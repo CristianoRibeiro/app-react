@@ -10,191 +10,214 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  FlatList,
 } from 'react-native';
+import FitImage from 'react-native-fit-image';
+import Banner from '~/pages/Main/Banner';
 
 import api from '~/services/api';
 
 import {Title, Header, TextDark, Card, Link} from './styles';
 
 import {Container, Content} from '../../style';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const [events, setEvents] = useState([
+    {
+      url: 'https://picsum.photos/1280/1280',
+      image: 'https://picsum.photos/1280/1280',
+    },
+    {
+      url: 'https://picsum.photos/1280/1280',
+      image: 'https://picsum.photos/1280/1280',
+    },
+    {
+      url: 'https://picsum.photos/1280/1280',
+      image: 'https://picsum.photos/1280/1280',
+    },
+    {
+      url: 'https://picsum.photos/1280/1280',
+      image: 'https://picsum.photos/1280/1280',
+    },
+  ]);
   const [error, setError] = useState(false);
 
   useEffect(() => {}, []);
 
+  function _renderItem({item, index}) {
+    return (
+      <TouchableOpacity style={{flexBasis: 0}}>
+        <Card style={{flex: 1, padding: 4}}>
+          <Image
+            source={{
+              uri:
+                'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+            }}
+            resizeMode="cover"
+            style={{height: 50, width: 50, flex: 1}}
+          />
+
+          <TextDark>Evento</TextDark>
+        </Card>
+      </TouchableOpacity>
+    );
+  }
   return (
     <Content>
       <ScrollView>
-        <Header style={{alignItems: 'center'}}>
-          <Title>INSPIRA 2020 </Title>
-          <TextDark>Fevereiro/2020 - São Paulo - SP </TextDark>
+        <Banner />
 
-          <View style={{alignItems: 'center'}}>
-            <Image
-              source={require('~/assets/avatar_evento.png')}
-              style={{
-                height: 150,
-                width: 150,
-                borderRadius: 50,
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        </Header>
+        <View>
+          {/* {events.map((item, index) =>
+              _renderItem({item, index})
+            )} */}
+          {/* <FlatList
+          data={events}
+          keyExtractor={item => item.id}
+          numColumns={3}
+          renderItem={({ item }) => _renderItem(item)}
+        /> */}
 
-        <View style={{marginBottom: 70}}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', marginTop: 20}}>
             <Link>
               <Card>
                 <Image
-                  source={require('~/assets/icons/calendar.png')}
+                  source={{
+                    uri:
+                      'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                  }}
                   style={{
                     height: 50,
                     width: 50,
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>PROGRAMAÇÃO </TextDark>
+                <TextDark>Evento </TextDark>
               </Card>
             </Link>
 
             <Link>
               <Card>
                 <Image
-                  source={require('~/assets/icons/ticket.png')}
+                  source={{
+                    uri:
+                      'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                  }}
                   style={{
                     height: 50,
                     width: 50,
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>TICKETS </TextDark>
-              </Card>
-            </Link>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <Link>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/user.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>REDE </TextDark>
+                <TextDark>Evento </TextDark>
               </Card>
             </Link>
 
             <Link>
               <Card>
                 <Image
-                  source={require('~/assets/icons/medal.png')}
+                  source={{
+                    uri:
+                      'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                  }}
                   style={{
                     height: 50,
                     width: 50,
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>PRÊMIOS </TextDark>
-              </Card>
-            </Link>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <Link>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/passport.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>PASSAGEM </TextDark>
+                <TextDark>Evento </TextDark>
               </Card>
             </Link>
 
             <Link>
               <Card>
                 <Image
-                  source={require('~/assets/icons/bus.png')}
+                  source={{
+                    uri:
+                      'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                  }}
                   style={{
                     height: 50,
                     width: 50,
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>TRANSFER </TextDark>
+                <TextDark>Evento </TextDark>
               </Card>
             </Link>
           </View>
+        </View>
 
-          <View style={{flexDirection: 'row'}}>
-            <Link>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/transmision.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>TRANSMISSÃO </TextDark>
-              </Card>
-            </Link>
+        <View style={{flexDirection: 'row'}}>
+          <Link>
+            <Card>
+              <Image
+                source={{
+                  uri:
+                    'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                }}
+                style={{
+                  height: 50,
+                  width: 50,
+                }}
+                resizeMode="contain"
+              />
+              <TextDark>Evento </TextDark>
+            </Card>
+          </Link>
 
-            <Link>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/info.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>INFORMAÇÕES </TextDark>
-              </Card>
-            </Link>
-          </View>
+          <Link>
+            <Card>
+              <Image
+                source={{
+                  uri:
+                    'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                }}
+                style={{
+                  height: 50,
+                  width: 50,
+                }}
+                resizeMode="contain"
+              />
+              <TextDark>Evento </TextDark>
+            </Card>
+          </Link>
 
-          <View style={{flexDirection: 'row'}}>
-            <Link>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/games.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>GAMES </TextDark>
-              </Card>
-            </Link>
+          <Link>
+            <Card>
+              <Image
+                source={{
+                  uri:
+                    'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                }}
+                style={{
+                  height: 50,
+                  width: 50,
+                }}
+                resizeMode="contain"
+              />
+              <TextDark>Evento </TextDark>
+            </Card>
+          </Link>
 
-            <Link>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/certificate.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>CERTIFICADO </TextDark>
-              </Card>
-            </Link>
-          </View>
+          <Link>
+            <Card>
+              <Image
+                source={{
+                  uri:
+                    'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+                }}
+                style={{
+                  height: 50,
+                  width: 50,
+                }}
+                resizeMode="contain"
+              />
+              <TextDark>Evento </TextDark>
+            </Card>
+          </Link>
         </View>
       </ScrollView>
     </Content>

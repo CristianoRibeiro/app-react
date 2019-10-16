@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Animated } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 // export const Container = styled(LinearGradient).attrs({
@@ -60,15 +59,4 @@ export const Card = styled.View`
   border-radius: 5px;
   padding: 15px 10px;
   background-color: #fff;
-`;
-
-export const Small = styled.ImageBackground`
-  width: 100%;
-  background: #eee;
-  aspect-ratio: ${props => props.aspect};
-`;
-
-export const Original = styled.Image`
-  width: 100%;
-  aspect-ratio: ${props => props.aspect};
 `;
