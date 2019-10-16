@@ -4,12 +4,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Container = styled(LinearGradient).attrs({
-  colors: ['#0F60A8', '#2f8038'],
+  colors: ['#051538', '#041c50'],
   start: { x: 0, y: 0 },
   end: { x: 1, y: 1 },
 })`
   flex: 1;
-  padding-top: ${30 + getStatusBarHeight(true)}px;
 `;
 
 
@@ -22,7 +21,7 @@ export const Title = styled.Text`
 
 export const SubTitle = styled.Text`
   font-size: 18px;
-  color: #333;
+  color: #fff;
   font-weight: 700;
 `;
 
@@ -41,7 +40,6 @@ export const TextDark = styled.Text`
 
 
 export const DrawerItem = styled.View`
-  margin: 10px;
+  margin: 1px;
   border-radius: 5px;
-  padding: 5px 10px;
 `;

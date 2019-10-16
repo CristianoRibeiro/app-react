@@ -18,6 +18,7 @@ import Schedule from '~/pages/Schedule';
 
 import DrawerItem from '~/components/DrawerItem';
 import ToolBar from '~/components/ToolBar';
+import SideBar from '~/components/SideBar';
 
 const DrawerRoutes = createDrawerNavigator(
   {
@@ -32,18 +33,19 @@ const DrawerRoutes = createDrawerNavigator(
       screen: Profile,
       path: 'profile',
       navigationOptions: {
-        drawerLabel: (props) => <DrawerItem {...props} title="Perfil"/>,
+        drawerLabel: (props) => <DrawerItem {...props} title="Meu perfil"/>,
       },
     },
     Schedule: {
       screen: Schedule,
       path: 'schedule',
       navigationOptions: {
-        drawerLabel: (props) => <DrawerItem {...props} title="Agenda"/>,
+        drawerLabel: (props) => <DrawerItem {...props} title="Meus eventos"/>,
       },
     },
   }
   , {
+    contentComponent: props => <SideBar {...props} />,
     initialRouteName: 'Main',
     contentOptions: {
       activeTintColor: '#e91e63',

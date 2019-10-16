@@ -31,8 +31,21 @@ export default function Main(props) {
   }, []);
 
   return (
-    <DrawerItem>
-      <TextDark>{props.title}</TextDark>
+    <DrawerItem
+      style={{
+        flexDirection: 'row',
+        backgroundColor: props.focused ? '#040d24' : 'transparent',
+      }}>
+      <View
+        style={{
+          width: 5,
+          backgroundColor: props.focused ? '#ff8206' : 'transparent',
+          minHeight: 50,
+        }}></View>
+
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <TextLight>{props.title}</TextLight>
+      </View>
     </DrawerItem>
   );
 }
