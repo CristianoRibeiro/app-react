@@ -1,59 +1,111 @@
 import React, {useState, useEffect, Component} from 'react';
 
 import {
-  Text, Image, StyleSheet, Dimensions, ImageBackground, StatusBar,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  StatusBar,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  fileName: {
-    fontWeight: 'bold',
-    marginTop: 5,
-  },
-  instructions: {
-    color: '#DDD',
-    fontSize: 14,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  logo: {
-    height: Dimensions.get('window').height * 0.11,
-    marginVertical: Dimensions.get('window').height * 0.11,
-    width: Dimensions.get('window').height * 0.11 * (1950 / 662),
-  },
-  welcome: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
+import api from '~/services/api';
 
-const Main = () => (
-  <ImageBackground
-    source={{
-      uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/background.png',
-    }}
-    style={styles.container}
-    resizeMode="cover"
-  >
-    <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
-    <Image
-      source={{
-        uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/rocketseat_logo.png',
-      }}
-      style={styles.logo}
-      resizeMode="contain"
-    />
-    <Text style={styles.welcome}>Bem-vindo ao Template Básico!</Text>
-    <Text style={styles.instructions}>Essa é a tela principal da sua aplicação =)</Text>
-    <Text style={styles.instructions}>Você pode editar a tela no arquivo:</Text>
-    <Text style={[styles.instructions, styles.fileName]}>src/pages/Main/index.js</Text>
-  </ImageBackground>
-);
+import {Title, Header, TextDark, Card, Link} from './styles';
 
-export default Main;
+import {Container, Content} from '../../style';
+
+export default function Main(props) {
+  const [cpf, setCpf] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+
+  useEffect(() => {}, []);
+
+  return (
+    <Content>
+      <ScrollView>
+      <Header style={{alignItems: 'center'}}>
+        <Title>INSPIRA 2020 </Title>
+        <TextDark>Fevereiro/2020 - São Paulo - SP </TextDark>
+
+        <View style={{alignItems: 'center'}}>
+          <Image
+            source={require('~/assets/avatar_evento.png')}
+            style={{
+              height: 150,
+              width: 150,
+              borderRadius: 50,
+            }}
+            resizeMode="contain"
+          />
+        </View>
+      </Header>
+
+      <View style={{flexDirection: 'row'}}>
+        <Link>
+          <Card>
+            <Image
+              source={require('~/assets/icons/calendar.png')}
+              style={{
+                height: 50,
+                width: 50,
+              }}
+              resizeMode="contain"
+            />
+            <TextDark>PROGRAMAÇÃO </TextDark>
+          </Card>
+        </Link>
+
+        <Link>
+          <Card>
+            <Image
+              source={require('~/assets/icons/ticket.png')}
+              style={{
+                height: 50,
+                width: 50,
+              }}
+              resizeMode="contain"
+            />
+            <TextDark>TICKETS  </TextDark>
+          </Card>
+        </Link>
+      </View>
+
+      <View style={{flexDirection: 'row'}}>
+        
+        <Link>
+          <Card>
+            <Image
+              source={require('~/assets/icons/user.png')}
+              style={{
+                height: 50,
+                width: 50,
+              }}
+              resizeMode="contain"
+            />
+            <TextDark>REDE </TextDark>
+          </Card>
+        </Link>
+
+        <Link>
+          <Card>
+            <Image
+              source={require('~/assets/icons/user.png')}
+              style={{
+                height: 50,
+                width: 50,
+              }}
+              resizeMode="contain"
+            />
+            <TextDark>REDE </TextDark>
+          </Card>
+        </Link>
+      </View>
+      </ScrollView>
+    </Content>
+  );
+}

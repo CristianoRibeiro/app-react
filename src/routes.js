@@ -11,7 +11,7 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-//import Main from '~/pages/Main';
+import Main from '~/pages/Main';
 import Login from '~/pages/Login';
 import Profile from '~/pages/Profile';
 import Schedule from '~/pages/Schedule';
@@ -21,6 +21,13 @@ import ToolBar from '~/components/ToolBar';
 
 const DrawerRoutes = createDrawerNavigator(
   {
+    Main: {
+      screen: Main,
+      path: 'main',
+      navigationOptions: {
+        drawerLabel: (props) => <DrawerItem {...props} title="Home"/>,
+      },
+    },
     Profile: {
       screen: Profile,
       path: 'profile',
@@ -37,7 +44,7 @@ const DrawerRoutes = createDrawerNavigator(
     },
   }
   , {
-    initialRouteName: 'Profile',
+    initialRouteName: 'Main',
     contentOptions: {
       activeTintColor: '#e91e63',
     }}
