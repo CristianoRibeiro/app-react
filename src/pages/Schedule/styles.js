@@ -67,7 +67,7 @@ export const Card = styled.View`
 `;
 
 export const CardImage = styled.View`
-  padding: 5px;
+  padding: 15px 15px 15px 5px;
 `;
 
 export const Input = styled.TextInput.attrs({

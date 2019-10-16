@@ -17,6 +17,9 @@ import Login from '~/pages/Login';
 import Profile from '~/pages/Profile';
 import Schedule from '~/pages/Schedule';
 import Voucher from '~/pages/Voucher';
+import Report from '~/pages/Report';
+import Notification from '~/pages/Notification';
+import Prize from '~/pages/Prize';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -46,11 +49,32 @@ const DrawerRoutes = createDrawerNavigator(
         drawerLabel: (props) => <DrawerItem {...props} title="Eventos" icon={require("~/assets/menu/calendar.png")}/>,
       },
     },
+    Report: {
+      screen: Report,
+      path: 'report',
+      navigationOptions: {
+        drawerLabel: (props) => <DrawerItem {...props} title="Extrato (de interações)" icon={require("~/assets/menu/extrato.png")}/>,
+      },
+    },
+    Notification: {
+      screen: Notification,
+      path: 'notification',
+      navigationOptions: {
+        drawerLabel: (props) => <DrawerItem {...props} title="Notificações" icon={require("~/assets/menu/notificacoes.png")}/>,
+      },
+    },
     Voucher: {
       screen: Voucher,
       path: 'voucher',
       navigationOptions: {
         drawerLabel: (props) => <DrawerItem {...props} title="Meus vouchers" icon={require("~/assets/menu/heart.png")}/>,
+      },
+    },
+    Prizes: {
+      screen: Prize,
+      path: 'prize',
+      navigationOptions: {
+        drawerLabel: (props) => <DrawerItem {...props} title="Prêmios" icon={require("~/assets/menu/premios.png")}/>,
       },
     },
   }
@@ -88,7 +112,7 @@ const Routes = createAppContainer(
       MainNavigator,
     }, {
       headerLayoutPreset: 'center',
-      
+
       defaultNavigationOptions: ({ navigation }) => ({
         headerTitle: <ToolBar navigation={navigation}/>,
         headerStyle: {
