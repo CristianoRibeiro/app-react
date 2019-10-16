@@ -15,12 +15,12 @@ import {
 import api from '~/services/api';
 
 import {
-  Title,
-} from './styles';
-
-import {
-  Container
+  Container,
+  Content
 } from '../../style';
+
+import {EventTitle, EventDate, EventLink, Header, TextTitle, Card, Link, CardImage} from './styles';
+
 
 export default function Main(props) {
   const [cpf, setCpf] = useState('');
@@ -32,6 +32,29 @@ export default function Main(props) {
   }, []);
 
   return (
-    <Container></Container>
+    <Content>
+      <Header style={{alignItems: 'center'}}>
+        <TextTitle>Eventos</TextTitle>
+      </Header>
+      <Link>
+        <Card>
+          <CardImage>
+            <Image
+              source={require('~/assets/icons/calendar.png')}
+              style={{
+                height: 50,
+                width: 50,
+              }}
+              resizeMode="contain"
+            />
+          </CardImage>
+          <View style={{ flex: 3 }}>
+            <EventDate>19/09/2019</EventDate>
+            <EventTitle>ANIVERSÁRIO APCEF/PA</EventTitle>
+            <EventLink>SAIBA MAIS</EventLink>
+          </View>
+        </Card>
+      </Link>
+    </Content>
   );
 }
