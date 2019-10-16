@@ -32,7 +32,7 @@ export default function Main(props) {
   return (
     <Content>
       <Header style={{alignItems: 'center'}}>
-        <TextTitle>Eventos</TextTitle>
+        <TextTitle>EVENTOS</TextTitle>
       </Header>
       <Link>
         <Card>

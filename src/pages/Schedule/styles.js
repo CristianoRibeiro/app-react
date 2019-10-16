@@ -128,7 +128,6 @@ export const Header = styled(LinearGradient).attrs({
 
 export const TextTitle = styled.Text`
   font-size: 28px;
-  font-weight: bold;
   color: #fff;
   margin: 5px 0;
 `;
