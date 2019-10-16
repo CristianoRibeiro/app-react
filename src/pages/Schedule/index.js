@@ -27,7 +27,9 @@ export default function Main(props) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <Content>

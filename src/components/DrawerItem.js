@@ -34,6 +34,7 @@ export default function Main(props) {
     <DrawerItem
       style={{
         flexDirection: 'row',
+        justifyContent: 'center',
         backgroundColor: props.focused ? '#040d24' : 'transparent',
       }}>
       <View
@@ -42,6 +43,22 @@ export default function Main(props) {
           backgroundColor: props.focused ? '#ff8206' : 'transparent',
           minHeight: 50,
         }}></View>
+
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginLeft: 10,
+        }}>
+        <Image
+          source={props.icon}
+          style={{
+            height: 24,
+            width: 24,
+          }}
+          resizeMode="contain"
+        />
+      </View>
 
       <View style={{flex: 1, justifyContent: 'center'}}>
         <TextLight>{props.title}</TextLight>

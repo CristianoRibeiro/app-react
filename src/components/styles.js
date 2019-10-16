@@ -41,5 +41,4 @@ export const TextDark = styled.Text`
 
 export const DrawerItem = styled.View`
   margin: 1px;
-  border-radius: 5px;
 `;

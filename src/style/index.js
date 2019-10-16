@@ -20,6 +20,19 @@ export const Content = styled(LinearGradient).attrs({
   flex: 1;
 `;
 
+export const Title = styled.Text`
+  font-size: 32px;
+  color: #FFF;
+  font-weight: bold;
+  padding: 0 20px;
+`;
+
+export const SubTitle = styled.Text`
+  font-size: 18px;
+  color: #333;
+  font-weight: 700;
+`;
+
 export const TextLight = styled.Text`
   font-size: 14;
   color: #FFF;
