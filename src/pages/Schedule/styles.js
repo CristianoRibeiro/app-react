@@ -1,17 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import LinearGradient from "react-native-linear-gradient";
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
-
-// export const Container = styled(LinearGradient).attrs({
-//   colors: ['#0F60A8', '#2f8038'],
-//   start: { x: 0, y: 0 },
-//   end: { x: 1, y: 1 },
-// })`
-//   flex: 1;
-//   padding-top: ${30 + getStatusBarHeight(true)}px;
-// `;
-
 
 export const Title = styled.Text`
   font-size: 32px;
@@ -39,6 +30,27 @@ export const TextDark = styled.Text`
   font-weight: 600;
 `;
 
+export const EventTitle = styled.Text`
+  font-size: 16px;
+  color: #0058b8;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 5px;
+`;
+
+export const EventDate = styled.Text`
+  font-size: 10px;
+  color: #7c7c7c;
+  font-weight: bold;
+  margin: 5px 0 0 0;
+`;
+
+export const EventLink = styled.Text`
+  font-size: 10px;
+  color: #ef7106;
+  margin: 5px 0;
+`;
+
 export const Form = styled.View`
   flex-direction: row;
   margin-top: 10px;
@@ -46,10 +58,16 @@ export const Form = styled.View`
 `;
 
 export const Card = styled.View`
-  margin: 10px;
+  margin: 5px;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 10px 10px;
   background-color: #fff;
+  display: flex;
+  flex-direction: row;
+`;
+
+export const CardImage = styled.View`
+  padding: 5px;
 `;
 
 export const Input = styled.TextInput.attrs({
@@ -89,7 +107,6 @@ export const Send = styled.TouchableOpacity`
 
 export const Link = styled.TouchableOpacity`
 flex: 1;
-  padding: 14px;
   color: #fff
 `;
 
@@ -99,6 +116,23 @@ export const List = styled.FlatList.attrs({
 })`
   margin-top: 20px;
 `;
+
+export const Header = styled(LinearGradient).attrs({
+  colors: ['#051538', '#041c50'],
+  start: { x: 1, y: 0 },
+  end: { x: 1, y: 1 },
+})`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
+export const TextTitle = styled.Text`
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+  margin: 5px 0;
+`;
+
 
 // export const Image = styled.Image`
 //   width: 100%;
