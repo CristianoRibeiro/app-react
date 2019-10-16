@@ -14,24 +14,25 @@ import {
 
 import api from '~/services/api';
 
-import {
-  Title,
-} from './styles';
+import {Title,SubTitle, Header, TextDark, Card, Link} from './styles';
 
-import {
-  Container
-} from '../../style';
+import {Container, Content} from '../../style';
 
 export default function Main(props) {
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   return (
-    <Container></Container>
+    <Content>
+      <ScrollView>
+        <Card>
+          <Title style={{color: '#333'}}>teste</Title>
+          <SubTitle style={{color: '#333'}}>teste</SubTitle>
+        </Card>
+      </ScrollView>
+    </Content>
   );
 }

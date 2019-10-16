@@ -36,15 +36,18 @@ export default function Main(props) {
     <Container>
       <ScrollView>
         <View style={{flex: 1, alignItems: 'center', paddingVertical: 20}}>
-          <Image
-            source={require('~/assets/avatar_evento.png')}
-            style={{
-              height: 150,
-              width: 150,
-              borderRadius: 50,
-            }}
-            resizeMode="contain"
-          />
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            <Image
+              source={require('~/assets/avatar_evento.png')}
+              style={{
+                height: 150,
+                width: 150,
+                borderRadius: 50,
+              }}
+              resizeMode="contain"
+            />
+          </View>
 
           <SubTitle style={{marginTop: 10}}>nome</SubTitle>
           <TextLight>email</TextLight>

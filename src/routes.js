@@ -11,11 +11,14 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+//Pages
 import Main from '~/pages/Main';
 import Login from '~/pages/Login';
 import Profile from '~/pages/Profile';
 import Schedule from '~/pages/Schedule';
+import Voucher from '~/pages/Voucher';
 
+//Components
 import DrawerItem from '~/components/DrawerItem';
 import ToolBar from '~/components/ToolBar';
 import SideBar from '~/components/SideBar';
@@ -26,21 +29,28 @@ const DrawerRoutes = createDrawerNavigator(
       screen: Main,
       path: 'main',
       navigationOptions: {
-        drawerLabel: (props) => <DrawerItem {...props} title="Home"/>,
+        drawerLabel: (props) => <DrawerItem {...props} title="Home" />,
       },
     },
     Profile: {
       screen: Profile,
       path: 'profile',
       navigationOptions: {
-        drawerLabel: (props) => <DrawerItem {...props} title="Meu perfil"/>,
+        drawerLabel: (props) => <DrawerItem {...props} title="Meu perfil" icon={require("~/assets/menu/user.png")}/>,
       },
     },
     Schedule: {
       screen: Schedule,
       path: 'schedule',
       navigationOptions: {
-        drawerLabel: (props) => <DrawerItem {...props} title="Meus eventos"/>,
+        drawerLabel: (props) => <DrawerItem {...props} title="Eventos" icon={require("~/assets/menu/calendar.png")}/>,
+      },
+    },
+    Voucher: {
+      screen: Voucher,
+      path: 'voucher',
+      navigationOptions: {
+        drawerLabel: (props) => <DrawerItem {...props} title="Meus vouchers" icon={require("~/assets/menu/heart.png")}/>,
       },
     },
   }
