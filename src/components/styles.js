@@ -19,8 +19,20 @@ export const Title = styled.Text`
   padding: 0 20px;
 `;
 
+export const TitleList = styled.Text`
+  font-size: 12;
+  color: #444;
+  font-weight: 300;
+`;
+
+export const TextList = styled.Text`
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+`;
+
 export const SubTitle = styled.Text`
-  font-size: 18px;
+  font-size: 20px;
   color: #fff;
   font-weight: 700;
 `;

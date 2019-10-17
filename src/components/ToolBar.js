@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TouchableOpacity, View, Image, SafeAreaView } from "react-native";
+import { TouchableOpacity, View, Image, SafeAreaView, StatusBar } from "react-native";
 import { Appbar, Avatar, withTheme, DefaultTheme } from "react-native-paper";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { DrawerActions } from "react-navigation-drawer";
@@ -16,6 +16,10 @@ class HeaderApp extends React.Component {
     return (
       <SafeAreaView style={{flex: 1}}>
 
+        <StatusBar
+          backgroundColor="#1d39cb"
+          barStyle="light-content"
+        />
         <View
           style={{
             alignItems: "center",
