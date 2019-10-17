@@ -33,6 +33,9 @@ import {
   SubTitle,
 } from './styles';
 
+//Types
+import {USER} from '~/reducers/types'; 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -70,7 +73,6 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({type: 'USER', payload: 'teste'});
 
     alert(JSON.stringify(user));
   }, []);
@@ -94,6 +96,8 @@ export default function Main(props) {
         );
        
         if(response.data.access_token){
+          await dispatch({type: USER, payload: response.data.user});
+          
           props.navigation.navigate('MainNavigator');
         }
         
