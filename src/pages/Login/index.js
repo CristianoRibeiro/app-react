@@ -1,6 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import { useSelector, useDispatch } from "react-redux";
 import {
+  AsyncStorage,
   Text,
   Image,
   StyleSheet,
@@ -11,6 +12,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
+import Modal from 'react-native-modal';
+import {ActivityIndicator, Colors} from 'react-native-paper';
 
 import api from '~/services/api';
 
@@ -58,11 +61,46 @@ const styles = StyleSheet.create({
 });
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const [doc, setCpf] = useState('28475201806');
+  const [password, setPassword] = useState('Brasil2010');
+  const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {}, []);
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({type: 'USER', payload: 'teste'});
+
+    alert(JSON.stringify(user));
+  }, []);
+
+  async function _login() {
+    if (doc === '') {
+      setError(true);
+    }
+    if (password === '') {
+      setError(true);
+    } else {
+      setError(false);
+
+      try {
+        setModal(true);
+        let response = await api.post('/api/auth/login', {doc, password});
+
+        const userToken = await AsyncStorage.setItem(
+          'token',
+          response.data.access_token,
+        );
+       
+        if(response.data.access_token){
+          props.navigation.navigate('MainNavigator');
+        }
+        
+      } catch (error) {}
+      setModal(false);
+    }
+  }
 
   return (
     <ImageBackground
@@ -82,14 +120,14 @@ export default function Main(props) {
             resizeMode="contain"
           />
 
-          <Title>Login</Title>
+          <Title>Login {user}</Title>
 
           <TextLight>Informe seu login e senha do Mundo Caixa </TextLight>
         </View>
         <KeyboardAvoidingView behavior={'padding'}>
           <Form>
             <Input
-              value={cpf}
+              value={doc}
               error={error}
               onChangeText={setCpf}
               autoCapitalize="none"
@@ -117,11 +155,24 @@ export default function Main(props) {
           </Link>
 
           <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
-          <Send style={{marginTop: 15}}>
+          <Send onPress={() => _login()} style={{marginTop: 15}}>
             <TextLight>CADASTRAR</TextLight>
           </Send>
         </View>
       </ScrollView>
+
+      <Modal isVisible={modal} style={{margin: 20}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator
+            animating={true}
+            size="large"
+            color={Colors.white}
+          />
+          {/* <Send onPress={() => setModal(!modal)}>
+            <TextLight>OK</TextLight>
+          </Send> */}
+        </View>
+      </Modal>
     </ImageBackground>
   );
 }

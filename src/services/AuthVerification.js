@@ -35,7 +35,7 @@ export default function Main(props) {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    props.navigation.navigate(userToken ? 'MainNavigator' : 'Login');
+    props.navigation.navigate(false ? 'MainNavigator' : 'Login');
   }
   return (
     <Content>
