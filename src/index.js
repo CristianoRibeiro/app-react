@@ -8,6 +8,7 @@ import '~/config/ReactotronConfig';
 import Routes from '~/routes';
 
 const {store, persistor} = configureStore();
+//import store from '~/reducers/st';
 
 const App = () => (
   <Provider store={store}>

@@ -3,7 +3,7 @@ import {
 } from "~/reducers/types";
 
 const INITIAL_STATE = {
-  user: 'teste',
+  user: [],
 };
 
 export default (state = INITIAL_STATE, action) => {

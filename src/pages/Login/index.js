@@ -120,7 +120,7 @@ export default function Main(props) {
             resizeMode="contain"
           />
 
-          <Title>Login {user}</Title>
+          <Title>Login</Title>
 
           <TextLight>Informe seu login e senha do Mundo Caixa </TextLight>
         </View>
