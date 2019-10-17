@@ -29,7 +29,7 @@ export default function Main(props) {
     <Content>
       <ScrollView>
         <Header style={{alignItems: 'center'}}>
-          <Title>INSPIRA 2020 </Title>
+          <Title>INSPIRA 2020</Title>
           <TextDark>Fevereiro/2020 - São Paulo - SP </TextDark>
 
           <View style={{alignItems: 'center'}}>
@@ -107,7 +107,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link  onPress={() => props.navigation.navigate('Flight')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/passport.png')}
