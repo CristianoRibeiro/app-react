@@ -80,7 +80,7 @@ export default function Main(props) {
         /> */}
 
           <View style={{flexDirection: 'row', marginTop: 20}}>
-            <Link>
+            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
               <Card>
                 <Image
                   source={{
@@ -97,7 +97,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
               <Card>
                 <Image
                   source={{
@@ -114,7 +114,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
               <Card>
                 <Image
                   source={{
@@ -131,7 +131,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
               <Card>
                 <Image
                   source={{
@@ -151,7 +151,7 @@ export default function Main(props) {
         </View>
 
         <View style={{flexDirection: 'row'}}>
-          <Link>
+          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
             <Card>
               <Image
                 source={{
@@ -168,7 +168,7 @@ export default function Main(props) {
             </Card>
           </Link>
 
-          <Link>
+          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
             <Card>
               <Image
                 source={{
@@ -185,7 +185,7 @@ export default function Main(props) {
             </Card>
           </Link>
 
-          <Link>
+          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
             <Card>
               <Image
                 source={{
@@ -202,7 +202,7 @@ export default function Main(props) {
             </Card>
           </Link>
 
-          <Link>
+          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
             <Card>
               <Image
                 source={{
