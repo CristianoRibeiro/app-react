@@ -29,7 +29,8 @@ const DrawerRoutes = createDrawerNavigator(
       screen: Main,
       path: 'main',
       navigationOptions: {
-        drawerLabel: props => <DrawerItem {...props} title="Home" />,
+        drawerLabel: props => <DrawerItem {...props} title="Home"
+        icon={require('~/assets/menu/home.png')} />,
       },
     },
     Profile: {

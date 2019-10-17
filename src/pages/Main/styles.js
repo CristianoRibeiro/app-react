@@ -37,7 +37,7 @@ export const TextLight = styled.Text`
 export const TextDark = styled.Text`
   font-size: 16;
   margin-top: 10px;
-  color: #0058B8;
+  color: #0058b8;
   font-weight: 600;
 `;
 
@@ -50,15 +50,15 @@ export const Header = styled(LinearGradient).attrs({
   start: { x: 1, y: 0 },
   end: { x: 1, y: 1 },
 })`
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin: 3px;
   align-items: center;
   border-radius: 5px;
-  padding: 15px 10px;
+  padding: 10px 5px;
   background-color: #fff;
 `;
 
