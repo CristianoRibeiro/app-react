@@ -17,6 +17,7 @@ import Voucher from '~/pages/Voucher';
 import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Prize';
+import Flight from '~/pages/Flight';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -190,6 +191,12 @@ const MainNavigator = createStackNavigator(
         headerTitle: 'teste',
         headerTintColor: '#333',
       },
+    },
+    Flight: {
+      screen: Flight,
+      path: 'flight',
+      header: null,
+      navigationOptions: {name: 'Flight', title: '',  headerTitle: 'teste', headerTintColor: '#333'},
     },
   },
   {

@@ -107,7 +107,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link  onPress={() => props.navigation.navigate('Flight')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/passport.png')}
