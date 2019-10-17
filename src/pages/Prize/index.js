@@ -34,9 +34,6 @@ export default function Main(props) {
 
   return (
     <Content>
-      <Header style={{alignItems: 'center'}}>
-        <TextTitle>PRÊMIOS</TextTitle>
-      </Header>
       <ScrollView>
 
         <Card style={{borderColor:'green',borderBottomWidth:3,borderTopWidth:3}}>
