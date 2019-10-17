@@ -14,7 +14,7 @@ import {
 
 import api from '~/services/api';
 
-import {Title,SubTitle, Header, TextDark, Card, Link} from './styles';
+import {Title, SubTitle, Header, TextDark, Card, Link} from './styles';
 
 import {Container, Content} from '../../style';
 
@@ -28,10 +28,12 @@ export default function Main(props) {
   return (
     <Content>
       <ScrollView>
-        <Card>
-          <Title style={{color: '#333'}}>teste</Title>
-          <SubTitle style={{color: '#333'}}>teste</SubTitle>
-        </Card>
+        <Link onPress={() => props.navigation.navigate('VoucherItem')}>
+          <Card>
+            <Title style={{color: '#333'}}>teste</Title>
+            <SubTitle style={{color: '#333'}}>teste</SubTitle>
+          </Card>
+        </Link>
       </ScrollView>
     </Content>
   );

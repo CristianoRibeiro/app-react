@@ -15,6 +15,7 @@ import Profile from '~/pages/Profile';
 import Schedule from '~/pages/Schedule';
 import ScheduleItem from '~/pages/ScheduleItem';
 import Voucher from '~/pages/Voucher';
+import VoucherItem from '~/pages/Voucher/Item';
 import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Prize';
@@ -260,6 +261,16 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
+    VoucherItem: {
+      screen: VoucherItem,
+      path: 'report',
+      navigationOptions: {
+        headerTitle: '',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
   },
   {
     initialRouteName: 'Main',
@@ -272,7 +283,7 @@ const MainNavigator = createStackNavigator(
       },
       headerTitleStyle: {
         fontWeight: 'bold',
-        color: '#fff'
+        color: '#fff',
       },
       headerBackTitleStyle: {
         fontWeight: 'bold',
