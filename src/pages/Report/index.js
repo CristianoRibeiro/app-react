@@ -33,9 +33,6 @@ export default function Main(props) {
 
   return (
     <Content>
-      <Header style={{alignItems: 'center'}}>
-        <TextTitle>EXTRATO DE INTERAÇÕES</TextTitle>
-      </Header>
       <ScrollView>
         <Card>
           <CardImage>

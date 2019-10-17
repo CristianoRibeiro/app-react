@@ -33,9 +33,6 @@ export default function Main(props) {
 
   return (
     <Content>
-      <Header style={{alignItems: 'center'}}>
-        <TextTitle>Passagem</TextTitle>
-      </Header>
       <Link>
         <ScrollView>
           <Card>

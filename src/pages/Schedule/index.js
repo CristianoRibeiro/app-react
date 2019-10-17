@@ -28,14 +28,11 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    
+
   }, []);
 
   return (
     <Content>
-      <Header style={{alignItems: 'center'}}>
-        <TextTitle>EVENTOS</TextTitle>
-      </Header>
       <Link>
         <Card>
           <CardImage>
