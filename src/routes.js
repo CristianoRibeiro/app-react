@@ -8,6 +8,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+//Auth
+import AuthVerification from '~/services/AuthVerification';
+
 //Pages
 import Main from '~/pages/Main';
 import Login from '~/pages/Login';
@@ -265,7 +268,7 @@ const MainNavigator = createStackNavigator(
       screen: VoucherItem,
       path: 'report',
       navigationOptions: {
-        headerTitle: '',
+        headerTitle: null,
         headerStyle: {
           backgroundColor: '#051538',
         },
@@ -295,8 +298,30 @@ const MainNavigator = createStackNavigator(
   },
 );
 
+const Auth = createSwitchNavigator(
+  {
+    Auth: {
+      screen: AuthVerification,
+      path: 'login',
+      navigationOptions: {name: 'Login', title: 'Login', header: null},
+    },
+    Login: {
+      screen: Login,
+      path: 'login',
+      navigationOptions: {name: 'Login', title: 'Login', header: null},
+    },
+    MainNavigator: {
+      screen: MainNavigator,
+      path: 'app',
+    },
+  },
+  {
+    initialRouteName: 'Auth',
+  },
+);
+
 const prefix = 'appfenae://';
-const Route = createAppContainer(MainNavigator);
+const Route = createAppContainer(Auth);
 const RouteApp = () => <Route uriPrefix={prefix} />;
 
 export default RouteApp;
