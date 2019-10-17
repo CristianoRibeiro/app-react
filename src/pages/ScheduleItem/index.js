@@ -33,7 +33,7 @@ export default function Main(props) {
           <Title>INSPIRA 2020</Title>
           <TextDark>Fevereiro/2020 - São Paulo - SP </TextDark>
 
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center', marginTop: 20}}>
             <Image
               source={require('~/assets/avatar_evento.png')}
               style={{

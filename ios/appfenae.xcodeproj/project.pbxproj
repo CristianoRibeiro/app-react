@@ -45,7 +45,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* appfenaeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = appfenaeTests.m; sourceTree = "<group>"; };
 		1296819AD23EA78FFAEFE35B /* libPods-appfenae-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appfenae-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07F961A680F5B00A75B9A /* appfenae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appfenae.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* VIVA FENAE APCEF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VIVA FENAE APCEF.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = appfenae/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = appfenae/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* appfenae.app */,
+				13B07F961A680F5B00A75B9A /* VIVA FENAE APCEF.app */,
 				00E356EE1AD99517003FC87E /* appfenaeTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* appfenae-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* appfenae-tvOSTests.xctest */,
@@ -237,7 +237,7 @@
 			);
 			name = appfenae;
 			productName = appfenae;
-			productReference = 13B07F961A680F5B00A75B9A /* appfenae.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* VIVA FENAE APCEF.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* appfenae-tvOS */ = {
@@ -649,7 +649,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/appfenae.app/appfenae";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VIVA FENAE APCEF.app/VIVA FENAE APCEF";
 			};
 			name = Debug;
 		};
@@ -669,7 +669,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/appfenae.app/appfenae";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VIVA FENAE APCEF.app/VIVA FENAE APCEF";
 			};
 			name = Release;
 		};
@@ -678,7 +678,7 @@
 			baseConfigurationReference = C0672DB11E3305D90CE29470 /* Pods-appfenae.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Y9XL2NGF98;
 				INFOPLIST_FILE = appfenae/Info.plist;
@@ -689,7 +689,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.fenaesisters;
-				PRODUCT_NAME = appfenae;
+				PRODUCT_NAME = "VIVA FENAE APCEF";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -699,7 +699,7 @@
 			baseConfigurationReference = 32A65D0456FE627E5DA44E02 /* Pods-appfenae.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Y9XL2NGF98;
 				INFOPLIST_FILE = appfenae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -709,7 +709,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.fenaesisters;
-				PRODUCT_NAME = appfenae;
+				PRODUCT_NAME = "VIVA FENAE APCEF";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

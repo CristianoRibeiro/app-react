@@ -49,8 +49,8 @@ export const Header = styled(LinearGradient).attrs({
   start: { x: 1, y: 0 },
   end: { x: 1, y: 1 },
 })`
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 30px;
+  padding-bottom: 20px;
 `;
 
 export const Card = styled.View`
