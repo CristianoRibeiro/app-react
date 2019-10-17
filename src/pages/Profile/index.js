@@ -10,13 +10,17 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from 'react-native';
+import {Avatar, FAB} from 'react-native-paper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import api from '~/services/api';
 
+//Components
+import ListItem from '~/components/ListItem';
+
 import {
-  Container,
-  Content,
   Title,
   Form,
   Input,
@@ -30,30 +34,15 @@ import {
   SubTitle,
 } from './styles';
 
+import {Container, Content} from '../../style';
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  fileName: {
-    fontWeight: 'bold',
-    marginTop: 5,
-  },
-  instructions: {
-    color: '#DDD',
-    fontSize: 14,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  logo: {
-    height: Dimensions.get('window').height * 0.2,
-    marginVertical: Dimensions.get('window').height * 0.1,
-    width: Dimensions.get('window').height * 0.17 * (1950 / 662),
-  },
-  welcome: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#1d39cb'
   },
 });
 
@@ -64,64 +53,91 @@ export default function Profile(props) {
 
   useEffect(() => {}, []);
 
+  const iconSize = 32;
   return (
-    <ImageBackground
+    <Content
       source={require('~/assets/bg-login.jpg')}
       style={styles.container}
       resizeMode="cover">
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle="light-content"
-        />
-        <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-          <Image
-            source={require('~/assets/logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 1,
+            padding: 15,
+            backgroundColor: '#1d39cb',
+          }}>
+          <View style={{alignItems: 'flex-end', flex: 1}}>
+            <Image
+              resizeMode="cover"
+              style={{width: 180, height: 180, borderRadius: 90}}
+              defaultSource={require('~/assets/avatar/avatar.png')}
+              source={require('~/assets/avatar/avatar.png')}
+            />
+
+            <Link
+              rippleColor="rgba(0, 0, 0, .32)"
+              style={{marginTop: -40}}
+              onPress={() => _uploadPhoto()}>
+              <Avatar.Icon size={42} icon="folder" />
+            </Link>
+          </View>
+
+          <TextLight style={{fontWeight: '700'}}>
+            FRANCISCO ALVES PEREIRA
+          </TextLight>
+
+          <TextLight>Matrícula: 9992333-21</TextLight>
+        </View>
+
+        <Card>
+          <ListItem
+            title="CPF"
+            text="034.443.334.11"
+            color="#444"
+            icon={
+              <MaterialCommunityIcons
+                name="account-card-details-outline"
+                size={iconSize}
+                color={'#444'}
+              />
+            }
           />
 
-          <Title>Login</Title>
+          <ListItem
+            title="E-MAIL"
+            text="franciscoalves@gmail.com"
+            color="#444"
+            icon={
+              <MaterialCommunityIcons
+                name="email-outline"
+                size={iconSize}
+                color={'#444'}
+              />
+            }
+          />
 
-          <TextLight>Informe seu login e senha do Mundo Caixa </TextLight>
-        </View>
-        <KeyboardAvoidingView behavior={'padding'}>
-          <Form>
-            <Input
-              value={cpf}
-              error={error}
-              onChangeText={setCpf}
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="CPF"
-            />
-          </Form>
-
-          <Form>
-            <Input
-              value={password}
-              error={error}
-              onChangeText={setPassword}
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="Senha"
-              secureTextEntry={true}
-            />
-          </Form>
-        </KeyboardAvoidingView>
-
-        <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-          <Link style={{marginTop: 5, marginBottom: 20}}>
-            <TextLight>Esqueci minha senha</TextLight>
-          </Link>
-
-          <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
-          <Send style={{marginTop: 15}}>
-            <TextLight>CADASTRAR</TextLight>
-          </Send>
-        </View>
+          <ListItem
+            title="TELEFONE"
+            text="9 95949-9394"
+            color="#444"
+            icon={
+              <MaterialCommunityIcons
+                name="cellphone-android"
+                size={iconSize}
+                color={'#444'}
+              />
+            }
+          />
+        </Card>
       </ScrollView>
-    </ImageBackground>
+
+      <FAB
+        style={styles.fab}
+        icon="edit"
+        onPress={() => console.log('Pressed')}
+      />
+    </Content>
   );
 }
