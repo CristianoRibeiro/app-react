@@ -29,7 +29,7 @@ export default function Main(props) {
     <Content>
       <ScrollView>
         <Header style={{alignItems: 'center'}}>
-          <Title>INSPIRA 2020 </Title>
+          <Title>INSPIRA 2020</Title>
           <TextDark>Fevereiro/2020 - São Paulo - SP </TextDark>
 
           <View style={{alignItems: 'center'}}>

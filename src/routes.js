@@ -169,12 +169,11 @@ const DrawerRoutes = createDrawerNavigator(
   },
 );
 
-const MainNavigator = createSwitchNavigator(
+const MainNavigator = createStackNavigator(
   {
     Main: {
       screen: DrawerRoutes,
       path: 'main',
-      navigationOptions: {name: 'Main', title: 'Home', headerTintColor: '#333'},
     },
     Login: {
       screen: Login,
@@ -195,27 +194,19 @@ const MainNavigator = createSwitchNavigator(
   },
   {
     initialRouteName: 'Main',
+    headerLayoutPreset: 'center',
+    defaultNavigationOptions: ({navigation}) => ({
+      headerTitle: <ToolBar navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: '#1d39cb',
+      },
+      gesturesEnabled: true,
+    }),
   },
 );
 
-const Routes = createAppContainer(
-  createAppContainer(
-    createStackNavigator(
-      {
-        MainNavigator,
-      },
-      {
-        headerLayoutPreset: 'center',
-        defaultNavigationOptions: ({navigation}) => ({
-          headerTitle: <ToolBar navigation={navigation} />,
-          headerStyle: {
-            backgroundColor: '#1d39cb',
-          },
-          gesturesEnabled: true,
-        }),
-      },
-    ),
-  ),
-);
+const prefix = 'appfenae://';
+const Route = createAppContainer(MainNavigator);
+const RouteApp = () => <Route uriPrefix={prefix} />;
 
-export default Routes;
+export default RouteApp;
