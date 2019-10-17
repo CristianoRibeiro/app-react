@@ -678,7 +678,7 @@
 			baseConfigurationReference = C0672DB11E3305D90CE29470 /* Pods-appfenae.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Y9XL2NGF98;
 				INFOPLIST_FILE = appfenae/Info.plist;
@@ -699,7 +699,7 @@
 			baseConfigurationReference = 32A65D0456FE627E5DA44E02 /* Pods-appfenae.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Y9XL2NGF98;
 				INFOPLIST_FILE = appfenae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
