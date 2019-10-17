@@ -6,6 +6,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //Pages
 import Main from '~/pages/Main';
@@ -179,34 +180,48 @@ const MainNavigator = createStackNavigator(
     Login: {
       screen: Login,
       path: 'login',
-      navigationOptions: {name: 'Main', title: 'Home', headerTintColor: '#333'},
+      navigationOptions: {name: 'Main', title: 'Home'},
     },
     ScheduleItem: {
       screen: ScheduleItem,
       path: 'login',
       header: null,
       navigationOptions: {
-        name: 'Main',
-        title: '',
-        headerTitle: 'teste',
-        headerTintColor: '#333',
+        headerTitle: null,
       },
     },
     Flight: {
       screen: Flight,
       path: 'flight',
       header: null,
-      navigationOptions: {name: 'Flight', title: '',  headerTitle: 'teste', headerTintColor: '#333'},
+      navigationOptions: {
+        name: 'Flight',
+        title: '',
+        headerTitle: 'Passagem',
+        headerStyle: {
+          backgroundColor: '#051538'
+        }
+      },
     },
   },
   {
     initialRouteName: 'Main',
     headerLayoutPreset: 'center',
     defaultNavigationOptions: ({navigation}) => ({
+      headerTintColor: '#ffffff',
       headerTitle: <ToolBar navigation={navigation} />,
       headerStyle: {
         backgroundColor: '#1d39cb',
       },
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        color: '#fff'
+      },
+      headerBackTitleStyle: {
+        fontWeight: 'bold',
+        color: '#fff',
+      },
+      headerBackTitle: 'Voltar',
       gesturesEnabled: true,
     }),
   },
