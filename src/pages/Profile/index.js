@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {Avatar, FAB} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import api from '~/services/api';
 
@@ -47,11 +48,64 @@ const styles = StyleSheet.create({
 });
 
 export default function Profile(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const [image, setImage] = useState('');
   const [error, setError] = useState(false);
 
   useEffect(() => {}, []);
+
+
+
+  function _uploadPhoto() {
+    const options = {
+      title: 'Selecione de onde quer importar o arquivo',
+      cancelButtonTitle: 'Cancelar',
+      takePhotoButtonTitle: 'Usar Camera',
+      chooseFromLibraryButtonTitle: 'Carregar da galeria',
+      width: 400,
+      height: 400,
+      cropping: true,
+    };
+
+    ImagePicker.openPicker(options).then(image => {
+      //alert(JSON.stringify(image));
+      let img = {
+        uri: image.path,
+        width: image.width,
+        height: image.height,
+        mime: image.mime,
+        type: 'image/jpeg',
+        name: image.path.substring(image.path.lastIndexOf('/') + 1),
+      };
+      
+      const data = new FormData();
+
+      data.append('avatar', img);
+
+      // AsyncStorage.getItem('token').then(token => {
+      //   axios
+      //     .post(API + '/api/v1/user/photo', data, {
+      //       headers: {
+      //         Authorization: 'Bearer ' + token,
+      //         accept: 'application/json',
+      //         'content-type': 'application/json',
+      //       },
+      //     })
+      //     .then(response => {
+      //       Alert.alert(null, response.data.message);
+      //     })
+      //     .catch(error => {
+      //       console.log('error ' + error.message);
+      //       Alert.alert(
+      //         null,
+      //         'Desculpe, algo deu errado. Tente novamente mais tarde.',
+      //       );
+      //     });
+      // });
+
+      setImage(img);
+    });
+  }
+
 
   const iconSize = 32;
   return (
@@ -73,7 +127,7 @@ export default function Profile(props) {
               resizeMode="cover"
               style={{width: 180, height: 180, borderRadius: 90}}
               defaultSource={require('~/assets/avatar/avatar.png')}
-              source={require('~/assets/avatar/avatar.png')}
+              source={image}
             />
 
             <Link
