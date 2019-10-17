@@ -19,6 +19,7 @@ import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Prize';
 import Flight from '~/pages/Flight';
+import Transfer from '~/pages/Transfer';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -199,8 +200,43 @@ const MainNavigator = createStackNavigator(
         title: '',
         headerTitle: 'Passagem',
         headerStyle: {
-          backgroundColor: '#051538'
-        }
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    Transfer: {
+      screen: Transfer,
+      path: 'transfer',
+      header: null,
+      navigationOptions: {
+        name: 'Transfer',
+        title: '',
+        headerTitle: 'Transfer',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    PrizeEvent: {
+      screen: Prize,
+      path: 'event/prize',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Prêmios',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    FlightEvent: {
+      screen: Flight,
+      path: 'event/flight',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Passagens',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
       },
     },
   },

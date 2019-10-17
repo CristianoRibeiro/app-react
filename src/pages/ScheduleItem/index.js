@@ -10,6 +10,7 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  Linking,
 } from 'react-native';
 
 import api from '~/services/api';
@@ -61,7 +62,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Voucher')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ticket.png')}
@@ -77,7 +78,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link onPress={() => Linking.openURL('http://inspirafenae2020.fenae.org.br/resultado/3') }>
               <Card>
                 <Image
                   source={require('~/assets/icons/user.png')}
@@ -87,11 +88,11 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>REDE </TextDark>
+                <TextDark>LISTA SORTEIO </TextDark>
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('PrizeEvent')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/medal.png')}
@@ -107,7 +108,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link  onPress={() => props.navigation.navigate('Flight')}>
+            <Link onPress={() => props.navigation.navigate('FlightEvent')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/passport.png')}
@@ -121,7 +122,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Transfer')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/bus.png')}
