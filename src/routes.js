@@ -23,14 +23,62 @@ import DrawerItem from '~/components/DrawerItem';
 import ToolBar from '~/components/ToolBar';
 import SideBar from '~/components/SideBar';
 
+//const App = createAppContainer(MainNavigator);
+
+const TabsRoute = createMaterialBottomTabNavigator(
+  {
+    Home: {
+      screen: Main,
+      path: '',
+      navigationOptions: {
+        title: 'home',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialCommunityIcons name="home" size={24} color={tintColor} />
+        ),
+      },
+    },
+
+    Notification: {
+      screen: Notification,
+      path: 'notification',
+      navigationOptions: {
+        title: 'notificações',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialIcons name="notifications" size={24} color={tintColor} />
+        ),
+      },
+    },
+  },
+  {
+    initialRouteName: 'Home',
+    activeColor: '#0D4274',
+    inactiveColor: '#777',
+    barStyle: {backgroundColor: '#fff'},
+    shifting: false,
+    tabBarOptions: {
+      activeTintColor: '#0D4274',
+      showLabel: true,
+      showIcon: false,
+      scrollEnabled: true,
+    },
+  },
+);
+
 const DrawerRoutes = createDrawerNavigator(
   {
-    Main: {
-      screen: Main,
+    Drawer: {
+      screen: TabsRoute,
       path: 'main',
       navigationOptions: {
-        drawerLabel: props => <DrawerItem {...props} title="Home"
-        icon={require('~/assets/menu/home.png')} />,
+        drawerLabel: props => (
+          <DrawerItem
+            {...props}
+            title="Home"
+            icon={require('~/assets/menu/home.png')}
+          />
+        ),
       },
     },
     Profile: {
@@ -72,19 +120,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    Notification: {
-      screen: Notification,
-      path: 'notification',
-      navigationOptions: {
-        drawerLabel: props => (
-          <DrawerItem
-            {...props}
-            title="Notificações"
-            icon={require('~/assets/menu/notificacoes.png')}
-          />
-        ),
-      },
-    },
+    // Notification: {
+    //   screen: Notification,
+    //   path: 'notification',
+    //   navigationOptions: {
+    //     drawerLabel: props => (
+    //       <DrawerItem
+    //         {...props}
+    //         title="Notificações"
+    //         icon={require('~/assets/menu/notificacoes.png')}
+    //       />
+    //     ),
+    //   },
+    // },
     Voucher: {
       screen: Voucher,
       path: 'voucher',
@@ -114,7 +162,7 @@ const DrawerRoutes = createDrawerNavigator(
   },
   {
     contentComponent: props => <SideBar {...props} />,
-    initialRouteName: 'Main',
+    initialRouteName: 'Drawer',
     contentOptions: {
       activeTintColor: '#e91e63',
     },
@@ -137,7 +185,12 @@ const MainNavigator = createSwitchNavigator(
       screen: ScheduleItem,
       path: 'login',
       header: null,
-      navigationOptions: {name: 'Main', title: '',  headerTitle: 'teste', headerTintColor: '#333'},
+      navigationOptions: {
+        name: 'Main',
+        title: '',
+        headerTitle: 'teste',
+        headerTintColor: '#333',
+      },
     },
   },
   {
