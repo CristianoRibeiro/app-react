@@ -136,12 +136,11 @@ const MainNavigator = createSwitchNavigator(
       screen: ScheduleItem,
       path: 'login',
       header: null,
-      navigationOptions: {name: 'Main', title: '', headerTintColor: '#333'},
+      navigationOptions: {name: 'Main', title: '',  headerTitle: 'teste', headerTintColor: '#333'},
     },
   },
   {
     initialRouteName: 'Main',
-    headerMode: 'float',
   },
 );
 
@@ -153,7 +152,6 @@ const Routes = createAppContainer(
       },
       {
         headerLayoutPreset: 'center',
-
         defaultNavigationOptions: ({navigation}) => ({
           headerTitle: <ToolBar navigation={navigation} />,
           headerStyle: {
