@@ -74,7 +74,6 @@ export default function Main(props) {
 
   useEffect(() => {
 
-    alert(JSON.stringify(user));
   }, []);
 
   async function _login() {
