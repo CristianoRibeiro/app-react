@@ -138,7 +138,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Streaming')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/transmision.png')}
@@ -152,7 +152,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Info')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/info.png')}
@@ -168,7 +168,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Info')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/games.png')}
@@ -178,7 +178,7 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>GAMES </TextDark>
+                <TextDark>EXTRATO </TextDark>
               </Card>
             </Link>
 
