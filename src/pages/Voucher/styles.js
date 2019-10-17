@@ -14,7 +14,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
 export const Title = styled.Text`
-  font-size: 18;
+  font-size: 20;
   color: #FFF;
   font-weight: bold;
 `;
@@ -22,7 +22,14 @@ export const Title = styled.Text`
 export const SubTitle = styled.Text`
   font-size: 14;
   color: #333;
-  font-weight: 700;
+  font-weight: 300;
+`;
+
+export const TextDate = styled.Text`
+  font-size: 12;
+  color: #666;
+  font-weight: 300;
+  text-align: right;
 `;
 
 export const TextLight = styled.Text`
@@ -48,13 +55,14 @@ export const Header = styled(LinearGradient).attrs({
   start: { x: 1, y: 0 },
   end: { x: 1, y: 1 },
 })`
-  padding-top: 50px;
-  padding-bottom: 50px;
+margin: 5px;
+border-radius: 5px;
+padding: 5px;
 `;
 
 export const Card = styled.View`
   margin: 5px;
   border-radius: 5px;
-  padding: 10px;
+  padding: 7px;
   background-color: #fff;
 `;

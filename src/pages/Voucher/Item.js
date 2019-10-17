@@ -15,6 +15,7 @@ import {
 import {Avatar, FAB} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImagePicker from 'react-native-image-crop-picker';
+import QRCode from 'react-native-qrcode-svg';
 
 import api from '~/services/api';
 
@@ -33,10 +34,10 @@ import {
   Link,
   Send,
   SubTitle,
+  TextDate,
 } from './styles';
 
 import {Container, Content} from '../../style';
-
 
 export default function Profile(props) {
   const [image, setImage] = useState('');
@@ -44,38 +45,59 @@ export default function Profile(props) {
 
   useEffect(() => {}, []);
 
-
   const iconSize = 32;
   return (
-    <Content
-      source={require('~/assets/bg-login.jpg')}
-      resizeMode="cover">
+    <Content source={require('~/assets/bg-login.jpg')} resizeMode="cover">
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            flex: 1,
-            padding: 15,
-            backgroundColor: '#1d39cb',
-          }}>
-          <View style={{alignItems: 'flex-end', flex: 1}}>
+        <View style={{backgroundColor: '#1d39cb'}}>
+          <View style={{flexDirection: 'row', margin: 15}}>
             <Image
               resizeMode="cover"
-              style={{width: 180, height: 180, borderRadius: 90}}
+              style={{width: 40, height: 40, borderRadius: 20}}
               defaultSource={require('~/assets/avatar/avatar.png')}
-              source={image}
+              source={{
+                uri: 'https://tanabi.sp.gov.br/media/capas/20170109131607.jpg',
+              }}
             />
 
+            <View style={{flex: 1, justifyContent: 'center'}}>
+              <TextLight>Evento</TextLight>
+            </View>
+
+            <View style={{justifyContent: 'center'}}>
+              <TextDate style={{color: 'white'}}>faltam 2 dias</TextDate>
+            </View>
           </View>
 
-          <TextLight style={{fontWeight: '700'}}>
-            FRANCISCO ALVES PEREIRA
-          </TextLight>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+              padding: 15,
+            }}>
+            <View style={{alignItems: 'flex-end', flex: 1, marginBottom: 20}}>
+              <Image
+                resizeMode="cover"
+                style={{width: 180, height: 180, borderRadius: 90}}
+                defaultSource={require('~/assets/avatar/avatar.png')}
+                source={image}
+              />
+            </View>
 
-          <TextLight>Matrícula: 9992333-21</TextLight>
+            <TextLight style={{fontWeight: '700'}}>
+              FRANCISCO ALVES PEREIRA
+            </TextLight>
+
+            <TextLight>Matrícula: 9992333-21</TextLight>
+          </View>
         </View>
 
+        <Card style={{alignItems: 'center'}}>
+          <View style={{overflow: 'hidden'}}>
+            <QRCode value={'teste'} size={200} bgColor="#000" fgColor="white" />
+          </View>
+        </Card>
         <Card>
           <ListItem
             title="CPF"
