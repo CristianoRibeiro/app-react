@@ -19,6 +19,9 @@ import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Prize';
 import Flight from '~/pages/Flight';
+import Transfer from '~/pages/Transfer';
+import Streaming from '~/pages/Streaming';
+import Info from '~/pages/Info';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -103,21 +106,8 @@ const DrawerRoutes = createDrawerNavigator(
         drawerLabel: props => (
           <DrawerItem
             {...props}
-            title="Eventos"
+            title="Próximos Eventos"
             icon={require('~/assets/menu/calendar.png')}
-          />
-        ),
-      },
-    },
-    Report: {
-      screen: Report,
-      path: 'report',
-      navigationOptions: {
-        drawerLabel: props => (
-          <DrawerItem
-            {...props}
-            title="Extrato (de interações)"
-            icon={require('~/assets/menu/extrato.png')}
           />
         ),
       },
@@ -199,8 +189,75 @@ const MainNavigator = createStackNavigator(
         title: '',
         headerTitle: 'Passagem',
         headerStyle: {
-          backgroundColor: '#051538'
-        }
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    Transfer: {
+      screen: Transfer,
+      path: 'transfer',
+      header: null,
+      navigationOptions: {
+        name: 'Transfer',
+        title: '',
+        headerTitle: 'Transfer',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    PrizeEvent: {
+      screen: Prize,
+      path: 'event/prize',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Prêmios',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    FlightEvent: {
+      screen: Flight,
+      path: 'event/flight',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Passagens',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    Streaming: {
+      screen: Streaming,
+      path: 'streaming',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Transmissão',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    Info: {
+      screen: Info,
+      path: 'info',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Informações',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    Report: {
+      screen: Report,
+      path: 'report',
+      navigationOptions: {
+        headerTitle: 'Extrato (de interações)',
+        headerStyle: {
+          backgroundColor: '#051538',
+        },
       },
     },
   },
