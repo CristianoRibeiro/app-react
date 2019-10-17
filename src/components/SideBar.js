@@ -1,4 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import {
   Text,
   Image,
@@ -27,9 +28,13 @@ import {
 } from './styles';
 import {ScrollView} from 'react-native-gesture-handler';
 
-export default function Main(props) {
+
+export default function SiderBar(props) {
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    //alert(JSON.stringify(props));
+    //alert(JSON.stringify(user));
   }, []);
 
   return (
@@ -39,18 +44,18 @@ export default function Main(props) {
           <View
             style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
             <Image
-              source={require('~/assets/avatar_evento.png')}
+              source={{uri: user.avatar}}
               style={{
                 height: 150,
                 width: 150,
-                borderRadius: 50,
+                borderRadius: 75,
               }}
               resizeMode="contain"
             />
           </View>
 
-          <SubTitle style={{marginTop: 10}}>nome</SubTitle>
-          <TextLight>email</TextLight>
+          <SubTitle style={{marginTop: 10}}>{user.name}</SubTitle>
+          <TextLight>{user.email}</TextLight>
         </View>
 
         <DrawerNavigatorItems {...props} activeTintColor={'#051538'} />

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
 import {
   AsyncStorage,
   Text,
@@ -32,9 +32,6 @@ import {
   Send,
   SubTitle,
 } from './styles';
-
-//Types
-import {USER} from '~/reducers/types'; 
 
 const styles = StyleSheet.create({
   container: {
@@ -69,12 +66,12 @@ export default function Main(props) {
   const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
 
+  //Redux
+  //import {USER} from '~/reducers/types';
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   async function _login() {
     if (doc === '') {
@@ -93,13 +90,12 @@ export default function Main(props) {
           'token',
           response.data.access_token,
         );
-       
-        if(response.data.access_token){
-          await dispatch({type: USER, payload: response.data.user});
-          
+
+        if (response.data.access_token) {
+          await dispatch({type: 'USER', payload: response.data.user});
+
           props.navigation.navigate('MainNavigator');
         }
-        
       } catch (error) {}
       setModal(false);
     }

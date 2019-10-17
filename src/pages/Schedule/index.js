@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import { useSelector, useDispatch } from "react-redux";
 import {
   Text,
   Image,
@@ -23,13 +23,28 @@ import {EventTitle, EventDate, EventLink, Header, TextTitle, Card, Link, CardIma
 
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const schedule = useSelector(state => state.schedule);
+  const dispatch = useDispatch();
+
+  const [schedules, setSchedules] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
 
+    _getSchedule();
   }, []);
+
+  async function _getSchedule(){
+
+    try {
+      let response = await api.post('/api/events');
+      //alert(JSON.stringify(response));
+      setSchedules(response);
+    } catch (error) {
+      alert(error.message);
+    }
+    
+  }
 
   return (
     <Content>
