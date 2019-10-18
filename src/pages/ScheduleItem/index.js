@@ -48,7 +48,7 @@ export default function Main(props) {
 
         <View style={{marginBottom: 70}}>
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link onPress={() => props.navigation.navigate('ScheduleEvent')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/calendar.png')}
@@ -62,7 +62,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => props.navigation.navigate('Voucher')}>
+            <Link onPress={() => props.navigation.navigate('VoucherItem')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ticket.png')}
@@ -182,7 +182,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Certificate')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/certificate.png')}

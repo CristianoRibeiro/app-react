@@ -26,6 +26,8 @@ import Flight from '~/pages/Flight';
 import Transfer from '~/pages/Transfer';
 import Streaming from '~/pages/Streaming';
 import Info from '~/pages/Info';
+import ScheduleEvent from '~/pages/ScheduleEvent';
+import Certificate from '~/pages/Certificate';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -266,10 +268,32 @@ const MainNavigator = createStackNavigator(
     },
     VoucherItem: {
       screen: VoucherItem,
-      path: 'report',
+      path: 'event/voucher',
       navigationOptions: {
         headerTitle: null,
         headerStyle: {
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    ScheduleEvent: {
+      screen: ScheduleEvent,
+      path: 'event/schedule',
+      navigationOptions: {
+        headerTitle: null,
+        headerStyle: {
+          headerTitle: 'Programação',
+          backgroundColor: '#051538',
+        },
+      },
+    },
+    Certificate: {
+      screen: Certificate,
+      path: 'certificate',
+      navigationOptions: {
+        headerTitle: null,
+        headerStyle: {
+          headerTitle: 'Certificado',
           backgroundColor: '#051538',
         },
       },
