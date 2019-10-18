@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -9,64 +9,97 @@ import {
   StatusBar,
   View,
   ScrollView,
-  KeyboardAvoidingView,
+  Alert,
+  FlatList,
+  RefreshControl
 } from 'react-native';
+import EmptyList from '~/components/EmptyList';
 
+//Api
 import api from '~/services/api';
 
+//Styles
+import {Container, Content} from '../../style';
+
 import {
-  Container,
-  Content
-} from '../../style';
-
-import {EventTitle, EventDate, EventLink, Header, TextTitle, Card, Link, CardImage} from './styles';
-
+  EventTitle,
+  EventDate,
+  EventLink,
+  Header,
+  TextTitle,
+  Card,
+  Link,
+  CardImage,
+} from './styles';
+import { TextDark } from '../Main/styles';
 
 export default function Main(props) {
-  const schedule = useSelector(state => state.schedule);
+  const data = useSelector(state => state.schedule);
   const dispatch = useDispatch();
 
-  const [schedules, setSchedules] = useState([]);
+  const [schedules, setSchedules] = useState(data);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-
     _getSchedule();
   }, []);
 
-  async function _getSchedule(){
-
+  async function _getSchedule() {
+    setLoading(true);
     try {
       let response = await api.post('/api/events');
       //alert(JSON.stringify(response));
-      setSchedules(response);
+      await dispatch({type: 'SCHEDULE', payload: response.data});
+      setSchedules(response.data);
     } catch (error) {
-      alert(error.message);
+      console.tron.log(error.message);
     }
-    
+    setLoading(false);
   }
 
-  return (
-    <Content>
+  function _renderItem(item) {
+    return (
       <Link>
         <Card>
           <CardImage>
             <Image
-              source={require('~/assets/icons/calendar.png')}
+              source={{uri: item.banner}}
               style={{
-                height: 50,
-                width: 50,
+                height: 70,
+                width: 70,
+                borderRadius: 35
               }}
               resizeMode="contain"
             />
           </CardImage>
-          <View style={{ flex: 3 }}>
-            <EventDate>19/09/2019</EventDate>
-            <EventTitle>ANIVERSÁRIO APCEF/PA</EventTitle>
-            <EventLink>SAIBA MAIS</EventLink>
+          <View style={{flex: 3}}>
+            <EventTitle>{item.name}</EventTitle>
+            <EventLink>{item.local}</EventLink>
+            
           </View>
         </Card>
       </Link>
+    );
+  }
+
+  return (
+    <Content>
+      <FlatList
+        style={{margimBottom: 50}}
+        data={schedules}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={
+          <EmptyList text="Nenhum evento emcontrado!"/>
+        }
+        renderItem={({item}) => _renderItem(item)}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={() => _getSchedule()}
+          />
+        }
+      />
     </Content>
   );
 }

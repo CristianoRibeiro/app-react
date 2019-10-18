@@ -60,14 +60,14 @@ export const Form = styled.View`
 export const Card = styled.View`
   margin: 5px;
   border-radius: 5px;
-  padding: 10px 10px;
+  padding: 5px 5px;
   background-color: #fff;
   display: flex;
   flex-direction: row;
 `;
 
 export const CardImage = styled.View`
-  padding: 15px 15px 15px 5px;
+  padding: 3px 10px 3px 3px;
 `;
 
 export const Input = styled.TextInput.attrs({
