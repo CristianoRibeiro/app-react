@@ -89,7 +89,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={schedules}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum evento emcontrado!" />}
+        ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!" />}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl

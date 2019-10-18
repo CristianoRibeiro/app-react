@@ -15,8 +15,14 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Title = styled.Text`
   font-size: 20;
-  color: #FFF;
+  color: #222;
   font-weight: bold;
+`;
+
+export const Header = styled.View`
+  margin: 5px;
+  padding: 7px;
+  padding-top: ${30 + getStatusBarHeight(true)}px;
 `;
 
 export const SubTitle = styled.Text`
@@ -34,7 +40,7 @@ export const TextDate = styled.Text`
 
 export const TextLight = styled.Text`
   font-size: 16;
-  color: #FFF;
+  color: #333;
   font-weight: 600;
   padding: 0 20px;
 `;
@@ -48,16 +54,6 @@ export const TextDark = styled.Text`
 
 export const Link = styled.TouchableOpacity`
   flex: 1;
-`;
-
-export const Header = styled(LinearGradient).attrs({
-  colors: ['#051538', '#041c50'],
-  start: { x: 1, y: 0 },
-  end: { x: 1, y: 1 },
-})`
-margin: 5px;
-border-radius: 5px;
-padding: 5px;
 `;
 
 export const Card = styled.View`

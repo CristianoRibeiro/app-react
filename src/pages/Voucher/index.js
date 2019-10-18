@@ -10,7 +10,9 @@ import {
   View,
   ScrollView,
   FlatList,
+  RefreshControl
 } from 'react-native';
+import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
@@ -35,10 +37,10 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getVoucher();
+    _onRefresh();
   }, []);
 
-  async function _getVoucher() {
+  async function _onRefresh() {
     setLoading(true);
     try {
       let response = await api.post('/api/vouchers');
@@ -54,24 +56,23 @@ export default function Main(props) {
 
   function _renderItem(item) {
     return (
-      <Link onPress={() => props.navigation.navigate('VoucherItem')}>
+      <Link onPress={() => props.navigation.navigate('VoucherItem', {item})}>
         <Card style={{flexDirection: 'row'}}>
           <Image
             resizeMode="cover"
             style={{width: 60, height: 60, borderRadius: 30}}
             defaultSource={require('~/assets/avatar/avatar.png')}
             source={{
-              uri: 'https://tanabi.sp.gov.br/media/capas/20170109131607.jpg',
+              uri: item.event.banner,
             }}
           />
 
           <View style={{flex: 1, justifyContent: 'center', marginLeft: 15}}>
-            <Title style={{color: '#333'}}>Evento</Title>
+            <Title style={{color: '#333'}}>{item.event.name}</Title>
             <SubTitle style={{color: '#333'}}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              lacinia felis mi, sit amet porta nibh porttitor a...{' '}
+              {item.event.local}
             </SubTitle>
-            <TextDate>faltam 2 dias</TextDate>
+            {/* <TextDate>faltam 2 dias</TextDate> */}
           </View>
         </Card>
       </Link>
@@ -82,14 +83,14 @@ export default function Main(props) {
     <Content>
       <FlatList
         style={{margimBottom: 50}}
-        data={schedules}
+        data={vouchers}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum evento emcontrado!" />}
+        ListEmptyComponent={<EmptyList text="Nenhum voucher encontrado!" />}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl
             refreshing={loading}
-            onRefresh={() => _getSchedule()}
+            onRefresh={() => _onRefresh()}
           />
         }
       />
