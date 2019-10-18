@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Avatar, FAB} from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImagePicker from 'react-native-image-crop-picker';
 import QRCode from 'react-native-qrcode-svg';
@@ -56,8 +57,11 @@ export default function Profile(props) {
     <Content source={require('~/assets/bg-login.jpg')} resizeMode="cover">
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
         <View style={{marginBottom: 75}}>
-          <View style={{backgroundColor: '#efefef'}}>
-            <Header style={{flexDirection: 'row', margin: 15}}>
+          <View >
+            <View style={{flexDirection: 'row', margin: 15, justifyContent: 'center'}}>
+              {/* <Link style={{width: 40, height: 40, alignItems: 'center'}}>
+                <Ionicons name="ios-arrow-back" size={24} color={'#222'} />
+              </Link> */}
               <Image
                 resizeMode="cover"
                 style={{width: 40, height: 40, borderRadius: 20}}
@@ -73,7 +77,7 @@ export default function Profile(props) {
               </View>
 
               
-            </Header>
+            </View>
 
             <View
               style={{

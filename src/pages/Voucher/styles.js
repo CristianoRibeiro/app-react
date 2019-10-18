@@ -22,7 +22,7 @@ export const Title = styled.Text`
 export const Header = styled.View`
   margin: 5px;
   padding: 7px;
-  padding-top: ${30 + getStatusBarHeight(true)}px;
+  padding-top: ${5 + getStatusBarHeight(true)}px;
 `;
 
 export const SubTitle = styled.Text`
@@ -53,7 +53,7 @@ export const TextDark = styled.Text`
 `;
 
 export const Link = styled.TouchableOpacity`
-  flex: 1;
+  padding: 2px;
 `;
 
 export const Card = styled.View`
