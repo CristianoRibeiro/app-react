@@ -20,7 +20,7 @@ import api from '~/services/api';
 
 //Components
 import ListItem from '~/components/ListItem';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Title,
   Form,
@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
 });
 
 export default function Profile(props) {
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
   const [image, setImage] = useState('');
   const [error, setError] = useState(false);
 
@@ -80,28 +83,6 @@ export default function Profile(props) {
       const data = new FormData();
 
       data.append('avatar', img);
-
-      // AsyncStorage.getItem('token').then(token => {
-      //   axios
-      //     .post(API + '/api/v1/user/photo', data, {
-      //       headers: {
-      //         Authorization: 'Bearer ' + token,
-      //         accept: 'application/json',
-      //         'content-type': 'application/json',
-      //       },
-      //     })
-      //     .then(response => {
-      //       Alert.alert(null, response.data.message);
-      //     })
-      //     .catch(error => {
-      //       console.log('error ' + error.message);
-      //       Alert.alert(
-      //         null,
-      //         'Desculpe, algo deu errado. Tente novamente mais tarde.',
-      //       );
-      //     });
-      // });
-
       setImage(img);
     });
   }
@@ -120,78 +101,77 @@ export default function Profile(props) {
             justifyContent: 'center',
             flex: 1,
             padding: 15,
-            backgroundColor: '#1d39cb',
           }}>
           <View style={{alignItems: 'flex-end', flex: 1}}>
             <Image
               resizeMode="cover"
-              style={{width: 180, height: 180, borderRadius: 90}}
+              style={{width: 180, height: 180, borderRadius: 90, marginBottom: 15}}
               defaultSource={require('~/assets/avatar/avatar.png')}
-              source={image}
+              source={{uri: user.avatar}}
             />
 
-            <Link
+            {/* <Link
               rippleColor="rgba(0, 0, 0, .32)"
               style={{marginTop: -40}}
               onPress={() => _uploadPhoto()}>
               <Avatar.Icon size={42} icon="folder" />
-            </Link>
+            </Link> */}
           </View>
 
-          <TextLight style={{fontWeight: '700'}}>
-            FRANCISCO ALVES PEREIRA
-          </TextLight>
+          <TextDark style={{fontWeight: '700'}}>
+            {user.name}
+          </TextDark>
 
-          <TextLight>Matrícula: 9992333-21</TextLight>
+          <TextDark>Matrícula: {user.matricula}</TextDark>
         </View>
 
         <Card>
-          <ListItem
-            title="CPF"
-            text="034.443.334.11"
-            color="#444"
-            icon={
-              <MaterialCommunityIcons
-                name="account-card-details-outline"
-                size={iconSize}
-                color={'#444'}
-              />
-            }
-          />
+            <ListItem
+              title="CPF"
+              text={user.doc}
+              color="#444"
+              icon={
+                <MaterialCommunityIcons
+                  name="account-card-details-outline"
+                  size={iconSize}
+                  color={'#444'}
+                />
+              }
+            />
 
-          <ListItem
-            title="E-MAIL"
-            text="franciscoalves@gmail.com"
-            color="#444"
-            icon={
-              <MaterialCommunityIcons
-                name="email-outline"
-                size={iconSize}
-                color={'#444'}
-              />
-            }
-          />
+            <ListItem
+              title="E-MAIL"
+              text={user.email}
+              color="#444"
+              icon={
+                <MaterialCommunityIcons
+                  name="email-outline"
+                  size={iconSize}
+                  color={'#444'}
+                />
+              }
+            />
 
-          <ListItem
-            title="TELEFONE"
-            text="9 95949-9394"
-            color="#444"
-            icon={
-              <MaterialCommunityIcons
-                name="cellphone-android"
-                size={iconSize}
-                color={'#444'}
-              />
-            }
-          />
-        </Card>
+            <ListItem
+              title="TELEFONE"
+              text={user.phone}
+              color="#444"
+              icon={
+                <MaterialCommunityIcons
+                  name="cellphone-android"
+                  size={iconSize}
+                  color={'#444'}
+                />
+              }
+            />
+          </Card>
       </ScrollView>
 
-      <FAB
+      {/* <FAB
         style={styles.fab}
         icon="edit"
         onPress={() => console.log('Pressed')}
-      />
+      /> */}
     </Content>
   );
 }

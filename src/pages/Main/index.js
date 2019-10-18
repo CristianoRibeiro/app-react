@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -11,206 +11,180 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   FlatList,
+  RefreshControl,
 } from 'react-native';
 import FitImage from 'react-native-fit-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Banner from '~/pages/Main/Banner';
+import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
-import {Title, Header, TextDark, Card, Link} from './styles';
+import {
+  Title,
+  Header,
+  TextDark,
+  Card,
+  Link,
+  TextLight,
+  Btn,
+  Original,
+} from './styles';
 
 import {Container, Content} from '../../style';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {TextLight} from '../Voucher/styles';
+import {Button} from 'react-native-paper';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  fileName: {
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+  instructions: {
+    color: '#DDD',
+    fontSize: 14,
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  logo: {
+    height: Dimensions.get('window').height * 0.2,
+    marginVertical: Dimensions.get('window').height * 0.1,
+    width: Dimensions.get('window').height * 0.17 * (1950 / 662),
+  },
+  welcome: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
 
 export default function Main(props) {
-  const [events, setEvents] = useState([
-    {
-      url: 'https://picsum.photos/1280/1280',
-      image: 'https://picsum.photos/1280/1280',
-    },
-    {
-      url: 'https://picsum.photos/1280/1280',
-      image: 'https://picsum.photos/1280/1280',
-    },
-    {
-      url: 'https://picsum.photos/1280/1280',
-      image: 'https://picsum.photos/1280/1280',
-    },
-    {
-      url: 'https://picsum.photos/1280/1280',
-      image: 'https://picsum.photos/1280/1280',
-    },
-  ]);
+  const data = useSelector(state => state.schedule);
+  const dispatch = useDispatch();
+
+  const [schedules, setSchedules] = useState(data);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    _getSchedule();
+  }, []);
 
-  function _renderItem({item, index}) {
+  async function _getSchedule() {
+    setLoading(true);
+    try {
+      let response = await api.post('/api/events');
+      //alert(JSON.stringify(response));
+      console.tron.log(response.data);
+      await dispatch({type: 'SCHEDULE', payload: response.data});
+      setSchedules(response.data);
+    } catch (error) {
+      console.tron.log(error.message);
+    }
+    setLoading(false);
+  }
+
+  function _renderItem(item) {
     return (
-      <TouchableOpacity style={{flexBasis: 0}}>
-        <Card style={{flex: 1, padding: 4}}>
+      <Link onPress={() => props.navigation.navigate('ScheduleItem', {item})}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginVertical: 10,
+            marginHorizontal: 5,
+          }}>
           <Image
-            source={{
-              uri:
-                'https://www.fenae.org.br/portal/data/files/53/03/D9/DF/2FDC4610EE5BBC46403A91A8/FENAE.jpg',
+            source={{uri: item.banner}}
+            style={{
+              height: 90,
+              width: 90,
             }}
-            resizeMode="cover"
-            style={{height: 50, width: 50, flex: 1}}
+            resizeMode="contain"
           />
-
-          <TextDark>Evento</TextDark>
-        </Card>
-      </TouchableOpacity>
+          <TextDark style={{fontSize: 12}}>{item.name} </TextDark>
+        </View>
+      </Link>
     );
   }
+
   return (
-    <Content>
-      <ScrollView>
+    <View style={{backgroundColor: '#fff', flex: 1}}>
+      <ScrollView style={{flex: 1}}>
         <Header style={{alignItems: 'center'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <MaterialCommunityIcons name="star" size={24} color={'#f36e06'} />
+            <MaterialCommunityIcons name="star" size={24} color={'#fff'} />
 
             <TextLight>DESTAQUES</TextLight>
 
-            <MaterialCommunityIcons name="star" size={24} color={'#f36e06'} />
+            <MaterialCommunityIcons name="star" size={24} color={'#fff'} />
           </View>
         </Header>
         <Banner />
 
         <View style={{flex: 1, alignItems: 'center', marginTop: 25}}>
-          <TextDark>Encontre o seu evento Fenae/Apcef </TextDark>
+          <Title
+            style={{
+              color: '#444',
+              textAlign: 'center',
+              fontSize: 20,
+              marginBottom: 10,
+              marginTop: 5,
+            }}>
+            Encontre o seu evento Fenae/Apcef
+          </Title>
         </View>
 
-        <View>
-          {/* {events.map((item, index) =>
-              _renderItem({item, index})
-            )} */}
-          {/* <FlatList
-          data={events}
-          keyExtractor={item => item.id}
-          numColumns={3}
-          renderItem={({ item }) => _renderItem(item)}
-        /> */}
+        <View style={{marginVertical: 5, marginHorizontal: 0}}>
+          <FlatList
+            data={data}
+            horizontal={true}
+            keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!" />}
+            renderItem={({item}) => _renderItem(item)}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={() => _getSchedule()}
+              />
+            }
+          />
+        </View>
 
-          <View style={{flexDirection: 'row', marginTop: 20}}>
-            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-              <Card>
-                <Image
-                  source={require('~/assets/evento/evento1.png')}
-                  style={{
-                    height: 65,
-                    width: 65,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>Evento </TextDark>
-              </Card>
-            </Link>
+        <Title
+          style={{
+            color: '#444',
+            textAlign: 'center',
+            fontSize: 20,
+            marginBottom: 10,
+            marginTop: 5,
+          }}>
+          Fique por dentro das campanhas
+        </Title>
 
-            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-              <Card>
-                <Image
-                  source={require('~/assets/evento/evento2.png')}
-                  style={{
-                    height: 65,
-                    width: 65,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>Evento </TextDark>
-              </Card>
-            </Link>
-
-            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-              <Card>
-                <Image
-                  source={require('~/assets/evento/evento3.png')}
-                  style={{
-                    height: 65,
-                    width: 65,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>Evento </TextDark>
-              </Card>
-            </Link>
-
-            <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-              <Card>
-                <Image
-                  source={require('~/assets/evento/evento4.png')}
-                  style={{
-                    height: 65,
-                    width: 65,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>Evento </TextDark>
-              </Card>
-            </Link>
+        <Card style={{elevation: 4, flex: 1}}>
+          <Image
+            style={{
+              width: '100%',
+              height: undefined,
+              aspectRatio: 135 / 62,
+            }}
+            source={require('~/assets/banner.jpg')}
+            resizeMode="cover"
+          />
+          <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
+            <Btn style={{alignItems: 'center', alignSelf: 'flex-end'}}>
+              <TextLight>Saiba mais</TextLight>
+            </Btn>
           </View>
-        </View>
+        </Card>
 
-        <View style={{flexDirection: 'row'}}>
-          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-            <Card>
-              <Image
-                source={require('~/assets/evento/evento5.png')}
-                style={{
-                  height: 65,
-                  width: 65,
-                }}
-                resizeMode="contain"
-              />
-              <TextDark>Evento </TextDark>
-            </Card>
-          </Link>
-
-          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-            <Card>
-              <Image
-                source={require('~/assets/evento/evento6.png')}
-                style={{
-                  height: 65,
-                  width: 65,
-                }}
-                resizeMode="contain"
-              />
-              <TextDark>Evento </TextDark>
-            </Card>
-          </Link>
-
-          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-            <Card>
-              <Image
-                source={require('~/assets/evento/evento7.png')}
-                style={{
-                  height: 65,
-                  width: 65,
-                }}
-                resizeMode="contain"
-              />
-              <TextDark>Evento </TextDark>
-            </Card>
-          </Link>
-
-          <Link onPress={() => props.navigation.navigate('ScheduleItem')}>
-            <Card>
-              <Image
-                source={require('~/assets/evento/evento8.png')}
-                style={{
-                  height: 65,
-                  width: 65,
-                }}
-                resizeMode="contain"
-              />
-              <TextDark>Evento </TextDark>
-            </Card>
-          </Link>
-        </View>
+        <View></View>
       </ScrollView>
-    </Content>
+    </View>
   );
 }

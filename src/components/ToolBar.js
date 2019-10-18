@@ -17,7 +17,7 @@ class HeaderApp extends React.Component {
       <SafeAreaView style={{flex: 1}}>
 
         <StatusBar
-          backgroundColor="#1d39cb"
+          backgroundColor="#FF6666"
           barStyle="light-content"
         />
         <View

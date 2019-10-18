@@ -28,6 +28,7 @@ import Streaming from '~/pages/Streaming';
 import Info from '~/pages/Info';
 import ScheduleEvent from '~/pages/ScheduleEvent';
 import Certificate from '~/pages/Certificate';
+import Campaigns from '~/pages/Campaigns';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -58,6 +59,17 @@ const TabsRoute = createMaterialBottomTabNavigator(
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => (
           <MaterialIcons name="notifications" size={24} color={tintColor} />
+        ),
+      },
+    },
+    Campaigns: {
+      screen: Campaigns,
+      path: 'campaigns',
+      navigationOptions: {
+        title: 'campanhas',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <Ionicons name="md-images" size={24} color={tintColor} />
         ),
       },
     },
@@ -194,7 +206,7 @@ const MainNavigator = createStackNavigator(
         title: '',
         headerTitle: 'Passagem',
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -207,7 +219,7 @@ const MainNavigator = createStackNavigator(
         title: '',
         headerTitle: 'Transfer',
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -218,7 +230,7 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: 'Prêmios',
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -229,7 +241,7 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: 'Passagens',
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -240,7 +252,7 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: 'Transmissão',
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -251,7 +263,7 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: 'Informações',
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -261,7 +273,7 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: 'Extrato (de interações)',
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -271,7 +283,7 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: null,
         headerStyle: {
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -282,7 +294,7 @@ const MainNavigator = createStackNavigator(
         headerTitle: null,
         headerStyle: {
           headerTitle: 'Programação',
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -293,7 +305,7 @@ const MainNavigator = createStackNavigator(
         headerTitle: null,
         headerStyle: {
           headerTitle: 'Certificado',
-          backgroundColor: '#051538',
+          backgroundColor: '#FF6666',
         },
       },
     },
@@ -305,7 +317,7 @@ const MainNavigator = createStackNavigator(
       headerTintColor: '#ffffff',
       headerTitle: <ToolBar navigation={navigation} />,
       headerStyle: {
-        backgroundColor: '#1d39cb',
+        backgroundColor: '#FF6666',
       },
       headerTitleStyle: {
         fontWeight: 'bold',

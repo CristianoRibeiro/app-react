@@ -58,7 +58,7 @@ export default function SiderBar(props) {
           <TextLight>{user.email}</TextLight>
         </View>
 
-        <DrawerNavigatorItems {...props} activeTintColor={'#051538'} />
+        <DrawerNavigatorItems {...props} activeTintColor={'#3F51B5'} />
       </ScrollView>
     </Container>
   );

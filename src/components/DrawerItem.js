@@ -35,11 +35,11 @@ export default function Main(props) {
       style={{
         flexDirection: 'row',
         justifyContent: 'center',
-        backgroundColor: props.focused ? '#040d24' : 'transparent',
+        backgroundColor: props.focused ? '#3F51B5' : 'transparent',
       }}>
       <View
         style={{
-          width: 5,
+          width: 3,
           backgroundColor: props.focused ? '#ff8206' : 'transparent',
           minHeight: 50,
         }}></View>
