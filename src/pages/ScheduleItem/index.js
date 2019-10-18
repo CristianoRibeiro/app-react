@@ -16,26 +16,28 @@ import {
 import api from '~/services/api';
 
 import {Title, Header, TextDark, Card, Link} from './styles';
-
 import {Container, Content} from '../../style';
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+
+  const [item, setItem] = useState(props.navigation.state.params.item);
   const [error, setError] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+
+    //alert(JSON.stringify(props.navigation.state.params.item));
+  }, []);
 
   return (
     <Content>
       <ScrollView>
         <Header style={{alignItems: 'center'}}>
-          <Title>INSPIRA 2020</Title>
-          <TextDark>Fevereiro/2020 - São Paulo - SP </TextDark>
+          <Title>{item.name}</Title>
+          <TextDark>{item.local} </TextDark>
 
           <View style={{alignItems: 'center', marginTop: 20}}>
             <Image
-              source={require('~/assets/avatar_evento.png')}
+              source={{uri: item.banner}}
               style={{
                 height: 150,
                 width: 150,

@@ -181,9 +181,8 @@ const MainNavigator = createStackNavigator(
     ScheduleItem: {
       screen: ScheduleItem,
       path: 'login',
-      header: null,
       navigationOptions: {
-        headerTitle: null,
+        headerTitle: '',
       },
     },
     Flight: {

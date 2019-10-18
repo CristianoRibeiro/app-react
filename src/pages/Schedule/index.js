@@ -11,7 +11,7 @@ import {
   ScrollView,
   Alert,
   FlatList,
-  RefreshControl
+  RefreshControl,
 } from 'react-native';
 import EmptyList from '~/components/EmptyList';
 
@@ -31,7 +31,7 @@ import {
   Link,
   CardImage,
 } from './styles';
-import { TextDark } from '../Main/styles';
+import {TextDark} from '../Main/styles';
 
 export default function Main(props) {
   const data = useSelector(state => state.schedule);
@@ -50,6 +50,7 @@ export default function Main(props) {
     try {
       let response = await api.post('/api/events');
       //alert(JSON.stringify(response));
+      console.tron.log(response.data);
       await dispatch({type: 'SCHEDULE', payload: response.data});
       setSchedules(response.data);
     } catch (error) {
@@ -60,7 +61,7 @@ export default function Main(props) {
 
   function _renderItem(item) {
     return (
-      <Link>
+      <Link onPress={() => props.navigation.navigate('ScheduleItem', {item})}>
         <Card>
           <CardImage>
             <Image
@@ -68,7 +69,7 @@ export default function Main(props) {
               style={{
                 height: 70,
                 width: 70,
-                borderRadius: 35
+                borderRadius: 35,
               }}
               resizeMode="contain"
             />
@@ -76,7 +77,6 @@ export default function Main(props) {
           <View style={{flex: 3}}>
             <EventTitle>{item.name}</EventTitle>
             <EventLink>{item.local}</EventLink>
-            
           </View>
         </Card>
       </Link>
@@ -89,9 +89,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={schedules}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={
-          <EmptyList text="Nenhum evento emcontrado!"/>
-        }
+        ListEmptyComponent={<EmptyList text="Nenhum evento emcontrado!" />}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl
