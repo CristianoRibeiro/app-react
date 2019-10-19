@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -10,67 +10,61 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
-  br
+  FlatList,
 } from 'react-native';
+import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
+import {Container, Content} from '../../style';
+
 import {
-  Container,
-  Content
-} from '../../style';
-
-import {EventTitle, EventDate, EventLink, Header, TextTitle, Card, Link, CardImage, Points, Info} from './styles';
-
+  EventTitle,
+  EventDate,
+  EventLink,
+  Header,
+  TextTitle,
+  Card,
+  Link,
+  CardImage,
+  Points,
+  Info,
+} from './styles';
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const data = useSelector(state => state.prizes);
+  const dispatch = useDispatch();
+
+  const [prize, setPrize] = useState(data);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-
+    console.tron.log(data);
   }, []);
+
+
+  function _renderItem(item) {
+    return (
+      <Card>
+       
+        <Info style={{flex: 1}}>
+          <EventTitle>{item.description}</EventTitle>
+          <EventLink>{item.append_type}</EventLink>
+        </Info>
+      </Card>
+    );
+  }
 
   return (
     <Content>
-      <ScrollView>
-
-        <Card style={{borderColor:'green',borderBottomWidth:3,borderTopWidth:3}}>
-          <CardImage>
-            <Image
-              source={require('~/assets/icons/premios.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="contain"
-            />
-          </CardImage>
-          <Info style={{ flex: 3 }}>
-            <EventTitle>MOCHILA TOM GRILL</EventTitle>
-            <EventLink>Retirado</EventLink>
-          </Info>
-        </Card>
-
-        <Card style={{borderColor:'blue',borderBottomWidth:3,borderTopWidth:3}}>
-          <CardImage>
-            <Image
-              source={require('~/assets/icons/premios.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="contain"
-            />
-          </CardImage>
-          <Info style={{ flex: 3 }}>
-            <EventTitle>RELÓGIO GARMIN</EventTitle>
-            <EventLink>Não retirado</EventLink>
-          </Info>
-        </Card>
-
-      </ScrollView>
+      <FlatList
+        style={{margimBottom: 50}}
+        data={prize}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<EmptyList text="Nenhum prêmio encontrado!" />}
+        renderItem={({item}) => _renderItem(item)}
+      />
     </Content>
   );
 }

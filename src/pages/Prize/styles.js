@@ -56,8 +56,7 @@ export const Points = styled.View`
 `;
 
 export const Info = styled.View`
-  justify-content: center;
-  align-items: center;
+  padding: 1px;
 `;
 
 export const Card = styled.View`
@@ -65,9 +64,7 @@ export const Card = styled.View`
   border-radius: 5px;
   padding: 10px 10px;
   background-color: #fff;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex:1;
 `;
 
 export const CardImage = styled.View`
@@ -88,37 +85,9 @@ export const Input = styled.TextInput.attrs({
   border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
 `;
 
-export const Submit = styled.TouchableOpacity`
-  background: #0F60A8;
-  margin-left: 10px;
-  justify-content: center;
-  border-radius: 4px;
-  padding: 0 14px;
-`;
-
-export const Send = styled.TouchableOpacity`
-  background: rgba(000,000,000, 0.2);
-  margin-left: 10px;
-  margin-right: 10px;
-  justify-content: center;
-  border-radius: 30px;
-  padding: 15px 14px;
-  align-items: center;
-  border: 1px solid #fff;
-  flex: 1;
-`;
-
-
 export const Link = styled.TouchableOpacity`
 flex: 1;
   color: #fff
-`;
-
-export const List = styled.FlatList.attrs({
-  contentContainerStyle: { paddingHorizontal: 20 },
-  showsVerticalScrollIndicator: false,
-})`
-  margin-top: 20px;
 `;
 
 export const Header = styled(LinearGradient).attrs({

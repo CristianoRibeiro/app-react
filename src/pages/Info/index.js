@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -9,40 +9,45 @@ import {
   StatusBar,
   View,
   ScrollView,
-  KeyboardAvoidingView,
+  Alert,
+  FlatList,
+  RefreshControl,
 } from 'react-native';
+import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
+import { WebView } from 'react-native-webview';
+import EmptyList from '~/components/EmptyList';
 
+//Api
 import api from '~/services/api';
 
+//Styles
+import {Container, Content} from '../../style';
+
 import {
-  Container,
-  Content
-} from '../../style';
-
-import {NotificationTitle, NotificationDate, NotificationLink, Header, TextTitle, Card, Link, NotificationText} from './styles';
-
+  EventTitle,
+  EventDate,
+  EventLink,
+  Header,
+  TextTitle,
+  Card,
+  Link,
+  SubTitle,
+} from './styles';
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const data = useSelector(state => state.eventitem);
+  const dispatch = useDispatch();
+
+  const [info, setInfo] = useState(data);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-
+    console.tron.log(info);
+    
   }, []);
 
   return (
-    <Content>
-      <Link>
-        <ScrollView>
-          <Card>
-            <View>
-              <NotificationTitle>Inspira Fenae 2019</NotificationTitle>
-              <NotificationText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut suscipit tortor ut quam bibendum, rutrum finibus mauris cursus. Quisque interdum, nunc id tristique tempor, nibh arcu vehicula lectus, quis porttitor arcu augue at turpis...</NotificationText>
-            </View>
-          </Card>
-        </ScrollView>
-      </Link>
-    </Content>
+        <WebView source={{ html: info.info }} />
   );
 }

@@ -4,3 +4,7 @@ export const VOUCHER = 'VOUCHER';
 export const NOTIFICATION = 'NOTIFICATION';
 export const VOUCHERITEM = 'VOUCHERITEM';
 export const SCHEDULE = 'SCHEDULE';
+export const PRIZE = 'PRIZE';
+export const FLIGHTS = 'FLIGHTS';
+export const TRANSFER = 'TRANSFER';
+export const EVENTITEM = 'EVENTITEM';

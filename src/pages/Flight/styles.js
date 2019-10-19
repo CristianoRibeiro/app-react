@@ -12,9 +12,9 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 18px;
+  font-size: 14;
   color: #333;
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export const TextLight = styled.Text`
@@ -30,36 +30,11 @@ export const TextDark = styled.Text`
   font-weight: 600;
 `;
 
-export const NotificationTitle = styled.Text`
-  font-size: 16px;
-  color: #0058b8;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-top: 5px;
-`;
-
-export const NotificationText = styled.Text`
-  font-size: 16px;
-  color: #727272;
-`;
-
-export const NotificationDate = styled.Text`
+export const EventDate = styled.Text`
   font-size: 10px;
   color: #7c7c7c;
   font-weight: bold;
   margin: 5px 0 0 0;
-`;
-
-export const NotificationLink = styled.Text`
-  font-size: 10px;
-  color: #ef7106;
-  margin: 5px 0;
-`;
-
-export const Form = styled.View`
-  flex-direction: row;
-  margin-top: 10px;
-  padding: 0 10px;
 `;
 
 export const Card = styled.View`
@@ -73,40 +48,6 @@ export const Card = styled.View`
 
 export const CardImage = styled.View`
   padding: 15px 15px 15px 5px;
-`;
-
-export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#efefef',
-  keyboardAppearance: 'light',
-  maxLength: 255
-})`
-  flex: 1;
-  padding: 12px 15px;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #fff;
-  background: rgba(000,000,000, 0.2);
-  border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
-`;
-
-export const Submit = styled.TouchableOpacity`
-  background: #0F60A8;
-  margin-left: 10px;
-  justify-content: center;
-  border-radius: 4px;
-  padding: 0 14px;
-`;
-
-export const Send = styled.TouchableOpacity`
-  background: rgba(000,000,000, 0.2);
-  margin-left: 10px;
-  margin-right: 10px;
-  justify-content: center;
-  border-radius: 30px;
-  padding: 15px 14px;
-  align-items: center;
-  border: 1px solid #fff;
-  flex: 1;
 `;
 
 

@@ -36,10 +36,14 @@ export default function Main(props) {
     try {
       if (props.navigation.state.params.item) {
         setItem(props.navigation.state.params.item);
-        //alert(JSON.stringify(props.navigation.state.params.item.vouchers));
+        //alert(JSON.stringify(props.navigation.state.params.item.prizes));
         console.tron.log(props.navigation.state.params.item);
         await dispatch({type: 'VOUCHER', payload: props.navigation.state.params.item.vouchers});
         await dispatch({type: 'SCHEDULE', payload: props.navigation.state.params.item.schedule});
+        await dispatch({type: 'PRIZE', payload: props.navigation.state.params.item.prizes});
+        await dispatch({type: 'FLIGHTS', payload: props.navigation.state.params.item.flights});
+        await dispatch({type: 'TRANSFER', payload: props.navigation.state.params.item.transfers});
+        await dispatch({type: 'EVENTITEM', payload: props.navigation.state.params.item});
       }
     } catch (error) {
       console.tron.log(error.message);

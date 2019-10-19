@@ -12,9 +12,9 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 18px;
+  font-size: 14;
   color: #333;
-  font-weight: 700;
+  font-weight: 400;
 `;
 
 export const TextLight = styled.Text`
@@ -31,8 +31,10 @@ export const TextDark = styled.Text`
 `;
 
 export const EventTitle = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   color: #0058b8;
+  font-weight: bold;
+  text-transform: uppercase;
   margin-top: 5px;
 `;
 
@@ -44,32 +46,28 @@ export const EventDate = styled.Text`
 `;
 
 export const EventLink = styled.Text`
-  font-size: 15px;
+  font-size: 10px;
   color: #ef7106;
   margin: 5px 0;
 `;
 
-export const Points = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
-
-export const TextItem = styled.Text`
-  align-items: center;
+export const Form = styled.View`
+  flex-direction: row;
+  margin-top: 10px;
+  padding: 0 10px;
 `;
 
 export const Card = styled.View`
   margin: 5px;
   border-radius: 5px;
-  padding: 10px 10px;
+  padding: 8px 10px;
   background-color: #fff;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
 `;
 
 export const CardImage = styled.View`
-  padding: 15px 15px 15px 5px;
+  padding: 3px 10px 3px 3px;
 `;
 
 export const Input = styled.TextInput.attrs({
@@ -129,7 +127,13 @@ export const Header = styled(LinearGradient).attrs({
 `;
 
 export const TextTitle = styled.Text`
-  font-size: 18px;
+  font-size: 28px;
   color: #fff;
   margin: 5px 0;
 `;
+
+
+// export const Image = styled.Image`
+//   width: 100%;
+//   aspect-ratio: ${props => props.aspect};
+// `;

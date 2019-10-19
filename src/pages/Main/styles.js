@@ -49,8 +49,7 @@ export const Btn = styled.TouchableOpacity`
   margin-left: 10px;
   margin-right: 10px;
   justify-content: center;
-  border-radius: 5px;
-  padding: 5px 5px;
+  border-radius: 20px;
   align-items: center;
   border: 1px solid #fff;
   padding: 6px 15px;

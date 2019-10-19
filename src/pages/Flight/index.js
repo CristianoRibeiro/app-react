@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -9,41 +9,75 @@ import {
   StatusBar,
   View,
   ScrollView,
-  KeyboardAvoidingView,
+  Alert,
+  FlatList,
+  RefreshControl,
 } from 'react-native';
+import { 
+  parseISO, 
+  format, 
+  formatRelative, 
+  formatDistance,
+} from 'date-fns';
+import EmptyList from '~/components/EmptyList';
 
+//Api
 import api from '~/services/api';
 
+//Styles
+import {Container, Content} from '../../style';
+
 import {
-  Container,
-  Content
-} from '../../style';
-
-import {NotificationTitle, NotificationDate, NotificationLink, Header, TextTitle, Card, Link, NotificationText} from './styles';
-
+  EventTitle,
+  EventDate,
+  EventLink,
+  Header,
+  TextTitle,
+  Card,
+  Link,
+  SubTitle
+} from './styles';
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const data = useSelector(state => state.flights);
+  const dispatch = useDispatch();
+
+  const [flights, setFlights] = useState(data);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-
+    console.tron.log(flights);
   }, []);
+
+
+  function _renderItem(item) {
+    const firstDate = parseISO(item.created_at);
+    const formattedDate = format(
+      firstDate, 
+      "dd/MM/YYY', às ' HH:mm'h'"
+    );
+    return (
+        <Card>
+         
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <EventDate>{formattedDate}</EventDate>
+            <SubTitle>{item.content}</SubTitle>
+          </View>
+        </Card>
+    );
+  }
 
   return (
     <Content>
-      <Link>
-        <ScrollView>
-          <Card>
-            <View>
-              <NotificationDate>Postado em: 19/09/2019</NotificationDate>
-              <NotificationTitle>Informações da sua passagem</NotificationTitle>
-              <NotificationText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut suscipit tortor ut quam bibendum, rutrum finibus mauris cursus. Quisque interdum, nunc id tristique tempor, nibh arcu vehicula lectus, quis porttitor arcu augue at turpis...</NotificationText>
-            </View>
-          </Card>
-        </ScrollView>
-      </Link>
+      <FlatList
+        style={{margimBottom: 50}}
+        data={flights}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<EmptyList text="Nenhuma passagem encontrada!" />}
+        renderItem={({item}) => _renderItem(item)}
+        
+      />
     </Content>
   );
 }

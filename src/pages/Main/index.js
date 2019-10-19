@@ -80,7 +80,7 @@ export default function Main(props) {
       let response = await api.post('/api/events');
       //alert(JSON.stringify(response));
       console.tron.log(response.data);
-      await dispatch({type: 'Event', payload: response.data});
+      await dispatch({type: 'EVENT', payload: response.data});
       setEvents(response.data);
     } catch (error) {
       console.tron.log(error.message);
@@ -177,7 +177,7 @@ export default function Main(props) {
           />
           <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
             <Btn style={{alignItems: 'center', alignSelf: 'flex-end'}}>
-              <TextLight>Saiba mais</TextLight>
+              <TextLight style={{fontSize:12}}>Saiba mais</TextLight>
             </Btn>
           </View>
         </Card>
