@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  StatusBar,
   View,
   ScrollView,
   KeyboardAvoidingView,
@@ -52,7 +51,7 @@ export default function Profile(props) {
 
   useEffect(() => {
     //console.tron.log(props.navigation.state.params.item);
-    alert(JSON.stringify(props.navigation.state.params.item.id));
+    //alert(JSON.stringify(props.navigation.state.params.item));
     _getVoucher();
   }, []);
 
@@ -60,11 +59,9 @@ export default function Profile(props) {
     setLoading(true);
     try {
       if(props.navigation.state.params.item){
-      let response = await api.post(`/api/voucher/${props.navigation.state.params.item.id}`);
-      alert(JSON.stringify(response.data));
-      console.tron.log(response.data);
-      await dispatch({type: 'VOUCHERITEM', payload: response.data});
-      setData(response.data);
+     
+      console.tron.log(props.navigation.state.params.item);
+      setData(props.navigation.state.params.item);
       }
     } catch (error) {
       console.tron.log(error.message);

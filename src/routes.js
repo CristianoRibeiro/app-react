@@ -349,12 +349,13 @@ const Auth = createSwitchNavigator(
     Auth: {
       screen: AuthVerification,
       path: 'login',
-      navigationOptions: {name: 'Login', title: 'Login', header: null},
+      navigationOptions: {header: null},
     },
     Login: {
       screen: Login,
       path: 'login',
-      navigationOptions: {name: 'Login', title: 'Login', header: null},
+      name: 'Login',
+      navigationOptions: {headerTitle: null, header: null},
     },
     MainNavigator: {
       screen: MainNavigator,

@@ -56,11 +56,6 @@ export const NotificationLink = styled.Text`
   margin: 5px 0;
 `;
 
-export const Form = styled.View`
-  flex-direction: row;
-  margin-top: 10px;
-  padding: 0 10px;
-`;
 
 export const Card = styled.View`
   margin: 5px;

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -7,10 +7,14 @@ import {
   Dimensions,
   View,
   StatusBar,
+  ScrollView,
+  SafeAreaView,
+  Alert,
+  AsyncStorage
 } from 'react-native';
 import {Drawer} from 'react-native-paper';
 import {DrawerNavigatorItems} from 'react-navigation-drawer';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   Container,
   Content,
@@ -26,8 +30,7 @@ import {
   Send,
   SubTitle,
 } from './styles';
-import {ScrollView} from 'react-native-gesture-handler';
-
+import ListItem from './ListItem';
 
 export default function SiderBar(props) {
   const user = useSelector(state => state.user);
@@ -37,6 +40,24 @@ export default function SiderBar(props) {
     //alert(JSON.stringify(user));
   }, []);
 
+  function _exit(){
+    Alert.alert(
+      '',
+      'Deseja sair?',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => {
+          AsyncStorage.removeItem('token');
+          props.navigation.navigate('Auth');
+        }},
+      ],
+      {cancelable: false},
+    );
+  }
   return (
     <Container>
       <ScrollView>
@@ -60,6 +81,38 @@ export default function SiderBar(props) {
 
         <DrawerNavigatorItems {...props} activeTintColor={'#3F51B5'} />
       </ScrollView>
+      <Link style={{marginBottom: 15}} onPress={()=>_exit()}>
+        <DrawerItem
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            backgroundColor: props.focused ? '#3F51B5' : 'transparent',
+          }}>
+          <View
+            style={{
+              width: 3,
+              backgroundColor: props.focused ? '#ff8206' : 'transparent',
+              minHeight: 50,
+            }}></View>
+
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginLeft: 10,
+            }}>
+            <MaterialCommunityIcons
+              name="exit-to-app"
+              size={28}
+              color={'rgba(255,255,255, 0.8)'}
+            />
+          </View>
+
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <TextLight>Sair</TextLight>
+          </View>
+        </DrawerItem>
+      </Link>
     </Container>
   );
 }

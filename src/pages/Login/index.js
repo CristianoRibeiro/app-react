@@ -11,9 +11,11 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  Alert
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {ActivityIndicator, Colors} from 'react-native-paper';
+import {MaskService} from 'react-native-masked-text';
 
 import api from '~/services/api';
 
@@ -61,8 +63,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Main(props) {
-  const [doc, setCpf] = useState('28475201806');
-  const [password, setPassword] = useState('Brasil2010');
+  const [doc, setCpf] = useState('');
+  const [password, setPassword] = useState('');
   const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
 
@@ -74,7 +76,8 @@ export default function Main(props) {
   useEffect(() => {}, []);
 
   async function _login() {
-    if (doc === '') {
+    let cpf = await MaskService.toMask('only-numbers', doc);
+    if (cpf.length < 14) {
       setError(true);
     }
     if (password === '') {
@@ -84,19 +87,28 @@ export default function Main(props) {
 
       try {
         setModal(true);
-        let response = await api.post('/api/auth/login', {doc, password});
 
-        const userToken = await AsyncStorage.setItem(
-          'token',
-          response.data.access_token,
-        );
+        let response = await api.post('/api/auth/login', {doc: cpf, password});
 
         if (response.data.access_token) {
+          const userToken = await AsyncStorage.setItem(
+            'token',
+            response.data.access_token,
+          );
+
           await dispatch({type: 'USER', payload: response.data.user});
 
           props.navigation.navigate('MainNavigator');
         }
-      } catch (error) {}
+        else{
+          Alert.alert(null, response.data.message);
+        }
+        //alert(JSON.stringify(response));
+        console.tron.log(response.data);
+        
+      } catch (error) {
+        Alert.alert(null, error.message);
+      }
       setModal(false);
     }
   }
@@ -126,8 +138,10 @@ export default function Main(props) {
         <KeyboardAvoidingView behavior={'padding'}>
           <Form>
             <Input
-              value={doc}
+              value={MaskService.toMask('cpf', doc)}
               error={error}
+              maxLength={14}
+              keyboardType="numeric"
               onChangeText={setCpf}
               autoCapitalize="none"
               autoCorrect={false}
@@ -149,13 +163,16 @@ export default function Main(props) {
         </KeyboardAvoidingView>
 
         <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-          <Link style={{marginTop: 5, marginBottom: 20}}>
+          <Link style={{marginTop: 5, marginBottom: 10}}>
             <TextLight>Esqueci minha senha</TextLight>
           </Link>
 
-          <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
+          <Link>
+            <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
+          </Link>
+
           <Send onPress={() => _login()} style={{marginTop: 15}}>
-            <TextLight>CADASTRAR</TextLight>
+            <TextLight>ENTRAR</TextLight>
           </Send>
         </View>
       </ScrollView>
