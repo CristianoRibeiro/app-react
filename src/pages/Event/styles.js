@@ -12,9 +12,9 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 18px;
+  font-size: 14;
   color: #333;
-  font-weight: 700;
+  font-weight: 300;
 `;
 
 export const TextLight = styled.Text`

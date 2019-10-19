@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -17,16 +17,35 @@ import api from '~/services/api';
 
 import {Title, Header, TextDark, Card, Link} from './styles';
 import {Container, Content} from '../../style';
+import {Event} from '~/model/Event';
 
 export default function Main(props) {
+  const dispatch = useDispatch();
 
-  const [item, setItem] = useState(props.navigation.state.params.item);
+  const [item, setItem] = useState(Event);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-
-    //alert(JSON.stringify(props.navigation.state.params.item));
+    //console.tron.log(props.navigation.state.params.item);
+    _getItem();
   }, []);
+
+  async function _getItem() {
+    setLoading(true);
+    try {
+      if (props.navigation.state.params.item) {
+        setItem(props.navigation.state.params.item);
+        //alert(JSON.stringify(props.navigation.state.params.item.vouchers));
+        console.tron.log(props.navigation.state.params.item);
+        await dispatch({type: 'VOUCHER', payload: props.navigation.state.params.item.vouchers});
+        await dispatch({type: 'SCHEDULE', payload: props.navigation.state.params.item.schedule});
+      }
+    } catch (error) {
+      console.tron.log(error.message);
+    }
+    setLoading(false);
+  }
 
   return (
     <Content>
@@ -50,7 +69,10 @@ export default function Main(props) {
 
         <View style={{marginBottom: 70}}>
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('ScheduleEvent')}>
+            <Link
+              onPress={() =>
+                props.navigation.navigate('ScheduleEvent', {item})
+              }>
               <Card>
                 <Image
                   source={require('~/assets/icons/calendar.png')}
@@ -64,7 +86,8 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => props.navigation.navigate('VoucherItem')}>
+            <Link
+              onPress={() => props.navigation.navigate('VoucherEvent')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ticket.png')}
@@ -80,7 +103,12 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => Linking.openURL('http://inspirafenae2020.fenae.org.br/resultado/3') }>
+            <Link
+              onPress={() =>
+                Linking.openURL(
+                  'http://inspirafenae2020.fenae.org.br/resultado/3',
+                )
+              }>
               <Card>
                 <Image
                   source={require('~/assets/icons/user.png')}

@@ -30,29 +30,29 @@ import {
   Card,
   Link,
   CardImage,
+  SubTitle
 } from './styles';
-import {TextDark} from '../Main/styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.schedule);
+  const data = useSelector(state => state.event);
   const dispatch = useDispatch();
 
-  const [schedules, setSchedules] = useState(data);
+  const [schedules, setEvents] = useState(data);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getSchedule();
+    _getEvent();
   }, []);
 
-  async function _getSchedule() {
+  async function _getEvent() {
     setLoading(true);
     try {
       let response = await api.post('/api/events');
       //alert(JSON.stringify(response));
       console.tron.log(response.data);
-      await dispatch({type: 'SCHEDULE', payload: response.data});
-      setSchedules(response.data);
+      await dispatch({type: 'EVENT', payload: response.data});
+      setEvents(response.data);
     } catch (error) {
       console.tron.log(error.message);
     }
@@ -74,9 +74,9 @@ export default function Main(props) {
               resizeMode="contain"
             />
           </CardImage>
-          <View style={{flex: 3}}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
             <EventTitle>{item.name}</EventTitle>
-            <EventLink>{item.local}</EventLink>
+            <SubTitle>{item.local}</SubTitle>
           </View>
         </Card>
       </Link>
@@ -94,7 +94,7 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl
             refreshing={loading}
-            onRefresh={() => _getSchedule()}
+            onRefresh={() => _getEvent()}
           />
         }
       />

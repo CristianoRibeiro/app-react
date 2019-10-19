@@ -40,17 +40,37 @@ import {
 } from './styles';
 
 import {Container, Content} from '../../style';
+import { Voucher } from '~/model/Voucher';
 
 export default function Profile(props) {
   const user = useSelector(state => state.user);
   //const dispatch = useDispatch();
 
-  const [data, setData] = useState(props.navigation.state.params.item);
+  const [data, setData] = useState(Voucher);
+  const [loading, setLoading] = useState(Voucher);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     //console.tron.log(props.navigation.state.params.item);
+    alert(JSON.stringify(props.navigation.state.params.item.id));
+    _getVoucher();
   }, []);
+
+  async function _getVoucher() {
+    setLoading(true);
+    try {
+      if(props.navigation.state.params.item){
+      let response = await api.post(`/api/voucher/${props.navigation.state.params.item.id}`);
+      alert(JSON.stringify(response.data));
+      console.tron.log(response.data);
+      await dispatch({type: 'VOUCHERITEM', payload: response.data});
+      setData(response.data);
+      }
+    } catch (error) {
+      console.tron.log(error.message);
+    }
+    setLoading(false);
+  }
 
   const iconSize = 32;
   return (

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -10,7 +10,10 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  FlatList,
+  RefreshControl
 } from 'react-native';
+import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
@@ -23,31 +26,65 @@ import {NotificationTitle, NotificationDate, NotificationLink, Header, TextTitle
 
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const data = useSelector(state => state.notifications);
+  const dispatch = useDispatch();
+
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-
+    _getNotification();
   }, []);
+
+  async function _getNotification() {
+    setLoading(true);
+    try {
+      let response = await api.post('/api/notifications');
+      //alert(JSON.stringify(response));
+      console.tron.log(response.data);
+      await dispatch({type: 'NOTIFICATION', payload: response.data});
+      setNotifications(response.data);
+    } catch (error) {
+      console.tron.log(error.message);
+    }
+    setLoading(false);
+  }
+
+  function _renderItem(item) {
+    return (
+     
+      <Link>
+          <Card>
+            <View>
+              <NotificationDate>{item.created_at}</NotificationDate>
+              <NotificationTitle>{item.title}</NotificationTitle>
+              <NotificationText>{item.content}</NotificationText>
+            </View>
+          </Card>
+      </Link>
+    );
+  }
 
   return (
     <Content>
-      <Header style={{alignItems: 'center'}}>
+       <Header style={{alignItems: 'center'}}>
         <TextTitle>NOTIFICAÇÕES</TextTitle>
       </Header>
-      <Link>
-        <ScrollView>
-          <Card>
-            <View>
-              <NotificationDate>19/09/2019</NotificationDate>
-              <NotificationTitle>Notificação Master</NotificationTitle>
-              <NotificationText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut suscipit tortor ut quam bibendum, rutrum finibus mauris cursus. Quisque interdum, nunc id tristique tempor, nibh arcu vehicula lectus, quis porttitor arcu augue at turpis...</NotificationText>
-              <NotificationLink>VER MAIS</NotificationLink>
-            </View>
-          </Card>
-        </ScrollView>
-      </Link>
+
+      <FlatList
+        style={{margimBottom: 50}}
+        data={notifications}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!" />}
+        renderItem={({item}) => _renderItem(item)}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={() => _getNotification()}
+          />
+        }
+      />
     </Content>
   );
 }

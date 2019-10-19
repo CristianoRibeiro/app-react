@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -10,58 +10,61 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
-  br
+  FlatList
 } from 'react-native';
+import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
 import {
   Container,
-  Content
+  Content,
+  TextItem
 } from '../../style';
 
 import {EventTitle, EventDate, EventLink, Header, TextTitle, Card, Link, CardImage, Points, Info} from './styles';
-import {TextItem} from "~/pages/ScheduleEvent/styles";
 
 
 export default function Main(props) {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const data = useSelector(state => state.schedule);
+  const dispatch = useDispatch();
+  
+  const [schedules, setSchedules] = useState(data);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-
+    console.tron.log(data);
   }, []);
+
+
+  function _renderItem(item) {
+    return (
+     
+      <Card>
+          <Card>
+            <TextTitle>
+              14h às 20h
+            </TextTitle>
+          </Card>
+          <View style={{ flex: 3 }}>
+            <EventTitle>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a</EventTitle>
+            <EventLink>Retirado</EventLink>
+          </View>
+        </Card>
+    );
+  }
 
   return (
     <Content>
-      <ScrollView>
 
-        <Card>
-          <CardImage>
-            <TextItem>
-              14h às 20h
-            </TextItem>
-          </CardImage>
-          <Info style={{ flex: 3 }}>
-            <EventTitle>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a</EventTitle>
-            <EventLink>Retirado</EventLink>
-          </Info>
-        </Card>
-
-        <Card>
-          <CardImage>
-            <TextItem>
-              20h às 24h
-            </TextItem>
-          </CardImage>
-          <Info style={{ flex: 3 }}>
-            <EventTitle>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a</EventTitle>
-            <EventLink>Eduardo Oliveira</EventLink>
-          </Info>
-        </Card>
-
-      </ScrollView>
+      <FlatList
+        style={{margimBottom: 50}}
+        data={schedules}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<EmptyList text="Nenhuma programação encontrada!" />}
+        renderItem={({item}) => _renderItem(item)}
+        
+      />
     </Content>
   );
 }

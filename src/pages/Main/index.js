@@ -63,25 +63,25 @@ const styles = StyleSheet.create({
 });
 
 export default function Main(props) {
-  const data = useSelector(state => state.schedule);
+  const data = useSelector(state => state.event);
   const dispatch = useDispatch();
 
-  const [schedules, setSchedules] = useState(data);
+  const [events, setEvents] = useState(data);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getSchedule();
+    _getEvents();
   }, []);
 
-  async function _getSchedule() {
+  async function _getEvents() {
     setLoading(true);
     try {
       let response = await api.post('/api/events');
       //alert(JSON.stringify(response));
       console.tron.log(response.data);
-      await dispatch({type: 'SCHEDULE', payload: response.data});
-      setSchedules(response.data);
+      await dispatch({type: 'Event', payload: response.data});
+      setEvents(response.data);
     } catch (error) {
       console.tron.log(error.message);
     }
@@ -90,7 +90,7 @@ export default function Main(props) {
 
   function _renderItem(item) {
     return (
-      <Link onPress={() => props.navigation.navigate('ScheduleItem', {item})}>
+      <Link onPress={() => props.navigation.navigate('EventItem', {item})}>
         <View
           style={{
             alignItems: 'center',
@@ -114,7 +114,13 @@ export default function Main(props) {
 
   return (
     <View style={{backgroundColor: '#fff', flex: 1}}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1}}
+      refreshControl={
+        <RefreshControl
+          refreshing={loading}
+          onRefresh={() => _getEvents()}
+        />
+      }>
         <Header style={{alignItems: 'center'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <MaterialCommunityIcons name="star" size={24} color={'#fff'} />
@@ -144,14 +150,7 @@ export default function Main(props) {
             data={data}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
-            ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!" />}
             renderItem={({item}) => _renderItem(item)}
-            refreshControl={
-              <RefreshControl
-                refreshing={loading}
-                onRefresh={() => _getSchedule()}
-              />
-            }
           />
         </View>
 

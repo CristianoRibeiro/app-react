@@ -15,10 +15,11 @@ import AuthVerification from '~/services/AuthVerification';
 import Main from '~/pages/Main';
 import Login from '~/pages/Login';
 import Profile from '~/pages/Profile';
-import Schedule from '~/pages/Schedule';
-import ScheduleItem from '~/pages/ScheduleItem';
+import Event from '~/pages/Event';
+import EventItem from '~/pages/EventItem';
 import Voucher from '~/pages/Voucher';
 import VoucherItem from '~/pages/Voucher/Item';
+import VoucherEvent from '~/pages/Voucher/VoucherEvent';
 import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Prize';
@@ -117,9 +118,9 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    Schedule: {
-      screen: Schedule,
-      path: 'schedule',
+    Event: {
+      screen: Event,
+      path: 'event',
       navigationOptions: {
         drawerLabel: props => (
           <DrawerItem
@@ -190,8 +191,8 @@ const MainNavigator = createStackNavigator(
       path: 'login',
       navigationOptions: {name: 'Main', title: 'Home'},
     },
-    ScheduleItem: {
-      screen: ScheduleItem,
+    EventItem: {
+      screen: EventItem,
       path: 'login',
       navigationOptions: {
         headerTitle: '',
@@ -280,6 +281,16 @@ const MainNavigator = createStackNavigator(
     VoucherItem: {
       screen: VoucherItem,
       path: 'event/voucher',
+      navigationOptions: {
+        headerTitle: null,
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    VoucherEvent: {
+      screen: VoucherEvent,
+      path: 'voucher/event',
       navigationOptions: {
         headerTitle: null,
         headerStyle: {
