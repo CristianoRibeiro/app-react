@@ -1,4 +1,17 @@
-import {USER, EVENT, VOUCHER, NOTIFICATION, VOUCHERITEM, SCHEDULE, PRIZE, FLIGHTS, TRANSFER, EVENTITEM, BANNER} from '~/reducers/types';
+import {
+  USER,
+  EVENT,
+  VOUCHER,
+  NOTIFICATION,
+  VOUCHERITEM,
+  SCHEDULE,
+  PRIZE,
+  FLIGHTS,
+  TRANSFER,
+  EVENTITEM,
+  BANNER,
+  CAMPAIGNS,
+} from '~/reducers/types';
 
 const INITIAL_STATE = {
   user: [],
@@ -12,6 +25,7 @@ const INITIAL_STATE = {
   flights: [],
   transfer: [],
   banner: [],
+  campaigns: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -38,6 +52,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, transfer: action.payload};
     case BANNER:
       return {...state, banner: action.payload};
+    case CAMPAIGNS:
+      return {...state, campaigns: action.payload};
     default:
       return state;
   }

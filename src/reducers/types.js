@@ -9,3 +9,4 @@ export const FLIGHTS = 'FLIGHTS';
 export const TRANSFER = 'TRANSFER';
 export const EVENTITEM = 'EVENTITEM';
 export const BANNER = 'BANNER';
+export const CAMPAIGNS = 'CAMPAIGNS';

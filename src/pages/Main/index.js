@@ -32,47 +32,21 @@ import {
   Original,
 } from './styles';
 
-import {Container, Content} from '../../style';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Button} from 'react-native-paper';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  fileName: {
-    fontWeight: 'bold',
-    marginTop: 5,
-  },
-  instructions: {
-    color: '#DDD',
-    fontSize: 14,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  logo: {
-    height: Dimensions.get('window').height * 0.2,
-    marginVertical: Dimensions.get('window').height * 0.1,
-    width: Dimensions.get('window').height * 0.17 * (1950 / 662),
-  },
-  welcome: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
 
 export default function Main(props) {
   const data = useSelector(state => state.event);
+  const campaignsState = useSelector(state => state.campaigns);
   const dispatch = useDispatch();
 
   const [events, setEvents] = useState(data ? data : []);
+  const [campaigns, setCampaigns] = useState(campaignsState ? campaignsState : []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     _getEvents();
+    _getData();
+    
   }, []);
 
   async function _getEvents() {
@@ -82,10 +56,28 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
       await dispatch({type: 'EVENT', payload: response.data});
-      setEvents(response.data);
+      //setEvents(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
+      }
+    }
+    _getData();
+  }
+
+  async function _getData() {
+    
+    try {
+      let response = await api.post('/api/campaigns');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+      console.tron.log(response.data);
+      }
+      await dispatch({type: 'CAMPAIGNS', payload: response.data});
+      //setCampaigns(response.data);
+    } catch (error) {
+      if (__DEV__) {
+      console.tron.log(error.message);
       }
     }
   }
@@ -149,7 +141,7 @@ export default function Main(props) {
 
         <View style={{marginVertical: 5, marginHorizontal: 0}}>
           <FlatList
-            data={data}
+            data={events}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => _renderItem(item, index)}
@@ -168,21 +160,12 @@ export default function Main(props) {
         </Title>
 
         <Card style={{elevation: 4, flex: 1}}>
-          <Image
-            style={{
-              width: '100%',
-              height: undefined,
-              aspectRatio: 135 / 62,
-            }}
-            source={require('~/assets/banner.jpg')}
+          <FitImage
+            source={{uri: campaigns[0].thumbnail}}
             resizeMode="cover"
           />
           <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
-            <Btn onPress={() =>
-                Linking.openURL(
-                  'http://inspirafenae2020.fenae.org.br',
-                )
-              } style={{alignItems: 'center', alignSelf: 'flex-end'}}>
+            <Btn onPress={() => props.navigation.navigate('Campaigns')} style={{alignItems: 'center', alignSelf: 'flex-end'}}>
               <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
             </Btn>
           </View>

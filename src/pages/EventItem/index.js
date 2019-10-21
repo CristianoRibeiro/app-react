@@ -32,7 +32,6 @@ export default function Main(props) {
   }, []);
 
   async function _getItem() {
-    setLoading(true);
     try {
       if (props.navigation.state.params.item) {
         setItem(props.navigation.state.params.item);
@@ -52,7 +51,6 @@ export default function Main(props) {
       console.tron.log(error.message);
       }
     }
-    setLoading(false);
   }
 
   return (

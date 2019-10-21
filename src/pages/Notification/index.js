@@ -44,7 +44,6 @@ export default function Main(props) {
   }, []);
 
   async function _getNotification() {
-    setLoading(true);
     try {
       let response = await api.post('/api/notifications');
       //alert(JSON.stringify(response));
@@ -58,7 +57,6 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
-    setLoading(false);
   }
 
   function _renderItem(item) {

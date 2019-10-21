@@ -33,6 +33,7 @@ import Info from '~/pages/Info';
 import ScheduleEvent from '~/pages/ScheduleEvent';
 import Certificate from '~/pages/Certificate';
 import Campaigns from '~/pages/Campaigns';
+import CampaignsItem from '~/pages/Campaigns/Item';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -65,6 +66,7 @@ const TabsRoute = createMaterialBottomTabNavigator(
         ),
       },
     },
+    
     Notification: {
       screen: Notification,
       path: 'notification',
@@ -320,6 +322,17 @@ const MainNavigator = createStackNavigator(
     ProfileEdit: {
       screen: ProfileEdit,
       path: 'profileedit',
+      navigationOptions: {
+        headerTitle: 'Editar Perfil',
+        headerStyle: {
+          headerTitle: 'Editar Perfil',
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    CampaignsItem: {
+      screen: CampaignsItem,
+      path: 'campaignsitem',
       navigationOptions: {
         headerTitle: 'Editar Perfil',
         headerStyle: {
