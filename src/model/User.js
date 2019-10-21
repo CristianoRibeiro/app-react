@@ -9,7 +9,7 @@ export const User = {
     "apcef": "",
     "phone": "",
     "sex": "",
-    "birthdate": "",
+    "birthdate": "0000-00-00",
     "address_state": "",
     "email_verified_at": "",
     "created_at": "",

@@ -17,6 +17,7 @@ import Main from '~/pages/Main';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Profile from '~/pages/Profile';
+import ProfileEdit from '~/pages/Profile/Edit';
 import Event from '~/pages/Event';
 import EventItem from '~/pages/EventItem';
 import Voucher from '~/pages/Voucher';
@@ -53,18 +54,6 @@ const TabsRoute = createMaterialBottomTabNavigator(
         ),
       },
     },
-
-    Notification: {
-      screen: Notification,
-      path: 'notification',
-      navigationOptions: {
-        title: 'notificações',
-        tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => (
-          <MaterialIcons name="notifications" size={24} color={tintColor} />
-        ),
-      },
-    },
     Campaigns: {
       screen: Campaigns,
       path: 'campaigns',
@@ -73,6 +62,17 @@ const TabsRoute = createMaterialBottomTabNavigator(
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => (
           <Ionicons name="md-images" size={24} color={tintColor} />
+        ),
+      },
+    },
+    Notification: {
+      screen: Notification,
+      path: 'notification',
+      navigationOptions: {
+        title: 'notificações',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialIcons name="notifications" size={24} color={tintColor} />
         ),
       },
     },
@@ -313,6 +313,17 @@ const MainNavigator = createStackNavigator(
         headerTitle: null,
         headerStyle: {
           headerTitle: 'Certificado',
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    ProfileEdit: {
+      screen: ProfileEdit,
+      path: 'profileedit',
+      navigationOptions: {
+        headerTitle: 'Editar Perfil',
+        headerStyle: {
+          headerTitle: 'Editar Perfil',
           backgroundColor: '#FF6666',
         },
       },

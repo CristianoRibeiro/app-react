@@ -52,7 +52,7 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
         setLoaded(true);
       }, 1000);
     }
-  }, [loaded]);
+  }, []);
 
   useEffect(() => {
     _getBanners();

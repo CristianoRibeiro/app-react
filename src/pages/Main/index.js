@@ -78,7 +78,6 @@ export default function Main(props) {
   async function _getEvents() {
     try {
       let response = await api.post('/api/events');
-      //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }

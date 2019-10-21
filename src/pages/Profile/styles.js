@@ -40,10 +40,9 @@ export const TextDark = styled.Text`
 `;
 
 export const Form = styled.View`
-  flex-direction: row;
-  margin-top: 10px;
-  padding: 0 10px;
+  padding: 10px;
 `;
+
 
 export const Card = styled.View`
   margin: 10px;
@@ -53,17 +52,15 @@ export const Card = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#efefef',
+  placeholderTextColor: '#999',
   keyboardAppearance: 'light',
   maxLength: 255
 })`
-  flex: 1;
   padding: 12px 15px;
   border-radius: 4px;
   font-size: 16px;
-  color: #fff;
-  background: rgba(000,000,000, 0.2);
-  border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
+  color: #222;
+  border: 1px solid ${props => (props.error ? '#FF7272' : '#333')};
 `;
 
 export const Submit = styled.TouchableOpacity`
@@ -75,7 +72,7 @@ export const Submit = styled.TouchableOpacity`
 `;
 
 export const Send = styled.TouchableOpacity`
-  background: rgba(000,000,000, 0.2);
+  background: #2A40B1;
   margin-left: 10px;
   margin-right: 10px;
   justify-content: center;
@@ -90,17 +87,11 @@ export const Send = styled.TouchableOpacity`
 export const Link = styled.TouchableOpacity`
 flex: 1;
   padding: 14px;
-  color: #fff
+  color: #222;
 `;
 
-export const List = styled.FlatList.attrs({
-  contentContainerStyle: { paddingHorizontal: 20 },
-  showsVerticalScrollIndicator: false,
-})`
-  margin-top: 20px;
+export const TextError = styled.Text`
+  font-size: 14px;
+  color: #e57373;
+  font-weight: 600;
 `;
-
-// export const Image = styled.Image`
-//   width: 100%;
-//   aspect-ratio: ${props => props.aspect};
-// `;
