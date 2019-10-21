@@ -39,7 +39,7 @@ import {
 } from './styles';
 
 import {Container, Content} from '../../style';
-import { Voucher } from '~/model/Voucher';
+import {Voucher} from '~/model/Voucher';
 
 export default function Profile(props) {
   const user = useSelector(state => state.user);
@@ -58,15 +58,16 @@ export default function Profile(props) {
   async function _getVoucher() {
     setLoading(true);
     try {
-      if(props.navigation.state.params.item){
-     
+      if (props.navigation.state.params.item) {
         if (__DEV__) {
-      console.tron.log(props.navigation.state.params.item);
+          console.tron.log(props.navigation.state.params.item);
         }
-      setData(props.navigation.state.params.item);
+        setData(props.navigation.state.params.item);
       }
     } catch (error) {
-      console.tron.log(error.message);
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
     }
     setLoading(false);
   }
@@ -76,8 +77,13 @@ export default function Profile(props) {
     <Content source={require('~/assets/bg-login.jpg')} resizeMode="cover">
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
         <View style={{marginBottom: 75}}>
-          <View >
-            <View style={{flexDirection: 'row', margin: 15, justifyContent: 'center'}}>
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                margin: 15,
+                justifyContent: 'center',
+              }}>
               {/* <Link style={{width: 40, height: 40, alignItems: 'center'}}>
                 <Ionicons name="ios-arrow-back" size={24} color={'#222'} />
               </Link> */}
@@ -92,10 +98,10 @@ export default function Profile(props) {
 
               <View style={{flex: 1, justifyContent: 'center'}}>
                 <TextLight numberOfLines={1}>{data.event.name}</TextLight>
-                <TextDate style={{textAlign: 'left', paddingLeft: 20}}>{data.event.local}</TextDate>
+                <TextDate style={{textAlign: 'left', paddingLeft: 20}}>
+                  {data.event.local}
+                </TextDate>
               </View>
-
-              
             </View>
 
             <View

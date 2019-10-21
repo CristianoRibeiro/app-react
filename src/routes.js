@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, Image, SafeAreaView} from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
@@ -14,6 +15,7 @@ import AuthVerification from '~/services/AuthVerification';
 //Pages
 import Main from '~/pages/Main';
 import Login from '~/pages/Login';
+import Register from '~/pages/Register';
 import Profile from '~/pages/Profile';
 import Event from '~/pages/Event';
 import EventItem from '~/pages/EventItem';
@@ -186,11 +188,6 @@ const MainNavigator = createStackNavigator(
       screen: DrawerRoutes,
       path: 'main',
     },
-    Login: {
-      screen: Login,
-      path: 'login',
-      navigationOptions: {name: 'Main', title: 'Home'},
-    },
     EventItem: {
       screen: EventItem,
       path: 'login',
@@ -344,6 +341,43 @@ const MainNavigator = createStackNavigator(
   },
 );
 
+
+const LoginRegister = createStackNavigator(
+  {
+    Login: {
+      screen: Login,
+      path: 'login',
+      name: 'Login',
+      navigationOptions: {headerTitle: null, header: null},
+    },
+    Register: {
+      screen: Register,
+      path: 'register',
+      navigationOptions: {name: 'Cadastrar', title: 'Cadastrar'},
+    },
+  },
+  {
+    initialRouteName: 'Login',
+    headerLayoutPreset: 'center',
+    defaultNavigationOptions: ({navigation}) => ({
+      headerTintColor: '#ffffff',
+      headerStyle: {
+        backgroundColor: '#2A40B1',
+      },
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        color: '#fff',
+      },
+      headerBackTitleStyle: {
+        fontWeight: 'bold',
+        color: '#fff',
+      },
+      headerBackTitle: 'Voltar',
+      gesturesEnabled: true,
+    }),
+  },
+);
+
 const Auth = createSwitchNavigator(
   {
     Auth: {
@@ -351,8 +385,8 @@ const Auth = createSwitchNavigator(
       path: 'login',
       navigationOptions: {header: null},
     },
-    Login: {
-      screen: Login,
+    LoginRegister: {
+      screen: LoginRegister,
       path: 'login',
       name: 'Login',
       navigationOptions: {headerTitle: null, header: null},

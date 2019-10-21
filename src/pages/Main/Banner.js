@@ -1,4 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -9,6 +10,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {Animated} from 'react-native';
 import Carousel from 'react-native-banner-carousel';
@@ -18,26 +20,29 @@ import api from '~/services/api';
 import {Title, Header, TextDark, Card, Link, Small, Original} from './styles';
 const AnimatedOriginal = Animated.createAnimatedComponent(Original);
 
-
 import {Container, Content} from '../../style';
 
 export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
-  const [banner, setBanner] = useState([
-    {
-      url: 'https://picsum.photos/1280/580',
-      image: 'https://picsum.photos/1280/580',
-    },
-    {
-      url: 'https://picsum.photos/1280/580',
-      image: 'https://picsum.photos/1280/580',
-    },
-    {
-      url: 'https://picsum.photos/1280/580',
-      image: 'https://picsum.photos/1280/580',
-    },
-  ]);
+  const data = useSelector(state => state.banner);
+  const dispatch = useDispatch();
+
+  // const [banner, setBanner] = useState([
+  //   {
+  //     url: 'https://picsum.photos/1280/580',
+  //     image: 'https://picsum.photos/1280/580',
+  //   },
+  //   {
+  //     url: 'https://picsum.photos/1280/580',
+  //     image: 'https://picsum.photos/1280/580',
+  //   },
+  //   {
+  //     url: 'https://picsum.photos/1280/580',
+  //     image: 'https://picsum.photos/1280/580',
+  //   },
+  // ]);
   const opacity = new Animated.Value(0);
 
+  const [banner, setBanners] = useState(data ? data : []);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
@@ -49,6 +54,26 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
     }
   }, [loaded]);
 
+  useEffect(() => {
+    _getBanners();
+  });
+
+  async function _getBanners() {
+    try {
+      let response = await api.get('/api/banners');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      await dispatch({type: 'BANNER', payload: response.data});
+      setBanners(response.data);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+  }
+
   function handleAnimate() {
     Animated.timing(opacity, {
       duration: 900,
@@ -59,22 +84,20 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
 
   function _renderItemCarousel(item, index) {
     return (
-      <TouchableOpacity key={index}>
-        <Small
-          source={{ uri: item.image}}
+      <TouchableOpacity
+        onPress={() => {
+          try {
+            Linking.openURL(item.link);
+          } catch (error) {}
+        }}
+        key={index}>
+        <AnimatedOriginal
+          style={{opacity}}
+          onLoadEnd={handleAnimate}
+          source={{uri: item.avatar}}
           aspect={aspectRatio}
           resizeMode="contain"
-          blurRadius={3}>
-          {loaded && (
-            <AnimatedOriginal
-              style={{opacity}}
-              onLoadEnd={handleAnimate}
-              source={{ uri: item.image}}
-              aspect={aspectRatio}
-              resizeMode="contain"
-            />
-          )}
-        </Small>
+        />
       </TouchableOpacity>
     );
   }

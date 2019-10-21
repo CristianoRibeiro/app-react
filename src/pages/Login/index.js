@@ -121,8 +121,7 @@ export default function Main(props) {
       resizeMode="cover">
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
         <StatusBar
-          translucent
-          backgroundColor="transparent"
+          backgroundColor="#2A40B1"
           barStyle="light-content"
         />
         <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
@@ -167,13 +166,13 @@ export default function Main(props) {
         </KeyboardAvoidingView>
 
         <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-          <Link style={{marginTop: 5, marginBottom: 10}}>
+          {/* <Link style={{marginTop: 5, marginBottom: 10}}>
             <TextLight>Esqueci minha senha</TextLight>
-          </Link>
-
-          {/* <Link>
-            <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
           </Link> */}
+
+          <Link style={{marginTop: 15}} onPress={() => props.navigation.navigate('Register')}>
+            <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
+          </Link>
 
           {!modal ? (
             <Send onPress={() => _login()} style={{marginTop: 15}}>
