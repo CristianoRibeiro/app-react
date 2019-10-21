@@ -42,11 +42,15 @@ export default function Main(props) {
     try {
       let response = await api.post('/api/notifications');
       //alert(JSON.stringify(response));
+      if (__DEV__) {
       console.tron.log(response.data);
+      }
       await dispatch({type: 'NOTIFICATION', payload: response.data});
       setNotifications(response.data);
     } catch (error) {
+      if (__DEV__) {
       console.tron.log(error.message);
+      }
     }
     setLoading(false);
   }

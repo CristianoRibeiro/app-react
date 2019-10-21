@@ -30,11 +30,13 @@ import {
   Send,
   SubTitle,
 } from './styles';
-import ListItem from './ListItem';
+import {User} from '~/model/User';
 
 export default function SiderBar(props) {
-  const user = useSelector(state => state.user);
+  const data = useSelector(state => state.user);
   const dispatch = useDispatch();
+
+  const [user, setUser] = useState(data ? data : User);
 
   useEffect(() => {
     //alert(JSON.stringify(user));

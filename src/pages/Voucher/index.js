@@ -45,11 +45,15 @@ export default function Main(props) {
     try {
       let response = await api.post('/api/vouchers');
       //alert(JSON.stringify(response));
+      if (__DEV__) {
       console.tron.log(response.data);
+      }
       await dispatch({type: 'VOUCHER', payload: response.data});
       setVouchers(response.data);
     } catch (error) {
+      if (__DEV__) {
       console.tron.log(error.message);
+      }
     }
     setLoading(false);
   }

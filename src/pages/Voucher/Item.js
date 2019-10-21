@@ -60,7 +60,9 @@ export default function Profile(props) {
     try {
       if(props.navigation.state.params.item){
      
+        if (__DEV__) {
       console.tron.log(props.navigation.state.params.item);
+        }
       setData(props.navigation.state.params.item);
       }
     } catch (error) {

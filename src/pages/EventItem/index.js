@@ -37,7 +37,9 @@ export default function Main(props) {
       if (props.navigation.state.params.item) {
         setItem(props.navigation.state.params.item);
         //alert(JSON.stringify(props.navigation.state.params.item.prizes));
+        if (__DEV__) {
         console.tron.log(props.navigation.state.params.item);
+        }
         await dispatch({type: 'VOUCHER', payload: props.navigation.state.params.item.vouchers});
         await dispatch({type: 'SCHEDULE', payload: props.navigation.state.params.item.schedule});
         await dispatch({type: 'PRIZE', payload: props.navigation.state.params.item.prizes});
@@ -46,7 +48,9 @@ export default function Main(props) {
         await dispatch({type: 'EVENTITEM', payload: props.navigation.state.params.item});
       }
     } catch (error) {
+      if (__DEV__) {
       console.tron.log(error.message);
+      }
     }
     setLoading(false);
   }

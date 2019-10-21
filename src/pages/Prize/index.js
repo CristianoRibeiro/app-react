@@ -35,12 +35,14 @@ export default function Main(props) {
   const data = useSelector(state => state.prizes);
   const dispatch = useDispatch();
 
-  const [prize, setPrize] = useState(data);
+  const [prize, setPrize] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (__DEV__) {
     console.tron.log(data);
+    }
   }, []);
 
 

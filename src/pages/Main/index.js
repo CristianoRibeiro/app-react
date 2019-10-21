@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
   RefreshControl,
+  Linking
 } from 'react-native';
 import FitImage from 'react-native-fit-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -66,7 +67,7 @@ export default function Main(props) {
   const data = useSelector(state => state.event);
   const dispatch = useDispatch();
 
-  const [events, setEvents] = useState(data);
+  const [events, setEvents] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -75,22 +76,26 @@ export default function Main(props) {
   }, []);
 
   async function _getEvents() {
-    setLoading(true);
     try {
       let response = await api.post('/api/events');
       //alert(JSON.stringify(response));
-      console.tron.log(response.data);
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
       await dispatch({type: 'EVENT', payload: response.data});
       setEvents(response.data);
     } catch (error) {
-      console.tron.log(error.message);
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
     }
-    setLoading(false);
   }
 
-  function _renderItem(item) {
+  function _renderItem(item, index) {
     return (
-      <Link onPress={() => props.navigation.navigate('EventItem', {item})}>
+      <Link
+        key={index}
+        onPress={() => props.navigation.navigate('EventItem', {item})}>
         <View
           style={{
             alignItems: 'center',
@@ -114,13 +119,11 @@ export default function Main(props) {
 
   return (
     <View style={{backgroundColor: '#fff', flex: 1}}>
-      <ScrollView style={{flex: 1}}
-      refreshControl={
-        <RefreshControl
-          refreshing={loading}
-          onRefresh={() => _getEvents()}
-        />
-      }>
+      <ScrollView
+        style={{flex: 1}}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getEvents()} />
+        }>
         <Header style={{alignItems: 'center'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <MaterialCommunityIcons name="star" size={24} color={'#fff'} />
@@ -150,7 +153,7 @@ export default function Main(props) {
             data={data}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => _renderItem(item)}
+            renderItem={({item, index}) => _renderItem(item, index)}
           />
         </View>
 
@@ -176,8 +179,12 @@ export default function Main(props) {
             resizeMode="cover"
           />
           <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
-            <Btn style={{alignItems: 'center', alignSelf: 'flex-end'}}>
-              <TextLight style={{fontSize:12}}>Saiba mais</TextLight>
+            <Btn onPress={() =>
+                Linking.openURL(
+                  'http://inspirafenae2020.fenae.org.br',
+                )
+              } style={{alignItems: 'center', alignSelf: 'flex-end'}}>
+              <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
             </Btn>
           </View>
         </Card>

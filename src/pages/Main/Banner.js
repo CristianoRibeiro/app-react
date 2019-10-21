@@ -59,7 +59,7 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
 
   function _renderItemCarousel(item, index) {
     return (
-      <TouchableOpacity onPress={() => this._openLink(item.url)}>
+      <TouchableOpacity key={index}>
         <Small
           source={{ uri: item.image}}
           aspect={aspectRatio}

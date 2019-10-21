@@ -11,7 +11,7 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
-  Alert
+  Alert,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {ActivityIndicator, Colors} from 'react-native-paper';
@@ -91,25 +91,26 @@ export default function Main(props) {
         let response = await api.post('/api/auth/login', {doc: cpf, password});
 
         if (response.data.access_token) {
+          await dispatch({type: 'USER', payload: response.data.user});
+
           const userToken = await AsyncStorage.setItem(
             'token',
             response.data.access_token,
           );
 
-          await dispatch({type: 'USER', payload: response.data.user});
-
           props.navigation.navigate('MainNavigator');
-        }
-        else{
+        } else {
           Alert.alert(null, response.data.message);
+          setModal(false);
         }
         //alert(JSON.stringify(response));
-        console.tron.log(response.data);
-        
+        if (__DEV__) {
+          console.tron.log(response.data);
+        }
       } catch (error) {
         Alert.alert(null, error.message);
+        setModal(false);
       }
-      setModal(false);
     }
   }
 
@@ -141,8 +142,9 @@ export default function Main(props) {
               value={MaskService.toMask('cpf', doc)}
               error={error}
               maxLength={14}
-              keyboardType="numeric"
+              keyboardType={"phone-pad"}
               onChangeText={setCpf}
+              textContentType="username"
               autoCapitalize="none"
               autoCorrect={false}
               placeholder="CPF"
@@ -154,6 +156,8 @@ export default function Main(props) {
               value={password}
               error={error}
               onChangeText={setPassword}
+              keyboardType="ascii-capable"
+              textContentType="password"
               autoCapitalize="none"
               autoCorrect={false}
               placeholder="Senha"
@@ -167,28 +171,34 @@ export default function Main(props) {
             <TextLight>Esqueci minha senha</TextLight>
           </Link>
 
-          <Link>
+          {/* <Link>
             <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
-          </Link>
+          </Link> */}
 
-          <Send onPress={() => _login()} style={{marginTop: 15}}>
-            <TextLight>ENTRAR</TextLight>
-          </Send>
+          {!modal ? (
+            <Send onPress={() => _login()} style={{marginTop: 15}}>
+              <TextLight>ENTRAR</TextLight>
+            </Send>
+          ) : (
+            <ActivityIndicator
+              animating={true}
+              size="large"
+              color={Colors.white}
+            />
+          )}
         </View>
       </ScrollView>
 
-      <Modal isVisible={modal} style={{margin: 20}}>
+      {/* <Modal isVisible={modal} style={{margin: 20}}>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <ActivityIndicator
             animating={true}
             size="large"
             color={Colors.white}
           />
-          {/* <Send onPress={() => setModal(!modal)}>
-            <TextLight>OK</TextLight>
-          </Send> */}
+          
         </View>
-      </Modal>
+      </Modal> */}
     </ImageBackground>
   );
 }

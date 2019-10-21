@@ -44,11 +44,15 @@ export default function Main(props) {
     setLoading(true);
     try {
         //setVouchers(props.navigation.state.params.item);
+        if (__DEV__) {
         console.tron.log('Props Voucher');
         console.tron.log(data);
+        }
       
     } catch (error) {
+      if (__DEV__) {
       console.tron.log(error.message);
+      }
     }
     setLoading(false);
   }
