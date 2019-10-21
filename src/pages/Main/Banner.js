@@ -66,7 +66,7 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
         console.tron.log(response.data);
       }
       await dispatch({type: 'BANNER', payload: response.data});
-      setBanners(response.data);
+      //setBanners(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);

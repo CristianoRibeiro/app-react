@@ -32,7 +32,7 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.notifications);
+  const data = useSelector(state => state.notification);
   const dispatch = useDispatch();
 
   const [notifications, setNotifications] = useState(data ? data : []);
@@ -51,7 +51,7 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
       await dispatch({type: 'NOTIFICATION', payload: response.data});
-      setNotifications(response.data);
+      //setNotifications(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -81,7 +81,7 @@ export default function Main(props) {
 
       <FlatList
         style={{margimBottom: 50}}
-        data={notifications}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhuma notificação encontrada!" />}
         renderItem={({item}) => _renderItem(item)}

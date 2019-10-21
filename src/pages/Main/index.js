@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
   RefreshControl,
-  Linking
+  Linking,
 } from 'react-native';
 import FitImage from 'react-native-fit-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -32,21 +32,26 @@ import {
   Original,
 } from './styles';
 
-
 export default function Main(props) {
   const data = useSelector(state => state.event);
   const campaignsState = useSelector(state => state.campaigns);
   const dispatch = useDispatch();
 
   const [events, setEvents] = useState(data ? data : []);
-  const [campaigns, setCampaigns] = useState(campaignsState ? campaignsState : []);
+  const [thumbnail, setThumbnail] = useState('');
+  const [campaigns, setCampaigns] = useState(
+    campaignsState ? campaignsState : [],
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     _getEvents();
     _getData();
-    
+
+    if(campaignsState.length){
+      setThumbnail(campaignsState[0].thumbnail);
+    }
   }, []);
 
   async function _getEvents() {
@@ -66,18 +71,17 @@ export default function Main(props) {
   }
 
   async function _getData() {
-    
     try {
       let response = await api.post('/api/campaigns');
       //alert(JSON.stringify(response));
       if (__DEV__) {
-      console.tron.log(response.data);
+        console.tron.log(response.data);
       }
       await dispatch({type: 'CAMPAIGNS', payload: response.data});
       //setCampaigns(response.data);
     } catch (error) {
       if (__DEV__) {
-      console.tron.log(error.message);
+        console.tron.log(error.message);
       }
     }
   }
@@ -141,7 +145,7 @@ export default function Main(props) {
 
         <View style={{marginVertical: 5, marginHorizontal: 0}}>
           <FlatList
-            data={events}
+            data={data}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => _renderItem(item, index)}
@@ -159,19 +163,21 @@ export default function Main(props) {
           Fique por dentro das campanhas
         </Title>
 
-        <Card style={{elevation: 4, flex: 1}}>
-          <FitImage
-            source={{uri: campaigns[0].thumbnail}}
-            resizeMode="cover"
-          />
-          <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
-            <Btn onPress={() => props.navigation.navigate('Campaigns')} style={{alignItems: 'center', alignSelf: 'flex-end'}}>
-              <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
-            </Btn>
-          </View>
-        </Card>
-
-        <View></View>
+        {thumbnail ? (
+          <Card style={{elevation: 4, flex: 1}}>
+            <FitImage
+              source={{uri: thumbnail}}
+              resizeMode="cover"
+            />
+            <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
+              <Btn
+                onPress={() => props.navigation.navigate('Campaigns')}
+                style={{alignItems: 'center', alignSelf: 'flex-end'}}>
+                <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
+              </Btn>
+            </View>
+          </Card>
+        ) : null}
       </ScrollView>
     </View>
   );
