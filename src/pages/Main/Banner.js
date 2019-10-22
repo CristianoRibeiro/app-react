@@ -56,7 +56,7 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
 
   useEffect(() => {
     _getBanners();
-  });
+  }, []);
 
   async function _getBanners() {
     try {

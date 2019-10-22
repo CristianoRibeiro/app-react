@@ -52,7 +52,7 @@ export default function Main(props) {
     if(campaignsState.length){
       setThumbnail(campaignsState[0].thumbnail);
     }
-  }, []);
+  }, [campaigns]);
 
   async function _getEvents() {
     try {
@@ -167,7 +167,7 @@ export default function Main(props) {
           <Card style={{elevation: 4, flex: 1}}>
             <FitImage
               source={{uri: thumbnail}}
-              resizeMode="cover"
+              resizeMode="contain"
             />
             <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
               <Btn
