@@ -11,6 +11,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   FlatList,
+  RefreshControl
 } from 'react-native';
 import EmptyList from '~/components/EmptyList';
 
@@ -43,8 +44,24 @@ export default function Main(props) {
     if (__DEV__) {
     console.tron.log(data);
     }
+    //_getData();
   }, []);
 
+  async function _getData() {
+    try {
+      let response = await api.post('/api/prizes');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      await dispatch({type: 'PRIZE', payload: response.data});
+      //setNotifications(response.data);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+  }
 
   function _renderItem(item) {
     return (
@@ -62,10 +79,16 @@ export default function Main(props) {
     <Content>
       <FlatList
         style={{margimBottom: 50}}
-        data={prize}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhum prêmio encontrado!" />}
         renderItem={({item}) => _renderItem(item)}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={() => _getData()}
+          />
+        }
       />
     </Content>
   );

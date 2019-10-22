@@ -34,6 +34,7 @@ import ScheduleEvent from '~/pages/ScheduleEvent';
 import Certificate from '~/pages/Certificate';
 import Campaigns from '~/pages/Campaigns';
 import CampaignsItem from '~/pages/Campaigns/Item';
+import Quiz from '~/pages/Campaigns/Quiz';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -325,7 +326,6 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: 'Editar Perfil',
         headerStyle: {
-          headerTitle: 'Editar Perfil',
           backgroundColor: '#FF6666',
         },
       },
@@ -334,9 +334,18 @@ const MainNavigator = createStackNavigator(
       screen: CampaignsItem,
       path: 'campaignsitem',
       navigationOptions: {
-        headerTitle: 'Editar Perfil',
+        headerTitle: '',
         headerStyle: {
-          headerTitle: 'Editar Perfil',
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Quiz: {
+      screen: Quiz,
+      path: 'quiz',
+      navigationOptions: {
+        headerTitle: 'Quiz',
+        headerStyle: {
           backgroundColor: '#FF6666',
         },
       },

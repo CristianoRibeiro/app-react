@@ -46,38 +46,25 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getEvents();
     _getData();
 
-    if(campaignsState.length){
+    if (campaignsState.length) {
       setThumbnail(campaignsState[0].thumbnail);
     }
   }, [campaigns]);
 
-  async function _getEvents() {
-    try {
-      let response = await api.post('/api/events');
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-      await dispatch({type: 'EVENT', payload: response.data});
-      //setEvents(response.data);
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-    _getData();
-  }
-
   async function _getData() {
     try {
-      let response = await api.post('/api/campaigns');
+      let events = await api.post('/api/events');
+      let campaigns = await api.post('/api/campaigns');
+      let prizes = await api.post('/api/prizes');
       //alert(JSON.stringify(response));
       if (__DEV__) {
-        console.tron.log(response.data);
+        console.tron.log(events.data);
       }
-      await dispatch({type: 'CAMPAIGNS', payload: response.data});
+      await dispatch({type: 'CAMPAIGNS', payload: campaigns.data});
+      await dispatch({type: 'PRIZE', payload: prizes.data});
+      await dispatch({type: 'EVENT', payload: events.data});
       //setCampaigns(response.data);
     } catch (error) {
       if (__DEV__) {
@@ -165,10 +152,7 @@ export default function Main(props) {
 
         {thumbnail ? (
           <Card style={{elevation: 4, flex: 1}}>
-            <FitImage
-              source={{uri: thumbnail}}
-              resizeMode="contain"
-            />
+            <FitImage source={{uri: thumbnail}} resizeMode="contain" />
             <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
               <Btn
                 onPress={() => props.navigation.navigate('Campaigns')}

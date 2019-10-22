@@ -11,6 +11,7 @@ import {
   EVENTITEM,
   BANNER,
   CAMPAIGNS,
+  QUIZZES
 } from '~/reducers/types';
 
 const INITIAL_STATE = {
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
   transfer: [],
   banner: [],
   campaigns: [],
+  quizzes: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -54,6 +56,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, banner: action.payload};
     case CAMPAIGNS:
       return {...state, campaigns: action.payload};
+    case QUIZZES:
+      return {...state, quizzes: action.payload};
     default:
       return state;
   }
