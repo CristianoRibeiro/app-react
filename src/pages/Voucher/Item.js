@@ -14,7 +14,7 @@ import {
 import {Avatar, FAB} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import ImagePicker from 'react-native-image-crop-picker';
+//import ImagePicker from 'react-native-image-crop-picker';
 import QRCode from 'react-native-qrcode-svg';
 
 import api from '~/services/api';

@@ -34,7 +34,12 @@ import ScheduleEvent from '~/pages/ScheduleEvent';
 import Certificate from '~/pages/Certificate';
 import Campaigns from '~/pages/Campaigns';
 import CampaignsItem from '~/pages/Campaigns/Item';
+//Campanhas
 import Quiz from '~/pages/Campaigns/Quiz';
+import Album from '~/pages/Campaigns/Album';
+import CampaignPrize from '~/pages/Campaigns/Prize';
+import Cupons from '~/pages/Campaigns/Cupons';
+import Exchange from '~/pages/Campaigns/Exchange';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -345,6 +350,46 @@ const MainNavigator = createStackNavigator(
       path: 'quiz',
       navigationOptions: {
         headerTitle: 'Quiz',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Album: {
+      screen: Album,
+      path: 'album',
+      navigationOptions: {
+        headerTitle: 'Álbum',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    CampaignPrize: {
+      screen: CampaignPrize,
+      path: 'prize',
+      navigationOptions: {
+        headerTitle: 'Premiação',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Cupons: {
+      screen: Cupons,
+      path: 'cupons',
+      navigationOptions: {
+        headerTitle: 'Cupons',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Exchange: {
+      screen: Exchange,
+      path: 'exchange',
+      navigationOptions: {
+        headerTitle: 'Trocas',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

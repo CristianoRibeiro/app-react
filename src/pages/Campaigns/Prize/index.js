@@ -12,9 +12,8 @@ import {
   KeyboardAvoidingView,
   FlatList,
   RefreshControl,
-  Alert,
+  Alert
 } from 'react-native';
-import {ActivityIndicator, Colors} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
@@ -45,17 +44,16 @@ export default function Main(props) {
 
   const [quizzes, setQuizzes] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
-  const [reload, setReload] = useState(false);
   const [selected, setSelected] = useState();
   const [date, setDate] = useState('');
   const [error, setError] = useState(false);
 
   useEffect(() => {
     _getData();
+
   }, []);
 
   async function _getData() {
-    
     try {
       let response = await api.post('/api/quizzes');
       //alert(JSON.stringify(response));
@@ -64,50 +62,40 @@ export default function Main(props) {
       }
       await dispatch({type: 'QUIZZES', payload: response.data});
 
-      if (response.data.time) {
+      if(response.data.time){
         const firstDate = parseISO(response.data.time);
         const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
         setDate(formattedDate);
-      }
+       }
       //setNotifications(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
-    
   }
 
   async function _setData(item) {
-    setReload(true);
     try {
-      if(selected){
-        let response = await api.post('/api/quizzes/answer', {
-          quiz_id: item.id,
-          correct: selected,
-        });
-        //alert(JSON.stringify(response));
-        if (__DEV__) {
-          console.tron.log(response.data);
-        }
-  
-        Alert.alert(null, response.data.message);
-  
-        if (response.data.success) {
-          await dispatch({type: 'QUIZZES', payload: []});
-          //setDate('');
-        }
+      let response = await api.post('/api/quizzes/answer', {quiz_id: item.id, correct: selected});
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
       }
-      else{
-        Alert.alert(null, 'Selecione uma resposta!');
+      
+      Alert.alert(null,response.data.message);
+
+      if(response.data.success){
+        await dispatch({type: 'QUIZZES', payload: []});
+        setDate('');
       }
+      
       //setNotifications(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
-    setReload(false);
   }
 
   function _renderItem(item) {
@@ -142,27 +130,20 @@ export default function Main(props) {
           />
         </View>
 
-        {!reload ? (
-          <Send onPress={() => _setData(item)}>
-            <TextLight>RESPONDER</TextLight>
-          </Send>
-        ) : (
-          <ActivityIndicator
-            animating={true}
-            size="large"
-            color={Colors.white}
-          />
-        )}
+        <Send onPress={() => _setData(item)}>
+          <TextLight>RESPONDER</TextLight>
+        </Send>
       </View>
     );
   }
-
+  
   return (
     <Content>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
+          {date ?
         <Header>
           <View
             style={{
@@ -184,12 +165,14 @@ export default function Main(props) {
             </TextLight>
           </View>
         </Header>
-
+        : null}
         <FlatList
           style={{margimBottom: 50}}
           data={data.quiz}
           keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Nenhum quiz encontrado!" />}
+          ListEmptyComponent={
+            <EmptyList text="Nenhum quiz encontrado!" />
+          }
           renderItem={({item, index}) => _renderItem(item)}
         />
       </ScrollView>

@@ -11,7 +11,8 @@ import {
   EVENTITEM,
   BANNER,
   CAMPAIGNS,
-  QUIZZES
+  QUIZZES,
+  CARDS
 } from '~/reducers/types';
 
 const INITIAL_STATE = {
@@ -28,6 +29,7 @@ const INITIAL_STATE = {
   banner: [],
   campaigns: [],
   quizzes: [],
+  cards: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -58,6 +60,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, campaigns: action.payload};
     case QUIZZES:
       return {...state, quizzes: action.payload};
+    case CARDS:
+      return {...state, cards: action.payload};
     default:
       return state;
   }

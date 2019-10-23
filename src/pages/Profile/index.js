@@ -15,7 +15,7 @@ import {
 import {Avatar, FAB} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import ImagePicker from 'react-native-image-crop-picker';
+//import ImagePicker from 'react-native-image-crop-picker';
 
 import api from '~/services/api';
 
@@ -68,32 +68,32 @@ export default function Profile(props) {
   }, []);
 
   function _uploadPhoto() {
-    const options = {
-      title: 'Selecione de onde quer importar o arquivo',
-      cancelButtonTitle: 'Cancelar',
-      takePhotoButtonTitle: 'Usar Camera',
-      chooseFromLibraryButtonTitle: 'Carregar da galeria',
-      width: 480,
-      height: 480,
-      cropping: true,
-    };
+    // const options = {
+    //   title: 'Selecione de onde quer importar o arquivo',
+    //   cancelButtonTitle: 'Cancelar',
+    //   takePhotoButtonTitle: 'Usar Camera',
+    //   chooseFromLibraryButtonTitle: 'Carregar da galeria',
+    //   width: 480,
+    //   height: 480,
+    //   cropping: true,
+    // };
 
-    ImagePicker.openPicker(options).then(image => {
-      //alert(JSON.stringify(image));
-      let img = {
-        uri: image.path,
-        width: image.width,
-        height: image.height,
-        mime: image.mime,
-        type: 'image/jpeg',
-        name: image.path.substring(image.path.lastIndexOf('/') + 1),
-      };
+    // ImagePicker.openPicker(options).then(image => {
+    //   //alert(JSON.stringify(image));
+    //   let img = {
+    //     uri: image.path,
+    //     width: image.width,
+    //     height: image.height,
+    //     mime: image.mime,
+    //     type: 'image/jpeg',
+    //     name: image.path.substring(image.path.lastIndexOf('/') + 1),
+    //   };
 
-      const data = new FormData();
+    //   const data = new FormData();
 
-      data.append('avatar', img);
-      setImage(img);
-    });
+    //   data.append('avatar', img);
+    //   setImage(img);
+    // });
   }
 
   const iconSize = 32;

@@ -83,7 +83,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => props.navigation.navigate('VoucherEvent')}>
+            <Link onPress={() => props.navigation.navigate('Album')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_album.png')}
@@ -100,11 +100,7 @@ export default function Main(props) {
 
           <View style={{flexDirection: 'row'}}>
             <Link
-              onPress={() =>
-                Linking.openURL(
-                  'http://inspirafenae2020.fenae.org.br/resultado/3',
-                )
-              }>
+              onPress={() => props.navigation.navigate('Cupons')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_cupons.png')}
@@ -118,7 +114,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => props.navigation.navigate('PrizeEvent')}>
+            <Link onPress={() => props.navigation.navigate('Exchange')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_trocas.png')}
@@ -134,7 +130,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('FlightEvent')}>
+            <Link>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_sorteio.png')}
@@ -148,7 +144,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => props.navigation.navigate('Transfer')}>
+            <Link>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_premiacao.png')}
@@ -164,7 +160,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('Streaming')}>
+            <Link>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_noticias.png')}
@@ -178,7 +174,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => props.navigation.navigate('Info')}>
+            <Link>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_regras.png')}

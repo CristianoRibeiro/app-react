@@ -5778,10 +5778,17 @@ react-native-gesture-handler@^1.4.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-image-crop-picker@^0.26.1:
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.26.1.tgz#3499ff5d4a09c9a9e927eb4f6ff936015ff594f1"
-  integrity sha512-5JdOjQS2V5L/vfb8+jPTUYx4VZPLvhZTyCUjiG0BZCbh+N1L24Kj2C+8EOuWS7xXXHrz5Bpe/eq5lQO1Efc+Yw==
+react-native-image-pan-zoom@^2.1.9:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.11.tgz#61bcb69219d95e76a9797d23e4a2e8e0bd654ae9"
+  integrity sha512-ZCisGUFpPchHXsjT7ZI0anlSLPgcTmjRKXqpVnPu3RDWFXfKjuL4zpY57DX4Y8YgGZCpbf9fApN7KjVYody2Mw==
+
+react-native-image-zoom-viewer@^2.2.26:
+  version "2.2.26"
+  resolved "https://registry.yarnpkg.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-2.2.26.tgz#c6f070abb094cfbe1b3b7d8a38ad979a5facbdc5"
+  integrity sha512-Mh4+CJQCDcAumLFXLlDk8nQ5iMxNnupc9HwktsZ3I/v4HULcFPmTLDQ0HGAxjLa5foZRPnKDN06iKGsEb9raoA==
+  dependencies:
+    react-native-image-pan-zoom "^2.1.9"
 
 react-native-linear-gradient@^2.5.6:
   version "2.5.6"
