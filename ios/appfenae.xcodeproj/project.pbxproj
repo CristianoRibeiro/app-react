@@ -684,7 +684,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = NO;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = J4HMWZWCKH;
 				INFOPLIST_FILE = appfenae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -696,7 +695,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.vivafenae;
 				PRODUCT_NAME = "VIVA FENAE APCEF";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -710,7 +709,6 @@
 				CODE_SIGN_ENTITLEMENTS = "appfenae/VIVA FENAE APCEF.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CURRENT_PROJECT_VERSION = 10;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = J4HMWZWCKH;
 				INFOPLIST_FILE = appfenae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -722,7 +720,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.vivafenae;
 				PRODUCT_NAME = "VIVA FENAE APCEF";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

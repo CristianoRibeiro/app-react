@@ -88,6 +88,10 @@ export default function Main(props) {
       try {
         setModal(true);
 
+        if (__DEV__) {
+          console.tron.log({doc: cpf, password});
+        }
+
         let response = await api.post('/api/auth/login', {doc: cpf, password});
 
         if (response.data.access_token) {
