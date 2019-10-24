@@ -174,7 +174,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Regulation')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_regras.png')}

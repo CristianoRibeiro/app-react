@@ -64,18 +64,6 @@ export const Card = styled.View`
   background-color: #fff;
 `;
 
-export const CardItem = styled.View`
-  margin: 2px;
-  border-radius: 3px;
-  padding: 3px;
-  background-color: #fff;
-`;
-
-export const CardImage = styled.View`
-  padding: 0px;
-  flex: 1;
-`;
-
 export const Input = styled.TextInput.attrs({
   placeholderTextColor: '#efefef',
   keyboardAppearance: 'light',
@@ -91,12 +79,11 @@ export const Input = styled.TextInput.attrs({
 `;
 
 export const Submit = styled.TouchableOpacity`
-  background: #f7893e;
-  height: 80px;
-  width: 80px;
-  border-radius: 40px;
+  background: #0F60A8;
+  margin-left: 10px;
   justify-content: center;
-  align-items: center;
+  border-radius: 4px;
+  padding: 0 14px;
 `;
 
 export const Send = styled.TouchableOpacity`
@@ -109,6 +96,7 @@ export const Send = styled.TouchableOpacity`
   padding: 15px 14px;
   align-items: center;
   border: 1px solid #fff;
+  flex: 1;
 `;
 
 
@@ -139,6 +127,12 @@ export const TextTitle = styled.Text`
   margin: 5px 0;
 `;
 
+export const CardItem = styled.View`
+  margin: 2px;
+  border-radius: 3px;
+  padding: 3px;
+  background-color: #fff;
+`;
 
 // export const Image = styled.Image`
 //   width: 100%;

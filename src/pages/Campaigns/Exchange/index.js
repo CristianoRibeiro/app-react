@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Modal from 'react-native-modal';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
 
@@ -30,6 +31,8 @@ import {
   Header,
   TextTitle,
   Card,
+  CardItem,
+  CardImage,
   Link,
   TextDark,
   ItemQuestion,
@@ -42,10 +45,12 @@ import {
 export default function Main(props) {
   const data = useSelector(state => state.quizzes);
   const user = useSelector(state => state.user);
+  const cards = useSelector(state => state.cards);
   const dispatch = useDispatch();
 
   const [quizzes, setQuizzes] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
   const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
 
@@ -96,42 +101,19 @@ export default function Main(props) {
     }
   }
 
-  function _renderItem(item) {
+  function _renderItem(item, i) {
     return (
-      <View>
-        <Title>{item.name}</Title>
-
-        <View style={{margin: 6}}>
-          <FlatList
-            style={{margimBottom: 50}}
-            data={JSON.parse(item.content)}
-            keyExtractor={(q, index) => index.toString()}
-            renderItem={(q, index) => (
-              <View key={index}>
-                <ItemQuestion
-                  onPress={() => setSelected(q.index + 1)}
-                  style={{
-                    backgroundColor:
-                      selected === q.index + 1
-                        ? '#0058b8'
-                        : 'rgba(255,255,255, 0.6)',
-                  }}>
-                  <TextDark
-                    style={{
-                      color: selected === q.index + 1 ? '#fff' : '#0058b8',
-                    }}>
-                    {q.item}
-                  </TextDark>
-                </ItemQuestion>
-              </View>
-            )}
-          />
-        </View>
-
-        <Send onPress={() => _setData(item)}>
-          <TextLight>RESPONDER</TextLight>
-        </Send>
-      </View>
+      <Link key={i}>
+        <CardItem>
+          <CardImage>
+            <Image
+              style={{aspectRatio: 1}}
+              source={{uri: item.url}}
+              resizeMode="contain"
+            />
+          </CardImage>
+        </CardItem>
+      </Link>
     );
   }
 
@@ -181,7 +163,9 @@ export default function Main(props) {
                 source={{uri: user.avatar}}
               />
 
-              <TextDark style={{fontWeight: '800', fontSize: 12}}>{user.name}</TextDark>
+              <TextDark style={{fontWeight: '800', fontSize: 12}}>
+                {user.name}
+              </TextDark>
             </View>
 
             <Image
@@ -208,7 +192,9 @@ export default function Main(props) {
                 }}
               />
 
-              <TextDark style={{fontWeight: '800', fontSize: 12}}>Nome</TextDark>
+              <TextDark style={{fontWeight: '800', fontSize: 12}}>
+                Nome
+              </TextDark>
             </View>
           </View>
 
@@ -233,11 +219,33 @@ export default function Main(props) {
         </Card>
 
         <View style={{alignItems: 'center', marginTop: 25}}>
-          <Submit>
+          <Submit onPress={() => setModal(true)}>
             <MaterialIcons name="add" size={40} color={'#fff'} />
           </Submit>
         </View>
       </ScrollView>
+
+      <Modal
+        visible={modal}
+        style={{marginHorizontal: 0, marginBottom: 0}}
+        transparent={true}
+        onRequestClose={() => setModal(false)}
+        onBackdropPress={() => setModal(false)}>
+        <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
+          <FlatList
+            data={cards.cards}
+            numColumns={3}
+            keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
+            renderItem={({item, index}) => _renderItem(item, index)}
+          />
+          <Send
+            style={{marginBottom: 15, marginTop: 10}}
+            onPress={() => setModal(false)}>
+            <TextLight>OK</TextLight>
+          </Send>
+        </View>
+      </Modal>
     </Content>
   );
 }

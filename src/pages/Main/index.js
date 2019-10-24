@@ -104,7 +104,7 @@ export default function Main(props) {
       <ScrollView
         style={{flex: 1}}
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getEvents()} />
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
         <Header style={{alignItems: 'center'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

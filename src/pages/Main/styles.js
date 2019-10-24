@@ -13,7 +13,6 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 //   padding-top: ${30 + getStatusBarHeight(true)}px;
 // `;
 
-
 export const Title = styled.Text`
   font-size: 32px;
   color: #FFF;

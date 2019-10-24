@@ -15,6 +15,7 @@ import {
 import {Animated} from 'react-native';
 import Carousel from 'react-native-banner-carousel';
 const BannerWidth = Dimensions.get('window').width;
+import FitImage from 'react-native-fit-image';
 import api from '~/services/api';
 
 import {Original} from './styles';
@@ -91,13 +92,7 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
           } catch (error) {}
         }}
         key={index}>
-        <AnimatedOriginal
-          style={{opacity}}
-          onLoadEnd={handleAnimate}
-          source={{uri: item.avatar}}
-          aspect={aspectRatio}
-          resizeMode="contain"
-        />
+        <FitImage indicator={false} source={{uri: item.avatar}} resizeMode="contain" />
       </TouchableOpacity>
     );
   }

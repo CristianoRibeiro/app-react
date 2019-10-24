@@ -29,6 +29,7 @@ import {
   Header,
   TextTitle,
   Card,
+  CardItem,
   Link,
   TextDark,
   ItemQuestion,
@@ -39,12 +40,11 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.coupons);
+  const data = useSelector(state => state.regulation);
   const dispatch = useDispatch();
 
-  const [coupons, setCoupons] = useState(data ? data : []);
+  const [regulation, setRegulation] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -52,13 +52,14 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    setLoading(true);
     try {
-      let response = await api.get('/api/coupons');
+      let response = await api.get('/api/regulations');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'COUPONS', payload: response.data});
+      await dispatch({type: 'REGULATION', payload: response.data});
 
       //setNotifications(response.data);
     } catch (error) {
@@ -66,6 +67,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoading(false);
   }
 
   return (
@@ -74,46 +76,23 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        <Header>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="ticket-outline"
-              size={20}
-              color={'#fff'}
-            />
 
-            <TextLight style={{fontSize: 18, fontWeight: '800'}}>
-              Extrato de Cupons
-            </TextLight>
-          </View>
-        </Header>
-
-        <Card>
-          <FlatList
-            style={{margimBottom: 50}}
-            data={data}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={(item, index) => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginVertical: 8,
-                }}>
-                <TextDark>{item.item.type}</TextDark>
-
-                <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
-                  {item.item.coupons}
+        <FlatList
+          style={{margimBottom: 50}}
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item, index}) => (
+            <View key={index}>
+              <Title style={{marginBottom: 5}}>{item.title}</Title>
+              <Card>
+                <TextDark>
+                  {item.regulation}
                 </TextDark>
-              </View>
-            )}
-          /> 
-        </Card>
+              
+              </Card>
+            </View>
+          )}
+        />
       </ScrollView>
     </Content>
   );

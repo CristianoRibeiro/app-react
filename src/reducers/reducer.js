@@ -12,7 +12,9 @@ import {
   BANNER,
   CAMPAIGNS,
   QUIZZES,
-  CARDS
+  CARDS,
+  COUPONS,
+  REGULATION
 } from '~/reducers/types';
 
 const INITIAL_STATE = {
@@ -30,6 +32,8 @@ const INITIAL_STATE = {
   campaigns: [],
   quizzes: [],
   cards: [],
+  coupons: [],
+  regulation: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -62,6 +66,10 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, quizzes: action.payload};
     case CARDS:
       return {...state, cards: action.payload};
+    case COUPONS:
+      return {...state, coupons: action.payload};
+    case REGULATION:
+      return {...state, regulation: action.payload};
     default:
       return state;
   }

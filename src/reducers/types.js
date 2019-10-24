@@ -12,3 +12,5 @@ export const BANNER = 'BANNER';
 export const CAMPAIGNS = 'CAMPAIGNS';
 export const QUIZZES = 'QUIZZES';
 export const CARDS = 'CARDS';
+export const COUPONS = 'COUPONS';
+export const REGULATION = 'REGULATION';

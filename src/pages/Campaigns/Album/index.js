@@ -78,7 +78,11 @@ export default function Main(props) {
       <Link key={i} onPress={() => _handleModal(i)}>
         <CardItem>
           <CardImage>
-            <Image style={{aspectRatio: 1}} source={{uri: item.url}} resizeMode="contain" />
+            <Image
+              style={{aspectRatio: 1}}
+              source={{uri: item.url}}
+              resizeMode="contain"
+            />
           </CardImage>
           {/* <View style={{flex: 1, justifyContent: 'center', paddingHorizontal: 10}}>
             <TextDark>{item.title}</TextDark>
@@ -91,9 +95,9 @@ export default function Main(props) {
   return (
     <Content>
       <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-      }>
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+        }>
         <Header>
           <View
             style={{
@@ -116,15 +120,14 @@ export default function Main(props) {
           </View>
         </Header>
         <View style={{margimBottom: 50}}>
-        <FlatList
-          data={cards.cards}
-          numColumns={3}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
-          renderItem={({item, index}) => _renderItem(item, index)}
-        />
+          <FlatList
+            data={cards.cards}
+            numColumns={3}
+            keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
+            renderItem={({item, index}) => _renderItem(item, index)}
+          />
         </View>
-        
 
         <Modal
           visible={modalVisible}
@@ -133,7 +136,6 @@ export default function Main(props) {
           onRequestClose={() => setModalVisible(false)}
           onBackdropPress={() => setModalVisible(false)}>
           <ImageViewer
-            style={{}}
             imageUrls={cards.cards}
             index={key}
             onSwipeDown={() => {
