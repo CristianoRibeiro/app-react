@@ -101,6 +101,12 @@ export default function Main(props) {
     }
   }
 
+  function _handleCard(item){
+    if (__DEV__) {
+      console.tron.log(item);
+    }
+  }
+
   function _renderItem(item, i) {
     return (
       <Link key={i}>

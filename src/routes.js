@@ -40,6 +40,7 @@ import Album from '~/pages/Campaigns/Album';
 import CampaignPrize from '~/pages/Campaigns/Prize';
 import Cupons from '~/pages/Campaigns/Cupons';
 import Exchange from '~/pages/Campaigns/Exchange';
+import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
 import Regulation from '~/pages/Campaigns/Regulation';
 
 //Components
@@ -391,6 +392,16 @@ const MainNavigator = createStackNavigator(
       path: 'exchange',
       navigationOptions: {
         headerTitle: 'Trocas',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    ExchangeSearch: {
+      screen: ExchangeSearch,
+      path: 'exchangesearch',
+      navigationOptions: {
+        headerTitle: 'Figurinhas repetidas',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
