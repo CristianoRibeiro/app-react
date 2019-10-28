@@ -90,6 +90,7 @@ export default function Main(props) {
             style={{
               height: 90,
               width: 90,
+              borderRadius: 45
             }}
             resizeMode="contain"
           />

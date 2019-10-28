@@ -114,7 +114,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => props.navigation.navigate('Exchange')}>
+            <Link onPress={() => props.navigation.navigate('TabsExchange')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_trocas.png')}

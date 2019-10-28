@@ -61,7 +61,7 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
-      let response = await api.get('/api/cards');
+      let response = await api.get('/api/cards/repeated');
       //alert(JSON.stringify(response.data));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -78,7 +78,7 @@ export default function Main(props) {
 
   function _renderItem(item, i) {
     return (
-      <Link key={i} onPress={() => props.navigation.navigate('Exchange')}>
+      <Link key={i} onPress={() => props.navigation.navigate('Exchange', {item})}>
         <CardItem>
           <CardImage>
             <Image
@@ -127,7 +127,7 @@ export default function Main(props) {
 
         <View style={{margimBottom: 50}}>
           <FlatList
-            data={cards.cards}
+            data={cards}
             numColumns={3}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}

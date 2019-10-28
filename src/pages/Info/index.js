@@ -14,7 +14,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
-import { WebView } from 'react-native-webview';
+import {WebView} from 'react-native-webview';
 import EmptyList from '~/components/EmptyList';
 
 //Api
@@ -44,12 +44,13 @@ export default function Main(props) {
 
   useEffect(() => {
     if (__DEV__) {
-    console.tron.log(info);
+      console.tron.log(info);
     }
-    
   }, []);
 
   return (
-        <WebView source={{ html: info.info }} />
+    <View style={{paddingBottom: 15, flex: 1}}>
+      <WebView source={{html: info.append_info}} />
+    </View>
   );
 }

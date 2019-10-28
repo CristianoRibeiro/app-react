@@ -15,8 +15,8 @@ import {
 
 import api from '~/services/api';
 
-import {Title, Header, TextDark, Card, Link} from './styles';
-import {Container, Content} from '../../style';
+import {Header, TextDark, Card, Link} from './styles';
+import {Container, Content, Title} from '../../style';
 import {Event} from '~/model/Event';
 
 export default function Main(props) {
@@ -58,7 +58,7 @@ export default function Main(props) {
       <ScrollView>
         <Header style={{alignItems: 'center'}}>
           <Title>{item.name}</Title>
-          <TextDark>{item.local} </TextDark>
+          <TextDark style={{color: '#fff'}}>{item.local} </TextDark>
 
           <View style={{alignItems: 'center', marginTop: 20}}>
             <Image
@@ -66,7 +66,7 @@ export default function Main(props) {
               style={{
                 height: 150,
                 width: 150,
-                borderRadius: 50,
+                borderRadius: 75,
               }}
               resizeMode="contain"
             />
@@ -204,7 +204,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('Info')}>
+            <Link>
               <Card>
                 <Image
                   source={require('~/assets/icons/games.png')}

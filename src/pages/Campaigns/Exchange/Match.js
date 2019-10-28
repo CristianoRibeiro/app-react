@@ -177,7 +177,7 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        {/* <Header style={{alignItems: 'center'}}>
+        <Header style={{alignItems: 'center'}}>
           <View
             style={{
               flexDirection: 'row',
@@ -195,7 +195,7 @@ export default function Main(props) {
             </TextLight>
           </View>
           <TextLight>Vamos trocar?</TextLight>
-        </Header> */}
+        </Header>
 
         <Card>
           <View
@@ -248,7 +248,7 @@ export default function Main(props) {
               marginTop: 15,
             }}>
             <TextDark style={{textAlign: 'center'}}>
-              Clique no ícone abaixo para encontrar alguém com a figurinha que deseja
+              Clique no ícone abaixo para adicionar as figurinhas que deseja
               trocar
             </TextDark>
           </View>

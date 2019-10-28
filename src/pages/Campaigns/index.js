@@ -69,7 +69,8 @@ export default function Main(props) {
           <CardImage>
             <FitImage source={{uri: item.thumbnail}} resizeMode="contain" />
           </CardImage>
-          <View style={{flex: 1, justifyContent: 'center', paddingHorizontal: 10}}>
+          <View
+            style={{flex: 1, justifyContent: 'center', paddingHorizontal: 10}}>
             <TextDark>{item.title}</TextDark>
           </View>
         </CardItem>

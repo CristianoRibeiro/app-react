@@ -5,7 +5,9 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -41,6 +43,7 @@ import CampaignPrize from '~/pages/Campaigns/Prize';
 import Cupons from '~/pages/Campaigns/Cupons';
 import Exchange from '~/pages/Campaigns/Exchange';
 import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
+import Match from '~/pages/Campaigns/Exchange/Match';
 import Regulation from '~/pages/Campaigns/Regulation';
 
 //Components
@@ -188,6 +191,50 @@ const DrawerRoutes = createDrawerNavigator(
     initialRouteName: 'Drawer',
     contentOptions: {
       activeTintColor: '#e91e63',
+    },
+  },
+);
+
+
+const TabsExchange = createMaterialTopTabNavigator(
+  {
+    ExchangeSearch: {
+      screen: ExchangeSearch,
+      path: '',
+      navigationOptions: {
+        title: 'Figurinhas repetidas',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <Fontisto name="arrow-swap" size={24} color={tintColor} />
+        ),
+      },
+    },
+
+    Match: {
+      screen: Match,
+      path: 'match',
+      navigationOptions: {
+        title: 'Meus Match',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialIcons name="notifications" size={24} color={tintColor} />
+        ),
+      },
+    },
+  },
+  {
+    initialRouteName: 'ExchangeSearch',
+    activeColor: '#222',
+    tabBarOptions: {
+      activeTintColor: '#fff',
+      inactiveTintColor: '#fff',
+      showLabel: true,
+      showIcon: false,
+      scrollEnabled: false,
+      indicatorStyle: {backgroundColor: '#fff'},
+      style: {
+        backgroundColor: '#FF6666',
+      },
     },
   },
 );
@@ -397,13 +444,20 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
-    ExchangeSearch: {
-      screen: ExchangeSearch,
+    TabsExchange: {
+      screen: TabsExchange,
       path: 'exchangesearch',
       navigationOptions: {
-        headerTitle: 'Figurinhas repetidas',
+        headerTitle: 'Trocas',
         headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
           backgroundColor: '#FF6666',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
         },
       },
     },
