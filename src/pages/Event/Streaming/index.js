@@ -17,7 +17,7 @@ import api from '~/services/api';
 import {
   Container,
   Content
-} from '../../style';
+} from '../../../style';
 
 import {EventTitle, EventDate, EventLink, Header, TextTitle, Card, Link, CardImage, Points, Info} from './styles';
 

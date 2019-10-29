@@ -86,30 +86,23 @@ export default function Main(props) {
     }
   }
 
-  async function _setData(item) {
+  async function _setData() {
     try {
-      // let response = await api.post('/api/quizzes/answer', {
-      //   quiz_id: item.id,
-      //   correct: selected,
-      // });
-      //alert(JSON.stringify(response));
+      let response = await api.post('/api/cards/from/user', {
+        card_id: card.id,
+        user_id: selected.id,
+      });
       if (__DEV__) {
         console.tron.log(response.data);
       }
 
       Alert.alert(null, response.data.message);
-
-      if (response.data.success) {
-        await dispatch({type: 'QUIZZES', payload: []});
-        setDate('');
-      }
-
-      //setNotifications(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
+    setModal(false);
   }
 
   function _handleCard(item) {
@@ -248,15 +241,15 @@ export default function Main(props) {
               marginTop: 15,
             }}>
             <TextDark style={{textAlign: 'center'}}>
-              Clique no ícone abaixo para encontrar alguém com a figurinha que deseja
-              trocar
+              Clique no ícone abaixo para encontrar alguém com a figurinha que
+              deseja trocar
             </TextDark>
           </View>
 
           {selected ? (
             <Send
               style={{marginBottom: 15, marginTop: 10}}
-              onPress={() => setModal(false)}>
+              onPress={() => _setData()}>
               <TextLight>OK</TextLight>
             </Send>
           ) : null}
@@ -277,15 +270,13 @@ export default function Main(props) {
           <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
             <FlatList
               data={users}
-              numColumns={3}
               keyExtractor={(item, index) => index.toString()}
               ListEmptyComponent={
                 <EmptyList text="Nenhum usuário encontrado!" />
               }
               renderItem={({item, index}) => _renderItem(item, index)}
             />
-            <Send
-              style={{marginBottom: 15, marginTop: 10}}>
+            <Send style={{marginBottom: 15, marginTop: 10}}>
               <TextLight>OK</TextLight>
             </Send>
           </View>

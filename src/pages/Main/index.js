@@ -118,20 +118,19 @@ export default function Main(props) {
         </Header>
         <Banner />
 
-        <View style={{flex: 1, alignItems: 'center', marginTop: 25}}>
+        <View style={{flex: 1, marginTop: 15}}>
           <Title
             style={{
               color: '#444',
-              textAlign: 'center',
-              fontSize: 20,
-              marginBottom: 10,
+              textAlign: 'left',
+              fontSize: 15,
               marginTop: 5,
             }}>
             Encontre o seu evento Fenae/Apcef
           </Title>
         </View>
 
-        <View style={{marginVertical: 5, marginHorizontal: 0}}>
+        <View style={{marginBottom: 4, marginHorizontal: 0}}>
           <FlatList
             data={data}
             horizontal={true}
@@ -143,8 +142,8 @@ export default function Main(props) {
         <Title
           style={{
             color: '#444',
-            textAlign: 'center',
-            fontSize: 20,
+            textAlign: 'left',
+            fontSize: 15,
             marginBottom: 10,
             marginTop: 5,
           }}>

@@ -20,23 +20,28 @@ import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Profile from '~/pages/Profile';
 import ProfileEdit from '~/pages/Profile/Edit';
+
+//Event
 import Event from '~/pages/Event';
-import EventItem from '~/pages/EventItem';
+import EventItem from '~/pages/Event/EventItem';
 import Voucher from '~/pages/Voucher';
 import VoucherItem from '~/pages/Voucher/Item';
 import VoucherEvent from '~/pages/Voucher/VoucherEvent';
 import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Prize';
-import Flight from '~/pages/Flight';
-import Transfer from '~/pages/Transfer';
-import Streaming from '~/pages/Streaming';
-import Info from '~/pages/Info';
+import Flight from '~/pages/Event/Flight';
+import Transfer from '~/pages/Event/Transfer';
+import Streaming from '~/pages/Event/Streaming';
+import Info from '~/pages/Event/Info';
+import Faq from '~/pages/Event/Faq';
 import ScheduleEvent from '~/pages/ScheduleEvent';
 import Certificate from '~/pages/Certificate';
+import Gallery from '~/pages/Event/Gallery';
+
+//Campanhas
 import Campaigns from '~/pages/Campaigns';
 import CampaignsItem from '~/pages/Campaigns/Item';
-//Campanhas
 import Quiz from '~/pages/Campaigns/Quiz';
 import Album from '~/pages/Campaigns/Album';
 import CampaignPrize from '~/pages/Campaigns/Prize';
@@ -466,6 +471,26 @@ const MainNavigator = createStackNavigator(
       path: 'regulation',
       navigationOptions: {
         headerTitle: 'Regras',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Faq: {
+      screen: Faq,
+      path: 'faq',
+      navigationOptions: {
+        headerTitle: 'Dúvidas',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Gallery: {
+      screen: Gallery,
+      path: 'gallery',
+      navigationOptions: {
+        headerTitle: 'Galeria',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

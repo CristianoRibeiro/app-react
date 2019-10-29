@@ -21,7 +21,7 @@ import EmptyList from '~/components/EmptyList';
 import api from '~/services/api';
 
 //Styles
-import {Container, Content} from '../../style';
+import {Container, Content} from '../../../style';
 
 import {
   EventTitle,
