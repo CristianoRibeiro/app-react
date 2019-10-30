@@ -290,6 +290,24 @@ export default function Main(props) {
               </Card>
             </Link>
           </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Link onPress={() => props.navigation.navigate('NewsCampaigns')}>
+              <Card>
+                <Image
+                  source={require('~/assets/icons/newspaper.png')}
+                  style={{
+                    height: 50,
+                    width: 50,
+                  }}
+                  resizeMode="contain"
+                />
+                <TextDark>NOTÍCIAS </TextDark>
+              </Card>
+            </Link>
+
+            <View style={{flex:1}}></View>
+          </View>
         </View>
       </ScrollView>
     </Content>

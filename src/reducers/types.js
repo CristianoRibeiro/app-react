@@ -14,3 +14,5 @@ export const QUIZZES = 'QUIZZES';
 export const CARDS = 'CARDS';
 export const COUPONS = 'COUPONS';
 export const REGULATION = 'REGULATION';
+export const LOTTERY = 'LOTTERY';
+export const NEWS = 'NEWS';

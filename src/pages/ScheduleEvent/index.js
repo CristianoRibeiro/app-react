@@ -13,12 +13,7 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import { 
-  parseISO, 
-  format, 
-  formatRelative, 
-  formatDistance,
-} from 'date-fns';
+import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
 
 //Api
@@ -36,7 +31,7 @@ import {
   Card,
   Link,
   CardImage,
-  SubTitle
+  SubTitle,
 } from './styles';
 
 export default function Main(props) {
@@ -49,25 +44,22 @@ export default function Main(props) {
 
   useEffect(() => {
     if (__DEV__) {
-    console.tron.log(schedules);
+      console.tron.log(schedules);
     }
   }, []);
 
-
   function _renderItem(item) {
-    const firstDate = parseISO(item.start);
-    const formattedDate = format(
-      firstDate, 
-      "dd/MM/YYY', às ' HH:mm'h'"
-    );
+    const time = item.start.substr(10, 6);
+    let firstDate = item.start.substr(0, 10).split('/').reverse().join('-');
+    firstDate = parseISO(firstDate+time);
+    const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
     return (
-        <Card>
-         
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <EventDate>{formattedDate}</EventDate>
-            <SubTitle>{item.content}</SubTitle>
-          </View>
-        </Card>
+      <Card>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <EventDate>{formattedDate}</EventDate>
+          <SubTitle>{item.content}</SubTitle>
+        </View>
+      </Card>
     );
   }
 
@@ -79,7 +71,6 @@ export default function Main(props) {
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhuma programaçã encontrada!" />}
         renderItem={({item}) => _renderItem(item)}
-        
       />
     </Content>
   );

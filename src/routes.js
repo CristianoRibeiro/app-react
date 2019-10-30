@@ -20,6 +20,8 @@ import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Profile from '~/pages/Profile';
 import ProfileEdit from '~/pages/Profile/Edit';
+import News from '~/pages/News';
+import NewsDetail from '~/pages/News/Detail';
 
 //Event
 import Event from '~/pages/Event';
@@ -50,6 +52,7 @@ import Exchange from '~/pages/Campaigns/Exchange';
 import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
 import Match from '~/pages/Campaigns/Exchange/Match';
 import Regulation from '~/pages/Campaigns/Regulation';
+import Lottery from '~/pages/Campaigns/Lottery';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -79,6 +82,18 @@ const TabsRoute = createMaterialBottomTabNavigator(
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => (
           <Ionicons name="md-images" size={24} color={tintColor} />
+        ),
+      },
+    },
+
+    News: {
+      screen: News,
+      path: 'news',
+      navigationOptions: {
+        title: 'notícias',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialCommunityIcons name="newspaper" size={24} color={tintColor} />
         ),
       },
     },
@@ -433,7 +448,7 @@ const MainNavigator = createStackNavigator(
       screen: Cupons,
       path: 'cupons',
       navigationOptions: {
-        headerTitle: 'Cupons',
+        headerTitle: 'Número da sorte',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -491,6 +506,36 @@ const MainNavigator = createStackNavigator(
       path: 'gallery',
       navigationOptions: {
         headerTitle: 'Galeria',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Lottery: {
+      screen: Lottery,
+      path: 'lottery',
+      navigationOptions: {
+        headerTitle: 'Sorteio',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    NewsCampaigns: {
+      screen: News,
+      path: 'newscampaigns',
+      navigationOptions: {
+        headerTitle: 'Notícias',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    NewsDetail: {
+      screen: NewsDetail,
+      path: 'newsdetail',
+      navigationOptions: {
+        headerTitle: '',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

@@ -8,6 +8,7 @@ import {
   ImageBackground,
   StatusBar,
   View,
+  Alert,
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
@@ -15,7 +16,7 @@ import {
 import {Avatar, FAB} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-//import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import api from '~/services/api';
 
@@ -54,7 +55,7 @@ export default function Profile(props) {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(data ? data : User);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState({uri: user.avatar});
   const [birthdate, setBirthdate] = useState();
   const [error, setError] = useState(false);
 
@@ -67,33 +68,49 @@ export default function Profile(props) {
     
   }, []);
 
-  function _uploadPhoto() {
-    // const options = {
-    //   title: 'Selecione de onde quer importar o arquivo',
-    //   cancelButtonTitle: 'Cancelar',
-    //   takePhotoButtonTitle: 'Usar Camera',
-    //   chooseFromLibraryButtonTitle: 'Carregar da galeria',
-    //   width: 480,
-    //   height: 480,
-    //   cropping: true,
-    // };
+  async function _uploadPhoto() {
+    const options = {
+      title: 'Selecione de onde quer importar o arquivo',
+      cancelButtonTitle: 'Cancelar',
+      takePhotoButtonTitle: 'Usar Camera',
+      chooseFromLibraryButtonTitle: 'Carregar da galeria',
+      width: 480,
+      height: 480,
+      cropping: true,
+    };
 
-    // ImagePicker.openPicker(options).then(image => {
-    //   //alert(JSON.stringify(image));
-    //   let img = {
-    //     uri: image.path,
-    //     width: image.width,
-    //     height: image.height,
-    //     mime: image.mime,
-    //     type: 'image/jpeg',
-    //     name: image.path.substring(image.path.lastIndexOf('/') + 1),
-    //   };
+    await ImagePicker.openPicker(options).then(image => {
+      //alert(JSON.stringify(image));
+      let img = {
+        uri: image.path,
+        width: image.width,
+        height: image.height,
+        mime: image.mime,
+        type: 'image/jpeg',
+        name: image.path.substring(image.path.lastIndexOf('/') + 1),
+      };
 
-    //   const data = new FormData();
+      setImage(img);
+    });
 
-    //   data.append('avatar', img);
-    //   setImage(img);
-    // });
+    const data = new FormData();
+
+    data.append('image', image);
+    try {
+  
+      let response = await api.post('/api/avatar', data);
+
+      if(response.data.success){
+        await dispatch({type: 'USER', payload: response.data.user});
+      }
+
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+    } catch (error) {
+      Alert.alert(null, error.message);
+    }
   }
 
   const iconSize = 32;
@@ -121,15 +138,15 @@ export default function Profile(props) {
                 marginBottom: 15,
               }}
               defaultSource={require('~/assets/avatar/avatar.png')}
-              source={{uri: user.avatar}}
+              source={image}
             />
 
-            {/* <Link
+            <Link
               rippleColor="rgba(0, 0, 0, .32)"
               style={{marginTop: -40}}
               onPress={() => _uploadPhoto()}>
               <Avatar.Icon size={42} icon="folder" />
-            </Link> */}
+            </Link>
           </View>
 
           <TextDark style={{fontWeight: '700'}}>{user.name}</TextDark>

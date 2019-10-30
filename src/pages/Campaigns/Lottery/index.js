@@ -39,10 +39,9 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.coupons);
+  const data = useSelector(state => state.lottery);
   const dispatch = useDispatch();
 
-  const [coupons, setCoupons] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
@@ -53,12 +52,12 @@ export default function Main(props) {
 
   async function _getData() {
     try {
-      let response = await api.get('/api/coupons');
+      let response = await api.get('/api/lottery');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'COUPONS', payload: response.data});
+      await dispatch({type: 'LOTTERY', payload: response.data});
 
       //setNotifications(response.data);
     } catch (error) {
@@ -105,14 +104,14 @@ export default function Main(props) {
                   justifyContent: 'space-between',
                   marginVertical: 8,
                 }}>
-                <TextDark>{item.item.type}</TextDark>
+                <TextDark> {item.item.user.name}</TextDark>
 
                 <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
-                  {item.item.coupons}
+                  {item.item.lucky_number}
                 </TextDark>
               </View>
             )}
-          /> 
+          />
         </Card>
       </ScrollView>
     </Content>

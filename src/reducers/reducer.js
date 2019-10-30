@@ -14,7 +14,9 @@ import {
   QUIZZES,
   CARDS,
   COUPONS,
-  REGULATION
+  REGULATION,
+  LOTTERY,
+  NEWS
 } from '~/reducers/types';
 
 const INITIAL_STATE = {
@@ -34,6 +36,8 @@ const INITIAL_STATE = {
   cards: [],
   coupons: [],
   regulation: [],
+  lottery: [],
+  news: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -70,6 +74,10 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, coupons: action.payload};
     case REGULATION:
       return {...state, regulation: action.payload};
+    case LOTTERY:
+      return {...state, lottery: action.payload};
+    case NEWS:
+      return {...state, news: action.payload};
     default:
       return state;
   }

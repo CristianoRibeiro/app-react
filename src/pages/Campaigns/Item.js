@@ -110,7 +110,7 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>CUPONS </TextDark>
+                <TextDark>NÚMERO DA SORTE </TextDark>
               </Card>
             </Link>
 
@@ -130,7 +130,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link onPress={() => props.navigation.navigate('Lottery')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_sorteio.png')}
@@ -160,7 +160,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link>
+            <Link onPress={() => props.navigation.navigate('NewsCampaigns')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_noticias.png')}

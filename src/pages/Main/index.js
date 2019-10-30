@@ -118,7 +118,7 @@ export default function Main(props) {
         </Header>
         <Banner />
 
-        <View style={{flex: 1, marginTop: 15}}>
+        <View style={{marginTop: 15}}>
           <Title
             style={{
               color: '#444',
@@ -153,7 +153,7 @@ export default function Main(props) {
         {thumbnail ? (
           <Card style={{elevation: 4, flex: 1}}>
             <FitImage source={{uri: thumbnail}} resizeMode="contain" />
-            <View style={{marginTop: -45, flex: 1, alignItems: 'flex-end'}}>
+            <View style={{marginTop: -45, marginBottom: 10, flex: 1, alignItems: 'flex-end'}}>
               <Btn
                 onPress={() => props.navigation.navigate('Campaigns')}
                 style={{alignItems: 'center', alignSelf: 'flex-end'}}>

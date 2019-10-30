@@ -10,8 +10,10 @@ import {
   View,
   ScrollView,
   FlatList,
-  RefreshControl
+  RefreshControl,
 } from 'react-native';
+import {FAB} from 'react-native-paper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
@@ -27,6 +29,16 @@ import {
 } from './styles';
 
 import {Container, Content} from '../../style';
+
+const styles = StyleSheet.create({
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#FF6666',
+  },
+});
 
 export default function Main(props) {
   const data = useSelector(state => state.voucher);
@@ -46,13 +58,13 @@ export default function Main(props) {
       let response = await api.post('/api/vouchers');
       //alert(JSON.stringify(response));
       if (__DEV__) {
-      console.tron.log(response.data);
+        console.tron.log(response.data);
       }
       await dispatch({type: 'VOUCHER', payload: response.data});
       setVouchers(response.data);
     } catch (error) {
       if (__DEV__) {
-      console.tron.log(error.message);
+        console.tron.log(error.message);
       }
     }
     setLoading(false);
@@ -73,9 +85,7 @@ export default function Main(props) {
 
           <View style={{flex: 1, justifyContent: 'center', marginLeft: 15}}>
             <Title style={{color: '#333'}}>{item.event.name}</Title>
-            <SubTitle style={{color: '#333'}}>
-              {item.event.local}
-            </SubTitle>
+            <SubTitle style={{color: '#333'}}>{item.event.local}</SubTitle>
             {/* <TextDate>faltam 2 dias</TextDate> */}
           </View>
         </Card>
@@ -86,18 +96,22 @@ export default function Main(props) {
   return (
     <Content>
       <FlatList
-        style={{margimBottom: 50}}
+        style={{margimBottom: 75}}
         data={vouchers}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhum voucher encontrado!" />}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={() => _onRefresh()}
-          />
+          <RefreshControl refreshing={loading} onRefresh={() => _onRefresh()} />
         }
       />
+
+      {/* <FAB
+        style={styles.fab}
+        icon={'add'}
+        color="#fff"
+        onPress={() => console.log('Pressed')}
+      /> */}
     </Content>
   );
 }
