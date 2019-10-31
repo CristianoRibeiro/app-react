@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {Button, TextInput} from 'react-native-paper';
+import RNPickerSelect from 'react-native-picker-select';
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -12,10 +14,17 @@ import styled from 'styled-components/native';
 //   padding-top: ${30 + getStatusBarHeight(true)}px;
 // `;
 
+export const Select = styled(RNPickerSelect).attrs({
+  color: '#444',
+  placeholderTextColor: '#777'
+})`
+  font-size: 16px;
+  color: #222;
+`;
 
 export const Title = styled.Text`
   font-size: 32px;
-  color: #FFF;
+  color: #fff;
   font-weight: bold;
   padding: 0 20px;
 `;
@@ -28,7 +37,7 @@ export const SubTitle = styled.Text`
 
 export const TextLight = styled.Text`
   font-size: 14;
-  color: #FFF;
+  color: #fff;
   font-weight: 600;
   padding: 0 20px;
 `;
@@ -40,9 +49,9 @@ export const TextDark = styled.Text`
 `;
 
 export const Form = styled.View`
-  padding: 10px;
+  flex-direction: row;
+  margin-top: 10px;
 `;
-
 
 export const Card = styled.View`
   margin: 10px;
@@ -51,41 +60,50 @@ export const Card = styled.View`
   background-color: #fff;
 `;
 
-export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#999',
+// export const Input = styled.TextInput.attrs({
+//   placeholderTextColor: '#777',
+//   keyboardAppearance: 'light',
+//   maxLength: 255,
+// })`
+//   flex: 1;
+//   padding: 12px 15px;
+//   border-radius: 4px;
+//   text-align: center;
+//   font-size: 16px;
+//   color: #222;
+//   background: rgba(050, 050, 050, 0.1);
+//   border: 1px solid ${props => (props.error ? '#FF7272' : '#ddd')};
+// `;
+
+export const Input = styled(TextInput).attrs({
+  placeholderTextColor: '#777',
   keyboardAppearance: 'light',
-  maxLength: 255
+  maxLength: 255,
 })`
-  padding: 12px 15px;
+  flex: 1;
   border-radius: 4px;
   font-size: 16px;
   color: #222;
-  border: 1px solid ${props => (props.error ? '#FF7272' : '#333')};
 `;
 
 export const Submit = styled.TouchableOpacity`
-  background: #0F60A8;
+  background: #0f60a8;
   margin-left: 10px;
   justify-content: center;
   border-radius: 4px;
   padding: 0 14px;
 `;
 
-export const Send = styled.TouchableOpacity`
-  background: #2A40B1;
-  margin-left: 10px;
-  margin-right: 10px;
-  justify-content: center;
-  border-radius: 30px;
-  padding: 15px 14px;
-  align-items: center;
+export const Send = styled(Button).attrs({
+  mode: 'contained',
+})`
+  background: #0058b8;
+  border-radius: 5px;
   border: 1px solid #fff;
-  flex: 1;
 `;
 
-
 export const Link = styled.TouchableOpacity`
-flex: 1;
+  flex: 1;
   padding: 14px;
   color: #222;
 `;

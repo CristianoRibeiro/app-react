@@ -15,15 +15,15 @@ import {
   Alert,
   SafeAreaView,
 } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
+import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import {ActivityIndicator, Colors} from 'react-native-paper';
 import {MaskService} from 'react-native-masked-text';
 
 import api from '~/services/api';
 
 import {
-  Container,
-  Content,
   Title,
   Form,
   Input,
@@ -36,7 +36,10 @@ import {
   Send,
   SubTitle,
   TextError,
+  Select,
 } from './styles';
+
+import {Container, Content} from '../../style';
 
 export default function Main(props) {
   //Redux
@@ -49,7 +52,13 @@ export default function Main(props) {
   const [email_personal, setEmailPersonal] = useState(
     user ? user.email_personal : '',
   );
+  const [matricula, setMatricula] = useState(user ? user.matricula : '');
+  const [apcef, setApcef] = useState(user ? user.apcef : '');
   const [phone, setPhone] = useState(user ? user.phone : '');
+  const [sex, setSex] = useState(user ? user.sex : '');
+  const [birthdate, setBirthdate] = useState(
+    user ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '',
+  );
   const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
 
@@ -68,7 +77,7 @@ export default function Main(props) {
         email_personal,
       });
 
-      if(response.data.success){
+      if (response.data.success) {
         await dispatch({type: 'USER', payload: response.data.user});
       }
 
@@ -121,6 +130,18 @@ export default function Main(props) {
         errors.phone = 'Digite um Telefone válido!';
       }
 
+      if (!sex) {
+        errors.sex = message;
+      } else if (sex.length < 14) {
+        errors.sex = message;
+      }
+
+      if (!birthdate) {
+        errors.birthdate = message;
+      } else if (birthdate.length < 14) {
+        errors.birthdate = message;
+      }
+
       return errors;
     },
     onSubmit: (values, bag) => {
@@ -132,96 +153,149 @@ export default function Main(props) {
   // const [email, metadataEmail] = getFieldProps("contact.email", "text");
 
   return (
-    <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-      <StatusBar backgroundColor="#FF6666" barStyle="light-content" />
+    <Content>
+      <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
+        <StatusBar backgroundColor="#FF6666" barStyle="light-content" />
 
-      <KeyboardAvoidingView behavior={'padding'}>
-        <Form>
-          <View>
-            <Input
-              value={name}
-              error={!name}
-              maxLength={14}
-              onChangeText={setName}
-              textContentType="name"
-              autoCorrect={false}
-              placeholder="Nome"
-            />
+        <KeyboardAvoidingView behavior={'padding'}>
+          <Card>
+            <Form>
+              <Input
+                value={name}
+                error={!name}
+                maxLength={14}
+                onChangeText={setName}
+                textContentType="name"
+                autoCorrect={false}
+                label="Nome"
+              />
+            </Form>
             <TextError>{errors.name}</TextError>
-          </View>
-        </Form>
 
-        <Form>
-          <View>
-            <Input
-              value={email.trim()}
-              error={!email}
-              maxLength={14}
-              onChangeText={setEmail}
-              textContentType="emailAddress"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="E-mail"
-            />
+            <Form>
+              <Input
+                value={email.trim()}
+                error={!email}
+                maxLength={14}
+                onChangeText={setEmail}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                label="E-mail"
+              />
+            </Form>
             <TextError>{errors.email}</TextError>
-          </View>
-        </Form>
 
-        <Form>
-          <View>
-            <Input
-              value={email_personal.trim()}
-              error={!email_personal}
-              maxLength={14}
-              onChangeText={setEmailPersonal}
-              textContentType="emailAddress"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="E-mail pessoal"
-            />
+            <Form>
+              <Input
+                value={email_personal.trim()}
+                error={!email_personal}
+                maxLength={14}
+                onChangeText={setEmailPersonal}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                label="E-mail pessoal"
+              />
+            </Form>
             <TextError>{errors.email_personal}</TextError>
-          </View>
-        </Form>
 
-        <Form>
-          <View>
-            <Input
-              value={MaskService.toMask('cel-phone', phone, {
-                maskType: 'BRL',
-                withDDD: true,
-                dddMask: '(99) ',
-              })}
-              error={!phone}
-              maxLength={14}
-              keyboardType={'phone-pad'}
-              onChangeText={setPhone}
-              textContentType="telephoneNumber"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="Telefone"
-            />
+            {/* <Form>
+              <Input
+                value={matricula}
+                error={!matricula}
+                maxLength={14}
+                keyboardType={'number-pad'}
+                onChangeText={setPhone}
+                autoCapitalize="none"
+                autoCorrect={false}
+                label="Matrícula"
+              />
+            </Form>
+            <TextError>{errors.matricula}</TextError> */}
+
+            <Form>
+              <Input
+                value={apcef}
+                error={!apcef}
+                maxLength={14}
+                onChangeText={setApcef}
+                autoCapitalize="characters"
+                autoCorrect={false}
+                label="APCEF"
+              />
+            </Form>
+            <TextError>{errors.apcef}</TextError>
+
+            <Form>
+              <Input
+                value={MaskService.toMask('cel-phone', phone, {
+                  maskType: 'BRL',
+                  withDDD: true,
+                  dddMask: '(99) ',
+                })}
+                error={!phone}
+                maxLength={14}
+                keyboardType={'phone-pad'}
+                onChangeText={setPhone}
+                textContentType="telephoneNumber"
+                autoCapitalize="none"
+                autoCorrect={false}
+                label="Telefone"
+              />
+            </Form>
             <TextError>{errors.phone}</TextError>
-          </View>
-        </Form>
-      </KeyboardAvoidingView>
 
-      <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-        {/* <Link style={{marginTop: 5, marginBottom: 10}}>
+            <Select
+              placeholder={{
+                label: 'Sexo',
+                value: sex,
+                color: '#9EA0A4',
+              }}
+              onValueChange={value => setSex(value)}
+              items={[
+                {label: 'Masculino', value: '1'},
+                {label: 'Feminino', value: '0'},
+              ]}
+            />
+            <TextError>{errors.sex}</TextError>
+
+            <Form>
+              <Input
+                value={MaskService.toMask('datetime', birthdate, {
+                  format: 'DD/MM/YYYY',
+                })}
+                error={!birthdate}
+                maxLength={14}
+                keyboardType={'number-pad'}
+                onChangeText={setBirthdate}
+                autoCapitalize="none"
+                autoCorrect={false}
+                label="Data de nascimento"
+              />
+            </Form>
+            <TextError>{errors.birthdate}</TextError>
+          </Card>
+        </KeyboardAvoidingView>
+
+        <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
+          {/* <Link style={{marginTop: 5, marginBottom: 10}}>
             <TextLight>Esqueci minha senha</TextLight>
           </Link> */}
 
-        {!modal ? (
-          <Send onPress={handleSubmit} style={{marginTop: 15}}>
-            <TextLight>SALVAR</TextLight>
-          </Send>
-        ) : (
-          <ActivityIndicator
-            animating={true}
-            size="large"
-            color={Colors.white}
-          />
-        )}
-      </View>
-    </ScrollView>
+          {!modal ? (
+            <Send onPress={handleSubmit} style={{marginTop: 15}}>
+              <TextLight>SALVAR</TextLight>
+            </Send>
+          ) : (
+            <ActivityIndicator
+              animating={true}
+              size="large"
+              color={Colors.white}
+            />
+          )}
+        </View>
+      </ScrollView>
+    </Content>
   );
 }
