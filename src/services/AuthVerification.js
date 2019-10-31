@@ -44,11 +44,8 @@ export default function Main(props) {
       await dispatch({type: 'USER', payload: response.data});
       //setNotifications(response.data);
     } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-        if(error.message === 'Request failed with status code 401'){
-          props.navigation.navigate('Login');
-        }
+      if (error.message === 'Request failed with status code 401') {
+        props.navigation.navigate('Login');
       }
     }
   }

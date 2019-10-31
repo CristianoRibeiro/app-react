@@ -16,7 +16,8 @@ import {
   COUPONS,
   REGULATION,
   LOTTERY,
-  NEWS
+  NEWS,
+  BANNERCAMPAIGNS
 } from '~/reducers/types';
 
 const INITIAL_STATE = {
@@ -31,6 +32,7 @@ const INITIAL_STATE = {
   flights: [],
   transfer: [],
   banner: [],
+  bannercampaigns: [],
   campaigns: [],
   quizzes: [],
   cards: [],
@@ -64,6 +66,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, transfer: action.payload};
     case BANNER:
       return {...state, banner: action.payload};
+    case BANNERCAMPAIGNS:
+      return {...state, bannercampaigns: action.payload};
     case CAMPAIGNS:
       return {...state, campaigns: action.payload};
     case QUIZZES:

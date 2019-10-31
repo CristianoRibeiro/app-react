@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import LinearGradient from "react-native-linear-gradient";
+import LinearGradient from 'react-native-linear-gradient';
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {Button} from 'react-native-paper';
 
 export const Title = styled.Text`
   font-size: 18;
@@ -20,7 +21,7 @@ export const SubTitle = styled.Text`
 
 export const TextLight = styled.Text`
   font-size: 14;
-  color: #FFF;
+  color: #fff;
   font-weight: 600;
   padding: 0 20px;
 `;
@@ -46,7 +47,7 @@ export const ItemQuestion = styled.TouchableOpacity`
   padding-right: 5px;
   padding-left: 5px;
   margin-top: 10px;
-  background: rgba(255,255,255, 0.4);
+  background: rgba(255, 255, 255, 0.4);
   width: 100%;
   border-radius: 5px;
 `;
@@ -67,46 +68,43 @@ export const Card = styled.View`
 export const Input = styled.TextInput.attrs({
   placeholderTextColor: '#efefef',
   keyboardAppearance: 'light',
-  maxLength: 255
+  maxLength: 255,
 })`
   flex: 1;
   padding: 12px 15px;
   border-radius: 4px;
   font-size: 16px;
   color: #fff;
-  background: rgba(000,000,000, 0.2);
+  background: rgba(000, 000, 000, 0.2);
   border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
 `;
 
 export const Submit = styled.TouchableOpacity`
-  background: #0F60A8;
+  background: #0f60a8;
   margin-left: 10px;
   justify-content: center;
   border-radius: 4px;
   padding: 0 14px;
 `;
 
-export const Send = styled.TouchableOpacity`
-  margin-top: 50px;
-  background: #0F60A8;
-  margin-left: 10px;
-  margin-right: 10px;
-  justify-content: center;
-  border-radius: 30px;
-  padding: 15px 14px;
-  align-items: center;
+export const Send = styled(Button).attrs({
+  mode: 'contained',
+})`
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background: #0058b8;
+  border-radius: 5px;
   border: 1px solid #fff;
-  flex: 1;
 `;
 
-
 export const Link = styled.TouchableOpacity`
-flex: 1;
-  color: #fff
+  flex: 1;
+  color: #fff;
 `;
 
 export const List = styled.FlatList.attrs({
-  contentContainerStyle: { paddingHorizontal: 20 },
+  contentContainerStyle: {paddingHorizontal: 20},
   showsVerticalScrollIndicator: false,
 })`
   margin-top: 20px;
@@ -114,8 +112,8 @@ export const List = styled.FlatList.attrs({
 
 export const Header = styled(LinearGradient).attrs({
   colors: ['#FF7272', '#FF7272'],
-  start: { x: 1, y: 0 },
-  end: { x: 1, y: 1 },
+  start: {x: 1, y: 0},
+  end: {x: 1, y: 1},
 })`
   padding-top: 10px;
   padding-bottom: 10px;
@@ -126,7 +124,6 @@ export const TextTitle = styled.Text`
   color: #fff;
   margin: 5px 0;
 `;
-
 
 // export const Image = styled.Image`
 //   width: 100%;

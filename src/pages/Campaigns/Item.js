@@ -39,6 +39,7 @@ import {
 
 export default function Main(props) {
   const data = useSelector(state => state.eventitem);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const [info, setInfo] = useState(data);
@@ -52,11 +53,36 @@ export default function Main(props) {
     if (props.navigation.state.params.item) {
       setInfo(props.navigation.state.params.item);
     }
+    _getData();
   }, []);
+
+  async function _getData() {
+    try {
+      let response = await api.get('/api/auth/user');
+
+      await dispatch({type: 'USER', payload: response.data});
+      //setNotifications(response.data);
+    } catch (error) {
+      if (error.message === 'Request failed with status code 401') {
+        props.navigation.navigate('Login');
+      }
+    }
+  }
+
+  function _handleScheen(screen) {
+    if (user.associated) {
+      props.navigation.navigate(screen);
+    } else {
+      Alert.alert(null, 'Somente para associados!');
+    }
+  }
 
   return (
     <Content>
-      <ScrollView>
+      <ScrollView
+       refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+      }>
         <View style={{flex: 1}}>
           <FitImage
             source={{uri: props.navigation.state.params.item.thumbnail}}
@@ -66,10 +92,7 @@ export default function Main(props) {
 
         <View style={{marginBottom: 70, marginTop: 15}}>
           <View style={{flexDirection: 'row'}}>
-            <Link
-              onPress={() =>
-                props.navigation.navigate('Quiz')
-              }>
+            <Link onPress={() => props.navigation.navigate('Quiz')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_quiz.png')}
@@ -99,8 +122,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link
-              onPress={() => props.navigation.navigate('Cupons')}>
+            <Link onPress={() => _handleScheen('Cupons')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_cupons.png')}
@@ -130,7 +152,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('Lottery')}>
+            <Link onPress={() => _handleScheen('Lottery')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_sorteio.png')}
@@ -144,7 +166,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link>
+            <Link onPress={() => _handleScheen('Awards')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_premiacao.png')}

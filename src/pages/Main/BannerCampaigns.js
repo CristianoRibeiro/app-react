@@ -23,8 +23,8 @@ const AnimatedOriginal = Animated.createAnimatedComponent(Original);
 
 import {Container, Content} from '../../style';
 
-export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
-  const data = useSelector(state => state.banner);
+export default function Banner() {
+  const data = useSelector(state => state.bannercampaigns);
   const dispatch = useDispatch();
 
   const opacity = new Animated.Value(0);
@@ -47,12 +47,12 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
 
   async function _getBanners() {
     try {
-      let response = await api.get('/api/banners');
-      //alert(JSON.stringify(response));
+      let response = await api.get('/api/banners/campaign');
+      //alert(JSON.stringify(response.data));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'BANNER', payload: response.data});
+      await dispatch({type: 'BANNERCAMPAIGNS', payload: response.data});
       //setBanners(response.data);
     } catch (error) {
       if (__DEV__) {

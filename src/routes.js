@@ -1,11 +1,11 @@
 import React from 'react';
 import {Text, Image, SafeAreaView} from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -22,6 +22,7 @@ import Profile from '~/pages/Profile';
 import ProfileEdit from '~/pages/Profile/Edit';
 import News from '~/pages/News';
 import NewsDetail from '~/pages/News/Detail';
+import Recommendation from '~/pages/Recommendation';
 
 //Event
 import Event from '~/pages/Event';
@@ -29,6 +30,7 @@ import EventItem from '~/pages/Event/EventItem';
 import Voucher from '~/pages/Voucher';
 import VoucherItem from '~/pages/Voucher/Item';
 import VoucherEvent from '~/pages/Voucher/VoucherEvent';
+import VoucherAdd from '~/pages/Voucher/Add';
 import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Prize';
@@ -93,11 +95,15 @@ const TabsRoute = createMaterialBottomTabNavigator(
         title: 'notícias',
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => (
-          <MaterialCommunityIcons name="newspaper" size={24} color={tintColor} />
+          <MaterialCommunityIcons
+            name="newspaper"
+            size={24}
+            color={tintColor}
+          />
         ),
       },
     },
-    
+
     Notification: {
       screen: Notification,
       path: 'notification',
@@ -192,6 +198,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
+    Recommendation: {
+      screen: Recommendation,
+      path: 'recommendation',
+      navigationOptions: {
+        drawerLabel: props => (
+          <DrawerItem
+            {...props}
+            title="Recomendar um amigo"
+            icon={require('~/assets/menu/chef.png')}
+          />
+        ),
+      },
+    },
     Prizes: {
       screen: Prize,
       path: 'prize',
@@ -214,7 +233,6 @@ const DrawerRoutes = createDrawerNavigator(
     },
   },
 );
-
 
 const TabsExchange = createMaterialTopTabNavigator(
   {
@@ -367,6 +385,16 @@ const MainNavigator = createStackNavigator(
       path: 'voucher/event',
       navigationOptions: {
         headerTitle: null,
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    VoucherAdd: {
+      screen: VoucherAdd,
+      path: 'voucher/add',
+      navigationOptions: {
+        headerTitle: 'Atualizar Meus Dados',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -564,7 +592,6 @@ const MainNavigator = createStackNavigator(
     }),
   },
 );
-
 
 const LoginRegister = createStackNavigator(
   {

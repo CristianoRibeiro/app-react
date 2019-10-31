@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import FitImage from 'react-native-fit-image';
 import EmptyList from '~/components/EmptyList';
+import BannerCampaigns from '~/pages/Main/BannerCampaigns';
 
 //Api
 import api from '~/services/api';
@@ -84,7 +85,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={campaigns}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!" />}
+        ListEmptyComponent={<BannerCampaigns/>}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />

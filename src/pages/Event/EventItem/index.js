@@ -141,7 +141,7 @@ export default function Main(props) {
 
         <View style={{marginBottom: 70}}>
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('VoucherEvent')}>
+            <Link onPress={() => props.navigation.navigate('Voucher')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ticket.png')}

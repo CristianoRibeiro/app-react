@@ -106,12 +106,12 @@ export default function Main(props) {
         }
       />
 
-      {/* <FAB
+      <FAB
         style={styles.fab}
         icon={'add'}
         color="#fff"
-        onPress={() => console.log('Pressed')}
-      /> */}
+        onPress={() => props.navigation.navigate('VoucherAdd')}
+      />
     </Content>
   );
 }

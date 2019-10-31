@@ -60,12 +60,11 @@ export default function Profile(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if(data.birthdate){
+    if (data.birthdate) {
       const firstDate = parseISO(data.birthdate);
-      const formattedDate = format(firstDate, "dd/MM/YYY");
+      const formattedDate = format(firstDate, 'dd/MM/YYY');
       setBirthdate(formattedDate);
     }
-    
   }, []);
 
   async function _uploadPhoto() {
@@ -79,7 +78,7 @@ export default function Profile(props) {
       cropping: true,
     };
 
-    await ImagePicker.openPicker(options).then(image => {
+    await ImagePicker.openPicker(options).then(async image => {
       //alert(JSON.stringify(image));
       let img = {
         uri: image.path,
@@ -91,30 +90,29 @@ export default function Profile(props) {
       };
 
       setImage(img);
+
+      const data = new FormData();
+
+      data.append('image', img);
+      try {
+        let response = await api.post('/api/avatar', data);
+
+        if (response.data.success) {
+          await dispatch({type: 'USER', payload: response.data.user});
+        }
+
+        //alert(JSON.stringify(response));
+        if (__DEV__) {
+          console.tron.log(response.data);
+        }
+      } catch (error) {
+        Alert.alert(null, error.message);
+      }
     });
-
-    const data = new FormData();
-
-    data.append('image', image);
-    try {
-  
-      let response = await api.post('/api/avatar', data);
-
-      if(response.data.success){
-        await dispatch({type: 'USER', payload: response.data.user});
-      }
-
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-    } catch (error) {
-      Alert.alert(null, error.message);
-    }
   }
 
   const iconSize = 32;
-  
+
   return (
     <Content
       source={require('~/assets/bg-login.jpg')}

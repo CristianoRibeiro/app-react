@@ -17,6 +17,7 @@ import {
 import FitImage from 'react-native-fit-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Banner from '~/pages/Main/Banner';
+import BannerCampaigns from '~/pages/Main/BannerCampaigns';
 import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
@@ -58,6 +59,8 @@ export default function Main(props) {
       let events = await api.post('/api/events');
       let campaigns = await api.post('/api/campaigns');
       let prizes = await api.post('/api/prizes');
+      let banners = await api.get('/api/banners');
+      let bannerCampaigns = await api.get('/api/banners/campaign');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(events.data);
@@ -65,6 +68,8 @@ export default function Main(props) {
       await dispatch({type: 'CAMPAIGNS', payload: campaigns.data});
       await dispatch({type: 'PRIZE', payload: prizes.data});
       await dispatch({type: 'EVENT', payload: events.data});
+      await dispatch({type: 'BANNER', payload: banners.data});
+      await dispatch({type: 'BANNERCAMPAIGNS', payload: bannerCampaigns.data});
       //setCampaigns(response.data);
     } catch (error) {
       if (__DEV__) {
@@ -90,7 +95,7 @@ export default function Main(props) {
             style={{
               height: 90,
               width: 90,
-              borderRadius: 45
+              borderRadius: 45,
             }}
             resizeMode="contain"
           />
@@ -100,13 +105,38 @@ export default function Main(props) {
     );
   }
 
+  function _renderBanner() {
+    if (thumbnail) {
+      return (
+        <Card style={{elevation: 4, flex: 1}}>
+          <FitImage source={{uri: thumbnail}} resizeMode="contain" />
+          <View
+            style={{
+              marginTop: -35,
+              marginBottom: 5,
+              flex: 1,
+              alignItems: 'flex-end',
+            }}>
+            <Btn
+              onPress={() => props.navigation.navigate('Campaigns')}
+              style={{alignItems: 'center', alignSelf: 'flex-end'}}>
+              <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
+            </Btn>
+          </View>
+        </Card>
+      );
+    } else {
+      return <View style={{paddingBottom: 60}}><BannerCampaigns /></View>;
+    }
+  }
+
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
-      <ScrollView
-        style={{flex: 1}}
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-        }>
+    <ScrollView
+      style={{flex: 1}}
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+      }>
+      <View style={{flex: 1}}>
         <Header style={{alignItems: 'center'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <MaterialCommunityIcons name="star" size={24} color={'#fff'} />
@@ -150,19 +180,8 @@ export default function Main(props) {
           Fique por dentro das campanhas
         </Title>
 
-        {thumbnail ? (
-          <Card style={{elevation: 4, flex: 1}}>
-            <FitImage source={{uri: thumbnail}} resizeMode="contain" />
-            <View style={{marginTop: -45, marginBottom: 10, flex: 1, alignItems: 'flex-end'}}>
-              <Btn
-                onPress={() => props.navigation.navigate('Campaigns')}
-                style={{alignItems: 'center', alignSelf: 'flex-end'}}>
-                <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
-              </Btn>
-            </View>
-          </Card>
-        ) : null}
-      </ScrollView>
-    </View>
+        {_renderBanner()}
+      </View>
+    </ScrollView>
   );
 }

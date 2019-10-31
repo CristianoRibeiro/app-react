@@ -97,7 +97,7 @@ export default function Profile(props) {
               />
 
               <View style={{flex: 1, justifyContent: 'center'}}>
-                <TextLight numberOfLines={1}>{data.event.name}</TextLight>
+                <TextDark style={{paddingLeft: 20}} numberOfLines={1}>{data.event.name}</TextDark>
                 <TextDate style={{textAlign: 'left', paddingLeft: 20}}>
                   {data.event.local}
                 </TextDate>
@@ -122,9 +122,9 @@ export default function Profile(props) {
                 />
               </View>
 
-              <TextLight style={{fontWeight: '700'}}>{data.name}</TextLight>
+              <TextDark style={{fontWeight: '700'}}>{data.name}</TextDark>
 
-              <TextLight>Matrícula: {user.matricula}</TextLight>
+              <TextDark>Matrícula: {user.matricula}</TextDark>
             </View>
           </View>
 
