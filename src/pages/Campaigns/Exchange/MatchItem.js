@@ -247,9 +247,9 @@ export default function Main(props) {
               <TextLight>OK</TextLight>
             </Send>
           ) : null}
-          
+
             <TextDark style={{textAlign: 'center'}}>
-              Clique no ícone abaixo para adicionar as figurinhas que deseja
+              Clique no ícone abaixo para selecionar uma pessoa com as figurinhas que deseja
               trocar
             </TextDark>
           </View>
