@@ -240,19 +240,19 @@ export default function Main(props) {
               justifyContent: 'center',
               marginTop: 15,
             }}>
-            <TextDark style={{textAlign: 'center'}}>
-              Clique no ícone abaixo para adicionar as figurinhas que deseja
-              trocar
-            </TextDark>
-          </View>
-
-          {selected ? (
+              {selected ? (
             <Send
               style={{marginBottom: 15, marginTop: 10}}
               onPress={() => _setData()}>
               <TextLight>OK</TextLight>
             </Send>
           ) : null}
+          
+            <TextDark style={{textAlign: 'center'}}>
+              Clique no ícone abaixo para adicionar as figurinhas que deseja
+              trocar
+            </TextDark>
+          </View>
         </Card>
 
         <View style={{alignItems: 'center', marginTop: 25}}>
