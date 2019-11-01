@@ -76,10 +76,11 @@ export default function Main(props) {
 
   function _renderItem(item, i) {
     return (
-      <Link key={i} onPress={() => _handleModal(i)}>
-        <CardItem>
-          <CardImage>
+      <Link style={{flex: 1}} key={i} onPress={() => _handleModal(i)}>
+        <CardItem style={{flex: 1}}>
+          <CardImage style={{flex: 1}}>
             <FitImage
+              style={{flex: 1}}
               source={{uri: item.url}}
               resizeMode="contain"
             />
@@ -98,7 +99,6 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        
         <View style={{margimBottom: 50}}>
           <FlatList
             data={galery.images}

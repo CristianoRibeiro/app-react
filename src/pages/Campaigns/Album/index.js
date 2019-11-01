@@ -42,7 +42,9 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getData();
+    return () => {
+      _getData();
+    };
   }, []);
 
   async function _getData() {
@@ -75,11 +77,14 @@ export default function Main(props) {
 
   function _renderItem(item, i) {
     return (
-      <Link key={i} onPress={() => _handleModal(i)}>
-        <CardItem>
-          <CardImage>
-            <Image
-              style={{aspectRatio: 1}}
+      <Link
+        style={{flex: 1, minHeight: 100}}
+        key={i}
+        onPress={() => _handleModal(i)}>
+        <CardItem style={{flex: 1}}>
+          <CardImage style={{flex: 1}}>
+            <FitImage
+              style={{flex: 1}}
               source={{uri: item.url}}
               resizeMode="contain"
             />
@@ -93,61 +98,60 @@ export default function Main(props) {
   }
 
   return (
-    <Content>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-        }>
-        <Header>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Entypo name="stopwatch" size={20} color={'#fff'} />
+    <Content style={{flex: 1}}>
+      <Header>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Entypo name="stopwatch" size={20} color={'#fff'} />
 
-            <TextLight>próximo quiz</TextLight>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <TextLight style={{fontSize: 22, fontWeight: '800'}}>
-              {date}
-            </TextLight>
-          </View>
-        </Header>
-        <View style={{margimBottom: 50}}>
-          <FlatList
-            data={cards.cards}
-            numColumns={3}
-            keyExtractor={(item, index) => index.toString()}
-            ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
-            renderItem={({item, index}) => _renderItem(item, index)}
-          />
+          <TextLight>próximo quiz</TextLight>
         </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TextLight style={{fontSize: 22, fontWeight: '800'}}>
+            {date}
+          </TextLight>
+        </View>
+      </Header>
+      <View style={{margimBottom: 50}}>
+        <FlatList
+          data={data.cards}
+          initialNumToRender={1}
+          numColumns={3}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
+          renderItem={({item, index}) => _renderItem(item, index)}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+          }
+        />
+      </View>
 
-        <Modal
-          visible={modalVisible}
-          style={{marginHorizontal: 0, marginBottom: 0}}
-          transparent={true}
-          onRequestClose={() => setModalVisible(false)}
-          onBackdropPress={() => setModalVisible(false)}>
-          <ImageViewer
-            imageUrls={cards.cards}
-            index={key}
-            onSwipeDown={() => {
-              console.log('onSwipeDown');
-            }}
-            onClick={() => setModalVisible(false)}
-            onMove={data => console.log(data)}
-            enableSwipeDown={true}
-            onSwipeDown={() => setModalVisible(false)}
-          />
-        </Modal>
-      </ScrollView>
+      <Modal
+        visible={modalVisible}
+        style={{marginHorizontal: 0, marginBottom: 0}}
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+        onBackdropPress={() => setModalVisible(false)}>
+        <ImageViewer
+          imageUrls={cards.cards}
+          index={key}
+          onSwipeDown={() => {
+            console.log('onSwipeDown');
+          }}
+          onClick={() => setModalVisible(false)}
+          onMove={data => console.log(data)}
+          enableSwipeDown={true}
+          onSwipeDown={() => setModalVisible(false)}
+        />
+      </Modal>
     </Content>
   );
 }

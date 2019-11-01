@@ -43,7 +43,6 @@ export default function Main(props) {
 
   useEffect(() => {
     _getData();
-    
   }, []);
 
   async function _getData() {
@@ -70,10 +69,13 @@ export default function Main(props) {
 
   function _renderItem(item, i) {
     return (
-      <Link key={i} onPress={() => props.navigation.navigate('NewsDetail', {item})}>
-        <CardItem>
+      <Link
+        style={{flex: 1, minHeight: 10}}
+        key={i}
+        onPress={() => props.navigation.navigate('NewsDetail', {item})}>
+        <CardItem style={{flex: 1}}>
           <Image
-            style={{aspectRatio: 6 / 4}}
+            style={{aspectRatio: 6 / 4, flex: 1}}
             source={{uri: item.imagemIntroducao.href}}
             resizeMode="contain"
           />
@@ -87,15 +89,15 @@ export default function Main(props) {
 
   return (
     <Content>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Nenhuma notícia encontrada!" />}
-          renderItem={({item, index}) => _renderItem(item, index)}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-          }
-        />
+      <FlatList
+        data={data}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<EmptyList text="Nenhuma notícia encontrada!" />}
+        renderItem={({item, index}) => _renderItem(item, index)}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+        }
+      />
     </Content>
   );
 }
