@@ -39,7 +39,7 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [events, setEvents] = useState(data ? data : []);
-  const [thumbnail, setThumbnail] = useState('');
+  const [thumbnail, setThumbnail] = useState();
   const [campaigns, setCampaigns] = useState(
     campaignsState ? campaignsState : [],
   );
@@ -48,10 +48,6 @@ export default function Main(props) {
 
   useEffect(() => {
     _getData();
-
-    if (campaignsState.length) {
-      setThumbnail(campaignsState[0].thumbnail);
-    }
   }, [campaigns]);
 
   async function _getData() {
@@ -75,6 +71,12 @@ export default function Main(props) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
+    }
+    if (campaignsState.length) {
+      setThumbnail(campaignsState[0].thumbnail);
+    }
+    else{
+      setThumbnail();
     }
   }
 

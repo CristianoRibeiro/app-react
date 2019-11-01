@@ -6,6 +6,7 @@ import {
   VOUCHERITEM,
   SCHEDULE,
   PRIZE,
+  PRIZECAMPAIGN,
   FLIGHTS,
   TRANSFER,
   EVENTITEM,
@@ -17,7 +18,9 @@ import {
   REGULATION,
   LOTTERY,
   NEWS,
-  BANNERCAMPAIGNS
+  BANNERCAMPAIGNS,
+  MATCHS,
+  MATCHITEM
 } from '~/reducers/types';
 
 const INITIAL_STATE = {
@@ -29,6 +32,7 @@ const INITIAL_STATE = {
   notification: [],
   schedule: [],
   prizes: [],
+  prizecampaigns: [],
   flights: [],
   transfer: [],
   banner: [],
@@ -40,6 +44,8 @@ const INITIAL_STATE = {
   regulation: [],
   lottery: [],
   news: [],
+  matchs: [],
+  matchitem: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -60,6 +66,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, schedule: action.payload};
     case PRIZE:
       return {...state, prizes: action.payload};
+    case PRIZECAMPAIGN:
+      return {...state, prizecampaigns: action.payload};
     case FLIGHTS:
       return {...state, flights: action.payload};
     case TRANSFER:
@@ -82,6 +90,10 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, lottery: action.payload};
     case NEWS:
       return {...state, news: action.payload};
+    case MATCHS:
+      return {...state, matchs: action.payload};
+    case MATCHITEM:
+      return {...state, matchitem: action.payload};
     default:
       return state;
   }

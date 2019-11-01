@@ -2,17 +2,17 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {Button, TextInput} from 'react-native-paper';
 import RNPickerSelect from 'react-native-picker-select';
-//import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-// export const Container = styled(LinearGradient).attrs({
-//   colors: ['#0F60A8', '#2f8038'],
-//   start: { x: 0, y: 0 },
-//   end: { x: 1, y: 1 },
-// })`
-//   flex: 1;
-//   padding-top: ${30 + getStatusBarHeight(true)}px;
-// `;
+export const Header = styled(LinearGradient).attrs({
+  colors: ['#FF7272', '#FF7272'],
+  start: {x: 1, y: 0},
+  end: {x: 1, y: 1},
+})`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
 
 export const Select = styled(RNPickerSelect).attrs({
   color: '#444',

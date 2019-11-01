@@ -13,7 +13,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
-import {Avatar, FAB} from 'react-native-paper';
+import {FAB} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -22,6 +22,7 @@ import api from '~/services/api';
 
 //Components
 import ListItem from '~/components/ListItem';
+import Avatar from '~/pages/Profile/Avatar';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   Title,
@@ -55,7 +56,6 @@ export default function Profile(props) {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(data ? data : User);
-  const [image, setImage] = useState({uri: user.avatar});
   const [birthdate, setBirthdate] = useState();
   const [error, setError] = useState(false);
 
@@ -66,50 +66,6 @@ export default function Profile(props) {
       setBirthdate(formattedDate);
     }
   }, []);
-
-  async function _uploadPhoto() {
-    const options = {
-      title: 'Selecione de onde quer importar o arquivo',
-      cancelButtonTitle: 'Cancelar',
-      takePhotoButtonTitle: 'Usar Camera',
-      chooseFromLibraryButtonTitle: 'Carregar da galeria',
-      width: 480,
-      height: 480,
-      cropping: true,
-    };
-
-    await ImagePicker.openPicker(options).then(async image => {
-      //alert(JSON.stringify(image));
-      let img = {
-        uri: image.path,
-        width: image.width,
-        height: image.height,
-        mime: image.mime,
-        type: 'image/jpeg',
-        name: image.path.substring(image.path.lastIndexOf('/') + 1),
-      };
-
-      setImage(img);
-
-      const data = new FormData();
-
-      data.append('image', img);
-      try {
-        let response = await api.post('/api/avatar', data);
-
-        if (response.data.success) {
-          await dispatch({type: 'USER', payload: response.data.user});
-        }
-
-        //alert(JSON.stringify(response));
-        if (__DEV__) {
-          console.tron.log(response.data);
-        }
-      } catch (error) {
-        Alert.alert(null, error.message);
-      }
-    });
-  }
 
   const iconSize = 32;
 
@@ -126,26 +82,7 @@ export default function Profile(props) {
             flex: 1,
             padding: 15,
           }}>
-          <View style={{alignItems: 'flex-end', flex: 1}}>
-            <Image
-              resizeMode="cover"
-              style={{
-                width: 180,
-                height: 180,
-                borderRadius: 90,
-                marginBottom: 15,
-              }}
-              defaultSource={require('~/assets/avatar/avatar.png')}
-              source={image}
-            />
-
-            <Link
-              rippleColor="rgba(0, 0, 0, .32)"
-              style={{marginTop: -40}}
-              onPress={() => _uploadPhoto()}>
-              <Avatar.Icon size={42} icon="folder" />
-            </Link>
-          </View>
+          <Avatar/>
 
           <TextDark style={{fontWeight: '700'}}>{user.name}</TextDark>
 

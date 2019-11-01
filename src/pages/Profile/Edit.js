@@ -20,6 +20,9 @@ import Modal from 'react-native-modal';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import {ActivityIndicator, Colors} from 'react-native-paper';
 import {MaskService} from 'react-native-masked-text';
+import ImagePicker from 'react-native-image-crop-picker';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Avatar from '~/pages/Profile/Avatar';
 
 import api from '~/services/api';
 
@@ -37,6 +40,7 @@ import {
   SubTitle,
   TextError,
   Select,
+  Header
 } from './styles';
 
 import {Container, Content} from '../../style';
@@ -56,6 +60,7 @@ export default function Main(props) {
   const [apcef, setApcef] = useState(user ? user.apcef : '');
   const [phone, setPhone] = useState(user ? user.phone : '');
   const [sex, setSex] = useState(user ? user.sex : '');
+  const [address_state, setState] = useState(user ? user.address_state : '');
   const [birthdate, setBirthdate] = useState(
     user ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '',
   );
@@ -63,6 +68,15 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {}, []);
+
+  function formataStringData(data) {
+    var dia  = data.split("/")[0];
+    var mes  = data.split("/")[1];
+    var ano  = data.split("/")[2];
+  
+    return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+    // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
+  }
 
   async function _login() {
     let p = await MaskService.toMask('only-numbers', phone);
@@ -75,6 +89,9 @@ export default function Main(props) {
         name,
         email,
         email_personal,
+        apcef,
+        sex,
+        birthdate: formataStringData(birthdate)
       });
 
       if (response.data.success) {
@@ -132,14 +149,14 @@ export default function Main(props) {
 
       if (!sex) {
         errors.sex = message;
-      } else if (sex.length < 14) {
-        errors.sex = message;
       }
 
       if (!birthdate) {
         errors.birthdate = message;
-      } else if (birthdate.length < 14) {
-        errors.birthdate = message;
+      }
+
+      if (!address_state) {
+        errors.address_state = message;
       }
 
       return errors;
@@ -155,7 +172,28 @@ export default function Main(props) {
   return (
     <Content>
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-        <StatusBar backgroundColor="#FF6666" barStyle="light-content" />
+
+        <Header>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialCommunityIcons name="account-circle" size={20} color={'#fff'} />
+
+            <TextLight>Mantenha seus dados atualizados</TextLight>
+          </View>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            
+          </View>
+        </Header>
+
+        <Avatar/>
 
         <KeyboardAvoidingView behavior={'padding'}>
           <Card>
@@ -246,19 +284,65 @@ export default function Main(props) {
             </Form>
             <TextError>{errors.phone}</TextError>
 
-            <Select
-              placeholder={{
-                label: 'Sexo',
-                value: sex,
-                color: '#9EA0A4',
-              }}
-              onValueChange={value => setSex(value)}
-              items={[
-                {label: 'Masculino', value: '1'},
-                {label: 'Feminino', value: '0'},
-              ]}
-            />
-            <TextError>{errors.sex}</TextError>
+            <View style={{backgroundColor: '#dfdfdf', padding: 8}}>
+              <Select
+                placeholder={{
+                  label: 'Sexo',
+                  value: null,
+                  color: '#9EA0A4',
+                }}
+                value={sex}
+                onValueChange={value => setSex(value)}
+                items={[
+                  {label: 'Masculino', value: 1},
+                  {label: 'Feminino', value: 0},
+                ]}
+              />
+            </View>
+
+            <View style={{backgroundColor: '#dfdfdf', padding: 8, marginTop: 10}}>
+              <Select
+                placeholder={{
+                  label: 'Estado',
+                  value: null,
+                  color: '#9EA0A4',
+                }}
+                value={address_state}
+                onValueChange={value => setState(value)}
+                items={[
+                  { value: 'AC', label: 'Acre'},
+                  { value: 'AL', label: 'Alagoas'},
+                  { value: 'AP', label: 'Amapá'},
+                  { value: 'AM', label: 'Amazonas'},
+                  { value: 'BA', label: 'Bahia'},
+                  { value: 'CE', label: 'Ceará'},
+                  { value: 'DF', label: 'Distrito Federal'},
+                  { value: 'ES', label: 'Espírito Santo'},
+                  { value: 'GO', label: 'Goiás'},
+                  { value: 'MA', label: 'Maranhão'},
+                  { value: 'MT', label: 'Mato Grosso'},
+                  { value: 'MS', label: 'Mato Grosso do Sul'},
+                  { value: 'MG', label: 'Minas Gerais'},
+                  { value: 'PA', label: 'Pará'},
+                  { value: 'PB', label: 'Paraíba'},
+                  { value: 'PR', label: 'Paraná'},
+                  { value: 'PE', label: 'Pernambuco'},
+                  { value: 'PI', label: 'Piauí'},
+                  { value: 'RJ', label: 'Rio de Janeiro'},
+                  { value: 'RN', label: 'Rio Grande do Norte'},
+                  { value: 'RS', label: 'Rio Grande do Sul'},
+                  { value: 'RO', label: 'Rondônia'},
+                  { value: 'RR', label: 'Roraima'},
+                  { value: 'SC', label: 'Santa Catarina'},
+                  { value: 'SP', label: 'São Paulo'},
+                  { value: 'SE', label: 'Sergipe'},
+                  { value: 'TO', label: 'Tocantins'},
+                  { value: 'EX', label: 'Estrangeiro'},
+                ]}
+              />
+            </View>
+
+            <TextError>{errors.address_state}</TextError>
 
             <Form>
               <Input

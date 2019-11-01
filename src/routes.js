@@ -53,8 +53,10 @@ import Cupons from '~/pages/Campaigns/Cupons';
 import Exchange from '~/pages/Campaigns/Exchange';
 import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
 import Match from '~/pages/Campaigns/Exchange/Match';
+import MatchItem from '~/pages/Campaigns/Exchange/MatchItem';
 import Regulation from '~/pages/Campaigns/Regulation';
 import Lottery from '~/pages/Campaigns/Lottery';
+import PrizeCampaign from '~/pages/Campaigns/Prize';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -198,19 +200,6 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    Recommendation: {
-      screen: Recommendation,
-      path: 'recommendation',
-      navigationOptions: {
-        drawerLabel: props => (
-          <DrawerItem
-            {...props}
-            title="Recomendar um amigo"
-            icon={require('~/assets/menu/chef.png')}
-          />
-        ),
-      },
-    },
     Prizes: {
       screen: Prize,
       path: 'prize',
@@ -327,6 +316,17 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
+    PrizeCampaign: {
+      screen: PrizeCampaign,
+      path: 'campaign/prize',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Prêmios',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
     FlightEvent: {
       screen: Flight,
       path: 'event/flight',
@@ -426,7 +426,7 @@ const MainNavigator = createStackNavigator(
       screen: ProfileEdit,
       path: 'profileedit',
       navigationOptions: {
-        headerTitle: 'Editar Perfil',
+        headerTitle: 'Atualizar Perfil',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -569,6 +569,26 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
+    Recommendation: {
+      screen: Recommendation,
+      path: 'recommendation',
+      navigationOptions: {
+        headerTitle: '',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    MatchItem: {
+      screen: MatchItem,
+      path: 'from/match',
+      navigationOptions: {
+        headerTitle: '',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
   },
   {
     initialRouteName: 'Main',
@@ -652,7 +672,7 @@ const Auth = createSwitchNavigator(
   },
 );
 
-const prefix = 'appfenae://';
+const prefix = 'vivafenae://';
 const Route = createAppContainer(Auth);
 const RouteApp = () => <Route uriPrefix={prefix} />;
 

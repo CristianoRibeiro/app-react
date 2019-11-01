@@ -118,54 +118,59 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
-    if (index < data.quiz.length) {
-      return (
-        <View>
-          <Title>{item.name}</Title>
 
-          <View style={{margin: 6}}>
-            <FlatList
-              style={{margimBottom: 50}}
-              data={JSON.parse(item.content)}
-              keyExtractor={(q, index) => index.toString()}
-              renderItem={(q, index) => (
-                <View key={index}>
-                  <ItemQuestion
-                    onPress={() => setSelected(q.index + 1)}
-                    style={{
-                      backgroundColor:
-                        selected === q.index + 1
-                          ? '#0058b8'
-                          : 'rgba(255,255,255, 0.6)',
-                    }}>
-                    <TextDark
+    if(data.quiz){
+      item = data.quiz[index];
+      if (index < data.quiz.length) {
+        return (
+          <View>
+            <Title>{item.name}</Title>
+  
+            <View style={{margin: 6}}>
+              <FlatList
+                style={{margimBottom: 50}}
+                data={JSON.parse(item.content)}
+                keyExtractor={(q, index) => index.toString()}
+                renderItem={(q, index) => (
+                  <View key={index}>
+                    <ItemQuestion
+                      onPress={() => setSelected(q.index + 1)}
                       style={{
-                        color: selected === q.index + 1 ? '#fff' : '#0058b8',
+                        backgroundColor:
+                          selected === q.index + 1
+                            ? '#0058b8'
+                            : 'rgba(255,255,255, 0.6)',
                       }}>
-                      {q.item}
-                    </TextDark>
-                  </ItemQuestion>
-                </View>
-              )}
-            />
+                      <TextDark
+                        style={{
+                          color: selected === q.index + 1 ? '#fff' : '#0058b8',
+                        }}>
+                        {q.item}
+                      </TextDark>
+                    </ItemQuestion>
+                  </View>
+                )}
+              />
+            </View>
+  
+            {!reload ? (
+              <Send onPress={() => _setData(item)}>
+                <TextLight>RESPONDER</TextLight>
+              </Send>
+            ) : (
+              <ActivityIndicator
+                animating={true}
+                size="large"
+                color={Colors.white}
+              />
+            )}
           </View>
-
-          {!reload ? (
-            <Send onPress={() => _setData(item)}>
-              <TextLight>RESPONDER</TextLight>
-            </Send>
-          ) : (
-            <ActivityIndicator
-              animating={true}
-              size="large"
-              color={Colors.white}
-            />
-          )}
-        </View>
-      );
-    } else {
-      return <EmptyList text="Nenhum quiz encontrado!" />;
+        );
+      } else {
+        return <EmptyList text="Nenhum quiz encontrado!" />;
+      }
     }
+    
   }
 
   return (
@@ -203,7 +208,7 @@ export default function Main(props) {
           ListEmptyComponent={<EmptyList text="Nenhum quiz encontrado!" />}
           renderItem={({item, index}) => _renderItem(item)}
         /> */}
-        {_renderItem(data.quiz[index])}
+        {_renderItem(data)}
       </ScrollView>
     </Content>
   );

@@ -166,7 +166,7 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <Link onPress={() => _handleScheen('Awards')}>
+            <Link onPress={() => props.navigation.navigate('PrizeCampaign')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_premiacao.png')}
@@ -209,6 +209,25 @@ export default function Main(props) {
                 <TextDark>REGRAS </TextDark>
               </Card>
             </Link>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+
+            <Link onPress={() => props.navigation.navigate('Recommendation')}>
+              <Card>
+                <Image
+                  source={require('~/assets/icons/thumbs-up.png')}
+                  style={{
+                    height: 50,
+                    width: 50,
+                  }}
+                  resizeMode="contain"
+                />
+                <TextDark>RECOMENDAR UM AMIGO </TextDark>
+              </Card>
+            </Link>
+
+            {/* <View style={{flex:1}}></View> */}
           </View>
         </View>
       </ScrollView>

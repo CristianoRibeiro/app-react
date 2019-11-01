@@ -46,12 +46,11 @@ import {
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
-  const cards = useSelector(state => state.cards);
+  const matchs = useSelector(state => state.matchs);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [modalUser, setModalUser] = useState(false);
   const [selected, setSelected] = useState(null);
   const [card, setCard] = useState([]);
   const [users, setUsers] = useState([]);
@@ -65,44 +64,14 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    setLoading(true);
     try {
-      await setCard(props.navigation.state.params.item);
-      let response = await api.post('/api/quizzes');
-      let u = await api.post('/api/cards/exchange/users', {
-        number: props.navigation.state.params.item.number,
-      });
-      setUsers(u.data);
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(u.data);
-      }
-      await dispatch({type: 'QUIZZES', payload: response.data});
-
-      //setNotifications(response.data);
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-  }
-
-  async function _setData(item) {
-    try {
-      // let response = await api.post('/api/quizzes/answer', {
-      //   quiz_id: item.id,
-      //   correct: selected,
-      // });
+      let response = await api.get('/api/cards/match');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-
-      Alert.alert(null, response.data.message);
-
-      if (response.data.success) {
-        await dispatch({type: 'QUIZZES', payload: []});
-        setDate('');
-      }
+      await dispatch({type: 'MATCHS', payload: response.data});
 
       //setNotifications(response.data);
     } catch (error) {
@@ -110,187 +79,77 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoading(false);
   }
 
-  function _handleCard(item) {
+  async function _handleItem(item) {
     if (__DEV__) {
       console.tron.log(item);
     }
-    setModal(false);
-    setSelected(item);
-  }
+    await dispatch({type: 'MATCHITEM', payload: item});
 
-  function _renderItem(item, i) {
-    return (
-      <Link onPress={() => _handleCard(item)} key={i}>
-        <CardItem
-          style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <CardImage>
-            <Image
-              style={{aspectRatio: 1}}
-              source={{uri: item.avatar}}
-              resizeMode="contain"
-            />
-          </CardImage>
-
-          <View
-            style={{
-              flex: 4,
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              marginHorizontal: 10,
-            }}>
-            <TextDark>{item.name}</TextDark>
-          </View>
-        </CardItem>
-      </Link>
-    );
-  }
-
-  function _renderUser() {
-    return (
-      <View style={{alignItems: 'center'}}>
-        <Image
-          resizeMode="cover"
-          style={{
-            width: 100,
-            height: 100,
-            borderRadius: 50,
-            margin: 15,
-          }}
-          defaultSource={require('~/assets/avatar/avatar.png')}
-          source={{uri: selected ? selected.avatar : ''}}
-        />
-
-        {selected ? (
-          <TextDark style={{fontWeight: '800', fontSize: 12}}>
-            {selected.name}
-          </TextDark>
-        ) : null}
-      </View>
-    );
+    props.navigation.navigate('MatchItem');
   }
 
   return (
     <Content>
-      <ScrollView
+      <FlatList
+        data={matchs}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={
+          <EmptyList text="Você não tem figurinhas repetidas!" />
+        }
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-        }>
-        <Header style={{alignItems: 'center'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="ticket-outline"
-              size={20}
-              color={'#fff'}
-            />
-
-            <TextLight style={{fontSize: 18, fontWeight: '800'}}>
-              Deu Match!
-            </TextLight>
-          </View>
-          <TextLight>Vamos trocar?</TextLight>
-        </Header>
-
-        <Card>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <View style={{alignItems: 'center'}}>
-              <Image
-                resizeMode="cover"
+        }
+        renderItem={({item, index}) => (
+          <Link
+            key={index}
+            onPress={() => _handleItem(item)}>
+            <CardItem>
+              <View
                 style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 5,
-                  margin: 15,
-                }}
-                defaultSource={require('~/assets/avatar/avatar.png')}
-                source={{uri: card.image}}
-              />
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  resizeMode="cover"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 5,
+                    margin: 2,
+                  }}
+                  defaultSource={require('~/assets/avatar/avatar.png')}
+                  source={{uri: user.avatar}}
+                />
 
-              {/* <TextDark style={{fontWeight: '800', fontSize: 12}}>
-                  {user.name}
-                </TextDark> */}
-            </View>
+                <Image
+                  source={require('~/assets/icons/ico_trocas.png')}
+                  style={{
+                    height: 40,
+                    width: 40,
+                  }}
+                  resizeMode="contain"
+                />
 
-            <Image
-              source={require('~/assets/icons/ico_trocas.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="contain"
-            />
-
-            {_renderUser()}
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: '#ddd',
-              marginTop: 15,
-            }}></View>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: 15,
-            }}>
-            <TextDark style={{textAlign: 'center'}}>
-              Clique no ícone abaixo para adicionar as figurinhas que deseja
-              trocar
-            </TextDark>
-          </View>
-
-          {selected ? (
-            <Send
-              style={{marginBottom: 15, marginTop: 10}}
-              onPress={() => setModal(false)}>
-              <TextLight>OK</TextLight>
-            </Send>
-          ) : null}
-        </Card>
-
-        <View style={{alignItems: 'center', marginTop: 25}}>
-          <Submit onPress={() => setModal(true)}>
-            <MaterialIcons name="add" size={40} color={'#fff'} />
-          </Submit>
-        </View>
-
-        <Modal
-          visible={modal}
-          style={{marginHorizontal: 0, marginBottom: 0}}
-          transparent={true}
-          onRequestClose={() => setModal(false)}
-          onBackdropPress={() => setModal(false)}>
-          <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
-            <FlatList
-              data={users}
-              numColumns={3}
-              keyExtractor={(item, index) => index.toString()}
-              ListEmptyComponent={
-                <EmptyList text="Nenhum usuário encontrado!" />
-              }
-              renderItem={({item, index}) => _renderItem(item, index)}
-            />
-            <Send
-              style={{marginBottom: 15, marginTop: 10}}>
-              <TextLight>OK</TextLight>
-            </Send>
-          </View>
-        </Modal>
-      </ScrollView>
+                <Image
+                  resizeMode="cover"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 5,
+                    margin: 2,
+                  }}
+                  defaultSource={require('~/assets/avatar/avatar.png')}
+                  source={{uri: item.url}}
+                />
+              </View>
+            </CardItem>
+          </Link>
+        )}
+      />
     </Content>
   );
 }

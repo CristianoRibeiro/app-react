@@ -102,7 +102,7 @@ export default function Main(props) {
             response.data.access_token,
           );
 
-          props.navigation.navigate('MainNavigator');
+          props.navigation.navigate('Auth');
         } else {
           Alert.alert(null, response.data.message);
           setModal(false);
