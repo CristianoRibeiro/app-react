@@ -31,7 +31,7 @@ export const TextDark = styled.Text`
 `;
 
 export const NotificationTitle = styled.Text`
-  font-size: 14px;
+  font-size: 12px;
   color: #0058b8;
   font-weight: bold;
   text-transform: uppercase;
@@ -63,9 +63,11 @@ export const Form = styled.View`
 `;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
   border-radius: 5px;
-  padding: 10px 10px;
+  padding: 5px 5px;
   background-color: #fff;
   display: flex;
   flex-direction: row;

@@ -137,7 +137,7 @@ const DrawerRoutes = createDrawerNavigator(
   {
     Drawer: {
       screen: TabsRoute,
-      path: 'main',
+      path: 'tabs',
       navigationOptions: {
         drawerLabel: props => (
           <DrawerItem

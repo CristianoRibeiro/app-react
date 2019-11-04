@@ -170,11 +170,11 @@ export default function Profile(props) {
         </Card>
       </ScrollView>
 
-      <FAB
+      {/* <FAB
         style={styles.fab}
         icon="edit"
         onPress={() => props.navigation.navigate('ProfileEdit')}
-      />
+      /> */}
     </Content>
   );
 }

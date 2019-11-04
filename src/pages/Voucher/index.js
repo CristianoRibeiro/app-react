@@ -44,7 +44,6 @@ export default function Main(props) {
   const data = useSelector(state => state.voucher);
   const dispatch = useDispatch();
 
-  const [vouchers, setVouchers] = useState(data);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -61,7 +60,6 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
       await dispatch({type: 'VOUCHER', payload: response.data});
-      setVouchers(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -97,7 +95,7 @@ export default function Main(props) {
     <Content>
       <FlatList
         style={{margimBottom: 75}}
-        data={vouchers}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhum voucher encontrado!" />}
         renderItem={({item}) => _renderItem(item)}

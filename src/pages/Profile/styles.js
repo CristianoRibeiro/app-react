@@ -97,6 +97,7 @@ export const Submit = styled.TouchableOpacity`
 export const Send = styled(Button).attrs({
   mode: 'contained',
 })`
+  flex: 1;
   background: #0058b8;
   border-radius: 5px;
   border: 1px solid #fff;

@@ -70,6 +70,7 @@ export default function Main(props) {
         if (response.data.success) {
           await dispatch({type: 'VOUCHER', payload: response.data.vouchers});
         }
+        props.navigation.goBack();
       } catch (error) {
         if (__DEV__) {
           console.tron.log(error.message);
