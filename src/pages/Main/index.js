@@ -3,10 +3,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
-  StyleSheet,
-  Dimensions,
-  ImageBackground,
-  StatusBar,
   View,
   ScrollView,
   KeyboardAvoidingView,
@@ -18,7 +14,6 @@ import FitImage from 'react-native-fit-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Banner from '~/pages/Main/Banner';
 import BannerCampaigns from '~/pages/Main/BannerCampaigns';
-import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 

@@ -41,9 +41,9 @@ export default function Main(props) {
     _bootstrapAsync();
 
     return () => {
-      OneSignal.removeEventListener('received', this.onReceived);
-      OneSignal.removeEventListener('opened', this.onOpened);
-      OneSignal.removeEventListener('ids', this.onIds);
+      OneSignal.removeEventListener('received', onReceived);
+      OneSignal.removeEventListener('opened', onOpened);
+      OneSignal.removeEventListener('ids', onIds);
     };
   }, []);
 
@@ -74,9 +74,9 @@ export default function Main(props) {
       //Api teste
       //OneSignal.init("c041a070-4834-4609-84f1-3af810fab71d");
 
-      OneSignal.addEventListener('received', this.onReceived);
-      OneSignal.addEventListener('opened', this.onOpened);
-      OneSignal.addEventListener('ids', this.onIds);
+      OneSignal.addEventListener('received', onReceived);
+      OneSignal.addEventListener('opened', onOpened);
+      OneSignal.addEventListener('ids', onIds);
 
       if (user) {
         OneSignal.sendTags({

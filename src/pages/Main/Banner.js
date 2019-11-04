@@ -61,14 +61,6 @@ export default function Banner({shouldLoad = false, aspectRatio = 2.2}) {
     }
   }
 
-  function handleAnimate() {
-    Animated.timing(opacity, {
-      duration: 900,
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
-  }
-
   function _renderItemCarousel(item, index) {
     return (
       <TouchableOpacity

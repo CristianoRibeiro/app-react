@@ -34,11 +34,7 @@ export default function Banner() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (true) {
-      setTimeout(() => {
-        setLoaded(true);
-      }, 1000);
-    }
+    
   }, []);
 
   useEffect(() => {
@@ -59,14 +55,6 @@ export default function Banner() {
         console.tron.log(error.message);
       }
     }
-  }
-
-  function handleAnimate() {
-    Animated.timing(opacity, {
-      duration: 900,
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
   }
 
   function _renderItemCarousel(item, index) {

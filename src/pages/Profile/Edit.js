@@ -58,11 +58,11 @@ export default function Main(props) {
   );
   const [matricula, setMatricula] = useState(user ? user.matricula : '');
   const [apcef, setApcef] = useState(user ? user.apcef : '');
-  const [phone, setPhone] = useState(user ? user.phone : '');
+  const [phone, setPhone] = useState(user.phone ? user.phone : '');
   const [sex, setSex] = useState(user ? user.sex : '');
   const [address_state, setState] = useState(user ? user.address_state : '');
   const [birthdate, setBirthdate] = useState(
-    user ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '',
+    user.birthdate ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '',
   );
   const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
@@ -87,8 +87,8 @@ export default function Main(props) {
       let response = await api.post('/api/auth/update', {
         phone: p.trim(),
         name,
-        email,
-        email_personal,
+        email: email.trim(),
+        email_personal: email_personal.trim(),
         apcef,
         sex,
         birthdate: formataStringData(birthdate)
@@ -212,7 +212,7 @@ export default function Main(props) {
 
             <Form>
               <Input
-                value={email.trim()}
+                value={email}
                 error={!email}
                 maxLength={14}
                 onChangeText={setEmail}
@@ -226,7 +226,7 @@ export default function Main(props) {
 
             <Form>
               <Input
-                value={email_personal.trim()}
+                value={email_personal}
                 error={!email_personal}
                 maxLength={14}
                 onChangeText={setEmailPersonal}
