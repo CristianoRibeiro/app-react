@@ -1,5 +1,8 @@
 import {
   USER,
+  USERS,
+  INDICATED,
+  CONVERTED,
   EVENT,
   VOUCHER,
   NOTIFICATION,
@@ -25,6 +28,9 @@ import {
 
 const INITIAL_STATE = {
   user: [],
+  users: [],
+  indicated: [],
+  converted: [],
   event: [],
   eventitem: [],
   voucher: [],
@@ -52,6 +58,12 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER:
       return {...state, user: action.payload};
+    case USERS:
+      return {...state, users: action.payload};
+    case INDICATED:
+      return {...state, indicated: action.payload};
+    case CONVERTED:
+      return {...state, converted: action.payload};
     case EVENT:
       return {...state, event: action.payload};
     case EVENTITEM:

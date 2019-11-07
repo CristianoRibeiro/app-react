@@ -1,4 +1,7 @@
 export const USER = 'USER';
+export const USERS = 'USERS';
+export const INDICATED = 'INDICATED';
+export const CONVERTED = 'CONVERTED';
 export const EVENT = 'EVENT';
 export const VOUCHER = 'VOUCHER';
 export const NOTIFICATION = 'NOTIFICATION';

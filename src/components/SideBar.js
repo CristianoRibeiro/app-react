@@ -73,7 +73,7 @@ export default function SiderBar(props) {
                 width: 150,
                 borderRadius: 75,
               }}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </View>
 

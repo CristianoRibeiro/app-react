@@ -22,7 +22,6 @@ import Profile from '~/pages/Profile';
 import ProfileEdit from '~/pages/Profile/Edit';
 import News from '~/pages/News';
 import NewsDetail from '~/pages/News/Detail';
-import Recommendation from '~/pages/Recommendation';
 
 //Event
 import Event from '~/pages/Event';
@@ -58,6 +57,9 @@ import MatchItem from '~/pages/Campaigns/Exchange/MatchItem';
 import Regulation from '~/pages/Campaigns/Regulation';
 import Lottery from '~/pages/Campaigns/Lottery';
 import PrizeCampaign from '~/pages/Campaigns/Prize';
+import Recommendation from '~/pages/Campaigns/Recommendation';
+import RecommendationIndicated from '~/pages/Campaigns/Recommendation/Indicated';
+import RecommendationConverted from '~/pages/Campaigns/Recommendation/Converted';
 
 //Components
 import DrawerItem from '~/components/DrawerItem';
@@ -267,6 +269,52 @@ const TabsExchange = createMaterialTopTabNavigator(
   },
 );
 
+
+const TabsRecommendation = createMaterialTopTabNavigator(
+  {
+    Recommendation: {
+      screen: Recommendation,
+      path: 'recomendation',
+      navigationOptions: {
+        title: 'Todos',
+        tabBarColor: '#fff',
+      },
+    },
+    RecommendationIndicated: {
+      screen: RecommendationIndicated,
+      path: 'recommendation/indicated',
+      navigationOptions: {
+        title: 'Meus Indicados',
+        tabBarColor: '#fff',
+      },
+    },
+    RecommendationConverted: {
+      screen: RecommendationConverted,
+      path: 'recommendation/converted',
+      navigationOptions: {
+        title: 'Convertidos',
+        tabBarColor: '#fff',
+      },
+    },
+  },
+  {
+    initialRouteName: 'Recommendation',
+    activeColor: '#222',
+    tabBarOptions: {
+      activeTintColor: '#fff',
+      inactiveTintColor: '#fff',
+      showLabel: true,
+      showIcon: false,
+      scrollEnabled: false,
+      indicatorStyle: {backgroundColor: '#fff'},
+      style: {
+        backgroundColor: '#FF6666',
+      },
+      labelStyle: {fontSize: 11}
+    },
+  },
+);
+
 const MainNavigator = createStackNavigator(
   {
     Main: {
@@ -448,7 +496,7 @@ const MainNavigator = createStackNavigator(
       screen: CampaignsItem,
       path: 'campaignsitem',
       navigationOptions: {
-        headerTitle: '',
+        headerTitle: 'Campanha',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -581,16 +629,6 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
-    Recommendation: {
-      screen: Recommendation,
-      path: 'recommendation',
-      navigationOptions: {
-        headerTitle: '',
-        headerStyle: {
-          backgroundColor: '#FF6666',
-        },
-      },
-    },
     MatchItem: {
       screen: MatchItem,
       path: 'from/match',
@@ -598,6 +636,23 @@ const MainNavigator = createStackNavigator(
         headerTitle: '',
         headerStyle: {
           backgroundColor: '#FF6666',
+        },
+      },
+    },
+    TabsRecommendation: {
+      screen: TabsRecommendation,
+      path: 'tabs/recomentation',
+      navigationOptions: {
+        headerTitle: 'Indicações',
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          backgroundColor: '#FF6666',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
         },
       },
     },

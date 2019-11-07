@@ -77,12 +77,20 @@ export default function Main(props) {
     }
   }
 
+  function _indicate(){
+    if (user.associated) {
+      props.navigation.navigate('TabsRecommendation');
+    } else {
+      Alert.alert(null, 'https://associacao.fenae.org.br/');
+    }
+  }
+
   return (
     <Content>
       <ScrollView
-       refreshControl={
-        <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-      }>
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+        }>
         <View style={{flex: 1}}>
           <FitImage
             source={{uri: props.navigation.state.params.item.thumbnail}}
@@ -162,7 +170,7 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>SORTEIO </TextDark>
+                <TextDark>SORTEADOS </TextDark>
               </Card>
             </Link>
 
@@ -176,13 +184,13 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>PREMIAÇÃO </TextDark>
+                <TextDark>MEUS PRÊMIOS </TextDark>
               </Card>
             </Link>
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('NewsCampaigns')}>
+            {/* <Link onPress={() => props.navigation.navigate('NewsCampaigns')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ico_noticias.png')}
@@ -194,7 +202,7 @@ export default function Main(props) {
                 />
                 <TextDark>NOTÍCIAS </TextDark>
               </Card>
-            </Link>
+            </Link> */}
 
             <Link onPress={() => props.navigation.navigate('Regulation')}>
               <Card>
@@ -206,14 +214,11 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>REGRAS </TextDark>
+                <TextDark>REGULAMENTO </TextDark>
               </Card>
             </Link>
-          </View>
 
-          <View style={{flexDirection: 'row'}}>
-
-            <Link onPress={() => props.navigation.navigate('Recommendation')}>
+            <Link onPress={() => _indicate()}>
               <Card>
                 <Image
                   source={require('~/assets/icons/thumbs-up.png')}
@@ -223,7 +228,24 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>RECOMENDAR UM AMIGO </TextDark>
+                <TextDark>{user.associated ? 'INDIQUE UM AMIGO': 'ASSOCIE-SE'} </TextDark>
+              </Card>
+            </Link>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            
+            <Link onPress={() => Alert.alert(null, 'Não disponível')}>
+              <Card>
+                <Image
+                  source={require('~/assets/icons/top-three.png')}
+                  style={{
+                    height: 50,
+                    width: 50,
+                  }}
+                  resizeMode="contain"
+                />
+                <TextDark>RANKING DAS UNIDADES </TextDark>
               </Card>
             </Link>
 

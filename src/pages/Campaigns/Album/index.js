@@ -42,9 +42,7 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    return () => {
-      _getData();
-    };
+    _getData();
   }, []);
 
   async function _getData() {
@@ -99,7 +97,7 @@ export default function Main(props) {
 
   return (
     <Content style={{flex: 1}}>
-      <Header>
+      {/* <Header>
         <View
           style={{
             flexDirection: 'row',
@@ -119,7 +117,7 @@ export default function Main(props) {
             {date}
           </TextLight>
         </View>
-      </Header>
+      </Header> */}
       <View style={{margimBottom: 50}}>
         <FlatList
           data={data.cards}

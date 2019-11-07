@@ -69,23 +69,23 @@ export default function Main(props) {
 
   function _renderItem(item, i) {
     return (
-      <Link
-        style={{flex: 1, minHeight: 20}}
-        key={i}
-        onPress={() => props.navigation.navigate('NewsDetail', {item})}>
-        <CardItem style={{flex: 1}}>
-          {item.imagemIntroducao.href ? (
-            <Image
-              style={{aspectRatio: 6 / 4, flex: 1}}
-              source={{uri: item.imagemIntroducao.href}}
-              resizeMode="contain"
-            />
-          ) : null}
+      <CardItem style={{flex: 1}}>
+        {item.imagemIntroducao.href ? (
+          <Image
+            style={{aspectRatio: 6 / 4, flex: 1}}
+            source={{uri: item.imagemIntroducao.href}}
+            resizeMode="contain"
+          />
+        ) : null}
+        <Link
+          style={{flex: 1, minHeight: 20}}
+          key={i}
+          onPress={() => props.navigation.navigate('NewsDetail', {item})}>
           <View style={{margin: 8}}>
             <SubTitle>{item.introducao}</SubTitle>
           </View>
-        </CardItem>
-      </Link>
+        </Link>
+      </CardItem>
     );
   }
 
@@ -93,6 +93,8 @@ export default function Main(props) {
     <Content>
       <FlatList
         data={data}
+        style={{flex: 1}}
+        initialNumToRender={10}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhuma notícia encontrada!" />}
         renderItem={({item, index}) => _renderItem(item, index)}

@@ -87,6 +87,7 @@ export default function Profile(props) {
           <TextDark style={{fontWeight: '700'}}>{user.name}</TextDark>
 
           <TextDark>Matrícula: {user.matricula}</TextDark>
+          <TextDark>{user.apcef}</TextDark>
         </View>
 
         <Card>

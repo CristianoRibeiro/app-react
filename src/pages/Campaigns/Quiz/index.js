@@ -14,6 +14,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
+import CountDown from 'react-native-countdown-component';
 import {ActivityIndicator, Colors} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
@@ -58,12 +59,6 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
-      if (data.time) {
-        const firstDate = parseISO(data.time);
-        const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
-        setDate(formattedDate);
-      }
-
       let response = await api.post('/api/quizzes');
       //alert(JSON.stringify(response));
       if (__DEV__) {
@@ -71,6 +66,11 @@ export default function Main(props) {
       }
       await dispatch({type: 'QUIZZES', payload: response.data});
 
+      if (response.data.time) {
+        // const firstDate = parseISO(response.data.time);
+        // const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
+        setDate(response.data.time);
+      }
       //setNotifications(response.data);
     } catch (error) {
       if (__DEV__) {
@@ -99,8 +99,7 @@ export default function Main(props) {
           //await dispatch({type: 'QUIZZES', payload: response.data});
           if (index < data.quiz.length) {
             setIndex(index + 1);
-          }
-          else{
+          } else {
             _getData();
           }
           setSelected(null);
@@ -118,14 +117,23 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
-
-    if(data.quiz){
+    if (data.quiz) {
       item = data.quiz[index];
       if (index < data.quiz.length) {
         return (
           <View>
+            {/* <View style={{marginTop: 5}}>
+              <CountDown
+                until={item.remaining_time}
+                //onFinish={() => Alert.alert(null, 'Tempo encerado!')}
+                size={20}
+                timeToShow={['H', 'M', 'S']}
+                timeLabels={{d: '', h: '', m: '', s: ''}}
+              />
+            </View> */}
+
             <Title>{item.name}</Title>
-  
+
             <View style={{margin: 6}}>
               <FlatList
                 style={{margimBottom: 50}}
@@ -152,7 +160,7 @@ export default function Main(props) {
                 )}
               />
             </View>
-  
+
             {!reload ? (
               <Send onPress={() => _setData(item)}>
                 <TextLight>RESPONDER</TextLight>
@@ -170,7 +178,6 @@ export default function Main(props) {
         return <EmptyList text="Nenhum quiz encontrado!" />;
       }
     }
-    
   }
 
   return (
@@ -195,11 +202,12 @@ export default function Main(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <TextLight style={{fontSize: 22, fontWeight: '800'}}>
+            <TextLight style={{fontSize: 15, fontWeight: '700'}}>
               {date}
             </TextLight>
           </View>
         </Header>
+
 
         {/* <FlatList
           style={{margimBottom: 50}}

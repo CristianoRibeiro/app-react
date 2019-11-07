@@ -39,13 +39,14 @@ export const TextLight = styled.Text`
   font-size: 14;
   color: #fff;
   font-weight: 600;
-  padding: 0 20px;
+  padding: 0 10px;
 `;
 
 export const TextDark = styled.Text`
   font-size: 14px;
   color: #333;
   font-weight: 600;
+  padding: 0 10px;
 `;
 
 export const Form = styled.View`
@@ -104,8 +105,7 @@ export const Send = styled(Button).attrs({
 `;
 
 export const Link = styled.TouchableOpacity`
-  flex: 1;
-  padding: 14px;
+  padding: 5px;
   color: #222;
 `;
 

@@ -112,7 +112,6 @@ export default function Profile(props) {
         flex: 1,
         padding: 15,
       }}>
-      <View style={{alignItems: 'flex-end', flex: 1}}>
         <Image
           resizeMode="cover"
           style={{
@@ -125,13 +124,26 @@ export default function Profile(props) {
           source={image}
         />
 
-        <Link
-          rippleColor="rgba(0, 0, 0, .32)"
-          style={{marginTop: -40}}
-          onPress={() => _uploadPhoto()}>
-          <Avatar.Icon size={42} icon="folder" />
-        </Link>
-      </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 1,
+            backgroundColor: 'rgba(000,000,000, 0.1)',
+            paddingLeft: 10,
+            borderRadius: 40,
+            padding: 0
+          }}>
+          <TextDark>Editar Foto</TextDark>
+
+          <Link
+            rippleColor="rgba(0, 0, 0, .32)"
+            style={{marginVertical: 0}}
+            onPress={() => _uploadPhoto()}>
+            <Avatar.Icon size={42} icon="folder" />
+          </Link>
+        </View>
     </View>
   );
 }

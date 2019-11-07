@@ -34,7 +34,7 @@ export const TextLight = styled.Text`
 `;
 
 export const TextDark = styled.Text`
-  font-size: 16;
+  font-size: 14;
   margin-top: 10px;
   color: #444;
   font-weight: 700;

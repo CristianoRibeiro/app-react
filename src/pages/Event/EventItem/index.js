@@ -11,18 +11,20 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Linking,
+  Alert
 } from 'react-native';
 
 import api from '~/services/api';
 
 import {Header, TextDark, Card, Link} from './styles';
-import {Container, Content, Title} from '../../../style';
+import {Container, Content, Title} from '~/style';
 import {Event} from '~/model/Event';
 
 export default function Main(props) {
   const dispatch = useDispatch();
 
   const [item, setItem] = useState(Event);
+  const [voucher, setVoucher] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -36,6 +38,7 @@ export default function Main(props) {
       if (props.navigation.state.params.item) {
         setItem(props.navigation.state.params.item);
         //alert(JSON.stringify(props.navigation.state.params.item.prizes));
+
         try {
           let response = await api.get(`/api/voucher/${props.navigation.state.params.item.id}`);
           //alert(JSON.stringify(response));
@@ -43,7 +46,8 @@ export default function Main(props) {
             console.tron.log(response.data);
           }
           await dispatch({type: 'VOUCHERITEM', payload: response.data});
-          //setNotifications(response.data);
+          setVoucher(response.data);
+          
         } catch (error) {
           if (__DEV__) {
             console.tron.log(error.message);
@@ -98,6 +102,18 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+  }
+
+  async function _voucherItem(){
+   
+      //alert(JSON.stringify(voucher));
+      if(voucher){
+        props.navigation.navigate('VoucherItem');
+      }
+      else{
+        Alert.alert(null, 'Você não possui ingresso!');
+      }
+      
   }
 
   return (
@@ -155,7 +171,7 @@ export default function Main(props) {
 
         <View style={{marginBottom: 70}}>
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('VoucherItem')}>
+            <Link onPress={() => _voucherItem()}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ticket.png')}
