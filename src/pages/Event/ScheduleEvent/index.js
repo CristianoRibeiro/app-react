@@ -20,7 +20,7 @@ import EmptyList from '~/components/EmptyList';
 import api from '~/services/api';
 
 //Styles
-import {Container, Content} from '../../style';
+import {Container, Content} from '~/style';
 
 import {
   EventTitle,
@@ -32,6 +32,7 @@ import {
   Link,
   CardImage,
   SubTitle,
+  TextDark,
 } from './styles';
 
 export default function Main(props) {
@@ -50,16 +51,23 @@ export default function Main(props) {
 
   function _renderItem(item) {
     const time = item.start.substr(10, 6);
-    let firstDate = item.start.substr(0, 10).split('/').reverse().join('-');
-    firstDate = parseISO(firstDate+time);
+    let firstDate = item.start
+      .substr(0, 10)
+      .split('/')
+      .reverse()
+      .join('-');
+    firstDate = parseISO(firstDate + time);
     const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
     return (
-      <Card>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <EventDate>{formattedDate}</EventDate>
-          <SubTitle>{item.content}</SubTitle>
-        </View>
-      </Card>
+      <Link onPress={() => props.navigation.navigate('ScheduleEventDetail', {item})}>
+        <Card>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <EventDate>{formattedDate}</EventDate>
+            <TextDark>{item.title}</TextDark>
+            <SubTitle>{item.speaker}</SubTitle>
+          </View>
+        </Card>
+      </Link>
     );
   }
 

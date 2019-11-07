@@ -1,6 +1,7 @@
 export const User = {
     "id": "",
     "avatar": "",
+    "append_avatar": "",
     "name": "",
     "email": "",
     "email_personal": "",

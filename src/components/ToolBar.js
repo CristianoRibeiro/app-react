@@ -55,7 +55,7 @@ class HeaderApp extends React.Component {
             <Image
               resizeMode="contain"
               style={{ height: 35, maxWidth: 150 }}
-              source={require("../assets/logo.png")}
+              source={require("../assets/logo_cinza.png")}
             />
           </View>
 

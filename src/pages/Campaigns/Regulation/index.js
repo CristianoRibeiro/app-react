@@ -13,6 +13,7 @@ import {
   FlatList,
   RefreshControl,
   Alert,
+  Linking,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
@@ -70,26 +71,38 @@ export default function Main(props) {
     setLoading(false);
   }
 
+  function _openUrl(url) {
+    try {
+      Linking.canOpenURL(url).then(supported => {
+        if (supported) {
+          Linking.openURL(url).catch(err =>
+            console.error('An error occurred', err),
+          );
+        }
+      });
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
   return (
     <Content>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-
         <FlatList
           style={{margimBottom: 50}}
           data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index}) => (
             <View key={index}>
-              <Title style={{marginBottom: 5}}>{item.title}</Title>
-              <Card>
-                <TextDark>
-                  {item.regulation}
-                </TextDark>
-              
-              </Card>
+              <Link onPress={() => _openUrl(item.url)}>
+                <Card>
+                  <Title style={{marginBottom: 5}}>{item.title}</Title>
+                  {/* <TextDark>{item.regulation}</TextDark> */}
+                </Card>
+              </Link>
             </View>
           )}
         />

@@ -68,9 +68,14 @@ export default function Main(props) {
     setLoading(false);
   }
 
+ async function _handleScreen(item){
+  await dispatch({type: 'VOUCHERITEM', payload: item});
+  props.navigation.navigate('VoucherItem')
+ }
+
   function _renderItem(item) {
     return (
-      <Link onPress={() => props.navigation.navigate('VoucherItem', {item})}>
+      <Link onPress={() => _handleScreen(item)}>
         <Card style={{flexDirection: 'row'}}>
           <Image
             resizeMode="cover"

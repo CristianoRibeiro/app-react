@@ -21,7 +21,8 @@ export const Content = styled(LinearGradient).attrs({
 `;
 
 export const Title = styled.Text`
-  font-size: 32px;
+  font-size: 28px;
+  text-align: center;
   color: #FFF;
   font-weight: bold;
   padding: 0 20px;

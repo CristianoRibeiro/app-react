@@ -43,36 +43,20 @@ import {Voucher} from '~/model/Voucher';
 
 export default function Profile(props) {
   const user = useSelector(state => state.user);
+  const voucheritem = useSelector(state => state.voucheritem);
   //const dispatch = useDispatch();
 
-  const [data, setData] = useState(Voucher);
+  const [data, setData] = useState(voucheritem ? voucheritem : Voucher);
   const [loading, setLoading] = useState(Voucher);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     //console.tron.log(props.navigation.state.params.item);
     //alert(JSON.stringify(props.navigation.state.params.item));
-    _getVoucher();
   }, []);
 
-  async function _getVoucher() {
-    setLoading(true);
-    try {
-      if (props.navigation.state.params.item) {
-        if (__DEV__) {
-          console.tron.log(props.navigation.state.params.item);
-        }
-        setData(props.navigation.state.params.item);
-      }
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-    setLoading(false);
-  }
-
   const iconSize = 32;
+  
   return (
     <Content source={require('~/assets/bg-login.jpg')} resizeMode="cover">
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
@@ -117,7 +101,7 @@ export default function Profile(props) {
                   style={{width: 180, height: 180, borderRadius: 90}}
                   defaultSource={require('~/assets/avatar/avatar.png')}
                   source={{
-                    uri: user.avatar,
+                    uri: user.append_avatar,
                   }}
                 />
               </View>

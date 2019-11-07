@@ -39,7 +39,8 @@ import Transfer from '~/pages/Event/Transfer';
 import Streaming from '~/pages/Event/Streaming';
 import Info from '~/pages/Event/Info';
 import Faq from '~/pages/Event/Faq';
-import ScheduleEvent from '~/pages/ScheduleEvent';
+import ScheduleEvent from '~/pages/Event/ScheduleEvent';
+import ScheduleEventDetail from '~/pages/Event/ScheduleEvent/Detail';
 import Certificate from '~/pages/Certificate';
 import Gallery from '~/pages/Event/Gallery';
 
@@ -194,7 +195,7 @@ const DrawerRoutes = createDrawerNavigator(
         drawerLabel: props => (
           <DrawerItem
             {...props}
-            title="Meus vouchers"
+            title="Meus ingressos"
             icon={require('~/assets/menu/heart.png')}
           />
         ),
@@ -407,6 +408,17 @@ const MainNavigator = createStackNavigator(
         headerTitle: null,
         headerStyle: {
           headerTitle: 'Programação',
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    ScheduleEventDetail: {
+      screen: ScheduleEventDetail,
+      path: 'event/schedule/detail',
+      navigationOptions: {
+        headerTitle: null,
+        headerStyle: {
+          headerTitle: '',
           backgroundColor: '#FF6666',
         },
       },

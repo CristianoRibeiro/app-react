@@ -54,7 +54,7 @@ export default function Profile(props) {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(data ? data : User);
-  const [image, setImage] = useState({uri: user.avatar});
+  const [image, setImage] = useState({uri: user.append_avatar});
   const [birthdate, setBirthdate] = useState();
   const [error, setError] = useState(false);
 

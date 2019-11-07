@@ -5,11 +5,9 @@ import LinearGradient from "react-native-linear-gradient";
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Title = styled.Text`
-  font-size: 18;
+  font-size: 16;
   color: #444;
   font-weight: bold;
-  padding: 0 10px;
-  margin-top: 25px;
 `;
 
 export const SubTitle = styled.Text`

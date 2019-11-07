@@ -66,24 +66,6 @@ export const Card = styled.View`
   flex-direction: row;
 `;
 
-export const CardImage = styled.View`
-  padding: 3px 10px 3px 3px;
-`;
-
-export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#efefef',
-  keyboardAppearance: 'light',
-  maxLength: 255
-})`
-  flex: 1;
-  padding: 12px 15px;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #fff;
-  background: rgba(000,000,000, 0.2);
-  border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
-`;
-
 export const Submit = styled.TouchableOpacity`
   background: #0F60A8;
   margin-left: 10px;

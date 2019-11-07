@@ -124,10 +124,7 @@ export default function Main(props) {
       style={styles.container}
       resizeMode="cover">
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-        <StatusBar
-          backgroundColor="#2A40B1"
-          barStyle="light-content"
-        />
+        <StatusBar backgroundColor="#2A40B1" barStyle="light-content" />
         <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
           <Image
             source={require('~/assets/logo.png')}
@@ -145,7 +142,7 @@ export default function Main(props) {
               value={MaskService.toMask('cpf', doc)}
               error={error}
               maxLength={14}
-              keyboardType={"phone-pad"}
+              keyboardType={'phone-pad'}
               onChangeText={setCpf}
               textContentType="username"
               autoCapitalize="none"
@@ -174,7 +171,9 @@ export default function Main(props) {
             <TextLight>Esqueci minha senha</TextLight>
           </Link> */}
 
-          <Link style={{marginTop: 15}} onPress={() => props.navigation.navigate('Register')}>
+          <Link
+            style={{marginTop: 15}}
+            onPress={() => props.navigation.navigate('Register')}>
             <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
           </Link>
 

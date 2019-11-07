@@ -36,6 +36,20 @@ export default function Main(props) {
       if (props.navigation.state.params.item) {
         setItem(props.navigation.state.params.item);
         //alert(JSON.stringify(props.navigation.state.params.item.prizes));
+        try {
+          let response = await api.get(`/api/voucher/${props.navigation.state.params.item.id}`);
+          //alert(JSON.stringify(response));
+          if (__DEV__) {
+            console.tron.log(response.data);
+          }
+          await dispatch({type: 'VOUCHERITEM', payload: response.data});
+          //setNotifications(response.data);
+        } catch (error) {
+          if (__DEV__) {
+            console.tron.log(error.message);
+          }
+        }
+
         if (__DEV__) {
           console.tron.log(props.navigation.state.params.item);
         }
@@ -141,7 +155,7 @@ export default function Main(props) {
 
         <View style={{marginBottom: 70}}>
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('Voucher')}>
+            <Link onPress={() => props.navigation.navigate('VoucherItem')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/ticket.png')}
@@ -151,7 +165,7 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>TICKETS </TextDark>
+                <TextDark>INGRESSO </TextDark>
               </Card>
             </Link>
 

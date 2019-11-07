@@ -67,7 +67,7 @@ export default function SiderBar(props) {
           <View
             style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
             <Image
-              source={{uri: user.avatar}}
+              source={{uri: user.append_avatar}}
               style={{
                 height: 150,
                 width: 150,
