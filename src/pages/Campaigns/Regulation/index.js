@@ -72,17 +72,20 @@ export default function Main(props) {
   }
 
   function _openUrl(url) {
-    try {
-      Linking.canOpenURL(url).then(supported => {
-        if (supported) {
-          Linking.openURL(url).catch(err =>
-            console.error('An error occurred', err),
-          );
-        }
-      });
-    } catch (e) {
-      console.error(e.message);
+    if(url){
+      try {
+        Linking.canOpenURL(url).then(supported => {
+          if (supported) {
+            Linking.openURL(url).catch(err =>
+              console.error('An error occurred', err),
+            );
+          }
+        });
+      } catch (e) {
+        console.error(e.message);
+      }
     }
+    
   }
 
   return (

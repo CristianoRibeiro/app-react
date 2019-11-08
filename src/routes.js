@@ -573,7 +573,7 @@ const MainNavigator = createStackNavigator(
       screen: Regulation,
       path: 'regulation',
       navigationOptions: {
-        headerTitle: 'Regras',
+        headerTitle: 'Regulamentos',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
