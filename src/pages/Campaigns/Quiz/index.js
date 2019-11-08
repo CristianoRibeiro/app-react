@@ -228,19 +228,24 @@ export default function Main(props) {
 
         {cards.length ? (
           <>
-          <CardImage style={{alignItems:'center'}}>
-            <TextDark style={{margin:5}}>
-              Você ganhou {cards.length} figurinhas.
-            </TextDark>
-          </CardImage>
-          <FlatList
-            data={cards}
-            initialNumToRender={1}
-            numColumns={3}
-            keyExtractor={(item, index) => index.toString()}
-            //ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
-            renderItem={({item, index}) => _renderCard(item, index)}
-          />
+            <CardImage style={{alignItems: 'center'}}>
+              <TextDark style={{margin: 5}}>
+                Você ganhou {cards.length} figurinhas.
+              </TextDark>
+
+              <Send onPress={() => props.navigation.navigate('Album')}>
+                <TextLight>IR PARA ÁLBUM</TextLight>
+              </Send>
+            </CardImage>
+
+            <FlatList
+              data={cards}
+              initialNumToRender={1}
+              numColumns={3}
+              keyExtractor={(item, index) => index.toString()}
+              //ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
+              renderItem={({item, index}) => _renderCard(item, index)}
+            />
           </>
         ) : null}
       </ScrollView>

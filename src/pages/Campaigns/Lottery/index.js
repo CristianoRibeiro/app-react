@@ -92,27 +92,44 @@ export default function Main(props) {
           </View>
         </Header> */}
 
-        <Card>
-          <FlatList
-            style={{margimBottom: 50}}
-            data={data}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={(item, index) => (
+        <FlatList
+          style={{margimBottom: 50}}
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={(item, index) => (
+            <Card>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   marginVertical: 8,
                 }}>
-                <TextDark> {item.item.user.name}</TextDark>
+                <View style={{flex: 1}}>
+                  <TextDark style={{fontWeight: '700', fontSize: 16}}>
+                    {item.item.prize}
+                  </TextDark>
+                  <TextDark> {item.item.user.name}</TextDark>
+                  <TextDark style={{fontWeight: '700'}}>
+                    {item.item.user.apcef}
+                  </TextDark>
 
-                <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
-                  {item.item.lucky_number}
-                </TextDark>
+                  <TextDark style={{fontSize: 12}}>
+                    {item.item.append_date}
+                  </TextDark>
+                </View>
+                <View>
+                  <TextDark>
+                    Número da sorte
+                  </TextDark>
+                  <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
+                    {item.item.lucky_number}
+                  </TextDark>
+                 
+                </View>
               </View>
-            )}
-          />
-        </Card>
+            </Card>
+          )}
+        />
       </ScrollView>
     </Content>
   );
