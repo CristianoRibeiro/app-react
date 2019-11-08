@@ -31,6 +31,7 @@ import {
   Header,
   TextTitle,
   Card,
+  CardImage,
   Link,
   TextDark,
   ItemQuestion,
@@ -50,6 +51,7 @@ export default function Main(props) {
   const [selected, setSelected] = useState();
   const [index, setIndex] = useState(0);
   const [date, setDate] = useState('');
+  const [cards, setCards] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -96,7 +98,7 @@ export default function Main(props) {
         Alert.alert(null, response.data.message);
 
         if (response.data.success) {
-          //await dispatch({type: 'QUIZZES', payload: response.data});
+          setCards(response.data.cards);
           if (index < data.quiz.length) {
             setIndex(index + 1);
           } else {
@@ -180,43 +182,67 @@ export default function Main(props) {
     }
   }
 
+  function _renderCard(item, i) {
+    return (
+      <CardImage style={{flex: 1}}>
+        <Image
+          style={{aspectRatio: 1}}
+          source={{uri: item.image}}
+          resizeMode="contain"
+        />
+      </CardImage>
+    );
+  }
+
   return (
     <Content>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        <Header>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Entypo name="stopwatch" size={20} color={'#fff'} />
+        {date ? (
+          <Header>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Entypo name="stopwatch" size={20} color={'#fff'} />
 
-            <TextLight>próximo quiz</TextLight>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <TextLight style={{fontSize: 15, fontWeight: '700'}}>
-              {date}
-            </TextLight>
-          </View>
-        </Header>
+              <TextLight>próximo quiz</TextLight>
+            </View>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TextLight style={{fontSize: 15, fontWeight: '700'}}>
+                {date}
+              </TextLight>
+            </View>
+          </Header>
+        ) : null}
 
-
-        {/* <FlatList
-          style={{margimBottom: 50}}
-          data={data.quiz}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Nenhum quiz encontrado!" />}
-          renderItem={({item, index}) => _renderItem(item)}
-        /> */}
         {_renderItem(data)}
+
+        {cards.length ? (
+          <>
+          <CardImage style={{alignItems:'center'}}>
+            <TextDark style={{margin:5}}>
+              Você ganhou {cards.length} figurinhas.
+            </TextDark>
+          </CardImage>
+          <FlatList
+            data={cards}
+            initialNumToRender={1}
+            numColumns={3}
+            keyExtractor={(item, index) => index.toString()}
+            //ListEmptyComponent={<EmptyList text="Nenhum álbum encontrado!" />}
+            renderItem={({item, index}) => _renderCard(item, index)}
+          />
+          </>
+        ) : null}
       </ScrollView>
     </Content>
   );

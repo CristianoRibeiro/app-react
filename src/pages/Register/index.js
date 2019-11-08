@@ -14,6 +14,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {ActivityIndicator, Colors} from 'react-native-paper';
@@ -162,24 +163,27 @@ export default function Main(props) {
   // const [email, metadataEmail] = getFieldProps("contact.email", "text");
 
   return (
-    <ImageBackground
-      source={require('~/assets/bg-login.jpg')}
-      style={styles.container}
-      resizeMode="cover">
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      enabled>
       <StatusBar backgroundColor="#2A40B1" barStyle="light-content" />
-      <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-        <View style={{flex: 1, alignItems: 'center', marginBottom: 10}}>
-          <Image
-            source={require('~/assets/logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+      <ImageBackground
+        source={require('~/assets/bg-login.jpg')}
+        style={styles.container}
+        resizeMode="cover">
+        <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
+          <View style={{flex: 1, alignItems: 'center', marginBottom: 10}}>
+            <Image
+              source={require('~/assets/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
 
-          <Title>Cadastrar</Title>
+            <Title>Cadastrar</Title>
 
-          {/* <TextLight>Informe seu login e senha do Mundo Caixa </TextLight> */}
-        </View>
-        <KeyboardAvoidingView behavior={'padding'}>
+            {/* <TextLight>Informe seu login e senha do Mundo Caixa </TextLight> */}
+          </View>
           <Form>
             <View>
               <Input
@@ -244,41 +248,31 @@ export default function Main(props) {
               <TextError>{errors.password}</TextError>
             </View>
           </Form>
-        </KeyboardAvoidingView>
 
-        <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-          {/* <Link style={{marginTop: 5, marginBottom: 10}}>
+          <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
+            {/* <Link style={{marginTop: 5, marginBottom: 10}}>
             <TextLight>Esqueci minha senha</TextLight>
           </Link> */}
 
-          <Link onPress={() => props.navigation.navigate('Login')}>
-            <TextLight>Já tem cadastro? Faça o login aqui</TextLight>
-          </Link>
+            <Link onPress={() => props.navigation.navigate('Login')}>
+              <TextLight>Já tem cadastro? Faça o login aqui</TextLight>
+            </Link>
 
-          {!modal ? (
-            <Send onPress={handleSubmit} style={{marginTop: 15}}>
-              <TextLight>CADASTRAR</TextLight>
-            </Send>
-          ) : (
-            <ActivityIndicator
-              animating={true}
-              size="large"
-              color={Colors.white}
-            />
-          )}
-        </View>
-      </ScrollView>
+            {!modal ? (
+              <Send onPress={handleSubmit} style={{marginTop: 15}}>
+                <TextLight>CADASTRAR</TextLight>
+              </Send>
+            ) : (
+              <ActivityIndicator
+                animating={true}
+                size="large"
+                color={Colors.white}
+              />
+            )}
+          </View>
+        </ScrollView>
 
-      {/* <Modal isVisible={modal} style={{margin: 20}}>
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator
-            animating={true}
-            size="large"
-            color={Colors.white}
-          />
-          
-        </View>
-      </Modal> */}
-    </ImageBackground>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 }

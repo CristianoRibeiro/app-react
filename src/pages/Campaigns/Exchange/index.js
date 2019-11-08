@@ -67,16 +67,14 @@ export default function Main(props) {
   async function _getData() {
     try {
       await setCard(props.navigation.state.params.item);
-      let response = await api.post('/api/quizzes');
       let u = await api.post('/api/cards/exchange/users', {
         number: props.navigation.state.params.item.number,
       });
-      setUsers(u.data);
+      setUsers(u.data ? u.data : []);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(u.data);
       }
-      await dispatch({type: 'QUIZZES', payload: response.data});
 
       //setNotifications(response.data);
     } catch (error) {

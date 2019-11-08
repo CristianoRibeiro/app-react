@@ -12,6 +12,7 @@ import {
   Alert,
   FlatList,
   RefreshControl,
+  Linking,
 } from 'react-native';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import FitImage from 'react-native-fit-image';
@@ -77,11 +78,23 @@ export default function Main(props) {
     }
   }
 
-  function _indicate(){
+  function _indicate() {
     if (user.associated) {
       props.navigation.navigate('TabsRecommendation');
     } else {
-      Alert.alert(null, 'https://associacao.fenae.org.br/');
+      try {
+        Linking.canOpenURL('https://associacao.fenae.org.br').then(
+          supported => {
+            if (supported) {
+              Linking.openURL('https://associacao.fenae.org.br').catch(err =>
+                console.error('An error occurred', err),
+              );
+            }
+          },
+        );
+      } catch (e) {
+        console.error(e.message);
+      }
     }
   }
 
@@ -228,13 +241,14 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>{user.associated ? 'INDIQUE UM AMIGO': 'ASSOCIE-SE'} </TextDark>
+                <TextDark>
+                  {user.associated ? 'INDIQUE UM AMIGO' : 'ASSOCIE-SE'}{' '}
+                </TextDark>
               </Card>
             </Link>
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            
             <Link onPress={() => Alert.alert(null, 'Não disponível')}>
               <Card>
                 <Image

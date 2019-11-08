@@ -65,6 +65,13 @@ export const Card = styled.View`
   background-color: #fff;
 `;
 
+export const CardImage = styled.View`
+  margin: 2px;
+  border-radius: 3px;
+  padding: 3px 3px;
+  background-color: #fff;
+`;
+
 export const Input = styled.TextInput.attrs({
   placeholderTextColor: '#efefef',
   keyboardAppearance: 'light',

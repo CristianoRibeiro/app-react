@@ -67,16 +67,26 @@ export default function Main(props) {
           <Image
             source={{uri: item.append_avatar}}
             style={{
-              height: 70,
-              width: 70,
-              borderRadius: 35,
+              height: 60,
+              width: 60,
+              borderRadius: 30,
             }}
             resizeMode="contain"
           />
         </CardImage>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <UserTitle>{item.name}</UserTitle>
-          <SubTitle>{item.email}</SubTitle>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <View style={{flex: 1}}>
+            <UserTitle style={{marginRight: 5}}>{item.name}</UserTitle>
+            <SubTitle style={{fontWeight: '700'}}>
+              {item.address_state}
+            </SubTitle>
+          </View>
         </View>
       </Card>
     );

@@ -53,7 +53,7 @@ export default function Main(props) {
       }
       let indicate = await api.get('/api/indicate');
       //alert(JSON.stringify(response));
-     
+
       await dispatch({type: 'INDICATED', payload: indicate.data});
       await dispatch({type: 'USERS', payload: response.data});
     } catch (error) {
@@ -87,21 +87,32 @@ export default function Main(props) {
           <Image
             source={{uri: item.append_avatar}}
             style={{
-              height: 70,
-              width: 70,
-              borderRadius: 35,
+              height: 60,
+              width: 60,
+              borderRadius: 30,
             }}
             resizeMode="contain"
           />
         </CardImage>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <UserTitle>{item.name}</UserTitle>
-          <SubTitle>{item.email}</SubTitle>
-          <View style={{alignItems: 'flex-start'}}>
-            <Send onPress={() => _setData(item.id)}>
-              <TextDark style={{color: '#0058b8'}}>ADICIONAR</TextDark>
-            </Send>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <View style={{flex: 1}}>
+            <UserTitle style={{marginRight: 5}}>{item.name}</UserTitle>
+            <SubTitle style={{fontWeight: '700'}}>
+              {item.address_state}
+            </SubTitle>
           </View>
+
+          <Send onPress={() => _setData(item.id)}>
+            <TextDark style={{color: '#0058b8', fontSize: 10}}>
+              INDICAR
+            </TextDark>
+          </Send>
         </View>
       </Card>
     );
