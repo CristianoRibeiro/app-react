@@ -78,6 +78,7 @@ export default function Main(props) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
+      await dispatch({type: 'QUIZZES', payload: []});
     }
     setLoading(false);
   }

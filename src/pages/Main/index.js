@@ -69,8 +69,7 @@ export default function Main(props) {
     }
     if (campaignsState.length) {
       setThumbnail(campaignsState[0].thumbnail);
-    }
-    else{
+    } else {
       setThumbnail();
     }
   }
@@ -105,25 +104,41 @@ export default function Main(props) {
   function _renderBanner() {
     if (thumbnail) {
       return (
-        <Card style={{elevation: 4, flex: 1}}>
-          <FitImage source={{uri: thumbnail}} resizeMode="contain" />
-          <View
+        <View>
+          <Title
             style={{
-              marginTop: -35,
-              marginBottom: 5,
-              flex: 1,
-              alignItems: 'flex-end',
+              color: '#444',
+              textAlign: 'left',
+              fontSize: 15,
+              marginBottom: 10,
+              marginTop: 5,
             }}>
-            <Btn
-              onPress={() => props.navigation.navigate('Campaigns')}
-              style={{alignItems: 'center', alignSelf: 'flex-end'}}>
-              <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
-            </Btn>
-          </View>
-        </Card>
+            Fique por dentro das campanhas
+          </Title>
+          <Card style={{elevation: 4, flex: 1}}>
+            <FitImage source={{uri: thumbnail}} resizeMode="contain" />
+            <View
+              style={{
+                marginTop: -35,
+                marginBottom: 5,
+                flex: 1,
+                alignItems: 'flex-end',
+              }}>
+              <Btn
+                onPress={() => props.navigation.navigate('Campaigns')}
+                style={{alignItems: 'center', alignSelf: 'flex-end'}}>
+                <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
+              </Btn>
+            </View>
+          </Card>
+        </View>
       );
     } else {
-      return <View style={{paddingBottom: 60}}><BannerCampaigns /></View>;
+      return (
+        <View style={{paddingBottom: 60}}>
+          <BannerCampaigns />
+        </View>
+      );
     }
   }
 
@@ -165,17 +180,6 @@ export default function Main(props) {
             renderItem={({item, index}) => _renderItem(item, index)}
           />
         </View>
-
-        <Title
-          style={{
-            color: '#444',
-            textAlign: 'left',
-            fontSize: 15,
-            marginBottom: 10,
-            marginTop: 5,
-          }}>
-          Fique por dentro das campanhas
-        </Title>
 
         {_renderBanner()}
       </View>

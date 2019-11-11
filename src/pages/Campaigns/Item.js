@@ -242,7 +242,7 @@ export default function Main(props) {
                   resizeMode="contain"
                 />
                 <TextDark>
-                  {user.associated ? 'INDIQUE UM AMIGO' : 'ASSOCIE-SE'}{' '}
+                  {user.associated ? 'INDIQUE UM AMIGO' : 'ASSOCIE-SE'}
                 </TextDark>
               </Card>
             </Link>

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Button} from 'react-native-paper';
-//import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Title = styled.Text`
@@ -103,17 +102,17 @@ export const List = styled.FlatList.attrs({
   margin-top: 20px;
 `;
 
-export const Header = styled(LinearGradient).attrs({
-  colors: ['#051538', '#041c50'],
-  start: {x: 1, y: 0},
-  end: {x: 1, y: 1},
-})`
-  padding-top: 10px;
-  padding-bottom: 10px;
-`;
-
 export const TextTitle = styled.Text`
   font-size: 28px;
   color: #fff;
   margin: 5px 0;
+`;
+
+export const Header = styled(LinearGradient).attrs({
+  colors: ['#FF7272', '#FF7272'],
+  start: { x: 1, y: 0 },
+  end: { x: 1, y: 1 },
+})`
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;

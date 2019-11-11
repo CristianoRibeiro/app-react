@@ -14,6 +14,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import EmptyList from '~/components/EmptyList';
+import {Searchbar} from 'react-native-paper';
 
 //Api
 import api from '~/services/api';
@@ -30,6 +31,7 @@ import {
   Send,
   TextLight,
   TextDark,
+  Header,
 } from './styles';
 
 export default function Main(props) {
@@ -37,6 +39,8 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [users, setUsers] = useState('');
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -46,16 +50,21 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
-      let response = await api.get('/api/user/unassociated');
+      if(name){
+        let response = await api.get('/api/user/unassociated/' + name);
+        setUsers(response.data);
+      }
+      
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      let indicate = await api.get('/api/indicate');
+      //let indicate = await api.get('/api/indicate');
       //alert(JSON.stringify(response));
 
-      await dispatch({type: 'INDICATED', payload: indicate.data});
-      await dispatch({type: 'USERS', payload: response.data});
+      //await dispatch({type: 'INDICATED', payload: indicate.data});
+      //await dispatch({type: 'USERS', payload: response.data});
+      
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -120,16 +129,28 @@ export default function Main(props) {
 
   return (
     <Content>
-      <FlatList
-        style={{margimBottom: 50}}
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!" />}
-        renderItem={({item}) => _renderItem(item)}
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-        }
-      />
+      <ScrollView>
+        <Header style={{alignItems: 'center'}}>
+          <Searchbar
+            style={{marginHorizontal: 5}}
+            placeholder="Pesquisar"
+            onIconPress={() => _getData()}
+            onChangeText={query => setName(query)}
+            value={name}
+          />
+        </Header>
+
+        <FlatList
+          style={{margimBottom: 50}}
+          data={users}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!" />}
+          renderItem={({item}) => _renderItem(item)}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+          }
+        />
+      </ScrollView>
     </Content>
   );
 }

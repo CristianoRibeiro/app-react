@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Animated } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { TouchableRipple } from 'react-native-paper';
 
 // export const Container = styled(LinearGradient).attrs({
 //   colors: ['#0F60A8', '#2f8038'],
@@ -39,7 +40,8 @@ export const TextDark = styled.Text`
   font-weight: 600;
 `;
 
-export const Link = styled.TouchableOpacity`
+export const Link = styled(TouchableRipple).attrs({
+})`
   flex: 1;
 `;
 
