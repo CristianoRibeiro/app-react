@@ -14,6 +14,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   SafeAreaView,
+  Platform
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
@@ -84,7 +85,7 @@ export default function Main(props) {
     try {
       setModal(true);
 
-      let response = await api.post('/api/auth/update', {
+      const send = {
         phone: p.trim(),
         name,
         email: email.trim(),
@@ -93,7 +94,13 @@ export default function Main(props) {
         sex,
         birthdate: formataStringData(birthdate),
         address_state
-      });
+      };
+
+      if (__DEV__) {
+        console.tron.log(send);
+      }
+
+      let response = await api.post('/api/auth/update', send);
 
       if (response.data.success) {
         await dispatch({type: 'USER', payload: response.data.user});
@@ -105,7 +112,7 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
     } catch (error) {
-      Alert.alert(null, error.message);
+      //Alert.alert(null, error.message);
       if (__DEV__) {
         console.tron.log(error.message);
       }
@@ -267,7 +274,7 @@ export default function Main(props) {
             </Form>
             <TextError>{errors.matricula}</TextError> */}
 
-            <Form>
+            {/* <Form>
               <Input
                 value={apcef}
                 error={!apcef}
@@ -278,7 +285,53 @@ export default function Main(props) {
                 label="APCEF"
               />
             </Form>
+            <TextError>{errors.apcef}</TextError> */}
+
+            <View
+              style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4, marginTop: 10}}>
+              <Select
+                placeholder={{
+                  label: 'APCEF',
+                  value: null,
+                  color: '#9EA0A4',
+                }}
+                value={apcef}
+                onValueChange={value => setApcef(value)}
+                items={[
+                  {value: 'APCEF/AC', label: 'APCEF/AC'},
+                  {value: 'APCEF/AL', label: 'APCEF/AL'},
+                  {value: 'APCEF/AP', label: 'APCEF/AP'},
+                  {value: 'APCEF/AM', label: 'APCEF/AM'},
+                  {value: 'APCEF/BA', label: 'APCEF/BA'},
+                  {value: 'APCEF/CE', label: 'APCEF/CE'},
+                  {value: 'APCEF/DF', label: 'APCEF/DF'},
+                  {value: 'APCEF/ES', label: 'APCEF/ES'},
+                  {value: 'APCEF/GO', label: 'APCEF/GO'},
+                  {value: 'APCEF/MA', label: 'APCEF/MA'},
+                  {value: 'APCEF/MT', label: 'APCEF/MT'},
+                  {value: 'APCEF/MS', label: 'APCEF/MS'},
+                  {value: 'APCEF/MG', label: 'APCEF/MG'},
+                  {value: 'APCEF/PA', label: 'APCEF/PA'},
+                  {value: 'APCEF/PB', label: 'APCEF/PB'},
+                  {value: 'APCEF/PR', label: 'APCEF/PR'},
+                  {value: 'APCEF/PE', label: 'APCEF/PE'},
+                  {value: 'APCEF/PI', label: 'APCEF/PI'},
+                  {value: 'APCEF/RJ', label: 'APCEF/RJ'},
+                  {value: 'APCEF/RN', label: 'APCEF/RN'},
+                  {value: 'APCEF/RS', label: 'APCEF/RS'},
+                  {value: 'APCEF/RO', label: 'APCEF/RO'},
+                  {value: 'APCEF/RR', label: 'APCEF/RR'},
+                  {value: 'APCEF/SC', label: 'APCEF/SC'},
+                  {value: 'APCEF/SP', label: 'APCEF/SP'},
+                  {value: 'APCEF/SE', label: 'APCEF/SE'},
+                  {value: 'APCEF/TO', label: 'APCEF/TO'},
+                  {value: 'APCEF/EX', label: 'APCEF/EX'},
+                ]}
+              />
+            </View>
+
             <TextError>{errors.apcef}</TextError>
+
 
             <Form>
               <Input
@@ -299,7 +352,7 @@ export default function Main(props) {
             </Form>
             <TextError>{errors.phone}</TextError>
 
-            <View style={{backgroundColor: '#dfdfdf', padding: 8}}>
+            <View style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4}}>
               <Select
                 placeholder={{
                   label: 'Sexo',
@@ -317,7 +370,7 @@ export default function Main(props) {
             <TextError>{errors.sex}</TextError>
 
             <View
-              style={{backgroundColor: '#dfdfdf', padding: 8, marginTop: 10}}>
+              style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4, marginTop: 10}}>
               <Select
                 placeholder={{
                   label: 'Estado',
@@ -367,7 +420,7 @@ export default function Main(props) {
                   format: 'DD/MM/YYYY',
                 })}
                 error={!birthdate}
-                maxLength={14}
+                maxLength={11}
                 keyboardType={'number-pad'}
                 onChangeText={setBirthdate}
                 autoCapitalize="none"

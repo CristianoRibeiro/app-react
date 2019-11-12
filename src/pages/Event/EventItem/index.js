@@ -11,7 +11,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Linking,
-  Alert
+  Alert,
+  FlatList,
 } from 'react-native';
 
 import api from '~/services/api';
@@ -40,14 +41,15 @@ export default function Main(props) {
         //alert(JSON.stringify(props.navigation.state.params.item.prizes));
 
         try {
-          let response = await api.get(`/api/voucher/${props.navigation.state.params.item.id}`);
+          let response = await api.get(
+            `/api/voucher/${props.navigation.state.params.item.id}`,
+          );
           //alert(JSON.stringify(response));
           if (__DEV__) {
             console.tron.log(response.data);
           }
           await dispatch({type: 'VOUCHERITEM', payload: response.data});
           setVoucher(response.data);
-          
         } catch (error) {
           if (__DEV__) {
             console.tron.log(error.message);
@@ -55,6 +57,7 @@ export default function Main(props) {
         }
 
         if (__DEV__) {
+          console.tron.log('Evento');
           console.tron.log(props.navigation.state.params.item);
         }
         if (props.navigation.state.params.item.vouchers) {
@@ -104,18 +107,148 @@ export default function Main(props) {
     }
   }
 
-  async function _voucherItem(){
-   
-      //alert(JSON.stringify(voucher));
-      if(voucher){
-        props.navigation.navigate('VoucherItem');
-      }
-      else{
-        Alert.alert(null, 'Você não possui ingresso!');
-      }
-      
+  async function _voucherItem() {
+    //alert(JSON.stringify(voucher));
+    if (voucher) {
+      props.navigation.navigate('VoucherItem');
+    } else {
+      Alert.alert(null, 'Você não possui ingresso!');
+    }
   }
 
+  const screen = [
+    {
+      navigation: 'Info',
+      image: require('~/assets/icons/info.png'),
+      name: 'INFORMAÇÕES',
+      item: item,
+      permission: item.faq,
+      type: null,
+    },
+    {
+      navigation: 'ScheduleEvent',
+      image: require('~/assets/icons/calendar.png'),
+      name: 'PROGRAMAÇÃO',
+      item: item,
+      permission: true,
+      type: null,
+    },
+    {
+      navigation: '',
+      image: require('~/assets/icons/ticket.png'),
+      name: 'INGRESSO',
+      item: item,
+      permission: item.voucher,
+      type: 'voucher',
+    },
+    {
+      navigation: 'FlightEvent',
+      image: require('~/assets/icons/passport.png'),
+      name: 'PASSAGEM',
+      item: item,
+      permission: item.flight,
+      type: null,
+    },
+    {
+      navigation: 'Transfer',
+      image: require('~/assets/icons/bus.png'),
+      name: 'TRANSFER',
+      item: item,
+      permission: item.transfer,
+      type: null,
+    },
+    {
+      navigation: '',
+      image: require('~/assets/icons/games.png'),
+      name: 'EXTRATO',
+      item: item,
+      permission: true,
+      type: null,
+    },
+    {
+      navigation: 'Games',
+      image: require('~/assets/icons/games.png'),
+      name: 'GAMES',
+      item: item,
+      permission: true,
+      type: null,
+    },
+    {
+      navigation: 'Streaming',
+      image: require('~/assets/icons/transmision.png'),
+      name: 'TRANSMISSÃO',
+      item: item,
+      permission: item.transmission,
+      type: null,
+    },
+    {
+      navigation: 'PrizeEvent',
+      image: require('~/assets/icons/medal.png'),
+      name: 'PRÊMIOS',
+      item: item,
+      permission: true,
+      type: null,
+    },
+    {
+      navigation: 'Certificate',
+      image: require('~/assets/icons/certificate.png'),
+      name: 'CERTIFICADO',
+      item: item,
+      permission: item.certificate,
+      type: null,
+    },
+    {
+      navigation: 'Faq',
+      image: require('~/assets/icons/faq.png'),
+      name: 'DUVIDAS',
+      item: item,
+      permission: true,
+      type: null,
+    },
+    {
+      navigation: 'Gallery',
+      image: require('~/assets/icons/gallery.png'),
+      name: 'GALERIA',
+      item: item,
+      permission: item.gallery,
+      type: null,
+    },
+    {
+      navigation: 'NewsCampaigns',
+      image: require('~/assets/icons/newspaper.png'),
+      name: 'NOTÍCIAS',
+      item: item,
+      permission: true,
+      type: null,
+    },
+  ];
+
+  function _renderItem(item) {
+    if (!item.permission) {
+      return null;
+    } else {
+      return (
+        <Link
+          onPress={() =>
+            item.type === 'voucher'
+              ? _voucherItem()
+              : props.navigation.navigate(item.navigation, {item: item.item})
+          }>
+          <Card>
+            <Image
+              source={item.image}
+              style={{
+                height: 50,
+                width: 50,
+              }}
+              resizeMode="contain"
+            />
+            <TextDark>{item.name} </TextDark>
+          </Card>
+        </Link>
+      );
+    }
+  }
   return (
     <Content>
       <ScrollView>
@@ -231,8 +364,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link
-              onPress={() => props.navigation.navigate('Games')}>
+            <Link onPress={() => props.navigation.navigate('Games')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/games.png')}
@@ -336,9 +468,18 @@ export default function Main(props) {
               </Card>
             </Link>
 
-            <View style={{flex:1}}></View>
+            <View style={{flex: 1}}></View>
           </View>
         </View>
+
+        {/* <FlatList
+          style={{margimBottom: 75}}
+          data={screen}
+          numColumns={2}
+          keyExtractor={(item, index) => index.toString()}
+          //ListEmptyComponent={<EmptyList text="Nenhum voucher encontrado!" />}
+          renderItem={({item}) => _renderItem(item)}
+        /> */}
       </ScrollView>
     </Content>
   );
