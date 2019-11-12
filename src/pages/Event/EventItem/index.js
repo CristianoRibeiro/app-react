@@ -232,7 +232,7 @@ export default function Main(props) {
 
           <View style={{flexDirection: 'row'}}>
             <Link
-              onPress={() => props.navigation.navigate('Certificate')}>
+              onPress={() => props.navigation.navigate('Games')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/games.png')}

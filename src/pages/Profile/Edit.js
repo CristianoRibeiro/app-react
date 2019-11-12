@@ -40,7 +40,7 @@ import {
   SubTitle,
   TextError,
   Select,
-  Header
+  Header,
 } from './styles';
 
 import {Container, Content} from '../../style';
@@ -58,7 +58,7 @@ export default function Main(props) {
   );
   const [matricula, setMatricula] = useState(user ? user.matricula : '');
   const [apcef, setApcef] = useState(user ? user.apcef : '');
-  const [phone, setPhone] = useState(user.phone ? user.phone : '');
+  const [phone, setPhone] = useState(user.phone ? user.phone.trim() : '');
   const [sex, setSex] = useState(user ? user.sex : '');
   const [address_state, setState] = useState(user ? user.address_state : '');
   const [birthdate, setBirthdate] = useState(
@@ -70,11 +70,11 @@ export default function Main(props) {
   useEffect(() => {}, []);
 
   function formataStringData(data) {
-    var dia  = data.split("/")[0];
-    var mes  = data.split("/")[1];
-    var ano  = data.split("/")[2];
-  
-    return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+    var dia = data.split('/')[0];
+    var mes = data.split('/')[1];
+    var ano = data.split('/')[2];
+
+    return ano + '-' + ('0' + mes).slice(-2) + '-' + ('0' + dia).slice(-2);
     // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
   }
 
@@ -91,7 +91,8 @@ export default function Main(props) {
         email_personal: email_personal.trim(),
         apcef,
         sex,
-        birthdate: formataStringData(birthdate)
+        birthdate: formataStringData(birthdate),
+        address_state
       });
 
       if (response.data.success) {
@@ -105,6 +106,9 @@ export default function Main(props) {
       }
     } catch (error) {
       Alert.alert(null, error.message);
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
       setModal(false);
     }
   }
@@ -143,11 +147,17 @@ export default function Main(props) {
 
       if (!phone) {
         errors.phone = 'Telefone obrigatório!';
-      } else if (phone.length < 14) {
+      } else if (
+        MaskService.toMask('cel-phone', phone, {
+          maskType: 'BRL',
+          withDDD: true,
+          dddMask: '(99) ',
+        }).length < 14
+      ) {
         errors.phone = 'Digite um Telefone válido!';
       }
 
-      if (!sex) {
+      if (sex === null) {
         errors.sex = message;
       }
 
@@ -170,9 +180,13 @@ export default function Main(props) {
   // const [email, metadataEmail] = getFieldProps("contact.email", "text");
 
   return (
-    <Content>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      enabled>
+    <Content style={{flex:1}}>
+      <SafeAreaView style={{flex:1}}>
       <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-
         <Header>
           <View
             style={{
@@ -180,7 +194,11 @@ export default function Main(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <MaterialCommunityIcons name="account-circle" size={20} color={'#fff'} />
+            <MaterialCommunityIcons
+              name="account-circle"
+              size={20}
+              color={'#fff'}
+            />
 
             <TextLight>Mantenha seus dados atualizados</TextLight>
           </View>
@@ -188,14 +206,11 @@ export default function Main(props) {
             style={{
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
-            
-          </View>
+            }}></View>
         </Header>
 
-        <Avatar/>
+        <Avatar />
 
-        <KeyboardAvoidingView behavior={'padding'}>
           <Card>
             <Form>
               <Input
@@ -299,8 +314,10 @@ export default function Main(props) {
                 ]}
               />
             </View>
+            <TextError>{errors.sex}</TextError>
 
-            <View style={{backgroundColor: '#dfdfdf', padding: 8, marginTop: 10}}>
+            <View
+              style={{backgroundColor: '#dfdfdf', padding: 8, marginTop: 10}}>
               <Select
                 placeholder={{
                   label: 'Estado',
@@ -310,34 +327,34 @@ export default function Main(props) {
                 value={address_state}
                 onValueChange={value => setState(value)}
                 items={[
-                  { value: 'AC', label: 'Acre'},
-                  { value: 'AL', label: 'Alagoas'},
-                  { value: 'AP', label: 'Amapá'},
-                  { value: 'AM', label: 'Amazonas'},
-                  { value: 'BA', label: 'Bahia'},
-                  { value: 'CE', label: 'Ceará'},
-                  { value: 'DF', label: 'Distrito Federal'},
-                  { value: 'ES', label: 'Espírito Santo'},
-                  { value: 'GO', label: 'Goiás'},
-                  { value: 'MA', label: 'Maranhão'},
-                  { value: 'MT', label: 'Mato Grosso'},
-                  { value: 'MS', label: 'Mato Grosso do Sul'},
-                  { value: 'MG', label: 'Minas Gerais'},
-                  { value: 'PA', label: 'Pará'},
-                  { value: 'PB', label: 'Paraíba'},
-                  { value: 'PR', label: 'Paraná'},
-                  { value: 'PE', label: 'Pernambuco'},
-                  { value: 'PI', label: 'Piauí'},
-                  { value: 'RJ', label: 'Rio de Janeiro'},
-                  { value: 'RN', label: 'Rio Grande do Norte'},
-                  { value: 'RS', label: 'Rio Grande do Sul'},
-                  { value: 'RO', label: 'Rondônia'},
-                  { value: 'RR', label: 'Roraima'},
-                  { value: 'SC', label: 'Santa Catarina'},
-                  { value: 'SP', label: 'São Paulo'},
-                  { value: 'SE', label: 'Sergipe'},
-                  { value: 'TO', label: 'Tocantins'},
-                  { value: 'EX', label: 'Estrangeiro'},
+                  {value: 'AC', label: 'Acre'},
+                  {value: 'AL', label: 'Alagoas'},
+                  {value: 'AP', label: 'Amapá'},
+                  {value: 'AM', label: 'Amazonas'},
+                  {value: 'BA', label: 'Bahia'},
+                  {value: 'CE', label: 'Ceará'},
+                  {value: 'DF', label: 'Distrito Federal'},
+                  {value: 'ES', label: 'Espírito Santo'},
+                  {value: 'GO', label: 'Goiás'},
+                  {value: 'MA', label: 'Maranhão'},
+                  {value: 'MT', label: 'Mato Grosso'},
+                  {value: 'MS', label: 'Mato Grosso do Sul'},
+                  {value: 'MG', label: 'Minas Gerais'},
+                  {value: 'PA', label: 'Pará'},
+                  {value: 'PB', label: 'Paraíba'},
+                  {value: 'PR', label: 'Paraná'},
+                  {value: 'PE', label: 'Pernambuco'},
+                  {value: 'PI', label: 'Piauí'},
+                  {value: 'RJ', label: 'Rio de Janeiro'},
+                  {value: 'RN', label: 'Rio Grande do Norte'},
+                  {value: 'RS', label: 'Rio Grande do Sul'},
+                  {value: 'RO', label: 'Rondônia'},
+                  {value: 'RR', label: 'Roraima'},
+                  {value: 'SC', label: 'Santa Catarina'},
+                  {value: 'SP', label: 'São Paulo'},
+                  {value: 'SE', label: 'Sergipe'},
+                  {value: 'TO', label: 'Tocantins'},
+                  {value: 'EX', label: 'Estrangeiro'},
                 ]}
               />
             </View>
@@ -360,12 +377,9 @@ export default function Main(props) {
             </Form>
             <TextError>{errors.birthdate}</TextError>
           </Card>
-        </KeyboardAvoidingView>
 
-        <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-          {/* <Link style={{marginTop: 5, marginBottom: 10}}>
-            <TextLight>Esqueci minha senha</TextLight>
-          </Link> */}
+        <View style={{flex: 1, marginBottom: 50, marginHorizontal: 10}}>
+          
 
           {!modal ? (
             <Send onPress={handleSubmit} style={{marginTop: 15}}>
@@ -380,6 +394,8 @@ export default function Main(props) {
           )}
         </View>
       </ScrollView>
+      </SafeAreaView>
     </Content>
+    </KeyboardAvoidingView>
   );
 }

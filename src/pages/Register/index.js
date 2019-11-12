@@ -271,7 +271,6 @@ export default function Main(props) {
             )}
           </View>
         </ScrollView>
-
       </ImageBackground>
     </KeyboardAvoidingView>
   );

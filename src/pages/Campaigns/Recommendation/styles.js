@@ -70,16 +70,16 @@ export const CardImage = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#efefef',
+  placeholderTextColor: '#999',
   keyboardAppearance: 'light',
   maxLength: 255,
 })`
   flex: 1;
-  padding: 12px 15px;
+  padding: 0px 10px;
   border-radius: 4px;
   font-size: 16px;
-  color: #fff;
-  background: rgba(000, 000, 000, 0.2);
+  color: #444;
+  background: #fff;
   border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
 `;
 
@@ -87,6 +87,12 @@ export const Send = styled(Button).attrs({
   mode: 'outlined',
 })`
   padding: 0px;
+  border-radius: 5px;
+`;
+
+export const Search = styled(Button).attrs({
+  mode: 'contained',
+})`
   border-radius: 5px;
 `;
 

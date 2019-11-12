@@ -13,6 +13,7 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EmptyList from '~/components/EmptyList';
 import {Searchbar} from 'react-native-paper';
 
@@ -32,6 +33,8 @@ import {
   TextLight,
   TextDark,
   Header,
+  Input,
+  Search,
 } from './styles';
 
 export default function Main(props) {
@@ -50,11 +53,11 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
-      if(name){
+      if (name) {
         let response = await api.get('/api/user/unassociated/' + name);
         setUsers(response.data);
       }
-      
+
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -64,7 +67,6 @@ export default function Main(props) {
 
       //await dispatch({type: 'INDICATED', payload: indicate.data});
       //await dispatch({type: 'USERS', payload: response.data});
-      
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -131,13 +133,16 @@ export default function Main(props) {
     <Content>
       <ScrollView>
         <Header style={{alignItems: 'center'}}>
-          <Searchbar
-            style={{marginHorizontal: 5}}
-            placeholder="Pesquisar"
-            onIconPress={() => _getData()}
-            onChangeText={query => setName(query)}
-            value={name}
-          />
+          <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 5}}>
+            <Input
+              placeholder="Pesquisar"
+              onChangeText={query => setName(query)}
+              value={name}
+            />
+            <Search style={{marginLeft: 5, backgroundColor: '#fff'}} onPress={() => _getData()}>
+              <MaterialIcons name="search" size={24} color={'#666'} />
+            </Search>
+          </View>
         </Header>
 
         <FlatList

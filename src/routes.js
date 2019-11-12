@@ -41,6 +41,7 @@ import Faq from '~/pages/Event/Faq';
 import ScheduleEvent from '~/pages/Event/ScheduleEvent';
 import ScheduleEventDetail from '~/pages/Event/ScheduleEvent/Detail';
 import Certificate from '~/pages/Certificate';
+import Games from '~/pages/Event/Games';
 import Gallery from '~/pages/Event/Gallery';
 
 //Campanhas
@@ -244,7 +245,7 @@ const TabsExchange = createMaterialTopTabNavigator(
       screen: Match,
       path: 'match',
       navigationOptions: {
-        title: 'Meus Match',
+        title: 'Minhas trocas',
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => (
           <MaterialIcons name="notifications" size={24} color={tintColor} />
@@ -482,16 +483,6 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
-    ProfileEdit: {
-      screen: ProfileEdit,
-      path: 'profileedit',
-      navigationOptions: {
-        headerTitle: 'Atualizar Perfil',
-        headerStyle: {
-          backgroundColor: '#FF6666',
-        },
-      },
-    },
     CampaignsItem: {
       screen: CampaignsItem,
       path: 'campaignsitem',
@@ -594,6 +585,16 @@ const MainNavigator = createStackNavigator(
       path: 'gallery',
       navigationOptions: {
         headerTitle: 'Galeria',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Games: {
+      screen: Games,
+      path: 'games',
+      navigationOptions: {
+        headerTitle: 'Games',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -732,6 +733,16 @@ const Auth = createSwitchNavigator(
     MainNavigator: {
       screen: MainNavigator,
       path: 'app',
+    },
+    ProfileEdit: {
+      screen: ProfileEdit,
+      path: 'profileedit',
+      navigationOptions: {
+        headerTitle: 'Atualizar Perfil',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
     },
   },
   {

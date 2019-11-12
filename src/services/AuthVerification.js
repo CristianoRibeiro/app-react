@@ -22,19 +22,27 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   function onReceived(notification) {
-    console.log('Notification received: ', notification);
+    if (__DEV__) {
+      console.tron.log('Notification received: ', notification);
+    }
   }
 
   function onOpened(openResult) {
-    //alert(JSON.stringify(openResult));
-    console.log('Message: ', openResult.notification.payload.body);
-    console.log('Data: ', openResult.notification.payload.additionalData);
-    console.log('isActive: ', openResult.notification.isAppInFocus);
-    console.log('openResult: ', openResult);
+    if (__DEV__) {
+      console.tron.log('Message: ', openResult.notification.payload.body);
+      console.tron.log(
+        'Data: ',
+        openResult.notification.payload.additionalData,
+      );
+      console.tron.log('isActive: ', openResult.notification.isAppInFocus);
+      console.tron.log('openResult: ', openResult);
+    }
   }
 
   function onIds(device) {
-    console.log('Device info: ', device);
+    if (__DEV__) {
+      console.tron.log('Device info: ', device);
+    }
   }
 
   useEffect(() => {
@@ -64,9 +72,9 @@ export default function Main(props) {
       }
       await dispatch({type: 'USER', payload: response.data});
 
-      // if (!response.data.updated) {
-      //   props.navigation.navigate('ProfileEdit');
-      // }
+      if (!response.data.updated) {
+        props.navigation.navigate('ProfileEdit');
+      }
 
       const user = response.data;
 
@@ -102,6 +110,7 @@ export default function Main(props) {
       }
     }
   }
+
   return (
     <Content>
       <View style={{flex: 1}}>
@@ -111,7 +120,7 @@ export default function Main(props) {
           barStyle="light-content"
         />
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          {/*<ActivityIndicator size={'large'} animating={true}/>*/}
+          {/* <ActivityIndicator size={'large'} animating={true}/> */}
         </View>
       </View>
     </Content>
