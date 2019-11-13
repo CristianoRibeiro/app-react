@@ -27,7 +27,11 @@ export default function Main(props) {
 
   const [item, setItem] = useState(Event);
   const [voucher, setVoucher] = useState([]);
-  const [app_functions, setFunctions] = useState(props.navigation.state.params.item.app_functions ? JSON.parse(props.navigation.state.params.item.app_functions) : []);
+  const [app_functions, setFunctions] = useState(
+    props.navigation.state.params.item.app_functions
+      ? JSON.parse(props.navigation.state.params.item.app_functions)
+      : [],
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -37,8 +41,36 @@ export default function Main(props) {
     _screen();
   }, []);
 
-  function _screen(){
-  
+  async function _handleItem(item) {
+    //alert(JSON.stringify(voucher));
+    if (item.type === 'voucher') {
+      if (voucher) {
+        props.navigation.navigate('VoucherItem');
+      } else {
+        Alert.alert(null, 'Você não possui ingresso!');
+      }
+    } else if (item.type === 'schedule') {
+      if (props.navigation.state.params.item.url_schedule) {
+        try {
+          Linking.canOpenURL(props.navigation.state.params.item.url_schedule).then(supported => {
+            if (supported) {
+              Linking.openURL(props.navigation.state.params.item.url_schedule).catch(err =>
+                console.error('An error occurred', err),
+              );
+            }
+          });
+        } catch (e) {
+          console.error(e.message);
+        }
+      } else {
+        props.navigation.navigate(item.navigation, {item: item.item});
+      }
+    } else {
+      props.navigation.navigate(item.navigation, {item: item.item});
+    }
+  }
+
+  function _screen() {
     const screen = [
       {
         navigation: 'Info',
@@ -56,7 +88,7 @@ export default function Main(props) {
         item: item,
         // permission: app_functions.schedule,
         permission: true,
-        type: null,
+        type: 'schedule',
       },
       {
         navigation: '',
@@ -148,7 +180,7 @@ export default function Main(props) {
         type: null,
       },
     ];
-    
+
     const filtered = screen.filter(value => value.permission === true);
     setFunctions(filtered);
   }
@@ -226,28 +258,12 @@ export default function Main(props) {
     }
   }
 
-  async function _voucherItem() {
-    //alert(JSON.stringify(voucher));
-    if (voucher) {
-      props.navigation.navigate('VoucherItem');
-    } else {
-      Alert.alert(null, 'Você não possui ingresso!');
-    }
-  }
-
-  
-
   function _renderItem(item) {
     if (!item.permission) {
       return null;
     } else {
       return (
-        <Link
-          onPress={() =>
-            item.type === 'voucher'
-              ? _voucherItem()
-              : props.navigation.navigate(item.navigation, {item: item.item})
-          }>
+        <Link onPress={() => _handleItem(item)}>
           <Card>
             <Image
               source={item.image}
