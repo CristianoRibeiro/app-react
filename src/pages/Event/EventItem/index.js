@@ -22,17 +22,133 @@ import {Container, Content, Title} from '~/style';
 import {Event} from '~/model/Event';
 
 export default function Main(props) {
+  const eventitem = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
   const [item, setItem] = useState(Event);
   const [voucher, setVoucher] = useState([]);
+  const [app_functions, setFunctions] = useState(props.navigation.state.params.item.app_functions ? JSON.parse(props.navigation.state.params.item.app_functions) : []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     //console.tron.log(props.navigation.state.params.item);
     _getItem();
+    _screen();
   }, []);
+
+  function _screen(){
+  
+    const screen = [
+      {
+        navigation: 'Info',
+        image: require('~/assets/icons/info.png'),
+        name: 'INFORMAÇÕES',
+        item: item,
+        permission: app_functions.info,
+        type: null,
+      },
+      {
+        navigation: 'ScheduleEvent',
+        image: require('~/assets/icons/calendar.png'),
+        name: 'PROGRAMAÇÃO',
+        item: item,
+        permission: app_functions.schedule,
+        type: null,
+      },
+      {
+        navigation: '',
+        image: require('~/assets/icons/ticket.png'),
+        name: 'INGRESSO',
+        item: item,
+        permission: app_functions.voucher,
+        type: 'voucher',
+      },
+      {
+        navigation: 'FlightEvent',
+        image: require('~/assets/icons/passport.png'),
+        name: 'PASSAGEM',
+        item: item,
+        permission: app_functions.flight,
+        type: null,
+      },
+      {
+        navigation: 'Transfer',
+        image: require('~/assets/icons/bus.png'),
+        name: 'TRANSFER',
+        item: item,
+        permission: app_functions.transfer,
+        type: null,
+      },
+      {
+        navigation: '',
+        image: require('~/assets/icons/games.png'),
+        name: 'EXTRATO',
+        item: item,
+        permission: app_functions.extract,
+        type: null,
+      },
+      {
+        navigation: 'Games',
+        image: require('~/assets/icons/games.png'),
+        name: 'GAMES',
+        item: item,
+        permission: app_functions.games,
+        type: null,
+      },
+      {
+        navigation: 'Streaming',
+        image: require('~/assets/icons/transmision.png'),
+        name: 'TRANSMISSÃO',
+        item: item,
+        permission: app_functions.transmission,
+        type: null,
+      },
+      {
+        navigation: 'PrizeEvent',
+        image: require('~/assets/icons/medal.png'),
+        name: 'PRÊMIOS',
+        item: item,
+        permission: app_functions.prizes,
+        type: null,
+      },
+      {
+        navigation: 'Certificate',
+        image: require('~/assets/icons/certificate.png'),
+        name: 'CERTIFICADO',
+        item: item,
+        permission: app_functions.certificate,
+        type: null,
+      },
+      {
+        navigation: 'Faq',
+        image: require('~/assets/icons/faq.png'),
+        name: 'DUVIDAS',
+        item: item,
+        permission: app_functions.faq,
+        type: null,
+      },
+      {
+        navigation: 'Gallery',
+        image: require('~/assets/icons/gallery.png'),
+        name: 'GALERIA',
+        item: item,
+        permission: app_functions.gallery,
+        type: null,
+      },
+      {
+        navigation: 'NewsEvent',
+        image: require('~/assets/icons/newspaper.png'),
+        name: 'NOTÍCIAS',
+        item: item,
+        permission: app_functions.news,
+        type: null,
+      },
+    ];
+    
+    const filtered = screen.filter(value => value.permission === true);
+    setFunctions(filtered);
+  }
 
   async function _getItem() {
     try {
@@ -116,112 +232,7 @@ export default function Main(props) {
     }
   }
 
-  const screen = [
-    {
-      navigation: 'Info',
-      image: require('~/assets/icons/info.png'),
-      name: 'INFORMAÇÕES',
-      item: item,
-      permission: item.faq,
-      type: null,
-    },
-    {
-      navigation: 'ScheduleEvent',
-      image: require('~/assets/icons/calendar.png'),
-      name: 'PROGRAMAÇÃO',
-      item: item,
-      permission: true,
-      type: null,
-    },
-    {
-      navigation: '',
-      image: require('~/assets/icons/ticket.png'),
-      name: 'INGRESSO',
-      item: item,
-      permission: item.voucher,
-      type: 'voucher',
-    },
-    {
-      navigation: 'FlightEvent',
-      image: require('~/assets/icons/passport.png'),
-      name: 'PASSAGEM',
-      item: item,
-      permission: item.flight,
-      type: null,
-    },
-    {
-      navigation: 'Transfer',
-      image: require('~/assets/icons/bus.png'),
-      name: 'TRANSFER',
-      item: item,
-      permission: item.transfer,
-      type: null,
-    },
-    {
-      navigation: '',
-      image: require('~/assets/icons/games.png'),
-      name: 'EXTRATO',
-      item: item,
-      permission: true,
-      type: null,
-    },
-    {
-      navigation: 'Games',
-      image: require('~/assets/icons/games.png'),
-      name: 'GAMES',
-      item: item,
-      permission: true,
-      type: null,
-    },
-    {
-      navigation: 'Streaming',
-      image: require('~/assets/icons/transmision.png'),
-      name: 'TRANSMISSÃO',
-      item: item,
-      permission: item.transmission,
-      type: null,
-    },
-    {
-      navigation: 'PrizeEvent',
-      image: require('~/assets/icons/medal.png'),
-      name: 'PRÊMIOS',
-      item: item,
-      permission: true,
-      type: null,
-    },
-    {
-      navigation: 'Certificate',
-      image: require('~/assets/icons/certificate.png'),
-      name: 'CERTIFICADO',
-      item: item,
-      permission: item.certificate,
-      type: null,
-    },
-    {
-      navigation: 'Faq',
-      image: require('~/assets/icons/faq.png'),
-      name: 'DUVIDAS',
-      item: item,
-      permission: true,
-      type: null,
-    },
-    {
-      navigation: 'Gallery',
-      image: require('~/assets/icons/gallery.png'),
-      name: 'GALERIA',
-      item: item,
-      permission: item.gallery,
-      type: null,
-    },
-    {
-      navigation: 'NewsCampaigns',
-      image: require('~/assets/icons/newspaper.png'),
-      name: 'NOTÍCIAS',
-      item: item,
-      permission: true,
-      type: null,
-    },
-  ];
+  
 
   function _renderItem(item) {
     if (!item.permission) {
@@ -271,215 +282,14 @@ export default function Main(props) {
           ) : null}
         </Header>
 
-        <View style={{flexDirection: 'row'}}>
-          <Link onPress={() => props.navigation.navigate('Info')}>
-            <Card>
-              <Image
-                source={require('~/assets/icons/info.png')}
-                style={{
-                  height: 50,
-                  width: 50,
-                }}
-                resizeMode="contain"
-              />
-              <TextDark>INFORMAÇÕES </TextDark>
-            </Card>
-          </Link>
-
-          <Link
-            onPress={() => props.navigation.navigate('ScheduleEvent', {item})}>
-            <Card>
-              <Image
-                source={require('~/assets/icons/calendar.png')}
-                style={{
-                  height: 50,
-                  width: 50,
-                }}
-                resizeMode="contain"
-              />
-              <TextDark>PROGRAMAÇÃO </TextDark>
-            </Card>
-          </Link>
-        </View>
-
-        <View style={{marginBottom: 70}}>
-          <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => _voucherItem()}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/ticket.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>INGRESSO </TextDark>
-              </Card>
-            </Link>
-
-            <Link onPress={() => props.navigation.navigate('FlightEvent')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/passport.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>PASSAGEM </TextDark>
-              </Card>
-            </Link>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('Transfer')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/bus.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>TRANSFER </TextDark>
-              </Card>
-            </Link>
-
-            <Link>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/games.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>EXTRATO </TextDark>
-              </Card>
-            </Link>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('Games')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/games.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>GAMES </TextDark>
-              </Card>
-            </Link>
-
-            <Link onPress={() => props.navigation.navigate('Streaming')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/transmision.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>TRANSMISSÃO </TextDark>
-              </Card>
-            </Link>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('PrizeEvent')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/medal.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>PRÊMIOS </TextDark>
-              </Card>
-            </Link>
-
-            <Link onPress={() => props.navigation.navigate('Certificate')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/certificate.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>CERTIFICADO </TextDark>
-              </Card>
-            </Link>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('Faq')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/faq.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>DUVIDAS </TextDark>
-              </Card>
-            </Link>
-
-            <Link onPress={() => props.navigation.navigate('Gallery')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/gallery.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>GALERIA </TextDark>
-              </Card>
-            </Link>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => props.navigation.navigate('NewsCampaigns')}>
-              <Card>
-                <Image
-                  source={require('~/assets/icons/newspaper.png')}
-                  style={{
-                    height: 50,
-                    width: 50,
-                  }}
-                  resizeMode="contain"
-                />
-                <TextDark>NOTÍCIAS </TextDark>
-              </Card>
-            </Link>
-
-            <View style={{flex: 1}}></View>
-          </View>
-        </View>
-
-        {/* <FlatList
+        <FlatList
           style={{margimBottom: 75}}
-          data={screen}
+          data={app_functions}
           numColumns={2}
           keyExtractor={(item, index) => index.toString()}
           //ListEmptyComponent={<EmptyList text="Nenhum voucher encontrado!" />}
           renderItem={({item}) => _renderItem(item)}
-        /> */}
+        />
       </ScrollView>
     </Content>
   );

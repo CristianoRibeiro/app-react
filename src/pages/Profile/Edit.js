@@ -106,7 +106,7 @@ export default function Main(props) {
         await dispatch({type: 'USER', payload: response.data.user});
       }
 
-      props.navigation.navigate('Profile');
+      props.navigation.navigate('Home');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -138,24 +138,24 @@ export default function Main(props) {
         errors.name = 'Nome obrigatório!';
       }
 
-      if (!email) {
+      if (!email.trim()) {
         errors.email = 'E-mail obrigatório!';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.trim())) {
         errors.email = 'Digite um e-mail válido!';
       }
 
-      if (!email_personal) {
+      if (!email_personal.trim()) {
         errors.email_personal = 'E-mail pessoal obrigatório!';
       } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal)
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal.trim())
       ) {
         errors.email_personal = 'Digite um e-mail pessoal válido!';
       }
 
-      if (!phone) {
+      if (!phone.trim()) {
         errors.phone = 'Telefone obrigatório!';
       } else if (
-        MaskService.toMask('cel-phone', phone, {
+        MaskService.toMask('cel-phone', phone.trim(), {
           maskType: 'BRL',
           withDDD: true,
           dddMask: '(99) ',

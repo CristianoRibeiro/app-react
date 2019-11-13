@@ -21,6 +21,7 @@ import Register from '~/pages/Register';
 import Profile from '~/pages/Profile';
 import ProfileEdit from '~/pages/Profile/Edit';
 import News from '~/pages/News';
+import EventNews from '~/pages/News/EventNews';
 import NewsDetail from '~/pages/News/Detail';
 
 //Event
@@ -326,7 +327,7 @@ const MainNavigator = createStackNavigator(
       screen: EventItem,
       path: 'login',
       navigationOptions: {
-        headerTitle: '',
+        headerTitle: 'Detalhes do Evento',
       },
     },
     Flight: {
@@ -605,6 +606,16 @@ const MainNavigator = createStackNavigator(
       path: 'lottery',
       navigationOptions: {
         headerTitle: 'Sorteio',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    NewsEvent: {
+      screen: EventNews,
+      path: 'newsevent',
+      navigationOptions: {
+        headerTitle: 'Notícias',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

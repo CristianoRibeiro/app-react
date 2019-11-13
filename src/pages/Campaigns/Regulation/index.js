@@ -15,30 +15,17 @@ import {
   Alert,
   Linking,
 } from 'react-native';
+import Modal from 'react-native-modal';
+import {WebView} from 'react-native-webview';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
-import {Container, Content} from '../../../style';
+import {Container, Content, TextLight} from '~/style';
 
-import {
-  Title,
-  NotificationDate,
-  NotificationLink,
-  Header,
-  TextTitle,
-  Card,
-  CardItem,
-  Link,
-  TextDark,
-  ItemQuestion,
-  NotificationText,
-  Submit,
-  Send,
-  TextLight,
-} from './styles';
+import {Title, Card, Link, ButtonDark} from './styles';
 
 export default function Main(props) {
   const data = useSelector(state => state.regulation);
@@ -46,6 +33,7 @@ export default function Main(props) {
 
   const [regulation, setRegulation] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -72,7 +60,7 @@ export default function Main(props) {
   }
 
   function _openUrl(url) {
-    if(url){
+    if (url) {
       try {
         Linking.canOpenURL(url).then(supported => {
           if (supported) {
@@ -84,8 +72,9 @@ export default function Main(props) {
       } catch (e) {
         console.error(e.message);
       }
+    } else {
+      setModal(true);
     }
-    
   }
 
   return (
@@ -102,10 +91,30 @@ export default function Main(props) {
             <View key={index}>
               <Link onPress={() => _openUrl(item.url)}>
                 <Card>
-                  <Title style={{marginBottom: 5}}>{item.title}</Title>
-                  {/* <TextDark>{item.regulation}</TextDark> */}
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <MaterialCommunityIcons
+                      style={{marginRight: 5}}
+                      name="file-document-outline"
+                      size={24}
+                      color={'#999'}
+                    />
+                    <View style={{flex: 1}}>
+                      <Title>{item.title}</Title>
+                    </View>
+                  </View>
                 </Card>
               </Link>
+
+              <Modal
+                isVisible={modal}
+                style={{marginTop: 50, backgroundColor: '#fff', margin: 0}}>
+                <WebView source={{html: item.append_regulation}} />
+                <ButtonDark
+                  onPress={() => setModal(false)}
+                  style={{marginBottom: 10, marginHorizontal: 15}}>
+                  <TextLight>OK</TextLight>
+                </ButtonDark>
+              </Modal>
             </View>
           )}
         />
