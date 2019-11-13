@@ -29,26 +29,10 @@ export const Info = styled.View`
 `;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin: 3px;
   border-radius: 5px;
-  padding: 30px 5px;
+  padding: 10px 5px;
   background-color: #fff;
-  display: flex;
-  align-items: center;
-`;
-
-export const Link = styled.TouchableOpacity`
-  flex: 1;
-  color: #fff;
-`;
-
-export const Header = styled(LinearGradient).attrs({
-  colors: ['#051538', '#041c50'],
-  start: {x: 1, y: 0},
-  end: {x: 1, y: 1},
-})`
-  padding-top: 10px;
-  padding-bottom: 10px;
 `;
 
 export const TextTitle = styled.Text`

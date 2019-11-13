@@ -108,7 +108,16 @@ export default function Main(props) {
               <Modal
                 isVisible={modal}
                 style={{marginTop: 50, backgroundColor: '#fff', margin: 0}}>
-                <WebView source={{html: item.append_regulation}} />
+                <WebView
+                  source={{html: item.append_regulation}}
+                  onShouldStartLoadWithRequest={(event) => {
+                    if (!/^[data:text, about:blank]/.test(event.url)) {
+                      Linking.openURL(event.url);
+                      return false;
+                    }
+                    return true;
+                  }}
+                />
                 <ButtonDark
                   onPress={() => setModal(false)}
                   style={{marginBottom: 10, marginHorizontal: 15}}>

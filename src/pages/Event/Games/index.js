@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   Image,
@@ -14,33 +14,27 @@ import {
 
 import api from '~/services/api';
 
-import {
-  Container,
-  Content
-} from '~/style';
+import {Container, Content} from '~/style';
 
 import {Title, Card} from './styles';
 
-
 export default function Main(props) {
+  const eventitem = useSelector(state => state.eventitem);
+
   const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const [item, setItem] = useState(
+    eventitem.app_functions ? JSON.parse(eventitem.app_functions) : [],
+  );
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Content>
       <ScrollView>
-
         <Card>
-          
-          <Title>Conheça o espaço Viva na sede Apcef/PA e participe!</Title>
+          <Title>{item.games_text}</Title>
         </Card>
-
-
       </ScrollView>
     </Content>
   );

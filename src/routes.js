@@ -455,9 +455,8 @@ const MainNavigator = createStackNavigator(
       screen: ScheduleEvent,
       path: 'event/schedule',
       navigationOptions: {
-        headerTitle: null,
+        headerTitle: 'Programação',
         headerStyle: {
-          headerTitle: 'Programação',
           backgroundColor: '#FF6666',
         },
       },

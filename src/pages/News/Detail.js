@@ -43,7 +43,6 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-   
     if (__DEV__) {
       console.tron.log(props.navigation.state.params.item);
     }
@@ -52,7 +51,21 @@ export default function Main(props) {
 
   return (
     <View style={{paddingBottom: 15, flex: 1}}>
-      <WebView source={{html: '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body>'+props.navigation.state.params.item.conteudo+' </body></html>'}} />
+      <WebView
+        source={{
+          html:
+            '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body>' +
+            props.navigation.state.params.item.conteudo +
+            ' </body></html>',
+        }}
+        onShouldStartLoadWithRequest={(event) => {
+          if (!/^[data:text, about:blank]/.test(event.url)) {
+            Linking.openURL(event.url);
+            return false;
+          }
+          return true;
+        }}
+      />
     </View>
   );
 }

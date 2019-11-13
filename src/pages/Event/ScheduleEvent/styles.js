@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from "react-native-linear-gradient";
+import {Button, TextInput} from 'react-native-paper';
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -51,12 +52,6 @@ export const EventLink = styled.Text`
   margin: 5px 0;
 `;
 
-export const Form = styled.View`
-  flex-direction: row;
-  margin-top: 10px;
-  padding: 0 10px;
-`;
-
 export const Card = styled.View`
   margin: 5px;
   border-radius: 5px;
@@ -99,15 +94,6 @@ export const List = styled.FlatList.attrs({
   margin-top: 20px;
 `;
 
-export const Header = styled(LinearGradient).attrs({
-  colors: ['#051538', '#041c50'],
-  start: { x: 1, y: 0 },
-  end: { x: 1, y: 1 },
-})`
-  padding-top: 10px;
-  padding-bottom: 10px;
-`;
-
 export const TextTitle = styled.Text`
   font-size: 28px;
   color: #fff;
@@ -115,7 +101,10 @@ export const TextTitle = styled.Text`
 `;
 
 
-// export const Image = styled.Image`
-//   width: 100%;
-//   aspect-ratio: ${props => props.aspect};
-// `;
+export const ButtonDark = styled(Button).attrs({
+  mode: 'contained',
+})`
+  background: #0058b8;
+  border-radius: 5px;
+  border: 1px solid #fff;
+`;

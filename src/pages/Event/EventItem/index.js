@@ -45,7 +45,8 @@ export default function Main(props) {
         image: require('~/assets/icons/info.png'),
         name: 'INFORMAÇÕES',
         item: item,
-        permission: app_functions.info,
+        // permission: app_functions.info,
+        permission: true,
         type: null,
       },
       {
@@ -53,7 +54,8 @@ export default function Main(props) {
         image: require('~/assets/icons/calendar.png'),
         name: 'PROGRAMAÇÃO',
         item: item,
-        permission: app_functions.schedule,
+        // permission: app_functions.schedule,
+        permission: true,
         type: null,
       },
       {
@@ -61,7 +63,7 @@ export default function Main(props) {
         image: require('~/assets/icons/ticket.png'),
         name: 'INGRESSO',
         item: item,
-        permission: app_functions.voucher,
+        permission: app_functions ? app_functions.voucher : false,
         type: 'voucher',
       },
       {
@@ -69,7 +71,7 @@ export default function Main(props) {
         image: require('~/assets/icons/passport.png'),
         name: 'PASSAGEM',
         item: item,
-        permission: app_functions.flight,
+        permission: app_functions ? app_functions.flight : false,
         type: null,
       },
       {
@@ -77,7 +79,7 @@ export default function Main(props) {
         image: require('~/assets/icons/bus.png'),
         name: 'TRANSFER',
         item: item,
-        permission: app_functions.transfer,
+        permission: app_functions ? app_functions.transfer : false,
         type: null,
       },
       {
@@ -85,7 +87,7 @@ export default function Main(props) {
         image: require('~/assets/icons/games.png'),
         name: 'EXTRATO',
         item: item,
-        permission: app_functions.extract,
+        permission: app_functions ? app_functions.extract : false,
         type: null,
       },
       {
@@ -93,7 +95,8 @@ export default function Main(props) {
         image: require('~/assets/icons/games.png'),
         name: 'GAMES',
         item: item,
-        permission: app_functions.games,
+        //permission: app_functions ? app_functions.games,
+        permission: true,
         type: null,
       },
       {
@@ -101,7 +104,7 @@ export default function Main(props) {
         image: require('~/assets/icons/transmision.png'),
         name: 'TRANSMISSÃO',
         item: item,
-        permission: app_functions.transmission,
+        permission: app_functions ? app_functions.transmission : false,
         type: null,
       },
       {
@@ -109,7 +112,7 @@ export default function Main(props) {
         image: require('~/assets/icons/medal.png'),
         name: 'PRÊMIOS',
         item: item,
-        permission: app_functions.prizes,
+        permission: app_functions ? app_functions.prizes : false,
         type: null,
       },
       {
@@ -117,7 +120,7 @@ export default function Main(props) {
         image: require('~/assets/icons/certificate.png'),
         name: 'CERTIFICADO',
         item: item,
-        permission: app_functions.certificate,
+        permission: app_functions ? app_functions.certificate : false,
         type: null,
       },
       {
@@ -125,7 +128,7 @@ export default function Main(props) {
         image: require('~/assets/icons/faq.png'),
         name: 'DUVIDAS',
         item: item,
-        permission: app_functions.faq,
+        permission: app_functions ? app_functions.faq : false,
         type: null,
       },
       {
@@ -133,7 +136,7 @@ export default function Main(props) {
         image: require('~/assets/icons/gallery.png'),
         name: 'GALERIA',
         item: item,
-        permission: app_functions.gallery,
+        permission: app_functions ? app_functions.gallery : false,
         type: null,
       },
       {
@@ -141,7 +144,7 @@ export default function Main(props) {
         image: require('~/assets/icons/newspaper.png'),
         name: 'NOTÍCIAS',
         item: item,
-        permission: app_functions.news,
+        permission: app_functions ? app_functions.news : false,
         type: null,
       },
     ];

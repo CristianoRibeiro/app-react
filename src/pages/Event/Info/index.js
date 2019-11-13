@@ -12,6 +12,7 @@ import {
   Alert,
   FlatList,
   RefreshControl,
+  Linking
 } from 'react-native';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import {WebView} from 'react-native-webview';
@@ -21,7 +22,7 @@ import EmptyList from '~/components/EmptyList';
 import api from '~/services/api';
 
 //Styles
-import {Container, Content} from '../../../style';
+import {Container, Content, TextDark} from '../../../style';
 
 import {
   EventTitle,
@@ -50,7 +51,14 @@ export default function Main(props) {
 
   return (
     <View style={{paddingBottom: 15, flex: 1}}>
-      <WebView source={{html: info.append_info}} />
+      <WebView source={{html: info.append_info}} 
+      onShouldStartLoadWithRequest={(event) => {
+        if (!/^[data:text, about:blank]/.test(event.url)) {
+          Linking.openURL(event.url);
+          return false;
+        }
+        return true;
+      }}/>
     </View>
   );
 }

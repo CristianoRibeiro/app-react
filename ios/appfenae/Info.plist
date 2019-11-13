@@ -65,6 +65,8 @@
 	<string>$(PRODUCT_NAME) uso de localização.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) uso de localização.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Salve fotos para determinadas atividades.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Este aplicativo requer acesso à biblioteca de fotos, você pode enviar sua foto de perfil usando sua biblioteca de fotos</string>
 	<key>UIAppFonts</key>
