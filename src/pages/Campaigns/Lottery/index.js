@@ -20,7 +20,7 @@ import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
-import {Container, Content} from '../../../style';
+import {Container, Content} from '~/style';
 
 import {
   Title,
@@ -51,6 +51,7 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    setLoading(true);
     try {
       let response = await api.get('/api/lottery');
       //alert(JSON.stringify(response));
@@ -65,6 +66,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoading(false);
   }
 
   return (
@@ -104,7 +106,7 @@ export default function Main(props) {
                   justifyContent: 'space-between',
                   marginVertical: 8,
                 }}>
-                <View style={{flex: 1}}>
+                <View style={{flex: 1, justifyContent: 'center'}}>
                   <TextDark style={{fontWeight: '700', fontSize: 16}}>
                     {item.item.prize}
                   </TextDark>
@@ -117,12 +119,19 @@ export default function Main(props) {
                     {item.item.append_date}
                   </TextDark>
                 </View>
-                <View>
-                  <TextDark>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                  <TextDark style={{fontSize:11}}>
                     Número da sorte
                   </TextDark>
                   <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
                     {item.item.lucky_number}
+                  </TextDark>
+
+                  <TextDark style={{fontSize:11}}>
+                    Número do sorteado
+                  </TextDark>
+                  <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
+                    {item.item.number}
                   </TextDark>
                  
                 </View>
