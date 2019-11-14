@@ -425,7 +425,7 @@ const MainNavigator = createStackNavigator(
       screen: VoucherItem,
       path: 'event/voucher',
       navigationOptions: {
-        headerTitle: null,
+        headerTitle: 'Ingresso',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

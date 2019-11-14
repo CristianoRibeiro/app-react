@@ -98,6 +98,7 @@ export default function Main(props) {
           style={{margimBottom: 50}}
           data={data}
           keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={<EmptyList text="Nenhum sorteado encontrado!" />}
           renderItem={(item, index) => (
             <Card>
               <View
@@ -107,33 +108,34 @@ export default function Main(props) {
                   marginVertical: 8,
                 }}>
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                  <TextDark style={{fontWeight: '700', fontSize: 16}}>
+                  <TextDark style={{fontWeight: '700', fontSize: 13}}>
                     {item.item.prize}
                   </TextDark>
-                  <TextDark> {item.item.user.name}</TextDark>
+
+                  <TextDark style={{fontSize: 12, marginTop: 12}}>
+                    {item.item.user.name}
+                  </TextDark>
+
                   <TextDark style={{fontWeight: '700'}}>
                     {item.item.user.apcef}
                   </TextDark>
 
-                  <TextDark style={{fontSize: 12}}>
+                  <TextDark style={{fontSize: 11}}>
                     {item.item.append_date}
                   </TextDark>
                 </View>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                  <TextDark style={{fontSize:11}}>
-                    Número da sorte
-                  </TextDark>
-                  <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
+                  <TextDark style={{fontSize: 10}}>Número da sorte</TextDark>
+
+                  <TextDark style={{fontWeight: '700', color: '#f7893e'}}>
                     {item.item.lucky_number}
                   </TextDark>
 
-                  <TextDark style={{fontSize:11}}>
-                    Número do sorteado
-                  </TextDark>
-                  <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
+                  <TextDark style={{fontSize: 10}}>Número do sorteado</TextDark>
+                  
+                  <TextDark style={{fontWeight: '700', color: '#f7893e'}}>
                     {item.item.number}
                   </TextDark>
-                 
                 </View>
               </View>
             </Card>
