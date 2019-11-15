@@ -43,31 +43,7 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getData();
   }, []);
-
-  async function _getData() {
-    setLoading(true);
-    try {
-      let response = await api.get('/api/cards');
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-      await dispatch({type: 'CARDS', payload: response.data});
-      if (response.data.time) {
-        const firstDate = parseISO(response.data.time);
-        const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
-        setDate(formattedDate);
-      }
-      setCards(response.data);
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-    setLoading(false);
-  }
 
   async function _handleModal(i) {
     await setIndex(i);
@@ -97,7 +73,7 @@ export default function Main(props) {
     <Content>
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+          <RefreshControl refreshing={loading} />
         }>
         <View style={{margimBottom: 50}}>
           <FlatList
