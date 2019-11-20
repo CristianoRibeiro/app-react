@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "452636261533",
-    "firebase_url": "https://viva-fenae-apcef.firebaseio.com",
-    "project_id": "viva-fenae-apcef",
-    "storage_bucket": "viva-fenae-apcef.appspot.com"
+    "project_number": "600285816701",
+    "firebase_url": "https://viva-fenae-apcef-bb3e1.firebaseio.com",
+    "project_id": "viva-fenae-apcef-bb3e1",
+    "storage_bucket": "viva-fenae-apcef-bb3e1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:452636261533:android:1e0691460d2bad48a32874",
+        "mobilesdk_app_id": "1:600285816701:android:5035f00ac91a2c42898e14",
         "android_client_info": {
           "package_name": "br.com.vivafenae"
         }
       },
       "oauth_client": [
         {
-          "client_id": "452636261533-v1vhc6mpjr8reggaknbocblfe2q34s1a.apps.googleusercontent.com",
+          "client_id": "600285816701-2nrjf86vdbt4h6jijffkv4d6pqpu68gn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDWtAL3zTFDDz9jJVtuW3w11gBeIApDB5s"
+          "current_key": "AIzaSyBqAO7s92fS9sjJyeU6Qx-KLxjkdgkcuxA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "452636261533-v1vhc6mpjr8reggaknbocblfe2q34s1a.apps.googleusercontent.com",
+              "client_id": "600285816701-2nrjf86vdbt4h6jijffkv4d6pqpu68gn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
