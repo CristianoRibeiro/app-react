@@ -130,7 +130,7 @@ export default function Main(props) {
             data={cards}
             numColumns={3}
             keyExtractor={(item, index) => index.toString()}
-            ListEmptyComponent={<EmptyList text="Você não tem figurinhas repetidas!" />}
+            ListEmptyComponent={<EmptyList text="Aqui você pode trocar figurinhas com os seus amigos." />}
             renderItem={({item, index}) => _renderItem(item, index)}
           />
         </View>

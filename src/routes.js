@@ -33,7 +33,8 @@ import VoucherEvent from '~/pages/Voucher/VoucherEvent';
 import VoucherAdd from '~/pages/Voucher/Add';
 import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
-import Prize from '~/pages/Prize';
+import Prize from '~/pages/Event/Prize';
+import PrizeAll from '~/pages/Event/Prize/All';
 import Flight from '~/pages/Event/Flight';
 import Transfer from '~/pages/Event/Transfer';
 import Streaming from '~/pages/Event/Streaming';
@@ -594,7 +595,7 @@ const MainNavigator = createStackNavigator(
       screen: Games,
       path: 'games',
       navigationOptions: {
-        headerTitle: 'Games',
+        headerTitle: 'Meus cupons',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -664,6 +665,17 @@ const MainNavigator = createStackNavigator(
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
+        },
+      },
+    },
+    PrizeAll: {
+      screen: PrizeAll,
+      path: 'prize/all',
+      
+      navigationOptions: {
+        headerTitle: 'Prêmios',
+        headerStyle: {
+          backgroundColor: '#FF6666',
         },
       },
     },

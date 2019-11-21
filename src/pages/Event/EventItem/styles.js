@@ -54,7 +54,7 @@ export const Header = styled(LinearGradient).attrs({
 `;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin: 2px;
   align-items: center;
   border-radius: 5px;
   padding: 15px 10px;

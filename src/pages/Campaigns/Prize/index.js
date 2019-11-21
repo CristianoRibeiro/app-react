@@ -57,6 +57,7 @@ export default function Main(props) {
       await dispatch({type: 'PRIZECAMPAIGN', payload: response.data});
       //setNotifications(response.data);
     } catch (error) {
+      await dispatch({type: 'PRIZE', payload: []});
       if (__DEV__) {
         console.tron.log(error.message);
       }
@@ -80,7 +81,8 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum prêmio encontrado!" />}
+        ListEmptyComponent={<EmptyList text="Que pena! Você ainda não ganhou prêmios.
+        Não desanime, continue participando e ganhe mais números da sorte." />}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />

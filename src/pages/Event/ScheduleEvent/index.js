@@ -124,7 +124,7 @@ export default function Main(props) {
         data={JSON.parse(schedules)}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
-          <EmptyList text="Nenhuma programação encontrada!" />
+          <EmptyList text="Em breve" />
         }
         renderItem={({item}) => _renderItem(item)}
       />

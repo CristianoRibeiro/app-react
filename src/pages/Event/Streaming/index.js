@@ -44,7 +44,7 @@ export default function Main(props) {
             }}
             resizeMode="contain"
           />
-          <EventTitle>NÃO DISPONÍVEL</EventTitle>
+          <EventTitle>Estará disponível durante o evento</EventTitle>
         </Card>
 
 

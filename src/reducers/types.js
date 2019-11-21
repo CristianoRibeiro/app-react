@@ -23,3 +23,4 @@ export const LOTTERY = 'LOTTERY';
 export const NEWS = 'NEWS';
 export const MATCHS = 'MATCHS';
 export const MATCHITEM = 'MATCHITEM';
+export const GAMES = 'GAMES';

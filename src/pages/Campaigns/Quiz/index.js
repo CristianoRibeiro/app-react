@@ -178,7 +178,7 @@ export default function Main(props) {
           </View>
         );
       } else {
-        return <EmptyList text="Nenhum quiz encontrado!" />;
+        return <EmptyList text="Disponível toda quarta-feira de 12h às 18h. Não perca! Respondendo você acumula número da sorte e libera figurinhas para seu álbum." />;
       }
     }
   }

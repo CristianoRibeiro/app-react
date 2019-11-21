@@ -76,7 +76,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={flights}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhuma passagem encontrada!" />}
+        ListEmptyComponent={<EmptyList text="Em breve informações serão disponibilizadas" />}
         renderItem={({item}) => _renderItem(item)}
         
       />

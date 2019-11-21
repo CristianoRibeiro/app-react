@@ -22,6 +22,7 @@
 		DDCE4BC966544695B6DA97E4 /* libPods-appfenae-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F101B7D5005ABC35013CAAF5 /* libPods-appfenae-tvOS.a */; };
 		FB2082A92369E12700DC6546 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2082A82369E12700DC6546 /* NotificationService.swift */; };
 		FB2082AD2369E12700DC6546 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB2082A62369E12700DC6546 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FBC7846023857BF500B13409 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC7845F23857BF500B13409 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		FB2082A82369E12700DC6546 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		FB2082AA2369E12700DC6546 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB670BB92360F3A700C6A8AF /* VIVA FENAE APCEF.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "VIVA FENAE APCEF.entitlements"; path = "appfenae/VIVA FENAE APCEF.entitlements"; sourceTree = "<group>"; };
+		FBC7845F23857BF500B13409 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 		13B07FAE1A68108700A75B9A /* appfenae */ = {
 			isa = PBXGroup;
 			children = (
+				FBC7845F23857BF500B13409 /* GoogleService-Info.plist */,
 				FB670BB92360F3A700C6A8AF /* VIVA FENAE APCEF.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -416,6 +419,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				FBC7846023857BF500B13409 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

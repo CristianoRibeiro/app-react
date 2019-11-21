@@ -9,18 +9,15 @@ import {
   StatusBar,
   View,
   ScrollView,
-  Alert,
+  KeyboardAvoidingView,
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
 
-//Api
 import api from '~/services/api';
 
-//Styles
-import {Container, Content} from '../../../style';
+import {Container, Content} from '~/style';
 
 import {
   EventTitle,
@@ -30,33 +27,38 @@ import {
   TextTitle,
   Card,
   Link,
+  CardImage,
+  Points,
   SubTitle,
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.games);
+  const data = useSelector(state => state.prizes);
+  const event = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
+  const [prize, setPrize] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (__DEV__) {
-      console.tron.log(data);
+      console.tron.log(event);
     }
     _getData();
   }, []);
 
   async function _getData() {
     try {
-      let response = await api.get('/api/games');
+      let response = await api.get(`/api/prizes/event/${event.id}`);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'GAMES', payload: response.data});
+      await dispatch({type: 'PRIZE', payload: response.data});
       //setNotifications(response.data);
     } catch (error) {
+      await dispatch({type: 'PRIZE', payload: []});
       if (__DEV__) {
         console.tron.log(error.message);
       }
@@ -64,13 +66,17 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
-    const firstDate = parseISO(item.created_at);
-    const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
+    const formattedDate = '';
+    if (item.retired_at) {
+      const firstDate = parseISO(item.retired_at);
+      formattedDate =
+        'Retirado: ' + format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
+    }
     return (
       <Card>
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <EventDate>{formattedDate}</EventDate>
-          <SubTitle>{item.type}</SubTitle>
+          {item.retired_at ? <EventDate>{formattedDate}</EventDate> : null}
+          <SubTitle>{item.description}</SubTitle>
         </View>
       </Card>
     );
@@ -82,8 +88,13 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Aqui você poderá consultar os seus cupons gerados a partir das interações no evento" />}
+        ListEmptyComponent={
+          <EmptyList text="Que pena! Você ainda não ganhou prêmios. Não desanime e continue participando." />
+        }
         renderItem={({item}) => _renderItem(item)}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+        }
       />
     </Content>
   );

@@ -125,7 +125,7 @@ export default function Main(props) {
       {
         navigation: 'Games',
         image: require('~/assets/icons/games.png'),
-        name: 'GAMES',
+        name: 'MEUS CUPONS',
         item: item,
         //permission: app_functions ? app_functions.games,
         permission: true,
@@ -145,6 +145,7 @@ export default function Main(props) {
         name: 'PRÊMIOS',
         item: item,
         permission: app_functions ? app_functions.prizes : false,
+        //permission: true,
         type: null,
       },
       {
@@ -177,6 +178,15 @@ export default function Main(props) {
         name: 'NOTÍCIAS',
         item: item,
         permission: app_functions ? app_functions.news : false,
+        type: null,
+      },
+      {
+        navigation: 'PrizeAll',
+        image: require('~/assets/icons/first.png'),
+        name: 'SORTEIO',
+        item: item,
+        //permission: app_functions ? app_functions.games,
+        permission: true,
         type: null,
       },
     ];

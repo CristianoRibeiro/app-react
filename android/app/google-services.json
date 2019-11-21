@@ -30,6 +30,13 @@
             {
               "client_id": "600285816701-2nrjf86vdbt4h6jijffkv4d6pqpu68gn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "600285816701-5585v83fi4da94ohdc142vtlhmf1ek3b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.vivafenae"
+              }
             }
           ]
         }

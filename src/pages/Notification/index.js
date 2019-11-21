@@ -62,15 +62,29 @@ export default function Main(props) {
   function _renderItem(item) {
     const firstDate = parseISO(item.created_at);
     const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
-    return (
-      <Card>
-        <View>
-          <NotificationDate>{formattedDate}</NotificationDate>
-          <NotificationTitle>{item.title}</NotificationTitle>
-          <NotificationText>{item.content}</NotificationText>
-        </View>
-      </Card>
-    );
+
+    if(item.user_id){
+      return (
+        <Card style={{backgroundColor: '#0058b8'}}>
+          <View>
+            <NotificationDate style={{color: '#fff'}}>{formattedDate}</NotificationDate>
+            <NotificationTitle style={{color: '#fff'}}>{item.title}</NotificationTitle>
+            <NotificationText style={{color: '#fff'}}>{item.content}</NotificationText>
+          </View>
+        </Card>
+      );
+    }else{
+      return (
+        <Card>
+          <View>
+            <NotificationDate>{formattedDate}</NotificationDate>
+            <NotificationTitle>{item.title}</NotificationTitle>
+            <NotificationText>{item.content}</NotificationText>
+          </View>
+        </Card>
+      );
+    }
+    
   }
 
   return (

@@ -66,7 +66,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={transfers}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum transfer encontrado!" />}
+        ListEmptyComponent={<EmptyList text="Em breve" />}
         renderItem={({item}) => _renderItem(item)}
       />
     </Content>

@@ -97,7 +97,7 @@ export default function Main(props) {
         data={matchs}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
-          <EmptyList text="Você não tem figurinhas repetidas!" />
+          <EmptyList text="Aqui você pode trocar figurinhas com os seus amigos." />
         }
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />

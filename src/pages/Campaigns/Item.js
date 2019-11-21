@@ -259,7 +259,7 @@ export default function Main(props) {
                   }}
                   resizeMode="contain"
                 />
-                <TextDark>RANKING DAS UNIDADES </TextDark>
+                <TextDark>UNIDADES </TextDark>
               </Card>
             </Link>
 

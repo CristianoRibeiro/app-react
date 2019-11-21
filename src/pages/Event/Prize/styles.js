@@ -12,9 +12,9 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 18px;
+  font-size: 14;
   color: #333;
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export const TextLight = styled.Text`
@@ -30,13 +30,6 @@ export const TextDark = styled.Text`
   font-weight: 600;
 `;
 
-export const EventTitle = styled.Text`
-  font-size: 14px;
-  color: #0058b8;
-  text-transform: uppercase;
-  margin-top: 5px;
-`;
-
 export const EventDate = styled.Text`
   font-size: 10px;
   color: #7c7c7c;
@@ -44,50 +37,30 @@ export const EventDate = styled.Text`
   margin: 5px 0 0 0;
 `;
 
-export const EventLink = styled.Text`
-  font-size: 15px;
-  color: #ef7106;
-  margin: 5px 0;
-`;
-
-export const Points = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Info = styled.View`
-  padding: 1px;
-`;
-
 export const Card = styled.View`
   margin: 5px;
   border-radius: 5px;
   padding: 10px 10px;
   background-color: #fff;
-  flex:1;
+  display: flex;
+  flex-direction: row;
 `;
 
 export const CardImage = styled.View`
   padding: 15px 15px 15px 5px;
 `;
 
-export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#efefef',
-  keyboardAppearance: 'light',
-  maxLength: 255
-})`
-  flex: 1;
-  padding: 12px 15px;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #fff;
-  background: rgba(000,000,000, 0.2);
-  border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
-`;
 
 export const Link = styled.TouchableOpacity`
 flex: 1;
   color: #fff
+`;
+
+export const List = styled.FlatList.attrs({
+  contentContainerStyle: { paddingHorizontal: 20 },
+  showsVerticalScrollIndicator: false,
+})`
+  margin-top: 20px;
 `;
 
 export const Header = styled(LinearGradient).attrs({
@@ -100,7 +73,13 @@ export const Header = styled(LinearGradient).attrs({
 `;
 
 export const TextTitle = styled.Text`
-  font-size: 18px;
+  font-size: 28px;
   color: #fff;
   margin: 5px 0;
 `;
+
+
+// export const Image = styled.Image`
+//   width: 100%;
+//   aspect-ratio: ${props => props.aspect};
+// `;

@@ -74,24 +74,9 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        {/* <Header>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="ticket-outline"
-              size={20}
-              color={'#fff'}
-            />
-
-            <TextLight style={{fontSize: 18, fontWeight: '800'}}>
-              Extrato de Cupons
-            </TextLight>
-          </View>
-        </Header> */}
+        <Header>
+          <TextLight>Confira abaixo seu(s) número(s) da sorte para participar dos sorteios:</TextLight>
+        </Header>
 
         <Card>
           <FlatList
