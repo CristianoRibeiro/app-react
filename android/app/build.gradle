@@ -141,8 +141,8 @@ android {
         applicationId "br.com.vivafenae"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.0.9"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
