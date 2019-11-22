@@ -98,19 +98,9 @@ export default function Main(props) {
     }
   }
 
-  return (
-    <Content>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-        }>
-        <View style={{flex: 1}}>
-          <FitImage
-            source={{uri: props.navigation.state.params.item.thumbnail}}
-            resizeMode="contain"
-          />
-        </View>
-
+  function _renderItem() {
+    if (props.navigation.state.params.item.functions) {
+      return (
         <View style={{marginBottom: 70, marginTop: 15}}>
           <View style={{flexDirection: 'row'}}>
             <Link onPress={() => props.navigation.navigate('Quiz')}>
@@ -266,6 +256,42 @@ export default function Main(props) {
             {/* <View style={{flex:1}}></View> */}
           </View>
         </View>
+      );
+    } else {
+      const html = '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body>'+props.navigation.state.params.item.content+ '</html>';
+      return (
+        <View style={{paddingBottom: 15, flex: 1}}>
+          <WebView
+          style={{
+            height: 1000, minHeight: '100%'
+          }}
+            source={{html: html}}
+            onShouldStartLoadWithRequest={event => {
+              if (!/^[data:text, about:blank]/.test(event.url)) {
+                Linking.openURL(event.url);
+                return false;
+              }
+              return true;
+            }}
+          />
+        </View>
+      );
+    }
+  }
+
+  return (
+    <Content>
+      <ScrollView
+        style={{flex:1}}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+        }>
+          <FitImage
+            source={{uri: props.navigation.state.params.item.thumbnail}}
+            resizeMode="contain"
+          />
+
+        {_renderItem()}
       </ScrollView>
     </Content>
   );

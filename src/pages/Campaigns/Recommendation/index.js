@@ -53,20 +53,16 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
+      let response = null;
       if (name) {
-        let response = await api.get('/api/user/unassociated/' + name);
+        response = await api.get('/api/user/unassociated/' + name);
         setUsers(response.data);
       }
 
-      //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      //let indicate = await api.get('/api/indicate');
-      //alert(JSON.stringify(response));
-
-      //await dispatch({type: 'INDICATED', payload: indicate.data});
-      //await dispatch({type: 'USERS', payload: response.data});
+      
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);

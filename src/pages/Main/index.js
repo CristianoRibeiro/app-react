@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import FitImage from 'react-native-fit-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Banner from '~/pages/Main/Banner';
 import BannerCampaigns from '~/pages/Main/BannerCampaigns';
 
@@ -20,6 +21,7 @@ import api from '~/services/api';
 import {
   Title,
   Header,
+  HeaderTitle,
   TextDark,
   Card,
   Link,
@@ -33,7 +35,6 @@ export default function Main(props) {
   const campaignsState = useSelector(state => state.campaigns);
   const dispatch = useDispatch();
 
-  const [events, setEvents] = useState(data ? data : []);
   const [thumbnail, setThumbnail] = useState();
   const [campaigns, setCampaigns] = useState(
     campaignsState ? campaignsState : [],
@@ -95,8 +96,22 @@ export default function Main(props) {
             }}
             resizeMode="contain"
           />
-          <TextDark style={{fontSize: 12}}>{item.name} </TextDark>
+          <TextDark style={{fontSize: 12}}> {item.name} </TextDark>
         </View>
+      </Link>
+    );
+  }
+
+  function _renderCampaingn(item) {
+    return (
+      <Link onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
+        <Card style={{width: 140, flex: 1}}>
+          <FitImage source={{uri: item.image}} resizeMode="contain" />
+          <View
+            style={{flex: 1, justifyContent: 'center', paddingHorizontal: 10}}>
+            <TextDark style={{fontSize: 9}}>{item.title}</TextDark>
+          </View>
+        </Card>
       </Link>
     );
   }
@@ -104,33 +119,13 @@ export default function Main(props) {
   function _renderBanner() {
     if (thumbnail) {
       return (
-        <View>
-          <Title
-            style={{
-              color: '#444',
-              textAlign: 'left',
-              fontSize: 15,
-              marginBottom: 10,
-              marginTop: 5,
-            }}>
-            Fique por dentro das campanhas
-          </Title>
-          <Card style={{elevation: 4, flex: 1}}>
-            <FitImage source={{uri: thumbnail}} resizeMode="contain" />
-            <View
-              style={{
-                marginTop: -35,
-                marginBottom: 5,
-                flex: 1,
-                alignItems: 'flex-end',
-              }}>
-              <Btn
-                onPress={() => props.navigation.navigate('Campaigns')}
-                style={{alignItems: 'center', alignSelf: 'flex-end'}}>
-                <TextLight style={{fontSize: 12}}>Saiba mais</TextLight>
-              </Btn>
-            </View>
-          </Card>
+        <View style={{marginBottom: 4, marginHorizontal: 0}}>
+          <FlatList
+            data={campaignsState}
+            horizontal={true}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index}) => _renderCampaingn(item, index)}
+          />
         </View>
       );
     } else {
@@ -160,17 +155,15 @@ export default function Main(props) {
         </Header>
         <Banner />
 
-        <View style={{marginTop: 15}}>
-          <Title
-            style={{
-              color: '#444',
-              textAlign: 'left',
-              fontSize: 15,
-              marginTop: 5,
-            }}>
-            Encontre o seu evento Fenae/Apcef
-          </Title>
-        </View>
+        <HeaderTitle style={{alignItems: 'center', backgroundColor: '#dfdfdf'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <MaterialIcons name="search" size={24} color={'#444'} />
+
+            <TextLight style={{color: '#444', fontWeight: '700'}}>
+              Encontre o seu evento Fenae/Apcef
+            </TextLight>
+          </View>
+        </HeaderTitle>
 
         <View style={{marginBottom: 4, marginHorizontal: 0}}>
           <FlatList
@@ -180,6 +173,16 @@ export default function Main(props) {
             renderItem={({item, index}) => _renderItem(item, index)}
           />
         </View>
+
+        <HeaderTitle style={{alignItems: 'center', backgroundColor: '#dfdfdf'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <MaterialIcons name="search" size={24} color={'#444'} />
+
+            <TextLight style={{color: '#444', fontWeight: '700'}}>
+              Fique por dentro das campanhas
+            </TextLight>
+          </View>
+        </HeaderTitle>
 
         {_renderBanner()}
       </View>

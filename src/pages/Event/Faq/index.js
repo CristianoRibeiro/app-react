@@ -34,7 +34,6 @@ export default function Main(props) {
   const data = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
-  const [notifications, setNotifications] = useState(data ? data : []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -86,7 +85,7 @@ export default function Main(props) {
         data={data.faqs}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
-          <EmptyList text="Nenhuma notificação encontrada!" />
+          <EmptyList text="Em breve!" />
         }
         renderItem={({item}) => _renderItem(item)}
       />

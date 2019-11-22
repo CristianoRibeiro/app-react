@@ -200,7 +200,7 @@ const DrawerRoutes = createDrawerNavigator(
         drawerLabel: props => (
           <DrawerItem
             {...props}
-            title="Meus ingressos"
+            title="Validar voucher"
             icon={require('~/assets/menu/heart.png')}
           />
         ),

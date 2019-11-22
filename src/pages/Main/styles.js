@@ -65,6 +65,15 @@ export const Header = styled(LinearGradient).attrs({
   padding-bottom: 10px;
 `;
 
+export const HeaderTitle = styled(LinearGradient).attrs({
+  colors: ['#dfdfdf', '#efefef'],
+  start: { x: 1, y: 0 },
+  end: { x: 1, y: 1 },
+})`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
 export const Card = styled.View`
   margin: 3px;
   border-radius: 5px;

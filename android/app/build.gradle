@@ -144,6 +144,7 @@ android {
         versionCode 9
         versionName "1.0.8"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     
     signingConfigs {
@@ -205,11 +206,11 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-//    implementation "com.google.android.gms:play-services-base:17.0.0"
+    implementation 'com.google.firebase:firebase-core:17.0.0'
 //    implementation "com.google.firebase:firebase-core:17.0.1"
     //implementation "com.google.firebase:firebase-messaging:19.0.0"
     //implementation 'com.google.firebase:firebase-core:17.0.0'
-    implementation "com.google.firebase:firebase-core:17.0.1"
+    //implementation "com.google.firebase:firebase-core:17.0.1"
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

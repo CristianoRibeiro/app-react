@@ -65,17 +65,23 @@ export default function Main(props) {
 
   function _renderItem(item) {
     return (
-      <Link onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
-        <CardItem>
-          <CardImage>
-            <FitImage source={{uri: item.thumbnail}} resizeMode="contain" />
-          </CardImage>
+      <CardItem>
+        <CardImage>
+          <FitImage source={{uri: item.thumbnail}} resizeMode="contain" />
+        </CardImage>
+        <Link
+          onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
           <View
-            style={{flex: 1, justifyContent: 'center', paddingHorizontal: 10}}>
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+            }}>
             <TextDark>{item.title}</TextDark>
           </View>
-        </CardItem>
-      </Link>
+        </Link>
+      </CardItem>
     );
   }
 
@@ -85,7 +91,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={campaigns}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<BannerCampaigns/>}
+        ListEmptyComponent={<BannerCampaigns />}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />

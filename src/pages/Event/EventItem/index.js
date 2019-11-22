@@ -183,7 +183,7 @@ export default function Main(props) {
       {
         navigation: 'PrizeAll',
         image: require('~/assets/icons/first.png'),
-        name: 'SORTEIO',
+        name: 'MEUS PRÊMIOS',
         item: item,
         //permission: app_functions ? app_functions.games,
         permission: true,
