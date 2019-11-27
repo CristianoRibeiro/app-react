@@ -189,6 +189,15 @@ export default function Main(props) {
         permission: true,
         type: null,
       },
+      {
+        navigation: 'FriendsEvent',
+        image: require('~/assets/icons/users.png'),
+        name: 'MEUS AMIGOS',
+        item: item,
+        //permission: app_functions ? app_functions.games,
+        permission: true,
+        type: null,
+      },
     ];
 
     const filtered = screen.filter(value => value.permission === true);
@@ -201,22 +210,11 @@ export default function Main(props) {
         setItem(props.navigation.state.params.item);
         //alert(JSON.stringify(props.navigation.state.params.item.prizes));
 
-        try {
-          let response = await api.get(
-            `/api/voucher/${props.navigation.state.params.item.id}`,
-          );
-          //alert(JSON.stringify(response));
-          if (__DEV__) {
-            console.tron.log(response.data);
-          }
-          await dispatch({type: 'VOUCHERITEM', payload: response.data});
-          setVoucher(response.data);
-        } catch (error) {
-          if (__DEV__) {
-            console.tron.log(error.message);
-          }
-        }
-
+        await dispatch({
+          type: 'EVENTITEM',
+          payload: props.navigation.state.params.item,
+        });
+        
         if (__DEV__) {
           console.tron.log('Evento');
           console.tron.log(props.navigation.state.params.item);
@@ -256,10 +254,21 @@ export default function Main(props) {
           });
         }
 
-        await dispatch({
-          type: 'EVENTITEM',
-          payload: props.navigation.state.params.item,
-        });
+        try {
+          let response = await api.get(
+            `/api/voucher/${props.navigation.state.params.item.id}`,
+          );
+          //alert(JSON.stringify(response));
+          if (__DEV__) {
+            console.tron.log(response.data);
+          }
+          await dispatch({type: 'VOUCHERITEM', payload: response.data});
+          setVoucher(response.data);
+        } catch (error) {
+          if (__DEV__) {
+            console.tron.log(error.message);
+          }
+        }
       }
     } catch (error) {
       if (__DEV__) {

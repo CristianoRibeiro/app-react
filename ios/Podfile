@@ -35,6 +35,9 @@ target 'appfenae' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'Firebase/Core'
   pod 'Firebase/Core'
+  pod 'react-native-camera', path: '../node_modules/react-native-camera'
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+  pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
 
   target 'appfenaeTests' do
     inherit! :search_paths

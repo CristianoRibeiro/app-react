@@ -45,6 +45,7 @@ import ScheduleEventDetail from '~/pages/Event/ScheduleEvent/Detail';
 import Certificate from '~/pages/Certificate';
 import Games from '~/pages/Event/Games';
 import Gallery from '~/pages/Event/Gallery';
+import FriendsEvent from '~/pages/Event/Friends';
 
 //Campanhas
 import Campaigns from '~/pages/Campaigns';
@@ -180,15 +181,15 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    // Notification: {
-    //   screen: Notification,
-    //   path: 'notification',
+    // Friends: {
+    //   screen: Friends,
+    //   path: 'friends',
     //   navigationOptions: {
     //     drawerLabel: props => (
     //       <DrawerItem
     //         {...props}
-    //         title="Notificações"
-    //         icon={require('~/assets/menu/notificacoes.png')}
+    //         title="Amigos"
+    //         icon={require('~/assets/menu/friends.png')}
     //       />
     //     ),
     //   },
@@ -201,7 +202,7 @@ const DrawerRoutes = createDrawerNavigator(
           <DrawerItem
             {...props}
             title="Validar voucher"
-            icon={require('~/assets/menu/heart.png')}
+            icon={require('~/assets/menu/voucher.png')}
           />
         ),
       },
@@ -671,7 +672,6 @@ const MainNavigator = createStackNavigator(
     PrizeAll: {
       screen: PrizeAll,
       path: 'prize/all',
-      
       navigationOptions: {
         headerTitle: 'Prêmios',
         headerStyle: {
@@ -679,6 +679,17 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
+    FriendsEvent: {
+      screen: FriendsEvent,
+      path: 'friends/event',
+      navigationOptions: {
+        headerTitle: 'Amigos',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    
   },
   {
     initialRouteName: 'Main',

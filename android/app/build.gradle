@@ -145,6 +145,7 @@ android {
         versionName "1.0.9"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
     
     signingConfigs {
