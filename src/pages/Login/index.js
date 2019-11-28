@@ -144,6 +144,7 @@ export default function Main(props) {
             <TextLight>Informe seu login e senha do Mundo Caixa </TextLight>
           </View>
 
+<Card>
           <Form>
             <Input
               value={MaskService.toMask('cpf', doc)}
@@ -171,6 +172,7 @@ export default function Main(props) {
               secureTextEntry={true}
             />
           </Form>
+          
 
           <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
             {/* <Link style={{marginTop: 5, marginBottom: 10}}>
@@ -180,7 +182,7 @@ export default function Main(props) {
             <Link
               style={{marginTop: 15}}
               onPress={() => props.navigation.navigate('Register')}>
-              <TextLight>Não tem cadastro? Registre-se aqui</TextLight>
+              <TextDark>Não tem cadastro? Registre-se aqui</TextDark>
             </Link>
 
             {!modal ? (
@@ -191,10 +193,11 @@ export default function Main(props) {
               <ActivityIndicator
                 animating={true}
                 size="large"
-                color={Colors.white}
+                color={Colors.blue400}
               />
             )}
           </View>
+          </Card>
         </ScrollView>
 
         {/* <Modal isVisible={modal} style={{margin: 20}}>

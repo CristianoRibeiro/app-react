@@ -26,6 +26,7 @@ import NewsDetail from '~/pages/News/Detail';
 
 //Event
 import Event from '~/pages/Event';
+import EventOld from '~/pages/Event/Old';
 import EventItem from '~/pages/Event/EventItem';
 import Voucher from '~/pages/Voucher';
 import VoucherItem from '~/pages/Voucher/Item';
@@ -176,6 +177,19 @@ const DrawerRoutes = createDrawerNavigator(
           <DrawerItem
             {...props}
             title="Próximos Eventos"
+            icon={require('~/assets/menu/calendar.png')}
+          />
+        ),
+      },
+    },
+    EventOld: {
+      screen: EventOld,
+      path: 'event/old',
+      navigationOptions: {
+        drawerLabel: props => (
+          <DrawerItem
+            {...props}
+            title="Eventos passados"
             icon={require('~/assets/menu/calendar.png')}
           />
         ),

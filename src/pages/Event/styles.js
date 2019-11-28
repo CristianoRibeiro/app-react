@@ -58,9 +58,9 @@ export const Form = styled.View`
 `;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin: 2px;
   border-radius: 5px;
-  padding: 5px 5px;
+  padding: 3px 3px;
   background-color: #fff;
   display: flex;
   flex-direction: row;

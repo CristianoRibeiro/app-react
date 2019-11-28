@@ -201,7 +201,7 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        {date ? (
+        {/* {date ? (
           <Header>
             <View
               style={{
@@ -223,7 +223,7 @@ export default function Main(props) {
               </TextLight>
             </View>
           </Header>
-        ) : null}
+        ) : null} */}
 
         {_renderItem(data)}
 

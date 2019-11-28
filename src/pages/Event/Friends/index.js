@@ -129,8 +129,12 @@ export default function Main(props) {
           }}>
           <View style={{flex: 1}}>
             <UserTitle style={{marginRight: 5}}>{item.friend.name}</UserTitle>
+            <SubTitle style={{fontWeight: '300'}}>
+              {item.friend.email}
+            </SubTitle>
+           
             <SubTitle style={{fontWeight: '700'}}>
-              {item.friend.address_state}
+            {item.friend.apcef}
             </SubTitle>
           </View>
         </View>

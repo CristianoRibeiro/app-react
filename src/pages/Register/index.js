@@ -184,6 +184,7 @@ export default function Main(props) {
 
             {/* <TextLight>Informe seu login e senha do Mundo Caixa </TextLight> */}
           </View>
+          <Card>
           <Form>
             <View>
               <Input
@@ -255,7 +256,7 @@ export default function Main(props) {
           </Link> */}
 
             <Link onPress={() => props.navigation.navigate('Login')}>
-              <TextLight>Já tem cadastro? Faça o login aqui</TextLight>
+              <TextDark>Já tem cadastro? Faça o login aqui</TextDark>
             </Link>
 
             {!modal ? (
@@ -266,10 +267,11 @@ export default function Main(props) {
               <ActivityIndicator
                 animating={true}
                 size="large"
-                color={Colors.white}
+                color={Colors.blue600}
               />
             )}
           </View>
+          </Card>
         </ScrollView>
       </ImageBackground>
     </KeyboardAvoidingView>

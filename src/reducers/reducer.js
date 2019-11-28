@@ -4,6 +4,7 @@ import {
   INDICATED,
   CONVERTED,
   EVENT,
+  EVENTOLD,
   VOUCHER,
   NOTIFICATION,
   VOUCHERITEM,
@@ -33,6 +34,7 @@ const INITIAL_STATE = {
   indicated: [],
   converted: [],
   event: [],
+  eventold: [],
   eventitem: [],
   voucher: [],
   voucheritem: [],
@@ -68,6 +70,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, converted: action.payload};
     case EVENT:
       return {...state, event: action.payload};
+    case EVENTOLD:
+      return {...state, eventold: action.payload};
     case EVENTITEM:
       return {...state, eventitem: action.payload};
     case VOUCHER:

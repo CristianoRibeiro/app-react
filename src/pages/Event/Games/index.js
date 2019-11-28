@@ -84,6 +84,12 @@ export default function Main(props) {
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Aqui você poderá consultar os seus cupons gerados a partir das interações no evento" />}
         renderItem={({item}) => _renderItem(item)}
+        refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={() => _getData()}
+            />
+          }
       />
     </Content>
   );

@@ -53,7 +53,7 @@ export const Card = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#efefef',
+  placeholderTextColor: '#777',
   keyboardAppearance: 'light',
   maxLength: 255
 })`
@@ -61,8 +61,8 @@ export const Input = styled.TextInput.attrs({
   padding: 12px 15px;
   border-radius: 4px;
   font-size: 16px;
-  color: #fff;
-  background: rgba(000,000,000, 0.2);
+  color: #0F60A8;
+  background: rgba(000,000,000, 0.1);
   border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
 `;
 
@@ -75,7 +75,7 @@ export const Submit = styled.TouchableOpacity`
 `;
 
 export const Send = styled.TouchableOpacity`
-  background: rgba(000,000,000, 0.2);
+  background: #0F60A8;
   margin-left: 10px;
   margin-right: 10px;
   justify-content: center;
