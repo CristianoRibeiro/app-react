@@ -70,7 +70,6 @@ export const CardItem = styled.View`
 
 export const CardImage = styled.View`
   padding: 0px;
-  flex: 1;
 `;
 
 export const Original = styled.Image`

@@ -65,6 +65,7 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    setLoading(true);
     try {
       await setCard(props.navigation.state.params.item);
       let u = await api.post('/api/cards/exchange/users', {
@@ -82,6 +83,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoading(false);
   }
 
   async function _setData() {
@@ -273,6 +275,12 @@ export default function Main(props) {
                 <EmptyList text="Nenhum usuário encontrado!" />
               }
               renderItem={({item, index}) => _renderItem(item, index)}
+              refreshControl={
+                <RefreshControl
+                  refreshing={loading}
+                  onRefresh={() => _getData()}
+                />
+              }
             />
             <Send style={{marginBottom: 15, marginTop: 10}}>
               <TextLight>OK</TextLight>

@@ -47,6 +47,7 @@ import Certificate from '~/pages/Certificate';
 import Games from '~/pages/Event/Games';
 import Gallery from '~/pages/Event/Gallery';
 import FriendsEvent from '~/pages/Event/Friends';
+import EventRegulation from '~/pages/Event/Regulation';
 
 //Campanhas
 import Campaigns from '~/pages/Campaigns';
@@ -698,6 +699,16 @@ const MainNavigator = createStackNavigator(
       path: 'friends/event',
       navigationOptions: {
         headerTitle: 'Amigos',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    EventRegulation: {
+      screen: EventRegulation,
+      path: 'regulation/event',
+      navigationOptions: {
+        headerTitle: 'Regulamento',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

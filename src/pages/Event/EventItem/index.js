@@ -43,7 +43,9 @@ export default function Main(props) {
 
   async function _handleItem(item) {
     //alert(JSON.stringify(voucher));
-    if (item.type === 'voucher') {
+    if (item.type === 'unavailable') {
+      Alert.alert(null, 'Em breve.');
+    } else if (item.type === 'voucher') {
       if (voucher) {
         props.navigation.navigate('VoucherItem');
       } else {
@@ -52,11 +54,13 @@ export default function Main(props) {
     } else if (item.type === 'schedule') {
       if (props.navigation.state.params.item.url_schedule) {
         try {
-          Linking.canOpenURL(props.navigation.state.params.item.url_schedule).then(supported => {
+          Linking.canOpenURL(
+            props.navigation.state.params.item.url_schedule,
+          ).then(supported => {
             if (supported) {
-              Linking.openURL(props.navigation.state.params.item.url_schedule).catch(err =>
-                console.error('An error occurred', err),
-              );
+              Linking.openURL(
+                props.navigation.state.params.item.url_schedule,
+              ).catch(err => console.error('An error occurred', err));
             }
           });
         } catch (e) {
@@ -165,6 +169,15 @@ export default function Main(props) {
         type: null,
       },
       {
+        navigation: 'EventRegulation',
+        image: require('~/assets/icons/clipboard.png'),
+        name: 'REGULAMENTO',
+        item: item,
+        permission: app_functions ? app_functions.regulation : false,
+        //permission: true,
+        type: null,
+      },
+      {
         navigation: 'Gallery',
         image: require('~/assets/icons/gallery.png'),
         name: 'GALERIA',
@@ -198,6 +211,24 @@ export default function Main(props) {
         permission: true,
         type: null,
       },
+      {
+        navigation: '',
+        image: require('~/assets/icons/book.png'),
+        name: 'GUIA DO PARTICIPANTE',
+        item: item,
+        //permission: app_functions ? app_functions.games,
+        permission: true,
+        type: 'unavailable',
+      },
+      {
+        navigation: '',
+        image: require('~/assets/icons/books.png'),
+        name: 'MATERIAL DIDÁTICO',
+        item: item,
+        //permission: app_functions ? app_functions.games,
+        permission: true,
+        type: 'unavailable',
+      },
     ];
 
     const filtered = screen.filter(value => value.permission === true);
@@ -214,7 +245,7 @@ export default function Main(props) {
           type: 'EVENTITEM',
           payload: props.navigation.state.params.item,
         });
-        
+
         if (__DEV__) {
           console.tron.log('Evento');
           console.tron.log(props.navigation.state.params.item);
@@ -292,7 +323,9 @@ export default function Main(props) {
               }}
               resizeMode="contain"
             />
-            <TextDark>{item.name} </TextDark>
+            <TextDark style={{fontSize: 14}}>
+              {item.name} 
+            </TextDark>
           </Card>
         </Link>
       );

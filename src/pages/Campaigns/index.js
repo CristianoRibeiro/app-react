@@ -65,12 +65,20 @@ export default function Main(props) {
 
   function _renderItem(item) {
     return (
-      <CardItem>
-        <CardImage>
-          <FitImage source={{uri: item.thumbnail}} resizeMode="contain" />
-        </CardImage>
-        <Link
-          onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
+      <Link onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
+        <CardItem style={{flexDirection: 'row', flex:1}}>
+          <CardImage>
+
+            <Image
+              source={{uri: item.image}}
+              style={{
+                height: 90,
+                width: 65,
+              }}
+              resizeMode="contain"
+            />
+          </CardImage>
+
           <View
             style={{
               flex: 1,
@@ -80,8 +88,8 @@ export default function Main(props) {
             }}>
             <TextDark>{item.title}</TextDark>
           </View>
-        </Link>
-      </CardItem>
+        </CardItem>
+      </Link>
     );
   }
 

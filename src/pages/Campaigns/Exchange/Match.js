@@ -18,6 +18,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
@@ -86,9 +87,21 @@ export default function Main(props) {
     if (__DEV__) {
       console.tron.log(item);
     }
-    await dispatch({type: 'MATCHITEM', payload: item});
+    try {
+      let response = await api.post('/api/cards/exchange', {card_id: item.id});
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
 
-    props.navigation.navigate('MatchItem');
+      Alert.alert(null, response.data.message);
+      //setNotifications(response.data);
+      _getData();
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
   }
 
   return (
@@ -103,51 +116,56 @@ export default function Main(props) {
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }
         renderItem={({item, index}) => (
-          <Link
-            key={index}
-            onPress={() => _handleItem(item)}>
-            <CardItem>
-              <View
+          <CardItem>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Image
+                resizeMode="cover"
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  resizeMode="cover"
-                  style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: 5,
-                    margin: 2,
-                  }}
-                  defaultSource={require('~/assets/avatar/avatar.png')}
-                  source={{uri: user.avatar}}
-                />
+                  width: 100,
+                  height: 100,
+                  borderRadius: 5,
+                  margin: 2,
+                }}
+                defaultSource={require('~/assets/avatar/avatar.png')}
+                source={{uri: item.card_image.image}}
+              />
 
-                <Image
-                  source={require('~/assets/icons/ico_trocas.png')}
+              <Link key={index} onPress={() => _handleItem(item)}>
+                <View
                   style={{
-                    height: 40,
-                    width: 40,
-                  }}
-                  resizeMode="contain"
-                />
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flex: 1,
+                  }}>
+                  <Image
+                    source={require('~/assets/icons/thumbs-up.png')}
+                    style={{
+                      height: 50,
+                      width: 50,
+                    }}
+                    resizeMode="contain"
+                  />
+                </View>
+              </Link>
 
-                <Image
-                  resizeMode="cover"
-                  style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: 5,
-                    margin: 2,
-                  }}
-                  defaultSource={require('~/assets/avatar/avatar.png')}
-                  source={{uri: item.url}}
-                />
-              </View>
-            </CardItem>
-          </Link>
+              <Image
+                resizeMode="cover"
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 5,
+                  margin: 2,
+                }}
+                defaultSource={require('~/assets/avatar/avatar.png')}
+                source={{uri: item.user.append_avatar}}
+              />
+            </View>
+          </CardItem>
         )}
       />
     </Content>
