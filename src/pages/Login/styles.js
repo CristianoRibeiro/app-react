@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {TextInput, Button} from 'react-native-paper';
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -42,7 +43,7 @@ export const TextDark = styled.Text`
 export const Form = styled.View`
   flex-direction: row;
   margin-top: 10px;
-  padding: 0 10px;
+  padding: 5px;
 `;
 
 export const Card = styled.View`
@@ -52,18 +53,14 @@ export const Card = styled.View`
   background-color: #fff;
 `;
 
-export const Input = styled.TextInput.attrs({
+export const Input = styled(TextInput).attrs({
   placeholderTextColor: '#777',
   keyboardAppearance: 'light',
-  maxLength: 255
+  maxLength: 255,
 })`
   flex: 1;
-  padding: 12px 15px;
-  border-radius: 4px;
   font-size: 16px;
-  color: #0F60A8;
-  background: rgba(000,000,000, 0.1);
-  border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
+  color: #0f60a8;
 `;
 
 export const Submit = styled.TouchableOpacity`
@@ -74,13 +71,14 @@ export const Submit = styled.TouchableOpacity`
   padding: 0 14px;
 `;
 
-export const Send = styled.TouchableOpacity`
-  background: #0F60A8;
+export const Send = styled(Button).attrs({
+  mode: 'contained',
+})`
+  background: #0f60a8;
   margin-left: 10px;
   margin-right: 10px;
   justify-content: center;
   border-radius: 30px;
-  padding: 15px 14px;
   align-items: center;
   border: 1px solid #fff;
   flex: 1;

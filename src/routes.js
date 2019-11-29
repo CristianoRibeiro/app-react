@@ -23,6 +23,7 @@ import ProfileEdit from '~/pages/Profile/Edit';
 import News from '~/pages/News';
 import EventNews from '~/pages/News/EventNews';
 import NewsDetail from '~/pages/News/Detail';
+import Friends from '~/pages/Friends';
 
 //Event
 import Event from '~/pages/Event';
@@ -196,19 +197,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    // Friends: {
-    //   screen: Friends,
-    //   path: 'friends',
-    //   navigationOptions: {
-    //     drawerLabel: props => (
-    //       <DrawerItem
-    //         {...props}
-    //         title="Amigos"
-    //         icon={require('~/assets/menu/friends.png')}
-    //       />
-    //     ),
-    //   },
-    // },
+    Friends: {
+      screen: Friends,
+      path: 'friends',
+      navigationOptions: {
+        drawerLabel: props => (
+          <DrawerItem
+            {...props}
+            title="Amigos"
+            icon={require('~/assets/menu/friends.png')}
+          />
+        ),
+      },
+    },
     Voucher: {
       screen: Voucher,
       path: 'voucher',

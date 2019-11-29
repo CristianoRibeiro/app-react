@@ -107,6 +107,12 @@ export default function Main(props) {
     } catch (error) {
       if (error.message === 'Request failed with status code 401') {
         props.navigation.navigate('Login');
+        AsyncStorage.removeItem(
+          'token'
+        );
+        AsyncStorage.removeItem(
+          'user'
+        );
       }
     }
   }
