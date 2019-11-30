@@ -21,26 +21,16 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
-<array>
-  <dict>
-  <key>CFBundleURLSchemes</key>
-  <array>
-    <string>fb723806324771728</string>
-  </array>
-  </dict>
-</array>
-<key>FacebookAppID</key>
-<string>723806324771728</string>
-<key>FacebookDisplayName</key>
-<string>Viva Fenae Fenae</string>
-
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb2557965230959805</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	
-	
-
-
-
 	<key>FacebookDisplayName</key>
 	<string>Viva Fenae Apcef</string>
 	<key>LSApplicationQueriesSchemes</key>
