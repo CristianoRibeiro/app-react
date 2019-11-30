@@ -25,14 +25,14 @@
   <dict>
   <key>CFBundleURLSchemes</key>
   <array>
-    <string>fb2945018402210875</string>
+    <string>fb723806324771728</string>
   </array>
   </dict>
 </array>
 <key>FacebookAppID</key>
-<string>2945018402210875</string>
+<string>723806324771728</string>
 <key>FacebookDisplayName</key>
-<string>Viva Fenae Apcef</string>
+<string>Viva Fenae Fenae</string>
 
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
