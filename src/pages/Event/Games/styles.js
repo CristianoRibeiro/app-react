@@ -38,7 +38,7 @@ export const EventDate = styled.Text`
 `;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin: 3px;
   border-radius: 5px;
   padding: 10px 10px;
   background-color: #fff;

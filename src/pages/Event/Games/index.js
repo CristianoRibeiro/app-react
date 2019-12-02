@@ -20,7 +20,7 @@ import EmptyList from '~/components/EmptyList';
 import api from '~/services/api';
 
 //Styles
-import {Container, Content} from '../../../style';
+import {Container, Content, TextDark} from '../../../style';
 
 import {
   EventTitle,
@@ -64,13 +64,22 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
-    const firstDate = parseISO(item.created_at);
-    const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
+    let formattedDate = '';
+    if (item.created_at) {
+      const firstDate = parseISO(item.created_at);
+      formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
+    }
+
     return (
       <Card>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <EventDate>{formattedDate}</EventDate>
-          <SubTitle>{item.type}</SubTitle>
+        <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            {item.created_at ? <EventDate>{formattedDate}</EventDate> : null}
+            <SubTitle>{item.type}</SubTitle>
+          </View>
+          <View style={{justifyContent: 'center'}}>
+            {item.qty ? <TextDark>{item.qty}</TextDark> : null}
+          </View>
         </View>
       </Card>
     );
@@ -82,14 +91,13 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Aqui você poderá consultar os seus cupons gerados a partir das interações no evento" />}
+        ListEmptyComponent={
+          <EmptyList text="Aqui você poderá consultar os seus cupons gerados a partir das interações no evento" />
+        }
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
-            <RefreshControl
-              refreshing={loading}
-              onRefresh={() => _getData()}
-            />
-          }
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+        }
       />
     </Content>
   );

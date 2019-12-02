@@ -49,6 +49,8 @@ import Games from '~/pages/Event/Games';
 import Gallery from '~/pages/Event/Gallery';
 import FriendsEvent from '~/pages/Event/Friends';
 import EventRegulation from '~/pages/Event/Regulation';
+import EventGuia from '~/pages/Event/Guia';
+import EventMaterial from '~/pages/Event/Guia/Material';
 
 //Campanhas
 import Campaigns from '~/pages/Campaigns';
@@ -710,6 +712,26 @@ const MainNavigator = createStackNavigator(
       path: 'regulation/event',
       navigationOptions: {
         headerTitle: 'Regulamento',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    EventGuia: {
+      screen: EventGuia,
+      path: 'guia/event',
+      navigationOptions: {
+        headerTitle: 'Guia do Participante',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    EventMaterial: {
+      screen: EventMaterial,
+      path: 'didatico/event',
+      navigationOptions: {
+        headerTitle: 'Material Didático',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

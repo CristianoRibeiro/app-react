@@ -212,22 +212,22 @@ export default function Main(props) {
         type: null,
       },
       {
-        navigation: '',
+        navigation: 'EventGuia',
         image: require('~/assets/icons/book.png'),
         name: 'GUIA DO PARTICIPANTE',
         item: item,
         //permission: app_functions ? app_functions.games,
         permission: true,
-        type: 'unavailable',
+        type: null,
       },
       {
-        navigation: '',
+        navigation: 'EventMaterial',
         image: require('~/assets/icons/books.png'),
         name: 'MATERIAL DIDÁTICO',
         item: item,
         //permission: app_functions ? app_functions.games,
         permission: true,
-        type: 'unavailable',
+        type: null,
       },
     ];
 
