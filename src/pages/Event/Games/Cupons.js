@@ -39,6 +39,7 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [cupon, setCupon] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -50,19 +51,17 @@ export default function Main(props) {
 
   async function _getData() {
     try {
-      //let response = await api.get('/api/games/'+eventitem.id);
-      let response = await api.get('/api/games');
+      let response = await api.get('/api/cupons/'+eventitem.id);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'GAMES', payload: response.data});
-      //setNotifications(response.data);
+      //await dispatch({type: 'GAMES', payload: response.data});
+      setCupon(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
-      await dispatch({type: 'GAMES', payload: []});
     }
   }
 
@@ -92,7 +91,7 @@ export default function Main(props) {
     <Content>
       <FlatList
         style={{margimBottom: 50}}
-        data={data}
+        data={cupon}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
           <EmptyList text="Aqui você poderá consultar os seus cupons gerados a partir das interações no evento" />

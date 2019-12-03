@@ -148,6 +148,17 @@ export default function Main(props) {
 
   return (
     <Content>
+      <Header>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TextLight style={{fontSize: 12, fontWeight: '700'}}>
+            Adicione amigos aqui e ganhe 1 cupom por contato.
+          </TextLight>
+        </View>
+      </Header>
       <FlatList
         style={{margimBottom: 50}}
         data={friends}
@@ -158,6 +169,27 @@ export default function Main(props) {
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }
       />
+
+      {/* <Modal style={{margin: 0}} isVisible={modal}>
+        <View style={{flex: 1}}>
+          <QRCodeScanner
+            showMarker={true}
+            checkAndroid6Permissions={true}
+            onRead={value => _scanner(value)}
+            bottomContent={
+              <Send onPress={() => setModal(false)}>
+                <TextLight>OK</TextLight>
+              </Send>
+            }
+          />
+        </View>
+      </Modal>
+      <FAB
+        style={styles.fab}
+        icon={'add'}
+        color="#fff"
+        onPress={() => setModal(true)}
+      /> */}
     </Content>
   );
 }

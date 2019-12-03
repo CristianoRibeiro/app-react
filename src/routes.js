@@ -46,6 +46,7 @@ import ScheduleEvent from '~/pages/Event/ScheduleEvent';
 import ScheduleEventDetail from '~/pages/Event/ScheduleEvent/Detail';
 import Certificate from '~/pages/Certificate';
 import Games from '~/pages/Event/Games';
+import EventCupons from '~/pages/Event/Games/Cupons';
 import Gallery from '~/pages/Event/Gallery';
 import FriendsEvent from '~/pages/Event/Friends';
 import EventRegulation from '~/pages/Event/Regulation';
@@ -613,6 +614,16 @@ const MainNavigator = createStackNavigator(
     Games: {
       screen: Games,
       path: 'games',
+      navigationOptions: {
+        headerTitle: 'Meus Games',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    EventCupons: {
+      screen: EventCupons,
+      path: 'event/cupons',
       navigationOptions: {
         headerTitle: 'Meus cupons',
         headerStyle: {

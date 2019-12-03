@@ -135,6 +135,15 @@ export default function Main(props) {
         permission: true,
         type: null,
       },
+      // {
+      //   navigation: 'EventCupons',
+      //   image: require('~/assets/icons/games.png'),
+      //   name: 'MEUS CUPONS',
+      //   item: item,
+      //   //permission: app_functions ? app_functions.games,
+      //   permission: true,
+      //   type: null,
+      // },
       {
         navigation: 'Streaming',
         image: require('~/assets/icons/transmision.png'),

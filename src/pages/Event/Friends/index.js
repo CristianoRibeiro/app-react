@@ -17,6 +17,7 @@ import {FAB} from 'react-native-paper';
 import Modal from 'react-native-modal';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import EmptyList from '~/components/EmptyList';
 import {Searchbar} from 'react-native-paper';
 
@@ -144,6 +145,18 @@ export default function Main(props) {
 
   return (
     <Content>
+      <Header>
+            
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TextLight style={{fontSize: 12, fontWeight: '700'}}>
+                  Adicione amigos aqui e ganhe 1 cupom por contato.
+              </TextLight>
+            </View>
+          </Header>
       <FlatList
         style={{margimBottom: 50}}
         data={friends}
