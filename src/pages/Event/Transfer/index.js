@@ -9,66 +9,138 @@ import {
   StatusBar,
   View,
   ScrollView,
-  Alert,
+  KeyboardAvoidingView,
   FlatList,
   RefreshControl,
+  Alert,
+  Linking,
 } from 'react-native';
+import Modal from 'react-native-modal';
+import {WebView} from 'react-native-webview';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
 
-//Api
 import api from '~/services/api';
 
-//Styles
-import {Container, Content} from '../../../style';
+import {Container, Content, TextLight} from '~/style';
 
-import {
-  EventTitle,
-  EventDate,
-  EventLink,
-  Header,
-  TextTitle,
-  Card,
-  Link,
-  SubTitle,
-} from './styles';
+import {Title, Card, Link, ButtonDark, Send} from './styles';
 
 export default function Main(props) {
   const data = useSelector(state => state.transfer);
+  const event = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
-  const [transfers, setTransfers] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [text, setText] = useState('');
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (__DEV__) {
-    console.tron.log(transfers);
-    }
+    _getData();
   }, []);
 
-  function _renderItem(item) {
-    const firstDate = parseISO(item.created_at);
-    const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
-    return (
-      <Card>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <EventDate>{formattedDate}</EventDate>
-          <SubTitle>{item.content}</SubTitle>
-        </View>
-      </Card>
-    );
+  async function _getData() {
+    setLoading(true);
+    try {
+      let response = await api.post('/api/events/transfers', {
+        event_id: event.id,
+      });
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      await dispatch({type: 'TRANSFER', payload: response.data});
+
+      //setNotifications(response.data);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    setLoading(false);
+  }
+
+  function _openModal(item) {
+    if(item.content){
+      setText(item.append_content);
+      setModal(true);
+    }
+    
+  }
+
+  function _openUrl(item) {
+      
+      try {
+        Linking.canOpenURL(item.append_url).then(supported => {
+          if (supported) {
+            Linking.openURL(item.append_url).catch(err =>
+              console.error('An error occurred', err),
+            );
+          }
+        });
+      } catch (e) {
+        console.error(e.message);
+      }
+   
   }
 
   return (
     <Content>
-      <FlatList
-        style={{margimBottom: 50}}
-        data={transfers}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Em breve" />}
-        renderItem={({item}) => _renderItem(item)}
-      />
+        <FlatList
+          style={{margimBottom: 50}}
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={<EmptyList text="Em breve" />}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+          }
+          renderItem={({item, index}) => (
+            <View key={index}>
+              <View style={{flexDirection: 'row'}}>
+                {item.pdf ? (
+                  <Send
+                    onPress={() => _openUrl(item)}
+                    style={{marginVertical: 1, padding: 0}}>
+                    <MaterialCommunityIcons
+                      name="file-download"
+                      size={24}
+                      color={'#fff'}
+                    />
+                  </Send>
+                ) : null}
+                <Link
+                  style={{flex: 1, padding: 0}}
+                  onPress={() => _openModal(item)}>
+                  <Card style={{minHeight: 50, justifyContent: 'center'}}>
+                    <Title>{item.title}</Title>
+                  </Card>
+                </Link>
+              </View>
+
+              <Modal
+                isVisible={modal}
+                style={{marginTop: 50, backgroundColor: '#fff', margin: 0}}>
+                <WebView
+                  source={{html: text}}
+                  onShouldStartLoadWithRequest={event => {
+                    if (!/^[data:text, about:blank]/.test(event.url)) {
+                      Linking.openURL(event.url);
+                      return false;
+                    }
+                    return true;
+                  }}
+                />
+                <ButtonDark
+                  onPress={() => setModal(false) }
+                  style={{marginBottom: 10, marginHorizontal: 15}}>
+                  <TextLight>OK</TextLight>
+                </ButtonDark>
+              </Modal>
+            </View>
+          )}
+        />
     </Content>
   );
 }

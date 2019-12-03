@@ -1,20 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from "react-native-linear-gradient";
+import {Button, TextInput} from 'react-native-paper';
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Title = styled.Text`
-  font-size: 32px;
-  color: #FFF;
-  font-weight: bold;
-  padding: 0 20px;
+  font-size: 13;
+  color: #444;
+  font-weight: 500;
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 14;
+  font-size: 18px;
   color: #333;
-  font-weight: 500;
+  font-weight: 700;
 `;
 
 export const TextLight = styled.Text`
@@ -26,60 +26,36 @@ export const TextLight = styled.Text`
 
 export const TextDark = styled.Text`
   font-size: 14px;
-  color: #333;
+  color: #555;
   font-weight: 600;
 `;
 
-export const EventDate = styled.Text`
-  font-size: 10px;
-  color: #7c7c7c;
-  font-weight: bold;
-  margin: 5px 0 0 0;
-`;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin: 3px;
   border-radius: 5px;
-  padding: 10px 10px;
+  padding: 10px 5px;
   background-color: #fff;
-  display: flex;
-  flex-direction: row;
 `;
-
-export const CardImage = styled.View`
-  padding: 15px 15px 15px 5px;
-`;
-
 
 export const Link = styled.TouchableOpacity`
-flex: 1;
-  color: #fff
+  flex: 1;
 `;
 
-export const List = styled.FlatList.attrs({
-  contentContainerStyle: { paddingHorizontal: 20 },
-  showsVerticalScrollIndicator: false,
+export const ButtonDark = styled(Button).attrs({
+  mode: 'contained',
 })`
-  margin-top: 20px;
+  background: #0058b8;
+  border-radius: 5px;
+  border: 1px solid #fff;
 `;
 
-export const Header = styled(LinearGradient).attrs({
-  colors: ['#051538', '#041c50'],
-  start: { x: 1, y: 0 },
-  end: { x: 1, y: 1 },
+export const Send = styled(Button).attrs({
+  mode: 'contained',
 })`
-  padding-top: 10px;
-  padding-bottom: 10px;
+  background: #0f60a8;
+  justify-content: center;
+  border-radius: 5px;
+  align-items: center;
+  border: 1px solid #fff;
 `;
-
-export const TextTitle = styled.Text`
-  font-size: 28px;
-  color: #fff;
-  margin: 5px 0;
-`;
-
-
-// export const Image = styled.Image`
-//   width: 100%;
-//   aspect-ratio: ${props => props.aspect};
-// `;

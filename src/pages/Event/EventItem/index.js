@@ -115,7 +115,8 @@ export default function Main(props) {
         image: require('~/assets/icons/bus.png'),
         name: 'TRANSFER',
         item: item,
-        permission: app_functions ? app_functions.transfer : false,
+        //permission: app_functions ? app_functions.transfer : false,
+        permission: true,
         type: null,
       },
       {
