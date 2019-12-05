@@ -62,7 +62,7 @@ export const Card = styled.View`
 `;
 
 export const CardItem = styled.View`
-  margin: 5px;
+  margin: 2px;
   border-radius: 5px;
   padding: 4px 0px 10px 0px;
   background-color: #fff;

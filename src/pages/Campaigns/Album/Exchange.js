@@ -24,7 +24,7 @@ import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
-import {Container, Content} from '~/style';
+import {Container, Content} from '../../../style';
 
 import {
   Title,
@@ -46,10 +46,11 @@ import {
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
-  const matchitem = useSelector(state => state.matchitem);
+  const cards = useSelector(state => state.cards);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [loadingsend, setLoadingSend] = useState(false);
   const [modal, setModal] = useState(false);
   const [modalUser, setModalUser] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -59,18 +60,19 @@ export default function Main(props) {
 
   useEffect(() => {
     _getData();
-    if (__DEV__) {
-      console.tron.log(matchitem);
-    }
+    // if (__DEV__) {
+    //   console.tron.log(props.navigation.state.params.item);
+    // }
   }, []);
 
   async function _getData() {
+    setLoading(true);
     try {
-      await setCard(matchitem);
+      await setCard(props.navigation.state.params.item);
       let u = await api.post('/api/cards/exchange/users', {
-        number: matchitem.number,
+        number: props.navigation.state.params.item.number,
       });
-      setUsers(u.data);
+      setUsers(u.data ? u.data : []);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(u.data);
@@ -82,13 +84,15 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoading(false);
   }
 
   async function _setData() {
-    setModal(false);
+    setLoadingSend(true);
     try {
       let response = await api.post('/api/cards/from/user', {
         card_id: card.id,
+        number: card.number,
         user_id: selected.id,
       });
       if (__DEV__) {
@@ -101,6 +105,8 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoadingSend(false);
+    setModal(false);
   }
 
   function _handleCard(item) {
@@ -116,13 +122,13 @@ export default function Main(props) {
       <Link onPress={() => _handleCard(item)} key={i}>
         <CardItem
           style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={{flex: 1}}>
+          <CardImage>
             <Image
               style={{aspectRatio: 1}}
               source={{uri: item.avatar}}
               resizeMode="contain"
             />
-          </View>
+          </CardImage>
 
           <View
             style={{
@@ -140,26 +146,24 @@ export default function Main(props) {
 
   function _renderUser() {
     return (
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center', flex:1}}>
         <Image
           resizeMode="cover"
           style={{
             width: 100,
             height: 100,
-            borderRadius: 5,
+            borderRadius: 50,
+            margin: 15,
           }}
           defaultSource={require('~/assets/avatar/avatar.png')}
           source={{uri: selected ? selected.avatar : ''}}
         />
 
         {selected ? (
-          <TextDark style={{fontWeight: '800', fontSize: 12, marginTop: 10}}>
+          <TextDark style={{fontWeight: '800', fontSize: 12}}>
             {selected.name}
           </TextDark>
-        ) : (
-          <TextDark
-            style={{fontWeight: '800', fontSize: 12, marginTop: 10}}></TextDark>
-        )}
+        ) : null}
       </View>
     );
   }
@@ -170,26 +174,7 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        <Header style={{alignItems: 'center'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="ticket-outline"
-              size={20}
-              color={'#fff'}
-            />
-
-            <TextLight style={{fontSize: 18, fontWeight: '800'}}>
-              Deu Match!
-            </TextLight>
-          </View>
-          <TextLight>Vamos trocar?</TextLight>
-        </Header>
-
+        
         <Card>
           <View
             style={{
@@ -204,15 +189,15 @@ export default function Main(props) {
                   width: 100,
                   height: 100,
                   borderRadius: 5,
+                  margin: 15,
                 }}
                 defaultSource={require('~/assets/avatar/avatar.png')}
                 source={{uri: card.image}}
               />
 
-              <TextDark
-                style={{fontWeight: '800', fontSize: 12, marginTop: 10}}>
-                {/* {user.name} */}
-              </TextDark>
+              {/* <TextDark style={{fontWeight: '800', fontSize: 12}}>
+                  {user.name}
+                </TextDark> */}
             </View>
 
             <Image
@@ -240,20 +225,20 @@ export default function Main(props) {
               justifyContent: 'center',
               marginTop: 15,
             }}>
-            {selected ? (
-              <Send
-               loading={loa}
-                style={{marginBottom: 15, marginTop: 10}}
-                onPress={() => _setData()}>
-                <TextLight>OK</TextLight>
-              </Send>
-            ) : null}
-
             <TextDark style={{textAlign: 'center'}}>
-              Clique no ícone abaixo para selecionar uma pessoa com as
-              figurinhas que deseja trocar
+              Clique no ícone abaixo para encontrar alguém com a figurinha que
+              deseja trocar
             </TextDark>
           </View>
+
+          {selected ? (
+            <Send
+              loading={loadingsend}
+              style={{marginBottom: 15, marginTop: 10}}
+              onPress={() => _setData()}>
+              <TextLight style={{flex: 1}}>OK</TextLight>
+            </Send>
+          ) : null}
         </Card>
 
         <View style={{alignItems: 'center', marginTop: 25}}>
@@ -271,16 +256,19 @@ export default function Main(props) {
           <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
             <FlatList
               data={users}
-              numColumns={3}
               keyExtractor={(item, index) => index.toString()}
               ListEmptyComponent={
                 <EmptyList text="Nenhum usuário encontrado!" />
               }
               renderItem={({item, index}) => _renderItem(item, index)}
+              refreshControl={
+                <RefreshControl
+                  refreshing={loading}
+                  onRefresh={() => _getData()}
+                />
+              }
             />
-            <Send
-              onPress={() => setModal(false)}
-              style={{marginBottom: 15, marginTop: 10}}>
+            <Send style={{marginBottom: 15, marginTop: 10}}>
               <TextLight>OK</TextLight>
             </Send>
           </View>

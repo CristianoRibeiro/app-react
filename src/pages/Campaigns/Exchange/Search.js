@@ -110,7 +110,7 @@ export default function Main(props) {
           />
         </Header> */}
 
-        {/* <Header>
+        <Header>
           <View
             style={{
               flexDirection: 'row',
@@ -119,11 +119,11 @@ export default function Main(props) {
             }}>
             <Ionicons name="md-images" size={24} color={'#fff'} />
 
-            <TextLight style={{fontSize: 18, fontWeight: '800'}}>
-              Figurinhas repetidas
+            <TextLight style={{fontSize: 16, fontWeight: '600'}}>
+              Qual figurinha você deseja trocar?
             </TextLight>
           </View>
-        </Header> */}
+        </Header>
 
         <View style={{margimBottom: 50}}>
           <FlatList

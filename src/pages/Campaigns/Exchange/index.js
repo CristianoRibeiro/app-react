@@ -50,6 +50,7 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [loadingsend, setLoadingSend] = useState(false);
   const [modal, setModal] = useState(false);
   const [modalUser, setModalUser] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -87,6 +88,7 @@ export default function Main(props) {
   }
 
   async function _setData() {
+    setLoadingSend(true);
     try {
       let response = await api.post('/api/cards/from/user', {
         card_id: card.id,
@@ -102,6 +104,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoadingSend(false);
     setModal(false);
   }
 
@@ -248,9 +251,10 @@ export default function Main(props) {
 
           {selected ? (
             <Send
+              loading={loadingsend}
               style={{marginBottom: 15, marginTop: 10}}
               onPress={() => _setData()}>
-              <TextLight>OK</TextLight>
+              <TextLight style={{flex: 1}}>OK</TextLight>
             </Send>
           ) : null}
         </Card>

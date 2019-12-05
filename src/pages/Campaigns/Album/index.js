@@ -26,7 +26,15 @@ import api from '~/services/api';
 //Styles
 import {Container, Content} from '~/style';
 
-import {Title, TextDark, CardItem, Link, CardImage, SubTitle} from './styles';
+import {
+  Title,
+  TextDark,
+  CardItem,
+  Link,
+  CardImage,
+  SubTitle,
+  Send,
+} from './styles';
 
 import {Header, TextLight} from '~/pages/Campaigns/Quiz/styles';
 
@@ -38,6 +46,7 @@ export default function Main(props) {
   const [key, setIndex] = useState(4);
   const [modalVisible, setModalVisible] = useState(false);
   const [date, setDate] = useState('');
+  const [card, setCard] = useState([]);
   const [cards, setCards] = useState(data);
   const [error, setError] = useState(false);
 
@@ -68,9 +77,14 @@ export default function Main(props) {
     setLoading(false);
   }
 
-  async function _handleModal(i) {
+  async function _handleModal(item, i) {
     await setIndex(i);
+    await setCard(item);
     setModalVisible(true);
+
+    if (__DEV__) {
+      console.tron.log(item);
+    }
   }
 
   function _renderItem(item, i) {
@@ -78,7 +92,7 @@ export default function Main(props) {
       <Link
         style={{flex: 1, minHeight: 100}}
         key={i}
-        onPress={() => _handleModal(i)}>
+        onPress={() => _handleModal(item, i)}>
         <CardItem style={{flex: 1}}>
           <CardImage style={{flex: 1}}>
             <FitImage
@@ -87,37 +101,18 @@ export default function Main(props) {
               resizeMode="contain"
             />
           </CardImage>
-          {/* <View style={{flex: 1, justifyContent: 'center', paddingHorizontal: 10}}>
-            <TextDark>{item.title}</TextDark>
-          </View> */}
         </CardItem>
       </Link>
     );
   }
 
+  function _setExchange() {
+    setModalVisible(false);
+    props.navigation.navigate('Exchange', {item: card});
+  }
+
   return (
     <Content style={{flex: 1}}>
-      {/* <Header>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Entypo name="stopwatch" size={20} color={'#fff'} />
-
-          <TextLight>próximo quiz</TextLight>
-        </View>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <TextLight style={{fontSize: 22, fontWeight: '800'}}>
-            {date}
-          </TextLight>
-        </View>
-      </Header> */}
       <View style={{margimBottom: 50}}>
         <FlatList
           data={data.cards}
@@ -134,11 +129,12 @@ export default function Main(props) {
 
       <Modal
         visible={modalVisible}
-        style={{marginHorizontal: 0, marginBottom: 0}}
+        style={{marginHorizontal: 0, marginBottom: 0, backgroundColor: '#000'}}
         transparent={true}
         onRequestClose={() => setModalVisible(false)}
         onBackdropPress={() => setModalVisible(false)}>
         <ImageViewer
+          style={{padding: 0}}
           imageUrls={cards.cards}
           index={key}
           onSwipeDown={() => {
@@ -149,6 +145,13 @@ export default function Main(props) {
           enableSwipeDown={true}
           onSwipeDown={() => setModalVisible(false)}
         />
+        {!card.have ? (
+          <View style={{marginBottom: 20}}>
+            <Send onPress={() => _setExchange()}>
+              <TextLight>TROCAR</TextLight>
+            </Send>
+          </View>
+        ) : null}
       </Modal>
     </Content>
   );

@@ -106,6 +106,25 @@ export default function Main(props) {
 
   return (
     <Content>
+      {/* <Header style={{alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialCommunityIcons
+              name="ticket-outline"
+              size={20}
+              color={'#fff'}
+            />
+
+            <TextLight style={{fontSize: 18, fontWeight: '800'}}>
+              Deu Match!
+            </TextLight>
+          </View>
+          <TextLight>Vamos trocar?</TextLight>
+        </Header> */}
       <FlatList
         data={matchs}
         keyExtractor={(item, index) => index.toString()}

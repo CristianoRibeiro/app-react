@@ -81,8 +81,8 @@ export default function Main(props) {
         image: require('~/assets/icons/info.png'),
         name: 'INFORMAÇÕES',
         item: item,
-        // permission: app_functions.info,
-        permission: true,
+        permission: app_functions.info,
+        //permission: true,
         type: null,
       },
       {
@@ -90,8 +90,8 @@ export default function Main(props) {
         image: require('~/assets/icons/calendar.png'),
         name: 'PROGRAMAÇÃO',
         item: item,
-        // permission: app_functions.schedule,
-        permission: true,
+        permission: app_functions.schedule,
+        //permission: true,
         type: 'schedule',
       },
       {
@@ -115,8 +115,8 @@ export default function Main(props) {
         image: require('~/assets/icons/bus.png'),
         name: 'TRANSFER',
         item: item,
-        //permission: app_functions ? app_functions.transfer : false,
-        permission: true,
+        permission: app_functions ? app_functions.transfer : false,
+        //permission: true,
         type: null,
       },
       {
@@ -132,8 +132,8 @@ export default function Main(props) {
         image: require('~/assets/icons/games.png'),
         name: 'MEUS CUPONS',
         item: item,
-        //permission: app_functions ? app_functions.games,
-        permission: true,
+        permission: app_functions ? app_functions.games : false,
+        //permission: true,
         type: null,
       },
       // {
@@ -208,8 +208,8 @@ export default function Main(props) {
         image: require('~/assets/icons/first.png'),
         name: 'MEUS PRÊMIOS',
         item: item,
-        //permission: app_functions ? app_functions.games,
-        permission: true,
+        permission: app_functions ? app_functions.prizeall : false,
+        //permission: true,
         type: null,
       },
       {
@@ -217,8 +217,8 @@ export default function Main(props) {
         image: require('~/assets/icons/users.png'),
         name: 'MEUS AMIGOS',
         item: item,
-        //permission: app_functions ? app_functions.games,
-        permission: true,
+        permission: app_functions ? app_functions.friends : false,
+        //permission: true,
         type: null,
       },
       {
@@ -226,8 +226,8 @@ export default function Main(props) {
         image: require('~/assets/icons/book.png'),
         name: 'GUIA DO PARTICIPANTE',
         item: item,
-        //permission: app_functions ? app_functions.games,
-        permission: true,
+        permission: app_functions ? app_functions.guia : false,
+        //permission: true,
         type: null,
       },
       {
@@ -235,8 +235,8 @@ export default function Main(props) {
         image: require('~/assets/icons/books.png'),
         name: 'MATERIAL DIDÁTICO',
         item: item,
-        //permission: app_functions ? app_functions.games,
-        permission: true,
+        permission: app_functions ? app_functions.material : false,
+        //permission: true,
         type: null,
       },
     ];
@@ -364,7 +364,7 @@ export default function Main(props) {
         </Header>
 
         <FlatList
-          style={{margimBottom: 75}}
+          contentContainerStyle={{paddingBottom: 75}}
           data={app_functions}
           numColumns={2}
           keyExtractor={(item, index) => index.toString()}

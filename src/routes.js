@@ -60,9 +60,9 @@ import Quiz from '~/pages/Campaigns/Quiz';
 import Album from '~/pages/Campaigns/Album';
 import CampaignPrize from '~/pages/Campaigns/Prize';
 import Cupons from '~/pages/Campaigns/Cupons';
-import Exchange from '~/pages/Campaigns/Exchange';
+import Exchange from '~/pages/Campaigns/Album/Exchange';
 import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
-import Match from '~/pages/Campaigns/Exchange/Match';
+import Match from '~/pages/Campaigns/Album/Match';
 import MatchItem from '~/pages/Campaigns/Exchange/MatchItem';
 import Regulation from '~/pages/Campaigns/Regulation';
 import Lottery from '~/pages/Campaigns/Lottery';
@@ -245,49 +245,6 @@ const DrawerRoutes = createDrawerNavigator(
     initialRouteName: 'Drawer',
     contentOptions: {
       activeTintColor: '#e91e63',
-    },
-  },
-);
-
-const TabsExchange = createMaterialTopTabNavigator(
-  {
-    ExchangeSearch: {
-      screen: ExchangeSearch,
-      path: '',
-      navigationOptions: {
-        title: 'Figurinhas repetidas',
-        tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => (
-          <Fontisto name="arrow-swap" size={24} color={tintColor} />
-        ),
-      },
-    },
-
-    Match: {
-      screen: Match,
-      path: 'match',
-      navigationOptions: {
-        title: 'Minhas trocas',
-        tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => (
-          <MaterialIcons name="notifications" size={24} color={tintColor} />
-        ),
-      },
-    },
-  },
-  {
-    initialRouteName: 'ExchangeSearch',
-    activeColor: '#222',
-    tabBarOptions: {
-      activeTintColor: '#fff',
-      inactiveTintColor: '#fff',
-      showLabel: true,
-      showIcon: false,
-      scrollEnabled: false,
-      indicatorStyle: {backgroundColor: '#fff'},
-      style: {
-        backgroundColor: '#FF6666',
-      },
     },
   },
 );
@@ -565,7 +522,7 @@ const MainNavigator = createStackNavigator(
       },
     },
     TabsExchange: {
-      screen: TabsExchange,
+      screen: Match,
       path: 'exchangesearch',
       navigationOptions: {
         headerTitle: 'Trocas',
@@ -615,7 +572,7 @@ const MainNavigator = createStackNavigator(
       screen: Games,
       path: 'games',
       navigationOptions: {
-        headerTitle: 'Meus Games',
+        headerTitle: 'Meus Cupons',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

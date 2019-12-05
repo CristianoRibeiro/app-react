@@ -1,22 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { TouchableRipple } from 'react-native-paper';
-
-// export const Container = styled(LinearGradient).attrs({
-//   colors: ['#0F60A8', '#2f8038'],
-//   start: { x: 0, y: 0 },
-//   end: { x: 1, y: 1 },
-// })`
-//   flex: 1;
-//   padding-top: ${30 + getStatusBarHeight(true)}px;
-// `;
-
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {TouchableRipple} from 'react-native-paper';
+import {TextInput, Button} from 'react-native-paper';
 
 export const Title = styled.Text`
   font-size: 32px;
-  color: #FFF;
+  color: #fff;
   font-weight: bold;
   padding: 0 20px;
 `;
@@ -29,7 +20,7 @@ export const SubTitle = styled.Text`
 
 export const TextLight = styled.Text`
   font-size: 16;
-  color: #FFF;
+  color: #fff;
   font-weight: 600;
   padding: 0 20px;
 `;
@@ -41,18 +32,17 @@ export const TextDark = styled.Text`
   font-weight: 700;
 `;
 
-export const Link = styled(TouchableRipple).attrs({
-})`
+export const Link = styled(TouchableRipple).attrs({})`
   flex: 1;
 `;
 
 export const Header = styled(LinearGradient).attrs({
-  colors: ['#051538', '#041c50'],
-  start: { x: 1, y: 0 },
-  end: { x: 1, y: 1 },
+  colors: ['#fff', '#fff'],
+  start: {x: 1, y: 0},
+  end: {x: 1, y: 1},
 })`
-  padding-top: 30px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 export const Card = styled.View`
@@ -79,3 +69,73 @@ export const Original = styled.Image`
   width: 100%;
   aspect-ratio: ${props => props.aspect};
 `;
+
+export const Send = styled(Button).attrs({
+  mode: 'contained',
+})`
+  background: #0f60a8;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 30px;
+  border: 1px solid #fff;
+`;
+
+export const NotificationTitle = styled.Text`
+  font-size: 14px;
+  color: #0058b8;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 5px;
+`;
+
+export const ItemQuestion = styled.TouchableOpacity`
+  font-size: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  width: 100%;
+  border-radius: 5px;
+`;
+
+export const Form = styled.View`
+  flex-direction: row;
+  margin-top: 10px;
+  padding: 0 10px;
+`;
+
+export const Input = styled.TextInput.attrs({
+  placeholderTextColor: '#efefef',
+  keyboardAppearance: 'light',
+  maxLength: 255,
+})`
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #fff;
+  background: rgba(000, 000, 000, 0.2);
+  border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
+`;
+
+export const Submit = styled.TouchableOpacity`
+  background: #f7893e;
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TextTitle = styled.Text`
+  font-size: 28px;
+  color: #fff;
+  margin: 5px 0;
+`;
+
+// export const Image = styled.Image`
+//   width: 100%;
+//   aspect-ratio: ${props => props.aspect};
+// `;

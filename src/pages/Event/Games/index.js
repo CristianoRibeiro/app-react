@@ -51,7 +51,7 @@ export default function Main(props) {
   async function _getData() {
     try {
       //let response = await api.get('/api/games/'+eventitem.id);
-      let response = await api.get('/api/games');
+      let response = await api.get('/api/games/'+eventitem.id);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
