@@ -95,11 +95,25 @@ export default function Main(props) {
         onPress={() => _handleModal(item, i)}>
         <CardItem style={{flex: 1}}>
           <CardImage style={{flex: 1}}>
-            <FitImage
-              style={{flex: 1}}
-              source={{uri: item.url}}
-              resizeMode="contain"
-            />
+            <ImageBackground
+              style={{flex: 1, minHeight: 125}}
+              source={{uri: item.url}}>
+              <View style={{alignItems: 'flex-end'}}>
+                <View
+                  style={{
+                    backgroundColor: 'green',
+                    height: 20,
+                    width: 20,
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text style={{color: '#fff', fontWeight: '700'}}>
+                    {item ? item.count : null}
+                  </Text>
+                </View>
+              </View>
+            </ImageBackground>
           </CardImage>
         </CardItem>
       </Link>
