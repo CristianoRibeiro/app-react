@@ -42,7 +42,7 @@ import {
   Submit,
   Send,
   TextLight,
-} from './styles';
+} from '../Exchange/styles';
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
@@ -51,7 +51,6 @@ export default function Main(props) {
 
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [modalUser, setModalUser] = useState(false);
   const [selected, setSelected] = useState(null);
   const [card, setCard] = useState([]);
   const [users, setUsers] = useState([]);
@@ -65,6 +64,9 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    if (__DEV__) {
+      console.tron.log(matchitem);
+    }
     try {
       await setCard(matchitem);
       let u = await api.post('/api/cards/exchange/users', {
@@ -72,9 +74,9 @@ export default function Main(props) {
       });
       setUsers(u.data);
       //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(u.data);
-      }
+      // if (__DEV__) {
+      //   console.tron.log(u.data);
+      // }
 
       //setNotifications(response.data);
     } catch (error) {
@@ -86,9 +88,15 @@ export default function Main(props) {
 
   async function _setData() {
     setModal(false);
+    if (__DEV__) {
+      console.tron.log({
+        card_id: card.id,
+        user_id: selected.id,
+      });
+    }
     try {
       let response = await api.post('/api/cards/from/user', {
-        card_id: card.id,
+        number: card.number,
         user_id: selected.id,
       });
       if (__DEV__) {
@@ -242,7 +250,7 @@ export default function Main(props) {
             }}>
             {selected ? (
               <Send
-               loading={loa}
+                loading={loading}
                 style={{marginBottom: 15, marginTop: 10}}
                 onPress={() => _setData()}>
                 <TextLight>OK</TextLight>
@@ -271,7 +279,6 @@ export default function Main(props) {
           <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
             <FlatList
               data={users}
-              numColumns={3}
               keyExtractor={(item, index) => index.toString()}
               ListEmptyComponent={
                 <EmptyList text="Nenhum usuário encontrado!" />

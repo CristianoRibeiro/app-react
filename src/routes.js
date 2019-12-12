@@ -60,10 +60,10 @@ import Quiz from '~/pages/Campaigns/Quiz';
 import Album from '~/pages/Campaigns/Album';
 import CampaignPrize from '~/pages/Campaigns/Prize';
 import Cupons from '~/pages/Campaigns/Cupons';
-import Exchange from '~/pages/Campaigns/Album/Exchange';
 import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
-import Match from '~/pages/Campaigns/Album/Match';
-import MatchItem from '~/pages/Campaigns/Exchange/MatchItem';
+import CardsPending from '~/pages/Campaigns/Album/CardsPending';
+import CardsRealize from '~/pages/Campaigns/Album/CardsRealize';
+import MatchItem from '~/pages/Campaigns/Album/MatchItem';
 import Regulation from '~/pages/Campaigns/Regulation';
 import Lottery from '~/pages/Campaigns/Lottery';
 import PrizeCampaign from '~/pages/Campaigns/Prize';
@@ -279,6 +279,43 @@ const TabsRecommendation = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: 'Recommendation',
+    activeColor: '#222',
+    tabBarOptions: {
+      activeTintColor: '#fff',
+      inactiveTintColor: '#fff',
+      showLabel: true,
+      showIcon: false,
+      scrollEnabled: false,
+      indicatorStyle: {backgroundColor: '#fff'},
+      style: {
+        backgroundColor: '#FF6666',
+      },
+      labelStyle: {fontSize: 11}
+    },
+  },
+);
+
+const TabsCards = createMaterialTopTabNavigator(
+  {
+    CardsPending: {
+      screen: CardsRealize,
+      path: 'recomendation',
+      navigationOptions: {
+        title: 'Pendentes',
+        tabBarColor: '#fff',
+      },
+    },
+    CardsRealize: {
+      screen: CardsPending,
+      path: 'recomendation',
+      navigationOptions: {
+        title: 'Realizadas',
+        tabBarColor: '#fff',
+      },
+    },
+  },
+  {
+    initialRouteName: 'CardsPending',
     activeColor: '#222',
     tabBarOptions: {
       activeTintColor: '#fff',
@@ -512,17 +549,17 @@ const MainNavigator = createStackNavigator(
       },
     },
     Exchange: {
-      screen: Exchange,
+      screen: MatchItem,
       path: 'exchange',
       navigationOptions: {
-        headerTitle: 'Trocas',
+        headerTitle: 'Trocar',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
       },
     },
     TabsExchange: {
-      screen: Match,
+      screen: TabsCards,
       path: 'exchangesearch',
       navigationOptions: {
         headerTitle: 'Trocas',

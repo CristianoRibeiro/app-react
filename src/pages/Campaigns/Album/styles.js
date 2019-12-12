@@ -56,7 +56,7 @@ export const Card = styled.View`
 export const CardItem = styled.View`
   margin: 2px;
   border-radius: 3px;
-  padding: 3px;
+  padding: 6px;
   background-color: #fff;
 `;
 

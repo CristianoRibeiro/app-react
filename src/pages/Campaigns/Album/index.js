@@ -96,25 +96,25 @@ export default function Main(props) {
         <CardItem style={{flex: 1}}>
           <CardImage style={{flex: 1}}>
             <ImageBackground
-              style={{flex: 1, minHeight: 125}}
+              style={{flex: 1, minHeight: 120}}
               source={{uri: item.url}}>
-                {item.count > 1 ? 
-              <View style={{alignItems: 'flex-end'}}>
-                <View
-                  style={{
-                    backgroundColor: 'green',
-                    height: 20,
-                    width: 20,
-                    borderRadius: 10,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text style={{color: '#fff', fontWeight: '700'}}>
-                    {item.count}
-                  </Text>
+              {item.count > 1 ? (
+                <View style={{alignItems: 'flex-end'}}>
+                  <View
+                    style={{
+                      backgroundColor: 'green',
+                      height: 20,
+                      width: 20,
+                      borderRadius: 10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{color: '#fff', fontWeight: '700'}}>
+                      {item.count}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              : null}
+              ) : null}
             </ImageBackground>
           </CardImage>
         </CardItem>
@@ -122,8 +122,12 @@ export default function Main(props) {
     );
   }
 
-  function _setExchange() {
+  async function _setExchange() {
     setModalVisible(false);
+    await dispatch({
+      type: 'MATCHITEM',
+      payload: card,
+    });
     props.navigation.navigate('Exchange', {item: card});
   }
 
