@@ -98,6 +98,7 @@ export default function Main(props) {
             <ImageBackground
               style={{flex: 1, minHeight: 125}}
               source={{uri: item.url}}>
+                {item.count > 1 ? 
               <View style={{alignItems: 'flex-end'}}>
                 <View
                   style={{
@@ -109,10 +110,11 @@ export default function Main(props) {
                     justifyContent: 'center',
                   }}>
                   <Text style={{color: '#fff', fontWeight: '700'}}>
-                    {item ? item.count : null}
+                    {item.count}
                   </Text>
                 </View>
               </View>
+              : null}
             </ImageBackground>
           </CardImage>
         </CardItem>

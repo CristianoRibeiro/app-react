@@ -80,6 +80,24 @@ export const Send = styled(Button).attrs({
   border: 1px solid #fff;
 `;
 
+export const Confirm = styled(Button).attrs({
+  mode: 'contained',
+})`
+  background: #4caf50;
+  padding: 0px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+`;
+
+export const Cancel = styled(Button).attrs({
+  mode: 'contained',
+})`
+  background: #d32f2f;
+  padding: 0px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+`;
+
 export const NotificationTitle = styled.Text`
   font-size: 14px;
   color: #0058b8;
