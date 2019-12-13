@@ -54,7 +54,7 @@ export default function Main(props) {
 
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [modalUser, setModalUser] = useState(false);
+  const [render, setRender] = useState(true);
   const [selected, setSelected] = useState(null);
   const [exchange, setExchange] = useState(
     props.item.exchange_image ? props.item.exchange_image.image : null,
@@ -62,39 +62,37 @@ export default function Main(props) {
   const [card, setCard] = useState('');
   const [cards, setCards] = useState([]);
 
-  useEffect(() => {
-    _getData();
-  }, []);
+  useEffect(() => {}, []);
 
   async function _getData() {
-    setLoading(true);
     try {
       let response = await api.get('/api/cards/match');
+      await dispatch({type: 'MATCHS', payload: []});
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
       await dispatch({type: 'MATCHS', payload: response.data});
-
-      //setNotifications(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
-    setLoading(false);
   }
 
   async function _send(item) {
+    const values = {
+      user_id: props.item.from,
+      id_figurinha_solicitada: card.card_id,
+      id_figurinha_para_troca: props.item.id,
+    };
     if (__DEV__) {
-      console.tron.log(props.item);
+      console.tron.log(values);
+      //console.tron.log(props.item);
     }
     try {
-      let response = await api.post('/api/cards/exchange', {
-        user_id: props.item.user_id,
-        id_figurinha_solicitada: card.id,
-        id_figurinha_para_troca: props.item.id,
-      });
+      setCards('');
+      let response = await api.post('/api/cards/exchange', values);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -106,7 +104,6 @@ export default function Main(props) {
         console.tron.log(error);
       }
     }
-    setModal(false);
   }
 
   async function _cancel(item) {
@@ -115,7 +112,7 @@ export default function Main(props) {
     }
     try {
       let response = await api.post('/api/cards/cancel', {
-        card_id: card.id
+        card_id: card.id,
       });
       //alert(JSON.stringify(response));
       if (__DEV__) {
@@ -137,7 +134,7 @@ export default function Main(props) {
     setLoading(true);
     try {
       let response = await api.post('/api/cards/from/user/repeated', {
-        user_id: item.user.id,
+        user_id: props.item.from,
       });
       //alert(JSON.stringify(response));
       if (__DEV__) {
@@ -154,6 +151,9 @@ export default function Main(props) {
   }
 
   async function _handleItem(item) {
+    if (__DEV__) {
+      console.tron.log(item);
+    }
     setSelected(item);
     //setModal(false);
     setCard(item);
@@ -201,157 +201,156 @@ export default function Main(props) {
   }
 
   return (
-      <View>
-        <CardItem>
+    <View>
+      <CardItem>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flex: 1,
+          }}>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
               flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            <View
+            <Image
+              resizeMode="cover"
               style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                resizeMode="cover"
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 5,
-                  margin: 2,
-                }}
-                defaultSource={require('~/assets/avatar/avatar.png')}
-                source={{
-                  uri: props.item.card_image
-                    ? props.item.card_image.image
-                    : null,
-                }}
-              />
-              <TextDark style={{fontSize: 12, textAlign: 'center'}}>
-                A enviar
-              </TextDark>
-            </View>
+                width: 100,
+                height: 100,
+                borderRadius: 5,
+                margin: 2,
+              }}
+              defaultSource={require('~/assets/avatar/avatar.png')}
+              source={{
+                uri: props.item.card_image ? props.item.card_image.image : null,
+              }}
+            />
+            <TextDark style={{fontSize: 12, textAlign: 'center'}}>
+              A enviar
+            </TextDark>
+          </View>
 
-            <View
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Image
+              source={require('~/assets/icons/ico_trocas.png')}
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: 10,
-                marginBottom: 15,
-              }}>
-              <FontAwesome name="exchange" size={36} color={'#4caf50'} />
-            </View>
+                height: 40,
+                width: 40,
+                marginHorizontal: 5,
+                marginBottom: 25
+              }}
+              resizeMode="contain"
+            />
+          </View>
 
-            <View style={{flex: 1}}>
-              <Link key={props.index} onPress={() => _handModal(props.item)}>
-                {card ? (
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      flexDirection: 'row',
-                      flex: 1,
-                    }}>
-                    <View>
-                      <Image
-                        resizeMode="cover"
-                        style={{
-                          width: 100,
-                          height: 100,
-                          borderRadius: 5,
-                          margin: 2,
-                        }}
-                        defaultSource={require('~/assets/avatar/avatar.png')}
-                        source={{uri: card.image}}
-                      />
-                      <TextDark style={{fontSize: 12, textAlign: 'center'}}>
-                        A receber
-                      </TextDark>
-                    </View>
-                  </View>
-                ) : (
-                  <View style={{alignItems: 'center'}}>
-                    <CardItem
+          <View style={{flex: 1}}>
+            <Link key={props.index} onPress={() => _handModal(props.item)}>
+              {card ? (
+                <View
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    flex: 1,
+                  }}>
+                  <View>
+                    <Image
+                      resizeMode="cover"
                       style={{
-                        borderColor: '#ccc',
-                        borderWidth: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
                         width: 100,
                         height: 100,
-                        flex: 1,
-                      }}>
-                      <MaterialCommunityIcons
-                        name="plus"
-                        size={45}
-                        color={'#999'}
-                      />
-                    </CardItem>
+                        borderRadius: 5,
+                        margin: 2,
+                      }}
+                      defaultSource={require('~/assets/avatar/avatar.png')}
+                      source={{uri: card.image}}
+                    />
                     <TextDark style={{fontSize: 12, textAlign: 'center'}}>
                       A receber
                     </TextDark>
                   </View>
-                )}
-              </Link>
-            </View>
-
-            <View style={{flex: 1}}>
-              <Confirm
-                disabled={card ? false : true}
-                onPress={() => _confirm()}>
-                <TextLight style={{fontSize: 12}}>CONFIRMAR</TextLight>
-              </Confirm>
-              <Cancel onPress={() => _cancel()}>
-                <TextLight style={{fontSize: 12}}>RECUSAR</TextLight>
-              </Cancel>
-            </View>
+                </View>
+              ) : (
+                <View style={{alignItems: 'center'}}>
+                  <CardItem
+                    style={{
+                      borderColor: '#ccc',
+                      borderWidth: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 100,
+                      height: 100,
+                      flex: 1,
+                    }}>
+                    <MaterialCommunityIcons
+                      name="plus"
+                      size={45}
+                      color={'#999'}
+                    />
+                  </CardItem>
+                  <TextDark style={{fontSize: 12, textAlign: 'center'}}>
+                    A receber
+                  </TextDark>
+                </View>
+              )}
+            </Link>
           </View>
-        </CardItem>
 
-        <Modal
-          visible={modal}
-          style={{marginHorizontal: 0, marginBottom: 0}}
-          transparent={true}
-          onRequestClose={() => setModal(false)}
-          onBackdropPress={() => setModal(false)}>
-          <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
-            <Header style={{alignItems: 'center'}}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <TextDark style={{fontSize: 14, fontWeight: '600'}}>
-                  Selecione a figurinha que deseja trocar.
-                </TextDark>
-              </View>
-            </Header>
-            <FlatList
-              data={cards}
-              numColumns={3}
-              keyExtractor={(item, index) => index.toString()}
-              ListEmptyComponent={
-                <EmptyList text="Nenhuma figurinha encontrada!" />
-              }
-              renderItem={({item, index}) => _renderItem(item, index)}
-              refreshControl={
-                <RefreshControl
-                  refreshing={loading}
-                  onRefresh={() => _getData()}
-                />
-              }
-            />
-            <Send
-              onPress={() => setModal(false)}
-              style={{marginBottom: 15, marginTop: 10}}>
-              <TextLight>OK</TextLight>
-            </Send>
+          <View style={{flex: 1}}>
+            <Confirm disabled={card ? false : true} onPress={() => _confirm()}>
+              <TextLight style={{fontSize: 11}}>CONFIRMAR</TextLight>
+            </Confirm>
+            <Cancel onPress={() => _cancel()}>
+              <TextLight style={{fontSize: 11}}>RECUSAR</TextLight>
+            </Cancel>
           </View>
-        </Modal>
-      </View>
+        </View>
+      </CardItem>
+
+      <Modal
+        visible={modal}
+        style={{marginHorizontal: 0, marginBottom: 0}}
+        transparent={true}
+        onRequestClose={() => setModal(false)}
+        onBackdropPress={() => setModal(false)}>
+        <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
+          <Header style={{alignItems: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TextDark style={{fontSize: 14, fontWeight: '600'}}>
+                Selecione a figurinha que deseja trocar.
+              </TextDark>
+            </View>
+          </Header>
+          <FlatList
+            data={cards}
+            numColumns={3}
+            keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={
+              <EmptyList text="Nenhuma figurinha encontrada!" />
+            }
+            renderItem={({item, index}) => _renderItem(item, index)}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={() => _getData()}
+              />
+            }
+          />
+          <Send
+            onPress={() => setModal(false)}
+            style={{marginBottom: 15, marginTop: 10}}>
+            <TextLight>OK</TextLight>
+          </Send>
+        </View>
+      </Modal>
+    </View>
   );
 }

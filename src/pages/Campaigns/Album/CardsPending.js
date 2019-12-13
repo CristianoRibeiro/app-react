@@ -78,7 +78,6 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
       await dispatch({type: 'MATCHS', payload: response.data});
-
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -87,12 +86,54 @@ export default function Main(props) {
     setLoading(false);
   }
 
-  
-
   async function _confirm(item) {
     setSelected(item);
     //setModal(false);
-    
+  }
+
+  async function _sendCancel(item) {
+    if (__DEV__) {
+      console.tron.log(item);
+    }
+    try {
+      let response = await api.post('/api/cards/cancel', {
+        card_id: item.id,
+      });
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      Alert.alert(null, response.data.message);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    //Props do metodo _getData() - CardRealize.js
+    _getData();
+  }
+
+  async function _cancel(item) {
+    //setModal(false);
+    Alert.alert(
+      '',
+      'Deseja cancelar?',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('cancel'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            _sendCancel(item);
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   }
 
   async function _handModal(item) {
@@ -127,36 +168,98 @@ export default function Main(props) {
     setModal(false);
   }
 
-  function _renderItem(item, i) {
-    return (
-      <Link onPress={() => _handleItem(item)} key={i}>
-        <CardItem
-          style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <CardImage>
-            <Image
-              style={{aspectRatio: 1}}
-              source={{uri: item.image}}
-              resizeMode="contain"
-            />
-          </CardImage>
-        </CardItem>
-      </Link>
-    );
-  }
-
   return (
     <Content>
       <FlatList
         contentContainerStyle={{paddingBottom: 75}}
         data={matchs}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={
-          <EmptyList text="Não existem trocas realizadas." />
-        }
+        ListEmptyComponent={<EmptyList text="Não existem trocas pendentes." />}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }
-        renderItem={({item, index}) => <Item item={item} />}
+        renderItem={({item, index}) => (
+          <View>
+            {item.user_id === user.id ? (
+              <Item item={item} />
+            ) : (
+              <CardItem>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flex: 1,
+                    justifyContent: 'center',
+                  }}>
+                  <View>
+                    <Image
+                      resizeMode="cover"
+                      style={{
+                        width: 100,
+                        height: 100,
+                        borderRadius: 5,
+                        margin: 2,
+                      }}
+                      defaultSource={require('~/assets/avatar/avatar.png')}
+                      source={{uri: item.card_image.gray}}
+                    />
+                    <TextDark style={{fontSize: 12, textAlign: 'center'}}>
+                      A receber
+                    </TextDark>
+                  </View>
+
+                  <View
+                    style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                      source={require('~/assets/icons/ico_trocas.png')}
+                      style={{
+                        height: 40,
+                        width: 40,
+                        marginLeft: 10,
+                        marginBottom: 25
+                      }}
+                      resizeMode="contain"
+                    />
+                  </View>
+
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      resizeMode="cover"
+                      style={{
+                        width: 100,
+                        height: 100,
+                      }}
+                      defaultSource={require('~/assets/avatar/avatar.png')}
+                      source={require('~/assets/icons/picture.png')}
+                    />
+                    <TextDark
+                      style={{
+                        fontSize: 12,
+                        textAlign: 'center',
+                        marginTop: 12,
+                      }}>
+                      A enviar
+                    </TextDark>
+                  </View>
+
+                  <View style={{flex: 1}}>
+                    <Cancel
+                      onPress={() => _cancel(item)}
+                      style={{marginBottom: 20}}>
+                      <TextLight style={{fontSize: 11}}>CANCELAR</TextLight>
+                    </Cancel>
+                  </View>
+                </View>
+              </CardItem>
+            )}
+          </View>
+        )}
       />
     </Content>
   );

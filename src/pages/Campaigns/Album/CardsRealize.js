@@ -53,20 +53,22 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [cards, setCards] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    _getData();
+  }, []);
 
   async function _getData() {
     setLoading(true);
     try {
-      let response = await api.get('/api/cards/match');
+      let response = await api.post('/api/cards/history');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'MATCHS', payload: response.data});
 
-      //setNotifications(response.data);
+      setCards(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -75,60 +77,60 @@ export default function Main(props) {
     setLoading(false);
   }
 
-  async function _send(item) {
-    if (__DEV__) {
-      console.tron.log(item);
-    }
-    try {
-      let response = await api.post('/api/cards/cancel', {
-        card_id: item.id,
-      });
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
+  function _renderImageSource(item) {
+    if (item) {
+      if (item.card_source) {
+        if (item.card_source.card_image) {
+          if (item.card_source.card_image.image) {
+            return (
+              <Image
+                resizeMode="cover"
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 5,
+                  margin: 2,
+                }}
+                source={{uri: item.card_source.card_image.image}}
+              />
+            );
+          }
+        }
       }
-
-      Alert.alert(null, response.data.message);
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
     }
-    //Props do metodo _getData() - CardRealize.js
-    _getData();
   }
 
-  async function _confirm(item) {
-    //setModal(false);
-    Alert.alert(
-      '',
-      'Deseja Cancelar?',
-      [
-        {
-          text: 'Cancelar',
-          onPress: () => console.log('cancel'),
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            _send(item);
-          },
-        },
-      ],
-      {cancelable: false},
-    );
+  function _renderImageTarget(item) {
+    if (item) {
+      if (item.card_target) {
+        if (item.card_target.card_image) {
+          if (item.card_target.card_image.image) {
+            return (
+              
+              <Image
+                resizeMode="cover"
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 5,
+                  margin: 2,
+                }}
+                source={{uri: item.card_target.card_image.image}}
+              />
+            );
+          }
+        }
+      }
+    }
   }
 
   return (
     <Content>
       <FlatList
         contentContainerStyle={{paddingBottom: 75}}
-        data={matchs}
+        data={cards}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={
-          <EmptyList text="Não existem trocas pendentes." />
-        }
+        ListEmptyComponent={<EmptyList text="Não existem trocas realizadas." />}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }
@@ -142,61 +144,32 @@ export default function Main(props) {
                 flex: 1,
                 justifyContent: 'center',
               }}>
-              {item.exchange_image.gray ? (
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    flex: 1,
-                  }}>
-                  <View>
-                    <Image
-                      resizeMode="cover"
-                      style={{
-                        width: 100,
-                        height: 100,
-                        borderRadius: 5,
-                        margin: 2,
-                      }}
-                      defaultSource={require('~/assets/avatar/avatar.png')}
-                      source={{uri: item.exchange_image.gray}}
-                    />
-                    <TextDark style={{fontSize: 12, textAlign: 'center'}}>
-                      A receber
-                    </TextDark>
-                  </View>
-                </View>
-              ) : (
-                <View style={{alignItems: 'center', flex: 1}}>
-                  <CardItem
-                    style={{
-                      borderColor: '#ccc',
-                      borderWidth: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 100,
-                      height: 100,
-                      flex: 1,
-                    }}>
-                    <MaterialCommunityIcons
-                      name="plus"
-                      size={45}
-                      color={'#999'}
-                    />
-                  </CardItem>
-                  <TextDark style={{fontSize: 12, textAlign: 'center'}}>
-                    A enviar
-                  </TextDark>
-                </View>
-              )}
               <View
                 style={{
-                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginRight: 10,
-                  marginBottom: 20,
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  flex: 1,
                 }}>
-                <FontAwesome name="exchange" size={36} color={'#4caf50'} />
+                <View>
+                  
+                  {_renderImageSource(item)}
+                  <TextDark style={{fontSize: 12, textAlign: 'center'}}>
+                    A receber
+                  </TextDark>
+                </View>
+              </View>
+
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Image
+                  source={require('~/assets/icons/ico_trocas.png')}
+                  style={{
+                    height: 40,
+                    width: 40,
+                    marginBottom: 20
+                  }}
+                  resizeMode="contain"
+                />
               </View>
 
               <View
@@ -205,32 +178,11 @@ export default function Main(props) {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Image
-                  resizeMode="cover"
-                  style={{
-                    width: 100,
-                    height: 100,
-                  }}
-                  defaultSource={require('~/assets/avatar/avatar.png')}
-                  source={require('~/assets/icons/picture.png')}
-                />
+                {_renderImageTarget(item)}
                 <TextDark
                   style={{fontSize: 12, textAlign: 'center', marginTop: 12}}>
                   A enviar
                 </TextDark>
-              </View>
-
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Cancel
-                  onPress={() => _confirm(item)}
-                  style={{marginBottom: 20}}>
-                  <TextLight style={{fontSize: 12}}>CANCELAR</TextLight>
-                </Cancel>
               </View>
             </View>
           </CardItem>

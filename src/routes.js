@@ -298,16 +298,16 @@ const TabsRecommendation = createMaterialTopTabNavigator(
 const TabsCards = createMaterialTopTabNavigator(
   {
     CardsPending: {
-      screen: CardsRealize,
-      path: 'recomendation',
+      screen:  CardsPending,
+      path: 'cardspending',
       navigationOptions: {
         title: 'Pendentes',
         tabBarColor: '#fff',
       },
     },
     CardsRealize: {
-      screen: CardsPending,
-      path: 'recomendation',
+      screen: CardsRealize,
+      path: 'cardsrealize',
       navigationOptions: {
         title: 'Realizadas',
         tabBarColor: '#fff',
@@ -560,7 +560,7 @@ const MainNavigator = createStackNavigator(
     },
     TabsExchange: {
       screen: TabsCards,
-      path: 'exchangesearch',
+      path: 'tabscards',
       navigationOptions: {
         headerTitle: 'Trocas',
         headerStyle: {

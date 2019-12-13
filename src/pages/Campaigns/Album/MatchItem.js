@@ -73,12 +73,6 @@ export default function Main(props) {
         number: matchitem.number,
       });
       setUsers(u.data);
-      //alert(JSON.stringify(response));
-      // if (__DEV__) {
-      //   console.tron.log(u.data);
-      // }
-
-      //setNotifications(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -104,6 +98,7 @@ export default function Main(props) {
       }
 
       Alert.alert(null, response.data.message);
+      props.navigation.navigate('TabsExchange');
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -127,7 +122,7 @@ export default function Main(props) {
           <View style={{flex: 1}}>
             <Image
               style={{aspectRatio: 1}}
-              source={{uri: item.avatar}}
+              source={{uri: item.append_avatar}}
               resizeMode="contain"
             />
           </View>
@@ -147,29 +142,50 @@ export default function Main(props) {
   }
 
   function _renderUser() {
-    return (
-      <View style={{alignItems: 'center'}}>
-        <Image
-          resizeMode="cover"
-          style={{
-            width: 100,
-            height: 100,
-            borderRadius: 5,
-          }}
-          defaultSource={require('~/assets/avatar/avatar.png')}
-          source={{uri: selected ? selected.avatar : ''}}
-        />
+    if (selected) {
+      return (
+        <Link onPress={() => setModal(true)}>
+          <View style={{alignItems: 'center'}}>
+            <Image
+              resizeMode="cover"
+              style={{
+                width: 120,
+                height: 120,
+                borderRadius: 5,
+              }}
+              defaultSource={require('~/assets/avatar/avatar.png')}
+              source={{uri: selected ? selected.append_avatar : null}}
+            />
 
-        {selected ? (
-          <TextDark style={{fontWeight: '800', fontSize: 12, marginTop: 10}}>
-            {selected.name}
-          </TextDark>
-        ) : (
-          <TextDark
-            style={{fontWeight: '800', fontSize: 12, marginTop: 10}}></TextDark>
-        )}
-      </View>
-    );
+            <TextDark
+              style={{
+                fontWeight: '800',
+                fontSize: 11,
+                marginTop: 10,
+                textAlign: 'center',
+              }}>
+              {selected.name}
+            </TextDark>
+          </View>
+        </Link>
+      );
+    } else {
+      return (
+        <Link onPress={() => setModal(true)}>
+          <View style={{alignItems: 'center'}}>
+            <Image
+              resizeMode="cover"
+              style={{
+                width: 120,
+                height: 120,
+                borderRadius: 5,
+              }}
+              source={require('~/assets/avatar/avatar.png')}
+            />
+          </View>
+        </Link>
+      );
+    }
   }
 
   return (
@@ -178,43 +194,24 @@ export default function Main(props) {
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
-        <Header style={{alignItems: 'center'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="ticket-outline"
-              size={20}
-              color={'#fff'}
-            />
-
-            <TextLight style={{fontSize: 18, fontWeight: '800'}}>
-              Deu Match!
-            </TextLight>
-          </View>
-          <TextLight>Vamos trocar?</TextLight>
-        </Header>
-
-        <Card>
+        <Card style={{alignItems: 'center', justifyContent: 'center'}}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              justifyContent: 'center',
             }}>
-            <View style={{alignItems: 'center'}}>
+            <View style={{alignItems: 'center', flex: 1}}>
               <Image
                 resizeMode="cover"
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 120,
+                  height: 120,
                   borderRadius: 5,
                 }}
                 defaultSource={require('~/assets/avatar/avatar.png')}
-                source={{uri: card.image}}
+                source={{uri: card.gray ? card.gray : null}}
               />
 
               <TextDark
@@ -223,25 +220,21 @@ export default function Main(props) {
               </TextDark>
             </View>
 
-            <Image
-              source={require('~/assets/icons/ico_trocas.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="contain"
-            />
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <Image
+                source={require('~/assets/icons/ico_trocas.png')}
+                style={{
+                  height: 40,
+                  width: 40,
+                }}
+                resizeMode="contain"
+              />
+            </View>
 
-            {_renderUser()}
+            <View style={{flex: 1}}>{_renderUser()}</View>
           </View>
 
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: '#ddd',
-              marginTop: 15,
-            }}></View>
           <View
             style={{
               alignItems: 'center',
@@ -256,24 +249,13 @@ export default function Main(props) {
                 <TextLight>OK</TextLight>
               </Send>
             ) : null}
-
-            <TextDark style={{textAlign: 'center'}}>
-              Clique no ícone abaixo para selecionar uma pessoa com as
-              figurinhas que deseja trocar
-            </TextDark>
           </View>
         </Card>
-
-        <View style={{alignItems: 'center', marginTop: 25}}>
-          <Submit onPress={() => setModal(true)}>
-            <MaterialIcons name="add" size={40} color={'#fff'} />
-          </Submit>
-        </View>
 
         <Modal
           visible={modal}
           style={{marginHorizontal: 0, marginBottom: 0}}
-          transparent={true}
+          transparent={false}
           onRequestClose={() => setModal(false)}
           onBackdropPress={() => setModal(false)}>
           <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
@@ -285,11 +267,18 @@ export default function Main(props) {
               }
               renderItem={({item, index}) => _renderItem(item, index)}
             />
-            <Send
-              onPress={() => setModal(false)}
-              style={{marginBottom: 15, marginTop: 10}}>
-              <TextLight>OK</TextLight>
-            </Send>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 15,
+              }}>
+              <Send
+                onPress={() => setModal(false)}
+                style={{marginBottom: 15, marginTop: 10}}>
+                <TextLight>CANCELAR</TextLight>
+              </Send>
+            </View>
           </View>
         </Modal>
       </ScrollView>
