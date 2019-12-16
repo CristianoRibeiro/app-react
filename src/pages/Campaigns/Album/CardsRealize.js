@@ -77,24 +77,76 @@ export default function Main(props) {
     setLoading(false);
   }
 
+  function _renderUserSource(item) {
+    if (item) {
+      if (item.user_source) {
+        if (item.user_source.avatar) {
+          return (
+            <Image
+              resizeMode="cover"
+              style={{
+                marginTop: -20,
+                marginRight: -20,
+                marginBottom: -5,
+                width: 40,
+                height: 40,
+                borderRadius: 20,
+                margin: 2,
+              }}
+              source={{uri: item.user_target.avatar}}
+            />
+          );
+        }
+      }
+    }
+  }
+
   function _renderImageSource(item) {
     if (item) {
       if (item.card_source) {
         if (item.card_source.card_image) {
           if (item.card_source.card_image.image) {
             return (
-              <Image
-                resizeMode="cover"
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 5,
-                  margin: 2,
-                }}
-                source={{uri: item.card_source.card_image.image}}
-              />
+              <View style={{alignItems: 'flex-end'}}>
+                <Image
+                  resizeMode="cover"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 5,
+                    margin: 2,
+                  }}
+                  source={{uri: item.card_source.card_image.image}}
+                />
+
+                {_renderUserSource(item)}
+              </View>
             );
           }
+        }
+      }
+    }
+  }
+
+  function _renderUserTarget(item) {
+    if (item) {
+      if (item.user_target) {
+        if (item.user_target.avatar) {
+          return (
+            <Image
+              resizeMode="cover"
+              style={{
+                marginTop: -20,
+                marginRight: -20,
+                marginBottom: -5,
+                width: 40,
+                height: 40,
+                borderRadius: 20,
+                margin: 2,
+              }}
+              source={{uri: item.user_target.avatar}}
+            />
+          );
         }
       }
     }
@@ -106,17 +158,20 @@ export default function Main(props) {
         if (item.card_target.card_image) {
           if (item.card_target.card_image.image) {
             return (
-              
-              <Image
-                resizeMode="cover"
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 5,
-                  margin: 2,
-                }}
-                source={{uri: item.card_target.card_image.image}}
-              />
+              <View style={{alignItems: 'flex-end'}}>
+                <Image
+                  resizeMode="cover"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 5,
+                    margin: 2,
+                  }}
+                  source={{uri: item.card_target.card_image.image}}
+                />
+
+                {/* {_renderUserTarget(item)} */}
+              </View>
             );
           }
         }
@@ -152,10 +207,9 @@ export default function Main(props) {
                   flex: 1,
                 }}>
                 <View>
-                  
                   {_renderImageSource(item)}
                   <TextDark style={{fontSize: 12, textAlign: 'center'}}>
-                    A receber
+                  Recebida
                   </TextDark>
                 </View>
               </View>
@@ -166,7 +220,7 @@ export default function Main(props) {
                   style={{
                     height: 40,
                     width: 40,
-                    marginBottom: 20
+                    marginBottom: 20,
                   }}
                   resizeMode="contain"
                 />
@@ -181,7 +235,7 @@ export default function Main(props) {
                 {_renderImageTarget(item)}
                 <TextDark
                   style={{fontSize: 12, textAlign: 'center', marginTop: 12}}>
-                  A enviar
+                  Enviada
                 </TextDark>
               </View>
             </View>

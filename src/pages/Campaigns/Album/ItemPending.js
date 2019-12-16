@@ -22,6 +22,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
+import {Avatar} from 'react-native-paper';
 
 import api from '~/services/api';
 
@@ -241,7 +242,7 @@ export default function Main(props) {
                 height: 40,
                 width: 40,
                 marginHorizontal: 5,
-                marginBottom: 25
+                marginBottom: 25,
               }}
               resizeMode="contain"
             />
@@ -299,13 +300,25 @@ export default function Main(props) {
             </Link>
           </View>
 
-          <View style={{flex: 1}}>
-            <Confirm disabled={card ? false : true} onPress={() => _confirm()}>
-              <TextLight style={{fontSize: 11}}>CONFIRMAR</TextLight>
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Confirm
+              style={{
+                height: 70,
+                width: 70,
+                borderRadius: 35,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 25
+              }}
+              disabled={card ? false : true}
+              onPress={() => _confirm()}>
+              <AntDesign name={'like2'} color="#fff" size={24} />
             </Confirm>
-            <Cancel onPress={() => _cancel()}>
+
+            {/* <Cancel onPress={() => _cancel()}>
               <TextLight style={{fontSize: 11}}>RECUSAR</TextLight>
-            </Cancel>
+            </Cancel> */}
           </View>
         </View>
       </CardItem>
@@ -347,7 +360,7 @@ export default function Main(props) {
           <Send
             onPress={() => setModal(false)}
             style={{marginBottom: 15, marginTop: 10}}>
-            <TextLight>OK</TextLight>
+            <TextLight>CANCELAR</TextLight>
           </Send>
         </View>
       </Modal>

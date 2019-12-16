@@ -75,7 +75,7 @@ export default function Main(props) {
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }>
         <Header>
-          <TextLight>Confira abaixo seu(s) número(s) da sorte para participar dos sorteios:</TextLight>
+          <TextLight style={{textAlign: 'center'}}>Confira abaixo seu(s) número(s) da sorte para participar dos sorteios:</TextLight>
         </Header>
 
         <Card>

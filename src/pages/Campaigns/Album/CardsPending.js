@@ -179,86 +179,100 @@ export default function Main(props) {
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
         }
         renderItem={({item, index}) => (
-          <View>
-            {item.user_id === user.id ? (
-              <Item item={item} />
-            ) : (
-              <CardItem>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flex: 1,
-                    justifyContent: 'center',
-                  }}>
-                  <View>
-                    <Image
-                      resizeMode="cover"
-                      style={{
-                        width: 100,
-                        height: 100,
-                        borderRadius: 5,
-                        margin: 2,
-                      }}
-                      defaultSource={require('~/assets/avatar/avatar.png')}
-                      source={{uri: item.card_image.gray}}
-                    />
-                    <TextDark style={{fontSize: 12, textAlign: 'center'}}>
-                      A receber
-                    </TextDark>
-                  </View>
-
-                  <View
-                    style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <Image
-                      source={require('~/assets/icons/ico_trocas.png')}
-                      style={{
-                        height: 40,
-                        width: 40,
-                        marginLeft: 10,
-                        marginBottom: 25
-                      }}
-                      resizeMode="contain"
-                    />
-                  </View>
-
+          <CardItem>
+            <View>
+              {item.user_id === user.id ? (
+                <Item item={item} />
+              ) : (
+                <CardItem>
                   <View
                     style={{
-                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                       alignItems: 'center',
+                      flex: 1,
                       justifyContent: 'center',
                     }}>
-                    <Image
-                      resizeMode="cover"
-                      style={{
-                        width: 100,
-                        height: 100,
-                      }}
-                      defaultSource={require('~/assets/avatar/avatar.png')}
-                      source={require('~/assets/icons/picture.png')}
-                    />
-                    <TextDark
-                      style={{
-                        fontSize: 12,
-                        textAlign: 'center',
-                        marginTop: 12,
-                      }}>
-                      A enviar
-                    </TextDark>
-                  </View>
+                    <View>
+                      <Image
+                        resizeMode="cover"
+                        style={{
+                          width: 100,
+                          height: 100,
+                          borderRadius: 5,
+                          margin: 2,
+                        }}
+                        defaultSource={require('~/assets/avatar/avatar.png')}
+                        source={{uri: item.card_image.gray}}
+                      />
+                      <TextDark style={{fontSize: 12, textAlign: 'center'}}>
+                        A receber
+                      </TextDark>
+                    </View>
 
-                  <View style={{flex: 1}}>
-                    <Cancel
-                      onPress={() => _cancel(item)}
-                      style={{marginBottom: 20}}>
-                      <TextLight style={{fontSize: 11}}>CANCELAR</TextLight>
-                    </Cancel>
+                    <View
+                      style={{alignItems: 'center', justifyContent: 'center'}}>
+                      <Image
+                        source={require('~/assets/icons/ico_trocas.png')}
+                        style={{
+                          height: 40,
+                          width: 40,
+                          marginHorizontal: 5,
+                          marginBottom: 25,
+                        }}
+                        resizeMode="contain"
+                      />
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        resizeMode="cover"
+                        style={{
+                          width: 100,
+                          height: 100,
+                        }}
+                        defaultSource={require('~/assets/avatar/avatar.png')}
+                        source={require('~/assets/icons/picture.png')}
+                      />
+                      <TextDark
+                        style={{
+                          fontSize: 12,
+                          textAlign: 'center',
+                          marginTop: 12,
+                        }}>
+                        A enviar
+                      </TextDark>
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Cancel
+                        onPress={() => _cancel(item)}
+                        style={{
+                          height: 70,
+                          width: 70,
+                          borderRadius: 35,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginBottom: 25,
+                        }}>
+                        <AntDesign name={'dislike2'} color="#fff" size={24} />
+                      </Cancel>
+                    </View>
                   </View>
-                </View>
-              </CardItem>
-            )}
-          </View>
+                </CardItem>
+              )}
+            </View>
+          </CardItem>
         )}
       />
     </Content>

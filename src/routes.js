@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {TextInput, Button, Appbar} from 'react-native-paper';
 
 //Auth
 import AuthVerification from '~/services/AuthVerification';
@@ -60,7 +61,7 @@ import Quiz from '~/pages/Campaigns/Quiz';
 import Album from '~/pages/Campaigns/Album';
 import CampaignPrize from '~/pages/Campaigns/Prize';
 import Cupons from '~/pages/Campaigns/Cupons';
-import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
+//import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
 import CardsPending from '~/pages/Campaigns/Album/CardsPending';
 import CardsRealize from '~/pages/Campaigns/Album/CardsRealize';
 import MatchItem from '~/pages/Campaigns/Album/MatchItem';
@@ -249,7 +250,6 @@ const DrawerRoutes = createDrawerNavigator(
   },
 );
 
-
 const TabsRecommendation = createMaterialTopTabNavigator(
   {
     Recommendation: {
@@ -290,7 +290,7 @@ const TabsRecommendation = createMaterialTopTabNavigator(
       style: {
         backgroundColor: '#FF6666',
       },
-      labelStyle: {fontSize: 11}
+      labelStyle: {fontSize: 11},
     },
   },
 );
@@ -298,7 +298,7 @@ const TabsRecommendation = createMaterialTopTabNavigator(
 const TabsCards = createMaterialTopTabNavigator(
   {
     CardsPending: {
-      screen:  CardsPending,
+      screen: CardsPending,
       path: 'cardspending',
       navigationOptions: {
         title: 'Pendentes',
@@ -327,7 +327,7 @@ const TabsCards = createMaterialTopTabNavigator(
       style: {
         backgroundColor: '#FF6666',
       },
-      labelStyle: {fontSize: 11}
+      labelStyle: {fontSize: 11},
     },
   },
 );
@@ -561,8 +561,24 @@ const MainNavigator = createStackNavigator(
     TabsExchange: {
       screen: TabsCards,
       path: 'tabscards',
-      navigationOptions: {
+      navigationOptions: ({navigation}) => ({
+        // header: ({goBack}) => ({
+        //   left: (
+        //     <MaterialCommunityIcons
+        //       name={'chevron-left'}
+        //       onPress={() => {
+        //         goBack();
+        //       }}
+        //     />
+        //   ),
+        // }),
         headerTitle: 'Trocas',
+        headerLeft: () => (
+          <Appbar.BackAction
+            color={'#fff'}
+            onPress={() => navigation.navigate('CampaignsItem')}
+          />
+        ),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -573,7 +589,7 @@ const MainNavigator = createStackNavigator(
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-      },
+      }),
     },
     Regulation: {
       screen: Regulation,
@@ -742,7 +758,6 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
-    
   },
   {
     initialRouteName: 'Main',
@@ -761,7 +776,7 @@ const MainNavigator = createStackNavigator(
         fontWeight: 'bold',
         color: '#fff',
       },
-      headerBackTitle: 'Voltar',
+      headerBackTitle: null,
       gesturesEnabled: true,
     }),
   },

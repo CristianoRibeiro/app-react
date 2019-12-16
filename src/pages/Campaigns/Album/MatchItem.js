@@ -42,7 +42,7 @@ import {
   Submit,
   Send,
   TextLight,
-} from '../Exchange/styles';
+} from './styles';
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
@@ -172,7 +172,7 @@ export default function Main(props) {
     } else {
       return (
         <Link onPress={() => setModal(true)}>
-          <View style={{alignItems: 'center'}}>
+          {/* <View style={{alignItems: 'center'}}>
             <Image
               resizeMode="cover"
               style={{
@@ -182,6 +182,42 @@ export default function Main(props) {
               }}
               source={require('~/assets/avatar/avatar.png')}
             />
+          </View> */}
+
+          <View style={{alignItems: 'flex-end'}}>
+            <CardItem
+              style={{
+                borderColor: '#ccc',
+                borderWidth: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 120,
+                height: 120,
+                flex: 1,
+              }}>
+              <Image
+                resizeMode="cover"
+                style={{
+                  width: 120,
+                  height: 120,
+                  borderRadius: 5,
+                }}
+                source={require('~/assets/avatar/avatar.png')}
+              />
+            </CardItem>
+            <View
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 25,
+                backgroundColor: '#ededed',
+                marginTop: -35,
+                marginRight: -3,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <MaterialCommunityIcons name="plus" size={45} color={'#999'} />
+            </View>
           </View>
         </Link>
       );
@@ -215,8 +251,13 @@ export default function Main(props) {
               />
 
               <TextDark
-                style={{fontWeight: '800', fontSize: 12, marginTop: 10}}>
-                {/* {user.name} */}
+                style={{
+                  fontWeight: '800',
+                  fontSize: 11,
+                  marginTop: 10,
+                  textAlign: 'center',
+                }}>
+                {user.name}
               </TextDark>
             </View>
 
@@ -234,31 +275,15 @@ export default function Main(props) {
 
             <View style={{flex: 1}}>{_renderUser()}</View>
           </View>
-
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: 15,
-            }}>
-            {selected ? (
-              <Send
-                loading={loading}
-                style={{marginBottom: 15, marginTop: 10}}
-                onPress={() => _setData()}>
-                <TextLight>OK</TextLight>
-              </Send>
-            ) : null}
-          </View>
         </Card>
 
         <Modal
           visible={modal}
-          style={{marginHorizontal: 0, marginBottom: 0}}
+          style={{margin: 0, padding: 0}}
           transparent={false}
           onRequestClose={() => setModal(false)}
           onBackdropPress={() => setModal(false)}>
-          <View style={{flex: 1, marginTop: 80, backgroundColor: '#fff'}}>
+          <View style={{flex: 1, marginTop: 30, backgroundColor: '#fff'}}>
             <FlatList
               data={users}
               keyExtractor={(item, index) => index.toString()}
@@ -282,6 +307,21 @@ export default function Main(props) {
           </View>
         </Modal>
       </ScrollView>
+      <View style={{flex: 1}}></View>
+      <View
+        style={{
+          marginTop: 15,
+          marginBottom: 10,
+        }}>
+        {selected ? (
+          <Send
+            loading={loading}
+            style={{marginBottom: 15, marginTop: 10}}
+            onPress={() => _setData()}>
+            <TextLight>OK</TextLight>
+          </Send>
+        ) : null}
+      </View>
     </Content>
   );
 }
