@@ -114,7 +114,7 @@ export default function Main(props) {
     try {
       let response = await api.post('/api/cards/cancel', {
         card_id: props.item.id,
-        user_id: props.item.from
+        user_id: props.item.user_id
       });
       //alert(JSON.stringify(response));
       if (__DEV__) {
