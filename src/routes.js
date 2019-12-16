@@ -562,16 +562,6 @@ const MainNavigator = createStackNavigator(
       screen: TabsCards,
       path: 'tabscards',
       navigationOptions: ({navigation}) => ({
-        // header: ({goBack}) => ({
-        //   left: (
-        //     <MaterialCommunityIcons
-        //       name={'chevron-left'}
-        //       onPress={() => {
-        //         goBack();
-        //       }}
-        //     />
-        //   ),
-        // }),
         headerTitle: 'Trocas',
         headerLeft: () => (
           <Appbar.BackAction

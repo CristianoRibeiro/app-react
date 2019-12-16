@@ -134,7 +134,19 @@ export default function Main(props) {
   return (
     <Content style={{flex: 1}}>
       <View style={{margimBottom: 50}}>
+        <Header>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <TextLight style={{fontSize: 15, fontWeight: '500', textAlign: 'center'}}>
+              Selecione uma figurinha que ainda não possui para trocá-la com alguém.
+            </TextLight>
+          </View>
+        </Header>
         <FlatList
+          contentContainerStyle={{paddingBottom: 75}}
           data={data.cards}
           initialNumToRender={1}
           numColumns={3}

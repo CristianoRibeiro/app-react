@@ -113,7 +113,8 @@ export default function Main(props) {
     }
     try {
       let response = await api.post('/api/cards/cancel', {
-        card_id: card.id,
+        card_id: props.item.id,
+        user_id: props.item.from
       });
       //alert(JSON.stringify(response));
       if (__DEV__) {
@@ -213,29 +214,49 @@ export default function Main(props) {
           }}>
           <View
             style={{
-              flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Image
-              resizeMode="cover"
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 5,
-                margin: 2,
-              }}
-              defaultSource={require('~/assets/avatar/avatar.png')}
-              source={{
-                uri: props.item.card_image ? props.item.card_image.image : null,
-              }}
-            />
+            <View style={{alignItems: 'flex-end'}}>
+              <Image
+                resizeMode="cover"
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 5,
+                  margin: 2,
+                }}
+                defaultSource={require('~/assets/avatar/avatar.png')}
+                source={{
+                  uri: props.item.card_image
+                    ? props.item.card_image.image
+                    : null,
+                }}
+              />
+              <Image
+                resizeMode="cover"
+                style={{
+                  marginTop: -20,
+                  marginRight: -20,
+                  marginBottom: -5,
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  margin: 2,
+                }}
+                source={{
+                  uri: props.item.user ? props.item.user.append_avatar : null,
+                }}
+                defaultSource={require('~/assets/avatar/avatar.png')}
+              />
+            </View>
+
             <TextDark style={{fontSize: 12, textAlign: 'center'}}>
               A enviar
             </TextDark>
           </View>
 
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{alignItems: 'center', justifyContent: 'center',flex:1}}>
             <Image
               source={require('~/assets/icons/ico_trocas.png')}
               style={{
@@ -258,17 +279,37 @@ export default function Main(props) {
                     flex: 1,
                   }}>
                   <View>
-                    <Image
-                      resizeMode="cover"
-                      style={{
-                        width: 100,
-                        height: 100,
-                        borderRadius: 5,
-                        margin: 2,
-                      }}
-                      defaultSource={require('~/assets/avatar/avatar.png')}
-                      source={{uri: card.image}}
-                    />
+                    <View style={{alignItems: 'flex-end'}}>
+                      <Image
+                        resizeMode="cover"
+                        style={{
+                          width: 90,
+                          height: 90,
+                          borderRadius: 5,
+                          margin: 2,
+                        }}
+                        defaultSource={require('~/assets/avatar/avatar.png')}
+                        source={{uri: card.image}}
+                      />
+                      <Image
+                        resizeMode="cover"
+                        style={{
+                          marginTop: -20,
+                          marginRight: -20,
+                          marginBottom: -5,
+                          width: 40,
+                          height: 40,
+                          borderRadius: 20,
+                          margin: 2,
+                        }}
+                        source={{
+                          uri: props.item.from_user
+                            ? props.item.from_user.append_avatar
+                            : null,
+                        }}
+                        defaultSource={require('~/assets/avatar/avatar.png')}
+                      />
+                    </View>
                     <TextDark style={{fontSize: 12, textAlign: 'center'}}>
                       A receber
                     </TextDark>
@@ -276,22 +317,42 @@ export default function Main(props) {
                 </View>
               ) : (
                 <View style={{alignItems: 'center'}}>
-                  <CardItem
-                    style={{
-                      borderColor: '#ccc',
-                      borderWidth: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 100,
-                      height: 100,
-                      flex: 1,
-                    }}>
-                    <MaterialCommunityIcons
-                      name="plus"
-                      size={45}
-                      color={'#999'}
+                  <View style={{alignItems: 'flex-end'}}>
+                    <CardItem
+                      style={{
+                        borderColor: '#ccc',
+                        borderWidth: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 90,
+                        maxHeight: 90,
+                        flex: 1,
+                      }}>
+                      <MaterialCommunityIcons
+                        name="plus"
+                        size={45}
+                        color={'#999'}
+                      />
+                    </CardItem>
+                    <Image
+                      resizeMode="cover"
+                      style={{
+                        marginTop: -20,
+                        marginRight: -20,
+                        marginBottom: -5,
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                        margin: 2,
+                      }}
+                      source={{
+                        uri: props.item.from_user
+                          ? props.item.from_user.append_avatar
+                          : null,
+                      }}
+                      defaultSource={require('~/assets/avatar/avatar.png')}
                     />
-                  </CardItem>
+                  </View>
                   <TextDark style={{fontSize: 12, textAlign: 'center'}}>
                     A receber
                   </TextDark>
@@ -301,24 +362,35 @@ export default function Main(props) {
           </View>
 
           <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Confirm
+            style={{justifyContent: 'center', alignItems: 'center',marginLeft: 20}}>
+            <Submit
               style={{
-                height: 70,
-                width: 70,
-                borderRadius: 35,
+                height: 50,
+                width: 50,
+                borderRadius: 25,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: 25
+                marginBottom: 5,
+                backgroundColor: '#4caf50',
               }}
               disabled={card ? false : true}
               onPress={() => _confirm()}>
-              <AntDesign name={'like2'} color="#fff" size={24} />
-            </Confirm>
+              <AntDesign name={'like2'} color="#fff" size={20} />
+            </Submit>
 
-            {/* <Cancel onPress={() => _cancel()}>
-              <TextLight style={{fontSize: 11}}>RECUSAR</TextLight>
-            </Cancel> */}
+            <Submit
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 25,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 10,
+                backgroundColor: '#d32f2f',
+              }}
+              onPress={() => _cancel()}>
+              <AntDesign name={'dislike2'} color="#fff" size={20} />
+            </Submit>
           </View>
         </View>
       </CardItem>

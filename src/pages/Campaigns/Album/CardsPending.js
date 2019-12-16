@@ -98,6 +98,7 @@ export default function Main(props) {
     try {
       let response = await api.post('/api/cards/cancel', {
         card_id: item.id,
+        user_id: item.from,
       });
       //alert(JSON.stringify(response));
       if (__DEV__) {
@@ -190,28 +191,47 @@ export default function Main(props) {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      flex: 1,
                       justifyContent: 'center',
                     }}>
                     <View>
-                      <Image
-                        resizeMode="cover"
-                        style={{
-                          width: 100,
-                          height: 100,
-                          borderRadius: 5,
-                          margin: 2,
-                        }}
-                        defaultSource={require('~/assets/avatar/avatar.png')}
-                        source={{uri: item.card_image.gray}}
-                      />
+                      <View style={{alignItems: 'flex-end'}}>
+                        <Image
+                          resizeMode="cover"
+                          style={{
+                            width: 100,
+                            height: 100,
+                            borderRadius: 5,
+                            margin: 2,
+                          }}
+                          defaultSource={require('~/assets/avatar/avatar.png')}
+                          source={{uri: item.card_image.gray}}
+                        />
+                        <Image
+                          resizeMode="cover"
+                          style={{
+                            marginTop: -20,
+                            marginRight: -20,
+                            marginBottom: -5,
+                            width: 40,
+                            height: 40,
+                            borderRadius: 20,
+                            margin: 2,
+                          }}
+                          source={{
+                            uri: item.from_user
+                              ? item.from_user.append_avatar
+                              : null,
+                          }}
+                          defaultSource={require('~/assets/avatar/avatar.png')}
+                        />
+                      </View>
                       <TextDark style={{fontSize: 12, textAlign: 'center'}}>
                         A receber
                       </TextDark>
                     </View>
 
                     <View
-                      style={{alignItems: 'center', justifyContent: 'center'}}>
+                      style={{alignItems: 'center', justifyContent: 'center', flex:1}}>
                       <Image
                         source={require('~/assets/icons/ico_trocas.png')}
                         style={{
@@ -230,15 +250,34 @@ export default function Main(props) {
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Image
-                        resizeMode="cover"
-                        style={{
-                          width: 100,
-                          height: 100,
-                        }}
-                        defaultSource={require('~/assets/avatar/avatar.png')}
-                        source={require('~/assets/icons/picture.png')}
-                      />
+                      <View style={{alignItems: 'flex-end'}}>
+                        <Image
+                          resizeMode="cover"
+                          style={{
+                            width: 100,
+                            height: 100,
+                          }}
+                          defaultSource={require('~/assets/avatar/avatar.png')}
+                          source={require('~/assets/icons/picture.png')}
+                        />
+
+                        <Image
+                          resizeMode="cover"
+                          style={{
+                            marginTop: -20,
+                            marginRight: -20,
+                            marginBottom: -5,
+                            width: 40,
+                            height: 40,
+                            borderRadius: 20,
+                            margin: 2,
+                          }}
+                          source={{
+                            uri: item.user ? item.user.append_avatar : null,
+                          }}
+                          defaultSource={require('~/assets/avatar/avatar.png')}
+                        />
+                      </View>
                       <TextDark
                         style={{
                           fontSize: 12,
@@ -251,22 +290,23 @@ export default function Main(props) {
 
                     <View
                       style={{
-                        flex: 1,
                         justifyContent: 'center',
                         alignItems: 'center',
+                        marginLeft: 20
                       }}>
-                      <Cancel
-                        onPress={() => _cancel(item)}
+                      <Submit
                         style={{
-                          height: 70,
-                          width: 70,
-                          borderRadius: 35,
+                          height: 50,
+                          width: 50,
+                          borderRadius: 25,
                           justifyContent: 'center',
                           alignItems: 'center',
-                          marginBottom: 25,
-                        }}>
-                        <AntDesign name={'dislike2'} color="#fff" size={24} />
-                      </Cancel>
+                          marginBottom: 20,
+                          backgroundColor: '#d32f2f',
+                        }}
+                        onPress={() => _cancel(item)}>
+                        <AntDesign name={'dislike2'} color="#fff" size={20} />
+                      </Submit>
                     </View>
                   </View>
                 </CardItem>

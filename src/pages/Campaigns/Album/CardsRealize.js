@@ -80,7 +80,7 @@ export default function Main(props) {
   function _renderUserSource(item) {
     if (item) {
       if (item.user_source) {
-        if (item.user_source.avatar) {
+        if (item.user_source.append_avatar) {
           return (
             <Image
               resizeMode="cover"
@@ -93,7 +93,8 @@ export default function Main(props) {
                 borderRadius: 20,
                 margin: 2,
               }}
-              source={{uri: item.user_target.avatar}}
+              source={{uri: item.user_source.append_avatar}}
+              defaultSource={require('~/assets/avatar/avatar.png')}
             />
           );
         }
@@ -131,7 +132,7 @@ export default function Main(props) {
   function _renderUserTarget(item) {
     if (item) {
       if (item.user_target) {
-        if (item.user_target.avatar) {
+        if (item.user_target.append_avatar) {
           return (
             <Image
               resizeMode="cover"
@@ -144,7 +145,8 @@ export default function Main(props) {
                 borderRadius: 20,
                 margin: 2,
               }}
-              source={{uri: item.user_target.avatar}}
+              source={{uri: item.user_target.append_avatar}}
+              defaultSource={require('~/assets/avatar/avatar.png')}
             />
           );
         }
@@ -170,7 +172,7 @@ export default function Main(props) {
                   source={{uri: item.card_target.card_image.image}}
                 />
 
-                {/* {_renderUserTarget(item)} */}
+                {_renderUserTarget(item)}
               </View>
             );
           }
@@ -208,9 +210,21 @@ export default function Main(props) {
                 }}>
                 <View>
                   {_renderImageSource(item)}
-                  <TextDark style={{fontSize: 12, textAlign: 'center'}}>
-                  Recebida
-                  </TextDark>
+
+                  {item.target_user_id === user.id ? (
+                    <TextDark style={{fontSize: 12, textAlign: 'center'}}>
+                      Enviada
+                    </TextDark>
+                  ) : (
+                    <TextDark
+                      style={{
+                        fontSize: 12,
+                        textAlign: 'center',
+                        marginTop: 12,
+                      }}>
+                      Recebida
+                    </TextDark>
+                  )}
                 </View>
               </View>
 
@@ -233,10 +247,21 @@ export default function Main(props) {
                   justifyContent: 'center',
                 }}>
                 {_renderImageTarget(item)}
-                <TextDark
-                  style={{fontSize: 12, textAlign: 'center', marginTop: 12}}>
-                  Enviada
-                </TextDark>
+
+                {item.target_user_id === user.id ? (
+                  <TextDark style={{fontSize: 12, textAlign: 'center'}}>
+                    Recebida
+                  </TextDark>
+                ) : (
+                  <TextDark
+                    style={{
+                      fontSize: 12,
+                      textAlign: 'center',
+                      marginTop: 12,
+                    }}>
+                    Enviada
+                  </TextDark>
+                )}
               </View>
             </View>
           </CardItem>
