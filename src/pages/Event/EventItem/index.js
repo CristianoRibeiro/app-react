@@ -281,13 +281,6 @@ export default function Main(props) {
           });
         }
 
-        if (props.navigation.state.params.item.flights) {
-          await dispatch({
-            type: 'FLIGHTS',
-            payload: props.navigation.state.params.item.flights,
-          });
-        }
-
         if (props.navigation.state.params.item.transfers) {
           await dispatch({
             type: 'TRANSFER',

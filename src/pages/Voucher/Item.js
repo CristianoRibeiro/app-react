@@ -121,7 +121,7 @@ export default function Profile(props) {
                 fgColor="white"
               />
             </View>
-            <TextDark style={{color: '#666'}}>{data.code}</TextDark>
+            <TextDark style={{color: '#666', fontWeight: '700'}}>{data.code}</TextDark>
           </Card>
           <Card>
             <ListItem
