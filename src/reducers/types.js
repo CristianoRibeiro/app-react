@@ -25,3 +25,4 @@ export const NEWS = 'NEWS';
 export const MATCHS = 'MATCHS';
 export const MATCHITEM = 'MATCHITEM';
 export const GAMES = 'GAMES';
+export const UNITS = 'UNITS';

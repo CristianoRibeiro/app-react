@@ -46,12 +46,7 @@ export default function Main(props) {
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
-  const [units, setUnits] = useState([
-    {code: 'R434DF3', name: 'Unidade 1', number: '346346346', score: 0.6},
-    {code: 'EDS2WD5', name: 'Unidade 2', number: '937355895', score: 0.2},
-    {code: 'TGF3S5Y', name: 'Unidade 3', number: '436488582', score: 1},
-    {code: 'BYR35CD', name: 'Unidade 4', number: '224653773', score: 0.8},
-  ]);
+  const [units, setUnits] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -63,13 +58,14 @@ export default function Main(props) {
     try {
       let response = null;
       if (name) {
-        response = await api.get('/api/user/unassociated/' + name);
+        response = await api.get('/api/unit/report/' + name);
         setUnits(response.data);
+
+        if (__DEV__) {
+          console.tron.log(response.data);
+        }
       }
 
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -81,10 +77,10 @@ export default function Main(props) {
   function _renderScore(item) {
     if (item.score === 1) {
       return (
-        <View>
-          <Title>Número da sorte</Title>
-          <SubTitle style={{fontWeight: '700'}}>{item.number}</SubTitle>
-        </View>
+        <>
+          <SubTitle>Número da sorte</SubTitle>
+          <Title style={{fontWeight: '700'}}>{item.number}</Title>
+        </>
       );
     }
     return null;
@@ -101,13 +97,13 @@ export default function Main(props) {
             alignItems: 'center',
           }}>
           <View style={{flex: 1}}>
-            <Title>Código</Title>
-            <SubTitle style={{fontWeight: '700'}}>{item.code}</SubTitle>
+            <SubTitle>Código</SubTitle>
+            <Title style={{fontWeight: '700'}}>{item.id}</Title>
           </View>
 
           <View style={{flex: 1}}>
-            <Title>Nome</Title>
-            <SubTitle style={{fontWeight: '700'}}>{item.name}</SubTitle>
+            <SubTitle>Nome</SubTitle>
+            <Title style={{fontWeight: '700'}}>{item.name}</Title>
           </View>
           <View style={{flex: 1}}>{_renderScore(item)}</View>
         </View>
@@ -125,7 +121,10 @@ export default function Main(props) {
 
   return (
     <Content>
-      <ScrollView>
+      <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+      }>
         <Header style={{alignItems: 'center'}}>
           <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 5}}>
             <Input
@@ -147,9 +146,7 @@ export default function Main(props) {
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={<EmptyList text="Pesquise a unidade desejada" />}
           renderItem={({item}) => _renderItem(item)}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-          }
+          
         />
       </ScrollView>
     </Content>

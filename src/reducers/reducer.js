@@ -25,7 +25,8 @@ import {
   BANNERCAMPAIGNS,
   MATCHS,
   MATCHITEM,
-  GAMES
+  GAMES,
+  UNITS
 } from '~/reducers/types';
 
 const INITIAL_STATE = {
@@ -56,6 +57,7 @@ const INITIAL_STATE = {
   matchs: [],
   matchitem: [],
   games: [],
+  units: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -114,6 +116,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, matchitem: action.payload};
     case GAMES:
       return {...state, games: action.payload};
+    case UNITS:
+      return {...state, units: action.payload};
     default:
       return state;
   }
