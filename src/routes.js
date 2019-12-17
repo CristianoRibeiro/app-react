@@ -61,6 +61,8 @@ import Quiz from '~/pages/Campaigns/Quiz';
 import Album from '~/pages/Campaigns/Album';
 import CampaignPrize from '~/pages/Campaigns/Prize';
 import Cupons from '~/pages/Campaigns/Cupons';
+import Units from '~/pages/Campaigns/Units';
+
 //import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
 import CardsPending from '~/pages/Campaigns/Album/CardsPending';
 import CardsRealize from '~/pages/Campaigns/Album/CardsRealize';
@@ -743,6 +745,16 @@ const MainNavigator = createStackNavigator(
       path: 'didatico/event',
       navigationOptions: {
         headerTitle: 'Material Didático',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Units: {
+      screen: Units,
+      path: 'units',
+      navigationOptions: {
+        headerTitle: 'Unidades',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

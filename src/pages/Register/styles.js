@@ -16,7 +16,7 @@ export const Header = styled(LinearGradient).attrs({
 
 export const Select = styled(RNPickerSelect).attrs({
   color: '#444',
-  placeholderTextColor: '#777'
+  placeholderTextColor: '#777',
 })`
   font-size: 16px;
   color: #222;
@@ -55,6 +55,7 @@ export const Form = styled.View`
 `;
 
 export const Card = styled.View`
+  flex: 1;
   margin: 10px;
   border-radius: 5px;
   padding: 5px 10px;

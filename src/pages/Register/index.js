@@ -195,13 +195,13 @@ export default function Main(props) {
         errors.password = 'A senha deve conter pelo menos 4 caracteres';
       }
 
-      if (!email_personal.trim()) {
-        errors.email_personal = 'E-mail pessoal obrigatório!';
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal.trim())
-      ) {
-        errors.email_personal = 'Digite um e-mail pessoal válido!';
-      }
+      // if (!email_personal.trim()) {
+      //   errors.email_personal = 'E-mail pessoal obrigatório!';
+      // } else if (
+      //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal.trim())
+      // ) {
+      //   errors.email_personal = 'Digite um e-mail pessoal válido!';
+      // }
 
       if (!phone.trim()) {
         errors.phone = 'Telefone obrigatório!';
@@ -225,9 +225,9 @@ export default function Main(props) {
         errors.doc = 'Digite um CPF válido!';
       }
 
-      if (!birthdate) {
-        errors.birthdate = message;
-      }
+      // if (!birthdate) {
+      //   errors.birthdate = message;
+      // }
 
       if (!address_state) {
         errors.address_state = message;
@@ -299,7 +299,7 @@ export default function Main(props) {
 
               <Input
                 value={email_personal}
-                error={!email_personal}
+                //error={!email_personal}
                 maxLength={14}
                 onChangeText={setEmailPersonal}
                 textContentType="emailAddress"
@@ -491,7 +491,7 @@ export default function Main(props) {
                 value={MaskService.toMask('datetime', birthdate, {
                   format: 'DD/MM/YYYY',
                 })}
-                error={!birthdate}
+                //error={!birthdate}
                 maxLength={11}
                 keyboardType={'number-pad'}
                 onChangeText={setBirthdate}

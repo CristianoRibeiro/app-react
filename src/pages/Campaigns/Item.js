@@ -241,7 +241,7 @@ export default function Main(props) {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Link onPress={() => Alert.alert(null, 'Não disponível')}>
+            <Link onPress={() => props.navigation.navigate('Units')}>
               <Card>
                 <Image
                   source={require('~/assets/icons/top-three.png')}
