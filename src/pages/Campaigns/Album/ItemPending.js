@@ -108,13 +108,10 @@ export default function Main(props) {
   }
 
   async function _cancel(item) {
-    if (__DEV__) {
-      console.tron.log(props.item);
-    }
     try {
       let response = await api.post('/api/cards/cancel', {
         card_id: props.item.id,
-        user_id: props.item.user_id
+        user_id: props.item.from,
       });
       //alert(JSON.stringify(response));
       if (__DEV__) {
@@ -256,7 +253,8 @@ export default function Main(props) {
             </TextDark>
           </View>
 
-          <View style={{alignItems: 'center', justifyContent: 'center',flex:1}}>
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
             <Image
               source={require('~/assets/icons/ico_trocas.png')}
               style={{
@@ -362,7 +360,11 @@ export default function Main(props) {
           </View>
 
           <View
-            style={{justifyContent: 'center', alignItems: 'center',marginLeft: 20}}>
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginLeft: 20,
+            }}>
             <Submit
               style={{
                 height: 50,
