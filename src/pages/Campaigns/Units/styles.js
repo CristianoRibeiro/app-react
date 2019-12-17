@@ -5,13 +5,13 @@ import {Button} from 'react-native-paper';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Title = styled.Text`
-  font-size: 18px;
+  font-size: 15px;
   color: #222;
   font-weight: 700;
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 14;
+  font-size: 12;
   color: #666;
   font-weight: 300;
 `;
@@ -32,7 +32,7 @@ export const TextDark = styled.Text`
 export const Card = styled.View`
   margin: 2px;
   border-radius: 5px;
-  padding: 10px;
+  padding: 8px;
   background-color: #fff;
 `;
 

@@ -50,7 +50,7 @@ export default function Main(props) {
     {code: 'R434DF3', name: 'Unidade 1', number: '346346346', score: 0.6},
     {code: 'EDS2WD5', name: 'Unidade 2', number: '937355895', score: 0.2},
     {code: 'TGF3S5Y', name: 'Unidade 3', number: '436488582', score: 1},
-    {code: 'BYR35CD', name: 'Unidade 4', number: '224653773', score: 0.9},
+    {code: 'BYR35CD', name: 'Unidade 4', number: '224653773', score: 0.8},
   ]);
   const [error, setError] = useState(false);
 
@@ -81,7 +81,7 @@ export default function Main(props) {
   function _renderScore(item) {
     if (item.score === 1) {
       return (
-        <View style={{flex: 1, alignItems: 'center', marginTop: 15}}>
+        <View>
           <Title>Número da sorte</Title>
           <SubTitle style={{fontWeight: '700'}}>{item.number}</SubTitle>
         </View>
@@ -105,10 +105,11 @@ export default function Main(props) {
             <SubTitle style={{fontWeight: '700'}}>{item.code}</SubTitle>
           </View>
 
-          <View style={{flex: 3}}>
+          <View style={{flex: 1}}>
             <Title>Nome</Title>
             <SubTitle style={{fontWeight: '700'}}>{item.name}</SubTitle>
           </View>
+          <View style={{flex: 1}}>{_renderScore(item)}</View>
         </View>
         <View style={{flex: 1, marginTop: 10}}>
           <Progress.Bar
@@ -118,7 +119,6 @@ export default function Main(props) {
             width={null}
           />
         </View>
-        {_renderScore(item)}
       </Card>
     );
   }
