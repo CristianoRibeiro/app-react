@@ -65,7 +65,7 @@ export default function Main(props) {
       <Card>
         <CardImage>
           <Image
-            source={{uri: item.append_avatar}}
+            source={{uri: item.image ? item.image.append_avatar : null}}
             style={{
               height: 60,
               width: 60,

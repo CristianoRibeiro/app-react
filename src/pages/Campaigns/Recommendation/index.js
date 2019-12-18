@@ -80,6 +80,9 @@ export default function Main(props) {
       }
       Alert.alert(null, response.data.message);
       _getData();
+      let indicate = await api.get('/api/indicate');
+      
+      await dispatch({type: 'INDICATED', payload: indicate.data});
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
