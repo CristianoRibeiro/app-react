@@ -77,10 +77,10 @@ export default function Main(props) {
   function _renderScore(item) {
     if (item.score === 1) {
       return (
-        <>
+        <View style={{flex:4, marginHorizontal:2}}>
           <SubTitle>Número da sorte</SubTitle>
           <Title style={{fontWeight: '700'}}>{item.number}</Title>
-        </>
+        </View>
       );
     }
     return null;
@@ -94,18 +94,17 @@ export default function Main(props) {
             flex: 1,
             justifyContent: 'space-between',
             flexDirection: 'row',
-            alignItems: 'center',
           }}>
-          <View style={{flex: 1}}>
+          <View style={{flex: 3, marginHorizontal:2}}>
             <SubTitle>Código</SubTitle>
             <Title style={{fontWeight: '700'}}>{item.id}</Title>
           </View>
 
-          <View style={{flex: 1}}>
+          <View style={{flex: 8, marginHorizontal:2}}>
             <SubTitle>Nome</SubTitle>
             <Title style={{fontWeight: '700'}}>{item.name}</Title>
           </View>
-          <View style={{flex: 1}}>{_renderScore(item)}</View>
+          {_renderScore(item)}
         </View>
         <View style={{flex: 1, marginTop: 10}}>
           <Progress.Bar
@@ -146,7 +145,7 @@ export default function Main(props) {
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={<EmptyList text="Pesquise a unidade desejada" />}
           renderItem={({item}) => _renderItem(item)}
-          
+
         />
       </ScrollView>
     </Content>

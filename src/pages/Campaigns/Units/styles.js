@@ -5,7 +5,7 @@ import {Button} from 'react-native-paper';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Title = styled.Text`
-  font-size: 15px;
+  font-size: 12px;
   color: #222;
   font-weight: 700;
 `;

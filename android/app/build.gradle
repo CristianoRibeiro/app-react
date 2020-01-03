@@ -141,13 +141,13 @@ android {
         applicationId "br.com.vivafenae"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "1.1.4"
+        versionCode 18
+        versionName "1.1.6"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }
-    
+
     signingConfigs {
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
