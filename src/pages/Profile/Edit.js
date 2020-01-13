@@ -18,12 +18,12 @@ import {
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
+import {Avatar, FAB} from 'react-native-paper';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import {ActivityIndicator, Colors} from 'react-native-paper';
 import {MaskService} from 'react-native-masked-text';
 import ImagePicker from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Avatar from '~/pages/Profile/Avatar';
 
 import api from '~/services/api';
 
@@ -32,11 +32,10 @@ import {
   Form,
   Input,
   Submit,
-  List,
+  Link,
   TextLight,
   Card,
   TextDark,
-  Link,
   Send,
   SubTitle,
   TextError,
@@ -52,6 +51,9 @@ export default function Main(props) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
+  const [image, setImage] = useState(user.append_avatar);
+
+  const [photo, setPhoto] = useState(user ? user.append_avatar : '');
   const [name, setName] = useState(user ? user.name : '');
   const [email, setEmail] = useState(user ? user.email : '');
   const [email_personal, setEmailPersonal] = useState(
@@ -65,10 +67,36 @@ export default function Main(props) {
   const [birthdate, setBirthdate] = useState(
     user.birthdate ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '',
   );
+  const [shirt, setShirt] = useState(user ? user.shirt : '');
+  const [frase, setFrase] = useState(user ? user.phrase : '');
+  const [whatsapp, setWhatsapp] = useState(user.whatsapp ? user.whatsapp.trim() : '');
+  const [facebook, setFacebook] = useState(user ? user.facebook : '');
+  const [instagram, setInstagram] = useState(user ? user.instagram : '');
+
   const [modal, setModal] = useState(false);
+  const [editable, setEditable] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+
+    if(props.navigation.state.params){
+      if (props.navigation.state.params.edit){
+        setEditable(true);
+      }
+
+    }
+    // else{
+    //   setEditable(false);
+    // }
+
+    try {
+      if (__DEV__) {
+        console.tron.log(props.navigation.state.params.edit);
+      }
+    } catch (e) {
+
+    }
+  }, []);
 
   function formataStringData(data) {
     var dia = data.split('/')[0];
@@ -79,11 +107,25 @@ export default function Main(props) {
     // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
   }
 
-  async function _login() {
+  async function _send() {
     let p = await MaskService.toMask('only-numbers', phone);
 
     try {
       setModal(true);
+
+      const data = new FormData();
+
+      data.append('image', image);
+      try {
+        let response = await api.post('/api/avatar', data);
+
+        //alert(JSON.stringify(response));
+        if (__DEV__) {
+          console.tron.log(response.data);
+        }
+      } catch (error) {
+        //Alert.alert(null, 'Erro ao enviar foto de perfil!');
+      }
 
       const send = {
         phone: p.trim(),
@@ -93,7 +135,12 @@ export default function Main(props) {
         apcef,
         sex,
         birthdate: formataStringData(birthdate),
-        address_state
+        address_state,
+        shirt: shirt,
+        phrase: frase,
+        whatsapp,
+        facebook,
+        instagram
       };
 
       if (__DEV__) {
@@ -106,7 +153,7 @@ export default function Main(props) {
         await dispatch({type: 'USER', payload: response.data.user});
       }
 
-      props.navigation.navigate('Home');
+      props.navigation.navigate('Profile');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -134,25 +181,22 @@ export default function Main(props) {
       // if (!name) err.name = message;
       // if (!email) err.email = message;
 
-      if (!name) {
-        errors.name = 'Nome obrigatório!';
+      if (image.length < 68) {
+        errors.photo = 'Foto obrigatória!';
       }
-
-      if (!email.trim()) {
+      else if (!name) {
+        errors.name = 'Nome obrigatório!';
+      } else if (!email.trim()) {
         errors.email = 'E-mail obrigatório!';
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.trim())) {
         errors.email = 'Digite um e-mail válido!';
-      }
-
-      if (!email_personal.trim()) {
+      } else if (!email_personal.trim()) {
         errors.email_personal = 'E-mail pessoal obrigatório!';
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal.trim())
       ) {
         errors.email_personal = 'Digite um e-mail pessoal válido!';
-      }
-
-      if (!phone.trim()) {
+      } else if (!phone.trim()) {
         errors.phone = 'Telefone obrigatório!';
       } else if (
         MaskService.toMask('cel-phone', phone.trim(), {
@@ -162,105 +206,180 @@ export default function Main(props) {
         }).length < 14
       ) {
         errors.phone = 'Digite um Telefone válido!';
-      }
-
-      if (sex === null) {
+      } else if (sex === null) {
         errors.sex = message;
-      }
-
-      if (!birthdate) {
+      } else if (!birthdate) {
         errors.birthdate = message;
-      }
-
-      if (!address_state) {
+      } else if (!address_state) {
         errors.address_state = message;
+      } else if (!shirt) {
+        errors.shirt = message;
       }
+      // else if (user.registered_inspira) {
+      //   if (!frase) {
+      //     errors.frase = message;
+      //   }
+      // }
+
+      // else if (!whatsapp) {
+      //   errors.whatsapp = message;
+      // } else if (!facebook) {
+      //   errors.facebook = message;
+      // } else if (!instagram) {
+      //   errors.instagram = message;
+      // }
 
       return errors;
     },
     onSubmit: (values, bag) => {
-      _login();
+      _send();
     },
   });
 
-  // const [name, metadataName] = getFieldProps("name", "text");
-  // const [email, metadataEmail] = getFieldProps("contact.email", "text");
+  async function _uploadPhoto() {
+    const options = {
+      title: 'Selecione de onde quer importar o arquivo',
+      cancelButtonTitle: 'Cancelar',
+      takePhotoButtonTitle: 'Usar Camera',
+      chooseFromLibraryButtonTitle: 'Carregar da galeria',
+      cropping: true,
+    };
+
+    await ImagePicker.openPicker(options).then(async image => {
+      //alert(JSON.stringify(image));
+      let img = {
+        uri: image.path,
+        width: image.width,
+        height: image.height,
+        mime: image.mime,
+        type: 'image/jpeg',
+        name: image.path.substring(image.path.lastIndexOf('/') + 1),
+      };
+
+      setImage(img);
+    });
+  }
 
   return (
     <KeyboardAvoidingView
       style={{flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : null}
       enabled>
-    <Content style={{flex:1}}>
-      <SafeAreaView style={{flex:1}}>
-      <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-        <Header>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="account-circle"
-              size={20}
-              color={'#fff'}
-            />
+      <Content style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}}>
+          <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
+            <Header>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <MaterialCommunityIcons
+                  name="account-circle"
+                  size={20}
+                  color={'#fff'}
+                />
 
-            <TextLight>Mantenha seus dados atualizados</TextLight>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}></View>
-        </Header>
+                <TextLight>Mantenha seus dados atualizados</TextLight>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}></View>
+            </Header>
 
-        <Avatar />
-
-          <Card>
-            <Form>
-              <Input
-                value={name}
-                error={!name}
-                maxLength={14}
-                onChangeText={setName}
-                textContentType="name"
-                autoCorrect={false}
-                label="Nome"
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1,
+                padding: 15,
+              }}>
+              <Image
+                resizeMode="cover"
+                style={{
+                  width: 180,
+                  height: 180,
+                  borderRadius: 90,
+                  marginBottom: 15,
+                }}
+                defaultSource={require('~/assets/avatar/avatar.png')}
+                source={{uri: image}}
               />
-            </Form>
-            <TextError>{errors.name}</TextError>
 
-            <Form>
-              <Input
-                value={email}
-                error={!email}
-                maxLength={14}
-                onChangeText={setEmail}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                label="E-mail"
-              />
-            </Form>
-            <TextError>{errors.email}</TextError>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flex: 1,
+                  backgroundColor: 'rgba(000,000,000, 0.1)',
+                  paddingLeft: 10,
+                  borderRadius: 40,
+                  padding: 0
+                }}>
+                <TextDark>Editar Foto</TextDark>
 
-            <Form>
-              <Input
-                value={email_personal}
-                error={!email_personal}
-                maxLength={14}
-                onChangeText={setEmailPersonal}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                label="E-mail pessoal"
-              />
-            </Form>
-            <TextError>{errors.email_personal}</TextError>
+                <Link
+                  rippleColor="rgba(0, 0, 0, .32)"
+                  style={{marginVertical: 0}}
+                  onPress={() => _uploadPhoto()}>
+                  <Avatar.Icon size={42} icon="folder" />
+                </Link>
+              </View>
+            </View>
 
-            {/* <Form>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <TextError>{errors.photo}</TextError>
+            </View>
+
+            <Card>
+              <Form>
+                <Input
+                  disabled={editable}
+                  value={name}
+                  error={errors.name}
+                  maxLength={255}
+                  onChangeText={setName}
+                  textContentType="name"
+                  autoCorrect={false}
+                  label="Nome"
+                />
+              </Form>
+              <TextError>{errors.name}</TextError>
+
+              <Form>
+                <Input
+                  disabled={editable}
+                  value={email}
+                  error={errors.email}
+                  maxLength={14}
+                  onChangeText={setEmail}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  label="E-mail"
+                />
+              </Form>
+              <TextError>{errors.email}</TextError>
+
+              <Form>
+                <Input
+                  value={email_personal}
+                  error={errors.email_personal}
+                  maxLength={14}
+                  onChangeText={setEmailPersonal}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  label="E-mail pessoal"
+                />
+              </Form>
+              <TextError>{errors.email_personal}</TextError>
+
+              {/* <Form>
               <Input
                 value={matricula}
                 error={!matricula}
@@ -274,7 +393,7 @@ export default function Main(props) {
             </Form>
             <TextError>{errors.matricula}</TextError> */}
 
-            {/* <Form>
+              {/* <Form>
               <Input
                 value={apcef}
                 error={!apcef}
@@ -287,168 +406,263 @@ export default function Main(props) {
             </Form>
             <TextError>{errors.apcef}</TextError> */}
 
-            <View
-              style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4, marginTop: 10}}>
-              <Select
-                placeholder={{
-                  label: 'APCEF',
-                  value: null,
-                  color: '#9EA0A4',
-                }}
-                value={apcef}
-                onValueChange={value => setApcef(value)}
-                items={[
-                  {value: 'APCEF/AC', label: 'APCEF/AC'},
-                  {value: 'APCEF/AL', label: 'APCEF/AL'},
-                  {value: 'APCEF/AP', label: 'APCEF/AP'},
-                  {value: 'APCEF/AM', label: 'APCEF/AM'},
-                  {value: 'APCEF/BA', label: 'APCEF/BA'},
-                  {value: 'APCEF/CE', label: 'APCEF/CE'},
-                  {value: 'APCEF/DF', label: 'APCEF/DF'},
-                  {value: 'APCEF/ES', label: 'APCEF/ES'},
-                  {value: 'APCEF/GO', label: 'APCEF/GO'},
-                  {value: 'APCEF/MA', label: 'APCEF/MA'},
-                  {value: 'APCEF/MT', label: 'APCEF/MT'},
-                  {value: 'APCEF/MS', label: 'APCEF/MS'},
-                  {value: 'APCEF/MG', label: 'APCEF/MG'},
-                  {value: 'APCEF/PA', label: 'APCEF/PA'},
-                  {value: 'APCEF/PB', label: 'APCEF/PB'},
-                  {value: 'APCEF/PR', label: 'APCEF/PR'},
-                  {value: 'APCEF/PE', label: 'APCEF/PE'},
-                  {value: 'APCEF/PI', label: 'APCEF/PI'},
-                  {value: 'APCEF/RJ', label: 'APCEF/RJ'},
-                  {value: 'APCEF/RN', label: 'APCEF/RN'},
-                  {value: 'APCEF/RS', label: 'APCEF/RS'},
-                  {value: 'APCEF/RO', label: 'APCEF/RO'},
-                  {value: 'APCEF/RR', label: 'APCEF/RR'},
-                  {value: 'APCEF/SC', label: 'APCEF/SC'},
-                  {value: 'APCEF/SP', label: 'APCEF/SP'},
-                  {value: 'APCEF/SE', label: 'APCEF/SE'},
-                  {value: 'APCEF/TO', label: 'APCEF/TO'},
-                  {value: 'APCEF/EX', label: 'APCEF/EX'},
-                ]}
-              />
+              <View
+                style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4, marginTop: 10}}>
+                <Select
+                  disabled={editable}
+                  placeholder={{
+                    label: 'APCEF',
+                    value: null,
+                    color: '#9EA0A4',
+                  }}
+                  value={apcef}
+                  onValueChange={value => setApcef(value)}
+                  items={[
+                    {value: 'APCEF/AC', label: 'APCEF/AC'},
+                    {value: 'APCEF/AL', label: 'APCEF/AL'},
+                    {value: 'APCEF/AP', label: 'APCEF/AP'},
+                    {value: 'APCEF/AM', label: 'APCEF/AM'},
+                    {value: 'APCEF/BA', label: 'APCEF/BA'},
+                    {value: 'APCEF/CE', label: 'APCEF/CE'},
+                    {value: 'APCEF/DF', label: 'APCEF/DF'},
+                    {value: 'APCEF/ES', label: 'APCEF/ES'},
+                    {value: 'APCEF/GO', label: 'APCEF/GO'},
+                    {value: 'APCEF/MA', label: 'APCEF/MA'},
+                    {value: 'APCEF/MT', label: 'APCEF/MT'},
+                    {value: 'APCEF/MS', label: 'APCEF/MS'},
+                    {value: 'APCEF/MG', label: 'APCEF/MG'},
+                    {value: 'APCEF/PA', label: 'APCEF/PA'},
+                    {value: 'APCEF/PB', label: 'APCEF/PB'},
+                    {value: 'APCEF/PR', label: 'APCEF/PR'},
+                    {value: 'APCEF/PE', label: 'APCEF/PE'},
+                    {value: 'APCEF/PI', label: 'APCEF/PI'},
+                    {value: 'APCEF/RJ', label: 'APCEF/RJ'},
+                    {value: 'APCEF/RN', label: 'APCEF/RN'},
+                    {value: 'APCEF/RS', label: 'APCEF/RS'},
+                    {value: 'APCEF/RO', label: 'APCEF/RO'},
+                    {value: 'APCEF/RR', label: 'APCEF/RR'},
+                    {value: 'APCEF/SC', label: 'APCEF/SC'},
+                    {value: 'APCEF/SP', label: 'APCEF/SP'},
+                    {value: 'APCEF/SE', label: 'APCEF/SE'},
+                    {value: 'APCEF/TO', label: 'APCEF/TO'},
+                    {value: 'APCEF/EX', label: 'APCEF/EX'},
+                  ]}
+                />
+              </View>
+
+              <TextError>{errors.apcef}</TextError>
+
+
+              <Form>
+                <Input
+                  disabled={editable}
+                  value={MaskService.toMask('cel-phone', phone, {
+                    maskType: 'BRL',
+                    withDDD: true,
+                    dddMask: '(99) ',
+                  })}
+                  error={errors.phone}
+                  maxLength={14}
+                  keyboardType={'phone-pad'}
+                  onChangeText={setPhone}
+                  textContentType="telephoneNumber"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  label="Telefone"
+                />
+              </Form>
+              <TextError>{errors.phone}</TextError>
+
+              <View style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4}}>
+                <Select
+                  disabled={editable}
+                  placeholder={{
+                    label: 'Sexo',
+                    value: null,
+                    color: '#9EA0A4',
+                  }}
+                  value={sex}
+                  onValueChange={value => setSex(value)}
+                  items={[
+                    {label: 'Masculino', value: 1},
+                    {label: 'Feminino', value: 0},
+                  ]}
+                />
+              </View>
+              <TextError>{errors.sex}</TextError>
+
+              <View
+                style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4, marginTop: 10}}>
+                <Select
+                  disabled={editable}
+                  placeholder={{
+                    label: 'Estado',
+                    value: null,
+                    color: '#9EA0A4',
+                  }}
+                  value={address_state}
+                  onValueChange={value => setState(value)}
+                  items={[
+                    {value: 'AC', label: 'Acre'},
+                    {value: 'AL', label: 'Alagoas'},
+                    {value: 'AP', label: 'Amapá'},
+                    {value: 'AM', label: 'Amazonas'},
+                    {value: 'BA', label: 'Bahia'},
+                    {value: 'CE', label: 'Ceará'},
+                    {value: 'DF', label: 'Distrito Federal'},
+                    {value: 'ES', label: 'Espírito Santo'},
+                    {value: 'GO', label: 'Goiás'},
+                    {value: 'MA', label: 'Maranhão'},
+                    {value: 'MT', label: 'Mato Grosso'},
+                    {value: 'MS', label: 'Mato Grosso do Sul'},
+                    {value: 'MG', label: 'Minas Gerais'},
+                    {value: 'PA', label: 'Pará'},
+                    {value: 'PB', label: 'Paraíba'},
+                    {value: 'PR', label: 'Paraná'},
+                    {value: 'PE', label: 'Pernambuco'},
+                    {value: 'PI', label: 'Piauí'},
+                    {value: 'RJ', label: 'Rio de Janeiro'},
+                    {value: 'RN', label: 'Rio Grande do Norte'},
+                    {value: 'RS', label: 'Rio Grande do Sul'},
+                    {value: 'RO', label: 'Rondônia'},
+                    {value: 'RR', label: 'Roraima'},
+                    {value: 'SC', label: 'Santa Catarina'},
+                    {value: 'SP', label: 'São Paulo'},
+                    {value: 'SE', label: 'Sergipe'},
+                    {value: 'TO', label: 'Tocantins'},
+                    {value: 'EX', label: 'Estrangeiro'},
+                  ]}
+                />
+              </View>
+
+              <TextError>{errors.address_state}</TextError>
+
+              <Form>
+                <Input
+                  disabled={editable}
+                  value={MaskService.toMask('datetime', birthdate, {
+                    format: 'DD/MM/YYYY',
+                  })}
+                  error={errors.birthdate}
+                  maxLength={11}
+                  keyboardType={'number-pad'}
+                  onChangeText={setBirthdate}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  label="Data de nascimento"
+                />
+              </Form>
+              <TextError>{errors.birthdate}</TextError>
+
+              <View style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4}}>
+                <Select
+                  placeholder={{
+                    label: 'Tamanho de camiseta',
+                    value: null,
+                    color: '#9EA0A4',
+                  }}
+                  selectText="Dia de preferência"
+                  value={shirt}
+                  onValueChange={value => setShirt(value)}
+                  items={[
+                    {label: 'P', value: 'P'},
+                    {label: 'M', value: 'M'},
+                    {label: 'G', value: 'G'},
+                    {label: 'GG', value: 'GG'},
+                    {label: 'XGG', value: 'XGG'},
+                  ]}
+                />
+              </View>
+              <TextError>{errors.shirt}</TextError>
+
+              <Form>
+                <Input
+                  autoCapitalize="none"
+                  value={facebook}
+                  error={errors.facebook}
+                  maxLength={255}
+                  onChangeText={setFacebook}
+                  autoCorrect={false}
+                  label="Facebook"
+                />
+              </Form>
+              <TextError>{errors.facebook}</TextError>
+
+              <Form>
+                <Input
+                  autoCapitalize="none"
+                  value={instagram}
+                  error={errors.instagram}
+                  maxLength={255}
+                  onChangeText={setInstagram}
+                  autoCorrect={false}
+                  label="Instagram"
+                />
+              </Form>
+              <TextError>{errors.instagram}</TextError>
+
+              <Form>
+                <Input
+                  value={MaskService.toMask('cel-phone', whatsapp, {
+                    maskType: 'BRL',
+                    withDDD: true,
+                    dddMask: '(99) ',
+                  })}
+                  error={errors.whatsapp}
+                  maxLength={14}
+                  keyboardType={'phone-pad'}
+                  onChangeText={setWhatsapp}
+                  textContentType="telephoneNumber"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  label="Whatsapp"
+                />
+              </Form>
+              <TextError>{errors.whatsapp}</TextError>
+
+              {user.registered_inspira ?
+                <View>
+                  <TextDark style={{paddingLeft: 0, marginBottom: 5}}>Para uso exclusivo no Inspira 2020:</TextDark>
+                  <View style={{borderWidth: 1, borderColor: '#ccc', padding: 8, borderStyle: 'dashed'}}>
+                    <Form style={{marginTop: 2, marginBottom: 2}}>
+                      <Input
+                        value={frase}
+                        multiline
+                        numberOfLines={3}
+                        onChangeText={setFrase}
+                        autoCorrect={true}
+                        label="Somos futuro, somos..."
+                      />
+                    </Form>
+
+                  </View>
+                </View>
+                : null}
+            </Card>
+
+            <View style={{flex: 1, marginBottom: 50, marginHorizontal: 10}}>
+
+              {!modal ? (
+                <Send onPress={handleSubmit} style={{marginTop: 15}}>
+                  <TextLight>SALVAR</TextLight>
+                </Send>
+              ) : (
+                <ActivityIndicator
+                  animating={true}
+                  size="large"
+                  color={Colors.blue400}
+                />
+              )}
             </View>
-
-            <TextError>{errors.apcef}</TextError>
-
-
-            <Form>
-              <Input
-                value={MaskService.toMask('cel-phone', phone, {
-                  maskType: 'BRL',
-                  withDDD: true,
-                  dddMask: '(99) ',
-                })}
-                error={!phone}
-                maxLength={14}
-                keyboardType={'phone-pad'}
-                onChangeText={setPhone}
-                textContentType="telephoneNumber"
-                autoCapitalize="none"
-                autoCorrect={false}
-                label="Telefone"
-              />
-            </Form>
-            <TextError>{errors.phone}</TextError>
-
-            <View style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4}}>
-              <Select
-                placeholder={{
-                  label: 'Sexo',
-                  value: null,
-                  color: '#9EA0A4',
-                }}
-                value={sex}
-                onValueChange={value => setSex(value)}
-                items={[
-                  {label: 'Masculino', value: 1},
-                  {label: 'Feminino', value: 0},
-                ]}
-              />
-            </View>
-            <TextError>{errors.sex}</TextError>
-
-            <View
-              style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4, marginTop: 10}}>
-              <Select
-                placeholder={{
-                  label: 'Estado',
-                  value: null,
-                  color: '#9EA0A4',
-                }}
-                value={address_state}
-                onValueChange={value => setState(value)}
-                items={[
-                  {value: 'AC', label: 'Acre'},
-                  {value: 'AL', label: 'Alagoas'},
-                  {value: 'AP', label: 'Amapá'},
-                  {value: 'AM', label: 'Amazonas'},
-                  {value: 'BA', label: 'Bahia'},
-                  {value: 'CE', label: 'Ceará'},
-                  {value: 'DF', label: 'Distrito Federal'},
-                  {value: 'ES', label: 'Espírito Santo'},
-                  {value: 'GO', label: 'Goiás'},
-                  {value: 'MA', label: 'Maranhão'},
-                  {value: 'MT', label: 'Mato Grosso'},
-                  {value: 'MS', label: 'Mato Grosso do Sul'},
-                  {value: 'MG', label: 'Minas Gerais'},
-                  {value: 'PA', label: 'Pará'},
-                  {value: 'PB', label: 'Paraíba'},
-                  {value: 'PR', label: 'Paraná'},
-                  {value: 'PE', label: 'Pernambuco'},
-                  {value: 'PI', label: 'Piauí'},
-                  {value: 'RJ', label: 'Rio de Janeiro'},
-                  {value: 'RN', label: 'Rio Grande do Norte'},
-                  {value: 'RS', label: 'Rio Grande do Sul'},
-                  {value: 'RO', label: 'Rondônia'},
-                  {value: 'RR', label: 'Roraima'},
-                  {value: 'SC', label: 'Santa Catarina'},
-                  {value: 'SP', label: 'São Paulo'},
-                  {value: 'SE', label: 'Sergipe'},
-                  {value: 'TO', label: 'Tocantins'},
-                  {value: 'EX', label: 'Estrangeiro'},
-                ]}
-              />
-            </View>
-
-            <TextError>{errors.address_state}</TextError>
-
-            <Form>
-              <Input
-                value={MaskService.toMask('datetime', birthdate, {
-                  format: 'DD/MM/YYYY',
-                })}
-                error={!birthdate}
-                maxLength={11}
-                keyboardType={'number-pad'}
-                onChangeText={setBirthdate}
-                autoCapitalize="none"
-                autoCorrect={false}
-                label="Data de nascimento"
-              />
-            </Form>
-            <TextError>{errors.birthdate}</TextError>
-          </Card>
-
-        <View style={{flex: 1, marginBottom: 50, marginHorizontal: 10}}>
-          
-
-          {!modal ? (
-            <Send onPress={handleSubmit} style={{marginTop: 15}}>
-              <TextLight>SALVAR</TextLight>
-            </Send>
-          ) : (
-            <ActivityIndicator
-              animating={true}
-              size="large"
-              color={Colors.white}
-            />
-          )}
-        </View>
-      </ScrollView>
-      </SafeAreaView>
-    </Content>
+          </ScrollView>
+        </SafeAreaView>
+      </Content>
     </KeyboardAvoidingView>
   );
 }
+
+//Tamanho da camiseta P,M,G,GG,XGG
+//Frase - inscritos no evento Inspira
+//Rededes sociais facebook, whatsApp, Instagram.
+//Editar email pessoal
+//Foto obrigatoria

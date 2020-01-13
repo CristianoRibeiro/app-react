@@ -33,10 +33,8 @@ import {
 import {User} from '~/model/User';
 
 export default function SiderBar(props) {
-  const data = useSelector(state => state.user);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
-
-  const [user, setUser] = useState(data ? data : User);
 
   useEffect(() => {
     //alert(JSON.stringify(user));
@@ -96,7 +94,9 @@ export default function SiderBar(props) {
               width: 3,
               backgroundColor: props.focused ? '#ff8206' : 'transparent',
               minHeight: 50,
-            }}></View>
+            }}>
+
+          </View>
 
           <View
             style={{

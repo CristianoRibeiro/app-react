@@ -377,6 +377,16 @@ const MainNavigator = createStackNavigator(
       screen: DrawerRoutes,
       path: 'main',
     },
+    ProfileUpdate: {
+      screen: ProfileEdit,
+      path: 'profileedit',
+      navigationOptions: {
+        headerTitle: 'Atualizar Perfil',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
     EventItem: {
       screen: EventItem,
       path: 'login',

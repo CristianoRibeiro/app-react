@@ -66,8 +66,6 @@ export default function Profile(props) {
       cancelButtonTitle: 'Cancelar',
       takePhotoButtonTitle: 'Usar Camera',
       chooseFromLibraryButtonTitle: 'Carregar da galeria',
-      width: 480,
-      height: 480,
       cropping: true,
     };
 
