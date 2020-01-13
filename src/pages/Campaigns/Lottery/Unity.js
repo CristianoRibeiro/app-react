@@ -39,7 +39,7 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.lottery);
+  const data = useSelector(state => state.lotteryunity);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -53,12 +53,12 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
-      let response = await api.get('/api/lottery');
+      let response = await api.get('/api/unit/lottery');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'LOTTERY', payload: response.data});
+      await dispatch({type: 'LOTTERYUNITY', payload: response.data});
 
       //setNotifications(response.data);
     } catch (error) {
@@ -113,12 +113,12 @@ export default function Main(props) {
                   </TextDark>
 
                   <TextDark style={{fontSize: 12, marginTop: 12}}>
-                    {item.item.user.name}
+                    {item.item.name}
                   </TextDark>
 
-                  <TextDark style={{fontWeight: '700'}}>
-                    {item.item.user.apcef}
-                  </TextDark>
+                  {/*<TextDark style={{fontWeight: '700'}}>*/}
+                  {/*  {item.item.apcef}*/}
+                  {/*</TextDark>*/}
 
                   <TextDark style={{fontSize: 11}}>
                     {item.item.append_date}

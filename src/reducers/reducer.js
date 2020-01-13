@@ -21,6 +21,7 @@ import {
   COUPONS,
   REGULATION,
   LOTTERY,
+  LOTTERYUNITY,
   NEWS,
   BANNERCAMPAIGNS,
   MATCHS,
@@ -53,6 +54,7 @@ const INITIAL_STATE = {
   coupons: [],
   regulation: [],
   lottery: [],
+  lotteryunity: [],
   news: [],
   matchs: [],
   matchitem: [],
@@ -108,6 +110,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, regulation: action.payload};
     case LOTTERY:
       return {...state, lottery: action.payload};
+    case LOTTERYUNITY:
+      return {...state, lotteryunity: action.payload};
     case NEWS:
       return {...state, news: action.payload};
     case MATCHS:

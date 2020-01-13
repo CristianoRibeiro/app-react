@@ -21,6 +21,7 @@ export const CARDS = 'CARDS';
 export const COUPONS = 'COUPONS';
 export const REGULATION = 'REGULATION';
 export const LOTTERY = 'LOTTERY';
+export const LOTTERYUNITY = 'LOTTERYUNITY';
 export const NEWS = 'NEWS';
 export const MATCHS = 'MATCHS';
 export const MATCHITEM = 'MATCHITEM';

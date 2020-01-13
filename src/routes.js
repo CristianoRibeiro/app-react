@@ -62,13 +62,13 @@ import Album from '~/pages/Campaigns/Album';
 import CampaignPrize from '~/pages/Campaigns/Prize';
 import Cupons from '~/pages/Campaigns/Cupons';
 import Units from '~/pages/Campaigns/Units';
-
 //import ExchangeSearch from '~/pages/Campaigns/Exchange/Search';
 import CardsPending from '~/pages/Campaigns/Album/CardsPending';
 import CardsRealize from '~/pages/Campaigns/Album/CardsRealize';
 import MatchItem from '~/pages/Campaigns/Album/MatchItem';
 import Regulation from '~/pages/Campaigns/Regulation';
 import Lottery from '~/pages/Campaigns/Lottery';
+import LotteryUnity from '~/pages/Campaigns/Lottery/Unity';
 import PrizeCampaign from '~/pages/Campaigns/Prize';
 import Recommendation from '~/pages/Campaigns/Recommendation';
 import RecommendationIndicated from '~/pages/Campaigns/Recommendation/Indicated';
@@ -318,6 +318,43 @@ const TabsCards = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: 'CardsPending',
+    activeColor: '#222',
+    tabBarOptions: {
+      activeTintColor: '#fff',
+      inactiveTintColor: '#fff',
+      showLabel: true,
+      showIcon: false,
+      scrollEnabled: false,
+      indicatorStyle: {backgroundColor: '#fff'},
+      style: {
+        backgroundColor: '#FF6666',
+      },
+      labelStyle: {fontSize: 11},
+    },
+  },
+);
+
+const TabsLottery = createMaterialTopTabNavigator(
+  {
+    Lottery: {
+      screen: Lottery,
+      path: 'tabs/lotery',
+      navigationOptions: {
+        title: 'Individual',
+        tabBarColor: '#fff',
+      },
+    },
+    LotteryUnit: {
+      screen: LotteryUnity,
+      path: 'tabs/lottery/unity',
+      navigationOptions: {
+        title: 'Unidades',
+        tabBarColor: '#fff',
+      },
+    },
+  },
+  {
+    initialRouteName: 'Lottery',
     activeColor: '#222',
     tabBarOptions: {
       activeTintColor: '#fff',
@@ -634,7 +671,7 @@ const MainNavigator = createStackNavigator(
       },
     },
     Lottery: {
-      screen: Lottery,
+      screen: TabsLottery,
       path: 'lottery',
       navigationOptions: {
         headerTitle: 'Sorteio',
