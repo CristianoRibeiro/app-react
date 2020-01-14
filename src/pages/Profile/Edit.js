@@ -51,7 +51,7 @@ export default function Main(props) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState(user.append_avatar);
+  const [image, setImage] = useState({uri: user.append_avatar});
 
   const [photo, setPhoto] = useState(user ? user.append_avatar : '');
   const [name, setName] = useState(user ? user.name : '');
@@ -79,8 +79,8 @@ export default function Main(props) {
 
   useEffect(() => {
 
-    if(props.navigation.state.params){
-      if (props.navigation.state.params.edit){
+    if (props.navigation.state.params) {
+      if (props.navigation.state.params.edit) {
         setEditable(true);
       }
 
@@ -183,8 +183,7 @@ export default function Main(props) {
 
       if (image.length < 68) {
         errors.photo = 'Foto obrigatória!';
-      }
-      else if (!name) {
+      } else if (!name) {
         errors.name = 'Nome obrigatório!';
       } else if (!email.trim()) {
         errors.email = 'E-mail obrigatório!';
@@ -306,7 +305,7 @@ export default function Main(props) {
                   marginBottom: 15,
                 }}
                 defaultSource={require('~/assets/avatar/avatar.png')}
-                source={{uri: image}}
+                source={image}
               />
 
               <View
@@ -326,7 +325,7 @@ export default function Main(props) {
                   rippleColor="rgba(0, 0, 0, .32)"
                   style={{marginVertical: 0}}
                   onPress={() => _uploadPhoto()}>
-                  <Avatar.Icon size={42} icon="folder" />
+                  <Avatar.Icon size={42} icon="folder"/>
                 </Link>
               </View>
             </View>
