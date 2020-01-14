@@ -28,7 +28,7 @@ const App = () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <PaperProvider theme={theme}>
-      <Routes />
+        <Routes/>
       </PaperProvider>
     </PersistGate>
   </Provider>
