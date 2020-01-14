@@ -41,7 +41,7 @@ export default function Main(props) {
         style={{
           width: 3,
           backgroundColor: props.focused ? '#ff8206' : 'transparent',
-          minHeight: 50,
+          minHeight: 45,
         }}></View>
 
       <View

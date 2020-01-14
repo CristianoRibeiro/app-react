@@ -75,7 +75,8 @@ export default function Main(props) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+  }, []);
 
   async function _login() {
     let cpf = await MaskService.toMask('only-numbers', doc);
@@ -130,7 +131,7 @@ export default function Main(props) {
         style={styles.container}
         resizeMode="cover">
         <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-          <StatusBar backgroundColor="#2A40B1" barStyle="light-content" />
+          <StatusBar backgroundColor="#2A40B1" barStyle="light-content"/>
 
           <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
             <Image
@@ -144,59 +145,59 @@ export default function Main(props) {
             <TextLight>Informe seu login e senha do Mundo Caixa </TextLight>
           </View>
 
-<Card>
-          <Form>
-            <Input
-              value={MaskService.toMask('cpf', doc)}
-              error={error}
-              maxLength={14}
-              keyboardType={'phone-pad'}
-              onChangeText={setCpf}
-              textContentType="username"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="CPF"
-            />
-          </Form>
+          <Card>
+            <Form>
+              <Input
+                value={MaskService.toMask('cpf', doc)}
+                error={error}
+                maxLength={14}
+                keyboardType={'phone-pad'}
+                onChangeText={setCpf}
+                textContentType="username"
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="CPF"
+              />
+            </Form>
 
-          <Form>
-            <Input
-              value={password}
-              error={error}
-              onChangeText={setPassword}
-              keyboardType="ascii-capable"
-              textContentType="password"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="Senha"
-              secureTextEntry={true}
-            />
-          </Form>
-          
+            <Form>
+              <Input
+                value={password}
+                error={error}
+                onChangeText={setPassword}
+                keyboardType="ascii-capable"
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Senha"
+                secureTextEntry={true}
+              />
+            </Form>
 
-          <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
-            {/* <Link style={{marginTop: 5, marginBottom: 10}}>
+
+            <View style={{flex: 1, alignItems: 'center', marginBottom: 20}}>
+              {/* <Link style={{marginTop: 5, marginBottom: 10}}>
             <TextLight>Esqueci minha senha</TextLight>
           </Link> */}
 
-            <Link
-              style={{marginTop: 15}}
-              onPress={() => props.navigation.navigate('Register')}>
-              <TextDark>Não tem cadastro? Registre-se aqui</TextDark>
-            </Link>
+              <Link
+                style={{marginTop: 15}}
+                onPress={() => props.navigation.navigate('Register')}>
+                <TextDark>Não tem cadastro? Registre-se aqui</TextDark>
+              </Link>
 
-            {!modal ? (
-              <Send onPress={() => _login()} style={{marginTop: 15}}>
-                <TextLight>ENTRAR</TextLight>
-              </Send>
-            ) : (
-              <ActivityIndicator
-                animating={true}
-                size="large"
-                color={Colors.blue400}
-              />
-            )}
-          </View>
+              {!modal ? (
+                <Send onPress={() => _login()} style={{marginTop: 15}}>
+                  <TextLight>ENTRAR</TextLight>
+                </Send>
+              ) : (
+                <ActivityIndicator
+                  animating={true}
+                  size="large"
+                  color={Colors.blue400}
+                />
+              )}
+            </View>
           </Card>
         </ScrollView>
 
@@ -207,7 +208,7 @@ export default function Main(props) {
             size="large"
             color={Colors.white}
           />
-          
+
         </View>
       </Modal> */}
       </ImageBackground>

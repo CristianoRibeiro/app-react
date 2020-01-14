@@ -1,69 +1,92 @@
-import * as React from "react";
-import { TouchableOpacity, View, Image, SafeAreaView, StatusBar } from "react-native";
+import React, {useState, useEffect, Component} from 'react';
+import {
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  StatusBar,
+  View,
+  SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
 import { Appbar, Avatar, withTheme, DefaultTheme } from "react-native-paper";
-import { createStackNavigator, createAppContainer } from "react-navigation";
 import { DrawerActions } from "react-navigation-drawer";
 
-class HeaderApp extends React.Component {
-  componentWillMount() {
-    //alert(JSON.stringify(this.props.navigation));
-  }
+import {Container, Content, Card, Send, TextLight} from '~/style';
+import {useSelector} from "react-redux";
 
-  _goMenu = () => this.props.navigation.dispatch(DrawerActions.toggleDrawer());
+export default function Main({navigation}) {
 
-  render() {
+  const user = useSelector(state => state.user);
 
-    return (
-      <SafeAreaView style={{flex: 1}}>
+  function _goMenu () {navigation.dispatch(DrawerActions.toggleDrawer())};
+  function  _goNotification() {user.id ? navigation.navigate('Notification') : navigation.navigate('Login')};
 
-        <StatusBar
-          backgroundColor="#FF6666"
-          barStyle="light-content"
-        />
-        <View
+  return (
+    <SafeAreaView style={{flex: 1}}>
+
+      <StatusBar
+        backgroundColor="#FF6666"
+        barStyle="light-content"
+      />
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          height: 50,
+          flexDirection: "row",
+          elevation: 4
+        }}
+      >
+        <TouchableOpacity
+          onPress={_goMenu}
           style={{
-            alignItems: "center",
-            justifyContent: "center",
+            width: 60,
             height: 50,
-            flexDirection: "row",
-            elevation: 4
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
-          <TouchableOpacity
-            onPress={this._goMenu}
-            style={{
-              width: 60,
-              height: 50,
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Appbar.Action
-              icon="menu"
-              onPress={this._goMenu}
-              color={'#fff'}
-            />
-          </TouchableOpacity>
+          <Appbar.Action
+            icon="menu"
+            onPress={_goMenu}
+            color={'#fff'}
+          />
+        </TouchableOpacity>
 
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Image
-              resizeMode="contain"
-              style={{ height: 35, maxWidth: 150 }}
-              source={require("../assets/logo_cinza.png")}
-            />
-          </View>
-
-          <View style={{ width: 60 }} />
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Image
+            resizeMode="contain"
+            style={{ height: 35, maxWidth: 150 }}
+            source={require("../assets/logo_cinza.png")}
+          />
         </View>
-      </SafeAreaView>
-    );
-  }
-}
 
-export default HeaderApp;
+        <TouchableOpacity
+          onPress={_goNotification}
+          style={{
+            width: 60,
+            height: 50,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Appbar.Action
+            icon="notifications"
+            onPress={_goNotification}
+            color={'#fff'}
+          />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}

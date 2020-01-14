@@ -33,7 +33,7 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.prizes);
+  const data = useSelector(state => state.prizesall);
   const event = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
@@ -55,10 +55,10 @@ export default function Main(props) {
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'PRIZE', payload: response.data});
+      await dispatch({type: 'PRIZEALL', payload: response.data});
       //setNotifications(response.data);
     } catch (error) {
-      await dispatch({type: 'PRIZE', payload: []});
+      await dispatch({type: 'PRIZEALL', payload: []});
       if (__DEV__) {
         console.tron.log(error.message);
       }

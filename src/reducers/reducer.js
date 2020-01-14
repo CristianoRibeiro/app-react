@@ -5,11 +5,14 @@ import {
   CONVERTED,
   EVENT,
   EVENTOLD,
+  EVENTJOURNEY,
   VOUCHER,
   NOTIFICATION,
   VOUCHERITEM,
   SCHEDULE,
   PRIZE,
+  PRIZEALL,
+  PRIZEUSER,
   PRIZECAMPAIGN,
   FLIGHTS,
   TRANSFER,
@@ -37,12 +40,15 @@ const INITIAL_STATE = {
   converted: [],
   event: [],
   eventold: [],
+  eventjourney: [],
   eventitem: [],
   voucher: [],
   voucheritem: [],
   notification: [],
   schedule: [],
   prizes: [],
+  prizesall: [],
+  prizesuser: [],
   prizecampaigns: [],
   flights: [],
   transfer: [],
@@ -76,6 +82,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, event: action.payload};
     case EVENTOLD:
       return {...state, eventold: action.payload};
+    case EVENTJOURNEY:
+      return {...state, eventjourney: action.payload};
     case EVENTITEM:
       return {...state, eventitem: action.payload};
     case VOUCHER:
@@ -88,6 +96,10 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, schedule: action.payload};
     case PRIZE:
       return {...state, prizes: action.payload};
+    case PRIZEALL:
+      return {...state, prizesall: action.payload};
+    case PRIZEUSER:
+      return {...state, prizesuser: action.payload};
     case PRIZECAMPAIGN:
       return {...state, prizecampaigns: action.payload};
     case FLIGHTS:

@@ -29,11 +29,12 @@ import {
   Link,
   CardImage,
   Points,
-  Info,
+  SubTitle,
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.prizecampaigns);
+  const data = useSelector(state => state.prizesuser);
+  const event = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
   const [prize, setPrize] = useState(data ? data : []);
@@ -42,7 +43,7 @@ export default function Main(props) {
 
   useEffect(() => {
     if (__DEV__) {
-      console.tron.log(data);
+      console.tron.log(event);
     }
     _getData();
   }, []);
@@ -50,15 +51,15 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
-      let response = await api.get('/api/prizes/campaigns');
+      let response = await api.post(`/api/prizes`);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'PRIZECAMPAIGN', payload: response.data});
+      await dispatch({type: 'PRIZEUSER', payload: response.data});
       //setNotifications(response.data);
     } catch (error) {
-      await dispatch({type: 'PRIZECAMPAIGN', payload: []});
+      await dispatch({type: 'PRIZEUSER', payload: []});
       if (__DEV__) {
         console.tron.log(error.message);
       }
@@ -67,12 +68,19 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
+    const formattedDate = '';
+    if (item.retired_at) {
+      const firstDate = parseISO(item.retired_at);
+      formattedDate =
+        'Retirado: ' + format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
+    }
     return (
       <Card>
-        <Info style={{flex: 1}}>
-          <EventTitle>{item.description}</EventTitle>
-          <EventLink>{item.append_type}</EventLink>
-        </Info>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          {item.retired_at ? <EventDate>{formattedDate}</EventDate> : null}
+          <SubTitle>{item.description}</SubTitle>
+          <SubTitle style={{fontSize: 11}}>{item.type}</SubTitle>
+        </View>
       </Card>
     );
   }
@@ -83,8 +91,9 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Que pena! Você ainda não ganhou prêmios.
-        Não desanime, continue participando e ganhe mais números da sorte." />}
+        ListEmptyComponent={
+          <EmptyList text="Que pena! Você ainda não ganhou prêmios. Não desanime e continue participando." />
+        }
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => _getData()} />

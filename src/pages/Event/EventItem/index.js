@@ -105,7 +105,7 @@ export default function Main(props) {
       {
         navigation: 'FlightEvent',
         image: require('~/assets/icons/passport.png'),
-        name: 'PASSAGEM',
+        name: 'PASSAGEM/HOSPEDAGEM',
         item: item,
         permission: app_functions ? app_functions.flight : false,
         type: null,
@@ -326,8 +326,8 @@ export default function Main(props) {
               }}
               resizeMode="contain"
             />
-            <TextDark style={{fontSize: 14}}>
-              {item.name} 
+            <TextDark style={{fontSize: 12}}>
+              {item.name}
             </TextDark>
           </Card>
         </Link>

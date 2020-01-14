@@ -9,15 +9,17 @@ import {
   StatusBar,
   View,
   ScrollView,
-  KeyboardAvoidingView,
+  Alert,
   FlatList,
   RefreshControl,
 } from 'react-native';
 import EmptyList from '~/components/EmptyList';
 
+//Api
 import api from '~/services/api';
 
-import {Container, Content} from '~/style';
+//Styles
+import {Container, Content} from '../../style';
 
 import {
   EventTitle,
@@ -28,37 +30,32 @@ import {
   Card,
   Link,
   CardImage,
-  Points,
-  Info,
+  SubTitle
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.prizecampaigns);
+  const data = useSelector(state => state.eventjourney);
   const dispatch = useDispatch();
 
-  const [prize, setPrize] = useState(data ? data : []);
+  const [events, setEvents] = useState(data);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (__DEV__) {
-      console.tron.log(data);
-    }
-    _getData();
+    _getEvent();
   }, []);
 
-  async function _getData() {
+  async function _getEvent() {
     setLoading(true);
     try {
-      let response = await api.get('/api/prizes/campaigns');
+      let response = await api.get('/api/events/journey');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'PRIZECAMPAIGN', payload: response.data});
-      //setNotifications(response.data);
+      await dispatch({type: 'EVENTJOURNEY', payload: response.data});
+      setEvents(response.data);
     } catch (error) {
-      await dispatch({type: 'PRIZECAMPAIGN', payload: []});
       if (__DEV__) {
         console.tron.log(error.message);
       }
@@ -68,12 +65,25 @@ export default function Main(props) {
 
   function _renderItem(item) {
     return (
-      <Card>
-        <Info style={{flex: 1}}>
-          <EventTitle>{item.description}</EventTitle>
-          <EventLink>{item.append_type}</EventLink>
-        </Info>
-      </Card>
+      <Link onPress={() => props.navigation.navigate('EventItem', {item})}>
+        <Card>
+          <CardImage>
+            <Image
+              source={{uri: item.banner}}
+              style={{
+                height: 70,
+                width: 70,
+                borderRadius: 35,
+              }}
+              resizeMode="contain"
+            />
+          </CardImage>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <EventTitle>{item.name}</EventTitle>
+            <SubTitle>{item.local}</SubTitle>
+          </View>
+        </Card>
+      </Link>
     );
   }
 
@@ -81,13 +91,15 @@ export default function Main(props) {
     <Content>
       <FlatList
         style={{margimBottom: 50}}
-        data={data}
+        data={events}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Que pena! Você ainda não ganhou prêmios.
-        Não desanime, continue participando e ganhe mais números da sorte." />}
+        ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!"/>}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={() => _getEvent()}
+          />
         }
       />
     </Content>

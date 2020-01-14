@@ -82,39 +82,41 @@ export default function SiderBar(props) {
         </View>
 
         <DrawerNavigatorItems {...props} activeTintColor={'#3F51B5'} />
-      </ScrollView>
-      <Link style={{marginBottom: 15}} onPress={()=>_exit()}>
-        <DrawerItem
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            backgroundColor: props.focused ? '#3F51B5' : 'transparent',
-          }}>
-          <View
-            style={{
-              width: 3,
-              backgroundColor: props.focused ? '#ff8206' : 'transparent',
-              minHeight: 50,
-            }}></View>
 
-          <View
+        <Link style={{marginBottom: 15}} onPress={()=>_exit()}>
+          <DrawerItem
             style={{
-              alignItems: 'center',
+              flexDirection: 'row',
               justifyContent: 'center',
-              marginLeft: 10,
+              backgroundColor: props.focused ? '#3F51B5' : 'transparent',
             }}>
-            <MaterialCommunityIcons
-              name="exit-to-app"
-              size={28}
-              color={'rgba(255,255,255, 0.8)'}
-            />
-          </View>
+            <View
+              style={{
+                width: 3,
+                backgroundColor: props.focused ? '#ff8206' : 'transparent',
+                minHeight: 50,
+              }}></View>
 
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <TextLight>Sair</TextLight>
-          </View>
-        </DrawerItem>
-      </Link>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: 10,
+              }}>
+              <MaterialCommunityIcons
+                name="exit-to-app"
+                size={28}
+                color={'rgba(255,255,255, 0.8)'}
+              />
+            </View>
+
+            <View style={{flex: 1, justifyContent: 'center'}}>
+              <TextLight>Sair</TextLight>
+            </View>
+          </DrawerItem>
+        </Link>
+      </ScrollView>
+
     </Container>
   );
 }

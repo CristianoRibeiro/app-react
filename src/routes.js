@@ -25,6 +25,10 @@ import News from '~/pages/News';
 import EventNews from '~/pages/News/EventNews';
 import NewsDetail from '~/pages/News/Detail';
 import Friends from '~/pages/Friends';
+import Extract from '~/pages/Extract';
+import ExtractItem from '~/pages/Extract/Item';
+import PrizeUser from '~/pages/Prize';
+import Rede from '~/pages/Rede';
 
 //Event
 import Event from '~/pages/Event';
@@ -34,6 +38,7 @@ import Voucher from '~/pages/Voucher';
 import VoucherItem from '~/pages/Voucher/Item';
 import VoucherEvent from '~/pages/Voucher/VoucherEvent';
 import VoucherAdd from '~/pages/Voucher/Add';
+import Journey from '~/pages/Event/Journey';
 import Report from '~/pages/Report';
 import Notification from '~/pages/Notification';
 import Prize from '~/pages/Event/Prize';
@@ -122,15 +127,33 @@ const TabsRoute = createMaterialBottomTabNavigator(
       },
     },
 
-    Notification: {
-      screen: Notification,
-      path: 'notification',
+    Rede: {
+      screen: Rede,
+      path: 'rede',
       navigationOptions: {
-        title: 'notificações',
+        title: '',
         tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => (
-          <MaterialIcons name="notifications" size={24} color={tintColor} />
-        ),
+        tabBarIcon: ({tintColor}) => tintColor === '#0D4274' ? (
+          <Image
+            source={require('~/assets/rede/Rede1.png')}
+            style={{
+              height: 40,
+              width: 40,
+            }}
+            resizeMode="cover"
+          />
+        )
+        :
+          (
+            <Image
+              source={require('~/assets/rede/Rede2.png')}
+              style={{
+                height: 40,
+                width: 40,
+              }}
+              resizeMode="cover"
+            />
+          ),
       },
     },
   },
@@ -203,6 +226,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
+    Journey: {
+      screen: Journey,
+      path: 'event/journey',
+      navigationOptions: {
+        drawerLabel: props => (
+          <DrawerItem
+            {...props}
+            title="Jornada"
+            icon={require('~/assets/menu/calendar.png')}
+          />
+        ),
+      },
+    },
     Friends: {
       screen: Friends,
       path: 'friends',
@@ -229,9 +265,9 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    Prizes: {
-      screen: Prize,
-      path: 'prize',
+    PrizeUser: {
+      screen: PrizeUser,
+      path: 'prize/user',
       navigationOptions: {
         drawerLabel: props => (
           <DrawerItem
@@ -242,6 +278,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
+    // Extract: {
+    //   screen: Extract,
+    //   path: 'extract',
+    //   navigationOptions: {
+    //     drawerLabel: props => (
+    //       <DrawerItem
+    //         {...props}
+    //         title="Movimento solidário"
+    //         icon={require('~/assets/menu/premios.png')}
+    //       />
+    //     ),
+    //   },
+    // },
   },
   {
     contentComponent: props => <SideBar {...props} />,
@@ -802,6 +851,26 @@ const MainNavigator = createStackNavigator(
       path: 'units',
       navigationOptions: {
         headerTitle: 'Unidades',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    ExtractItem: {
+      screen: ExtractItem,
+      path: 'extract/item',
+      navigationOptions: {
+        headerTitle: 'Extrato',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Notification: {
+      screen: Notification,
+      path: 'notification',
+      navigationOptions: {
+        headerTitle: 'Notificações',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

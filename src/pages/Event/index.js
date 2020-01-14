@@ -51,13 +51,14 @@ export default function Main(props) {
       let response = await api.post('/api/events');
       //alert(JSON.stringify(response));
       if (__DEV__) {
-      console.tron.log(response.data);
+        console.tron.log(response.data);
       }
       await dispatch({type: 'EVENT', payload: response.data});
       setEvents(response.data);
     } catch (error) {
+      await dispatch({type: 'EVENT', payload: []});
       if (__DEV__) {
-      console.tron.log(error.message);
+        console.tron.log(error.message);
       }
     }
     setLoading(false);
@@ -93,7 +94,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={events}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!" />}
+        ListEmptyComponent={<EmptyList text="Nenhum evento encontrado!"/>}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl

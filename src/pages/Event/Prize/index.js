@@ -49,6 +49,7 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    setLoading(true);
     try {
       let response = await api.get(`/api/prizes/event/${event.id}`);
       //alert(JSON.stringify(response));
@@ -63,6 +64,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoading(false);
   }
 
   function _renderItem(item) {

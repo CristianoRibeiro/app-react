@@ -56,7 +56,7 @@ export const Link = styled.TouchableOpacity`
 `;
 
 export const Card = styled.View`
-  margin: 5px;
+  margin: 2px;
   border-radius: 5px;
   padding: 7px;
   background-color: #fff;
