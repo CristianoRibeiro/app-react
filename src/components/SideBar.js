@@ -33,8 +33,10 @@ import {
 import {User} from '~/model/User';
 
 export default function SiderBar(props) {
-  const user = useSelector(state => state.user);
+  const data = useSelector(state => state.user);
   const dispatch = useDispatch();
+
+  const [user, setUser] = useState(data ? data : User);
 
   useEffect(() => {
     //alert(JSON.stringify(user));
@@ -51,9 +53,9 @@ export default function SiderBar(props) {
           style: 'cancel',
         },
         {text: 'OK', onPress: () => {
-          AsyncStorage.removeItem('token');
-          props.navigation.navigate('Auth');
-        }},
+            AsyncStorage.removeItem('token');
+            props.navigation.navigate('Auth');
+          }},
       ],
       {cancelable: false},
     );
@@ -66,7 +68,6 @@ export default function SiderBar(props) {
             style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
             <Image
               source={{uri: user.append_avatar}}
-              defaultSource={require('~/assets/avatar/avatar.png')}
               style={{
                 height: 150,
                 width: 150,
@@ -94,9 +95,7 @@ export default function SiderBar(props) {
               width: 3,
               backgroundColor: props.focused ? '#ff8206' : 'transparent',
               minHeight: 50,
-            }}>
-
-          </View>
+            }}></View>
 
           <View
             style={{

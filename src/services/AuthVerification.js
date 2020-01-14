@@ -73,7 +73,7 @@ export default function Main(props) {
       await dispatch({type: 'USER', payload: response.data});
 
       if (!response.data.updated) {
-        props.navigation.navigate('ProfileEdit');
+        props.navigation.navigate('ProfileE');
       }
 
       const user = response.data;
