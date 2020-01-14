@@ -379,7 +379,7 @@ const MainNavigator = createStackNavigator(
     },
     ProfileUpdate: {
       screen: ProfileEdit,
-      path: 'profileedit',
+      path: 'profileedit/update',
       navigationOptions: {
         headerTitle: 'Atualizar Perfil',
         headerStyle: {
