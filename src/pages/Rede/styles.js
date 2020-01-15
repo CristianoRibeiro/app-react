@@ -108,7 +108,8 @@ export const Header = styled(LinearGradient).attrs({
   end: { x: 1, y: 1 },
 })`
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 14px;
+  margin-bottom: 5px;
 `;
 
 export const TextTitle = styled.Text`
