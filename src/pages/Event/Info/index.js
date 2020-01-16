@@ -34,6 +34,7 @@ import {
   Link,
   SubTitle,
 } from './styles';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Main(props) {
   const data = useSelector(state => state.eventitem);
@@ -51,7 +52,8 @@ export default function Main(props) {
 
   return (
     <View style={{paddingBottom: 15, flex: 1}}>
-      <WebView source={{html: info.append_info}} 
+      {info.append_info ?
+      <WebView source={{html: info.append_info}}
       onShouldStartLoadWithRequest={(event) => {
         if (!/^[data:text, about:blank]/.test(event.url)) {
           Linking.openURL(event.url);
@@ -59,6 +61,15 @@ export default function Main(props) {
         }
         return true;
       }}/>
+      : <View style={{margin: 5, padding: 20}}>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <MaterialCommunityIcons name="alert-circle-outline" size={50} color={props.color ? props.color : '#444'}/>
+            <TextDark style={{marginTop: 15}}>
+              Nenhuma informação encontrada!
+            </TextDark>
+          </View>
+
+        </View>}
     </View>
   );
 }

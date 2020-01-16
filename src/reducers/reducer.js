@@ -31,7 +31,8 @@ import {
   MATCHITEM,
   GAMES,
   UNITS,
-  PRODUCTS
+  PRODUCTS,
+  ITEM
 } from '~/reducers/types';
 
 import Product from '~/model/Product';
@@ -71,6 +72,7 @@ const INITIAL_STATE = {
   games: [],
   units: [],
   products: [],
+  item: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -140,7 +142,9 @@ export default (state = INITIAL_STATE, action) => {
     case UNITS:
       return {...state, units: action.payload};
     case PRODUCTS:
-      return {...state, products: action.payload};
+      return {...state, products: action.payload, item: []};
+    case ITEM:
+      return {...state, item: action.payload};
     default:
       return state;
   }

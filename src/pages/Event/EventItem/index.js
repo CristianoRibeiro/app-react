@@ -14,6 +14,7 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
+import Voucher from '~/model/Voucher';
 
 import api from '~/services/api';
 
@@ -28,18 +29,38 @@ export default function Main(props) {
   const [item, setItem] = useState(Event);
   const [voucher, setVoucher] = useState([]);
   const [app_functions, setFunctions] = useState(
-    props.navigation.state.params.item.app_functions
-      ? JSON.parse(props.navigation.state.params.item.app_functions)
+    eventitem.app_functions
+      ? JSON.parse(eventitem.app_functions)
       : [],
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    //console.tron.log(props.navigation.state.params.item);
+    //console.tron.log(eventitem);
+    _getVoucher();
     _getItem();
     _screen();
   }, []);
+
+  async function _getVoucher(){
+    try {
+      let response = await api.get(
+        `/api/voucher/${eventitem.id}`
+      );
+      //alert(JSON.stringify(response.data));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      await dispatch({type: 'VOUCHERITEM', payload: response.data});
+      setVoucher(response.data);
+    } catch (error) {
+      await dispatch({type: 'VOUCHERITEM', payload: Voucher});
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+  }
 
   async function _handleItem(item) {
     //alert(JSON.stringify(voucher));
@@ -52,14 +73,14 @@ export default function Main(props) {
         Alert.alert(null, 'Você não possui ingresso!');
       }
     } else if (item.type === 'schedule') {
-      if (props.navigation.state.params.item.url_schedule) {
+      if (eventitem.url_schedule) {
         try {
           Linking.canOpenURL(
-            props.navigation.state.params.item.url_schedule,
+            eventitem.url_schedule,
           ).then(supported => {
             if (supported) {
               Linking.openURL(
-                props.navigation.state.params.item.url_schedule,
+                eventitem.url_schedule,
               ).catch(err => console.error('An error occurred', err));
             }
           });
@@ -90,8 +111,8 @@ export default function Main(props) {
         image: require('~/assets/icons/info.png'),
         name: 'INFORMAÇÕES ÚTEIS',
         item: item,
-        //permission: app_functions.useful_info,
-        permission: false,
+        permission: app_functions.useful_info,
+        //permission: true,
         type: null,
       },
       {
@@ -248,6 +269,15 @@ export default function Main(props) {
         //permission: true,
         type: null,
       },
+      {
+        navigation: 'Extract',
+        image: require('~/assets/icons/books.png'),
+        name: 'MOVIMENTO SOLIDÁRIO',
+        item: item,
+        //permission: app_functions ? app_functions.material : false,
+        permission: true,
+        type: null,
+      },
     ];
 
     const filtered = screen.filter(value => value.permission === true);
@@ -256,61 +286,45 @@ export default function Main(props) {
 
   async function _getItem() {
     try {
-      if (props.navigation.state.params.item) {
-        setItem(props.navigation.state.params.item);
-        //alert(JSON.stringify(props.navigation.state.params.item.prizes));
+      if (eventitem) {
+        setItem(eventitem);
+        //alert(JSON.stringify(eventitem.prizes));
 
         await dispatch({
           type: 'EVENTITEM',
-          payload: props.navigation.state.params.item,
+          payload: eventitem,
         });
 
         if (__DEV__) {
           console.tron.log('Evento');
-          console.tron.log(props.navigation.state.params.item);
+          console.tron.log(eventitem);
         }
-        if (props.navigation.state.params.item.vouchers) {
+        if (eventitem.vouchers) {
           await dispatch({
             type: 'VOUCHER',
-            payload: props.navigation.state.params.item.vouchers,
+            payload: eventitem.vouchers,
           });
         }
 
-        if (props.navigation.state.params.item.schedule) {
+        if (eventitem.schedule) {
           await dispatch({
             type: 'SCHEDULE',
-            payload: props.navigation.state.params.item.schedule,
+            payload: eventitem.schedule,
           });
         }
 
-        if (props.navigation.state.params.item.prizes) {
+        if (eventitem.prizes) {
           await dispatch({
             type: 'PRIZE',
-            payload: props.navigation.state.params.item.prizes,
+            payload: eventitem.prizes,
           });
         }
 
-        if (props.navigation.state.params.item.transfers) {
+        if (eventitem.transfers) {
           await dispatch({
             type: 'TRANSFER',
-            payload: props.navigation.state.params.item.transfers,
+            payload: eventitem.transfers,
           });
-        }
-
-        try {
-          let response = await api.get(
-            `/api/voucher/${props.navigation.state.params.item.id}`,
-          );
-          //alert(JSON.stringify(response));
-          if (__DEV__) {
-            console.tron.log(response.data);
-          }
-          await dispatch({type: 'VOUCHERITEM', payload: response.data});
-          setVoucher(response.data);
-        } catch (error) {
-          if (__DEV__) {
-            console.tron.log(error.message);
-          }
         }
       }
     } catch (error) {
@@ -343,6 +357,7 @@ export default function Main(props) {
       );
     }
   }
+
   return (
     <Content>
       <ScrollView>

@@ -70,7 +70,7 @@ export default function Main(props) {
 
  async function _handleScreen(item){
   await dispatch({type: 'VOUCHERITEM', payload: item});
-  props.navigation.navigate('VoucherItem')
+  props.navigation.navigate('VoucherItem');
  }
 
   function _renderItem(item) {

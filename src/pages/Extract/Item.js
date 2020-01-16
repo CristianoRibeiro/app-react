@@ -45,36 +45,76 @@ import Product from '~/model/Product';
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
+  const eventitem = useSelector(state => state.eventitem);
+  const item = useSelector(state => state.item);
   const dispatch = useDispatch();
 
-  const [saldo, setSaldo] = useState(20);
-  const [doacao, setDoacao] = useState(10);
-  const [item, setItem] = useState(null);
+  const [message, setMessage] = useState('');
   const [product, setProduct] = useState(Product);
 
+  const [disableComfirm, setDisableConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
 
   useEffect(() => {
     _getData();
 
     if (__DEV__) {
-      console.tron.log(props.navigation.state.params);
+      console.tron.log(item);
     }
   }, []);
 
+
   async function _getData() {
     setLoading(true);
+
+    if (user.coins < product.price) {
+      setDisableConfirm(true);
+    } else {
+      setDisableConfirm(false);
+    }
+
     try {
-      let response = await api.post('/api/ms/produto', {id: props.navigation.state.params.itemId});
+      let response = await api.post('/api/ms/produto', {id: item});
+      let response_user = await api.get('/api/auth/user');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
 
       setProduct(response.data);
+      await dispatch({type: 'USER', payload: response_user.data});
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+
+
+    setLoading(false);
+  }
+
+  async function _sendDonate() {
+    setLoading(true);
+    try {
+      let response = await api.post('/api/ms/doar', {product_id: item, event_id: eventitem.id});
+      let response_user = await api.get('/api/auth/user');
+      let response_produtos = await api.get('/api/ms/produtos');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      await dispatch({type: 'USER', payload: response_user.data});
+      await dispatch({type: 'PRODUCTS', payload: response_produtos.data});
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      //Alert.alert(null, response.data.msg);
+
+      setMessage(response.data.msg);
+      setModal(true);
+
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -90,7 +130,13 @@ export default function Main(props) {
 
   return (
     <Content>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={() => _getData()}
+          />
+        }>
         <Card>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <Title>{product.name}</Title>
@@ -111,23 +157,23 @@ export default function Main(props) {
 
         <Card>
 
-          {saldo < doacao ?
+          {user.coins < product.price ?
             <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
               <TextDark style={{fontSize: 18, color: '#bf360c'}}>Saldo insuficiente</TextDark>
-              <TextDark style={{fontSize: 18, fontWeight: '700', color: '#bf360c'}}>{saldo} pontos</TextDark>
+              <TextDark style={{fontSize: 18, fontWeight: '700', color: '#bf360c'}}>{user.coins} pontos</TextDark>
             </View>
 
             :
 
             <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
               <TextDark style={{fontSize: 18}}>Saldo</TextDark>
-              <TextDark style={{fontSize: 18, fontWeight: '700'}}>{saldo} pontos</TextDark>
+              <TextDark style={{fontSize: 18, fontWeight: '700'}}>{user.coins} pontos</TextDark>
             </View>
           }
 
           <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
             <TextDark style={{fontSize: 18}}>Doação</TextDark>
-            <TextDark style={{fontSize: 18, fontWeight: '700'}}>{doacao} pontos</TextDark>
+            <TextDark style={{fontSize: 18, fontWeight: '700'}}>{product.price} pontos</TextDark>
           </View>
 
           <Card
@@ -144,28 +190,29 @@ export default function Main(props) {
             <TextDark>Você receberá 3 cupons!</TextDark>
           </Card>
 
-          <View style={{flexDirection: 'row'}}>
-            <BtnCancel onPress={() => props.navigation.navigate('Extract')}>
-              <TextLight>CANCELAR</TextLight>
-            </BtnCancel>
+          {user.id ?
+            <View style={{flexDirection: 'row'}}>
+              <BtnCancel onPress={() => props.navigation.navigate('Extract')}>
+                <TextLight>CANCELAR</TextLight>
+              </BtnCancel>
 
-            <BtnConfirm disabled={saldo < doacao ? true : false} onPress={() => setModal(!modal)}>
-              <TextLight>CONFIRMAR</TextLight>
-            </BtnConfirm>
-          </View>
+              <BtnConfirm disabled={disableComfirm} onPress={() => _sendDonate()}>
+                <TextLight>CONFIRMAR</TextLight>
+              </BtnConfirm>
+            </View>
+            : null}
         </Card>
       </ScrollView>
 
       <Modal
         isVisible={modal}
         style={{backgroundColor: '#fff', margin: 0}}>
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Title style={{marginBottom: 10}}>Obrigado!</Title>
-          <TextDark>
-            Sua doação foi realizada com sucesso!</TextDark>
-          <TextDark>
-            Identifique-se no balcão de retirada para receber o item
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10}}>
+          <Title style={{marginBottom: 10, fontSize: 30, marginBottom: 50}}>Obrigado!</Title>
+          <TextDark style={{textAlign: 'center', fontSize: 20}}>
+            {message}
           </TextDark>
+
         </View>
 
         <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>

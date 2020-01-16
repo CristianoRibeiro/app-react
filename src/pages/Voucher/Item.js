@@ -15,6 +15,7 @@ import {Avatar, FAB} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //import ImagePicker from 'react-native-image-crop-picker';
+import EmptyList from '~/components/EmptyList';
 import QRCode from 'react-native-qrcode-svg';
 
 import api from '~/services/api';
@@ -43,128 +44,144 @@ import {Voucher} from '~/model/Voucher';
 
 export default function Profile(props) {
   const user = useSelector(state => state.user);
-  const voucheritem = useSelector(state => state.voucheritem);
+  const data = useSelector(state => state.voucheritem);
   //const dispatch = useDispatch();
 
-  const [data, setData] = useState(voucheritem ? voucheritem : Voucher);
+  //const [data, setData] = useState(voucheritem ? voucheritem : Voucher);
   const [loading, setLoading] = useState(Voucher);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    //console.tron.log(props.navigation.state.params.item);
-    //alert(JSON.stringify(props.navigation.state.params.item));
+    if (__DEV__) {
+      console.tron.log(data);
+    }
   }, []);
 
   const iconSize = 32;
-  
-  return (
-    <Content source={require('~/assets/bg-login.jpg')} resizeMode="cover">
-      <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
-        <View style={{marginBottom: 75}}>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                margin: 15,
-                justifyContent: 'center',
-              }}>
-              {/* <Link style={{width: 40, height: 40, alignItems: 'center'}}>
+
+  function _render() {
+    if(data.code){
+      return (
+        <Content source={require('~/assets/bg-login.jpg')} resizeMode="cover">
+          <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
+            <View style={{marginBottom: 75}}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    margin: 15,
+                    justifyContent: 'center',
+                  }}>
+                  {/* <Link style={{width: 40, height: 40, alignItems: 'center'}}>
                 <Ionicons name="ios-arrow-back" size={24} color={'#222'} />
               </Link> */}
-              <Image
-                resizeMode="cover"
-                style={{width: 40, height: 40, borderRadius: 20}}
-                defaultSource={require('~/assets/avatar/avatar.png')}
-                source={{
-                  uri: data.event.banner,
-                }}
-              />
+                  <Image
+                    resizeMode="cover"
+                    style={{width: 40, height: 40, borderRadius: 20}}
+                    defaultSource={require('~/assets/avatar/avatar.png')}
+                    source={{
+                      uri: data.event.banner,
+                    }}
+                  />
 
-              <View style={{flex: 1, justifyContent: 'center'}}>
-                <TextDark style={{paddingLeft: 20}} numberOfLines={1}>{data.event.name}</TextDark>
-                <TextDate style={{textAlign: 'left', paddingLeft: 20}}>
-                  {data.event.local}
-                </TextDate>
+                  <View style={{flex: 1, justifyContent: 'center'}}>
+                    <TextDark style={{paddingLeft: 20}} numberOfLines={1}>{data.event.name}</TextDark>
+                    <TextDate style={{textAlign: 'left', paddingLeft: 20}}>
+                      {data.event.local}
+                    </TextDate>
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flex: 1,
+                    padding: 15,
+                  }}>
+                  <View style={{alignItems: 'flex-end', flex: 1, marginBottom: 20}}>
+                    <Image
+                      resizeMode="cover"
+                      style={{width: 180, height: 180, borderRadius: 90}}
+                      defaultSource={require('~/assets/avatar/avatar.png')}
+                      source={{
+                        uri: user.append_avatar,
+                      }}
+                    />
+                  </View>
+
+                  <TextDark style={{fontWeight: '700'}}>{data.name}</TextDark>
+
+                  <TextDark>Matrícula: {user.matricula}</TextDark>
+                </View>
               </View>
-            </View>
 
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                flex: 1,
-                padding: 15,
-              }}>
-              <View style={{alignItems: 'flex-end', flex: 1, marginBottom: 20}}>
-                <Image
-                  resizeMode="cover"
-                  style={{width: 180, height: 180, borderRadius: 90}}
-                  defaultSource={require('~/assets/avatar/avatar.png')}
-                  source={{
-                    uri: user.append_avatar,
-                  }}
+              <Card style={{alignItems: 'center'}}>
+                <View style={{overflow: 'hidden'}}>
+                  <QRCode
+                    value={data.code}
+                    size={200}
+                    bgColor="#000"
+                    fgColor="white"
+                  />
+                </View>
+                <TextDark style={{color: '#666', fontWeight: '700'}}>{data.code}</TextDark>
+              </Card>
+              <Card>
+                <ListItem
+                  title="CPF"
+                  text={data.doc}
+                  color="#444"
+                  icon={
+                    <MaterialCommunityIcons
+                      name="account-card-details-outline"
+                      size={iconSize}
+                      color={'#444'}
+                    />
+                  }
                 />
-              </View>
 
-              <TextDark style={{fontWeight: '700'}}>{data.name}</TextDark>
+                <ListItem
+                  title="E-MAIL"
+                  text={data.email}
+                  color="#444"
+                  icon={
+                    <MaterialCommunityIcons
+                      name="email-outline"
+                      size={iconSize}
+                      color={'#444'}
+                    />
+                  }
+                />
 
-              <TextDark>Matrícula: {user.matricula}</TextDark>
+                <ListItem
+                  title="TELEFONE"
+                  text={data.phone}
+                  color="#444"
+                  icon={
+                    <MaterialCommunityIcons
+                      name="cellphone-android"
+                      size={iconSize}
+                      color={'#444'}
+                    />
+                  }
+                />
+              </Card>
             </View>
+          </ScrollView>
+        </Content>
+      );
+    }
+    else{
+      return(
+        <Content>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <EmptyList text="Você não possui ingresso!" />
           </View>
+        </Content>
+      );
+    }
+  }
 
-          <Card style={{alignItems: 'center'}}>
-            <View style={{overflow: 'hidden'}}>
-              <QRCode
-                value={data.code}
-                size={200}
-                bgColor="#000"
-                fgColor="white"
-              />
-            </View>
-            <TextDark style={{color: '#666', fontWeight: '700'}}>{data.code}</TextDark>
-          </Card>
-          <Card>
-            <ListItem
-              title="CPF"
-              text={data.doc}
-              color="#444"
-              icon={
-                <MaterialCommunityIcons
-                  name="account-card-details-outline"
-                  size={iconSize}
-                  color={'#444'}
-                />
-              }
-            />
-
-            <ListItem
-              title="E-MAIL"
-              text={data.email}
-              color="#444"
-              icon={
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={iconSize}
-                  color={'#444'}
-                />
-              }
-            />
-
-            <ListItem
-              title="TELEFONE"
-              text={data.phone}
-              color="#444"
-              icon={
-                <MaterialCommunityIcons
-                  name="cellphone-android"
-                  size={iconSize}
-                  color={'#444'}
-                />
-              }
-            />
-          </Card>
-        </View>
-      </ScrollView>
-    </Content>
-  );
+  return _render();
 }

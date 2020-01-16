@@ -47,6 +47,7 @@ import Flight from '~/pages/Event/Flight';
 import Transfer from '~/pages/Event/Transfer';
 import Streaming from '~/pages/Event/Streaming';
 import Info from '~/pages/Event/Info';
+import UsefulInfo from '~/pages/Event/Info/Useful';
 import Faq from '~/pages/Event/Faq';
 import ScheduleEvent from '~/pages/Event/ScheduleEvent';
 import ScheduleEventDetail from '~/pages/Event/ScheduleEvent/Detail';
@@ -95,7 +96,7 @@ const TabsRoute = createMaterialBottomTabNavigator(
         title: 'home',
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => (
-          <MaterialCommunityIcons name="home" size={24} color={tintColor} />
+          <MaterialCommunityIcons name="home" size={24} color={tintColor}/>
         ),
       },
     },
@@ -106,7 +107,7 @@ const TabsRoute = createMaterialBottomTabNavigator(
         title: 'campanhas',
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => (
-          <Ionicons name="md-images" size={24} color={tintColor} />
+          <Ionicons name="md-images" size={24} color={tintColor}/>
         ),
       },
     },
@@ -134,16 +135,16 @@ const TabsRoute = createMaterialBottomTabNavigator(
         title: '',
         tabBarColor: '#fff',
         tabBarIcon: ({tintColor}) => tintColor === '#0D4274' ? (
-          <Image
-            source={require('~/assets/rede/Rede1.png')}
-            style={{
-              height: 40,
-              width: 40,
-            }}
-            resizeMode="cover"
-          />
-        )
-        :
+            <Image
+              source={require('~/assets/rede/Rede1.png')}
+              style={{
+                height: 40,
+                width: 40,
+              }}
+              resizeMode="cover"
+            />
+          )
+          :
           (
             <Image
               source={require('~/assets/rede/Rede2.png')}
@@ -278,19 +279,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    Extract: {
-      screen: Extract,
-      path: 'extract',
-      navigationOptions: {
-        drawerLabel: props => (
-          <DrawerItem
-            {...props}
-            title="Movimento solidário"
-            icon={require('~/assets/menu/premios.png')}
-          />
-        ),
-      },
-    },
+    // Extract: {
+    //   screen: Extract,
+    //   path: 'extract',
+    //   navigationOptions: {
+    //     drawerLabel: props => (
+    //       <DrawerItem
+    //         {...props}
+    //         title="Movimento solidário"
+    //         icon={require('~/assets/menu/premios.png')}
+    //       />
+    //     ),
+    //   },
+    // },
   },
   {
     contentComponent: props => <SideBar {...props} />,
@@ -519,6 +520,17 @@ const MainNavigator = createStackNavigator(
       header: null,
       navigationOptions: {
         headerTitle: 'Informações',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    UsefulInfo: {
+      screen: UsefulInfo,
+      path: 'info/useful',
+      header: null,
+      navigationOptions: {
+        headerTitle: 'Informações Úteis',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -876,13 +888,23 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
+    Extract: {
+      screen: Extract,
+      path: 'extract',
+      navigationOptions: {
+        headerTitle: 'Movimento solidário',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
   },
   {
     initialRouteName: 'Main',
     headerLayoutPreset: 'center',
     defaultNavigationOptions: ({navigation}) => ({
       headerTintColor: '#ffffff',
-      headerTitle: <ToolBar navigation={navigation} />,
+      headerTitle: <ToolBar navigation={navigation}/>,
       headerStyle: {
         backgroundColor: '#FF6666',
       },
@@ -971,6 +993,12 @@ const Auth = createSwitchNavigator(
 
 const prefix = 'vivafenae://';
 const Route = createAppContainer(Auth);
-const RouteApp = () => <Route uriPrefix={prefix} />;
+const RouteApp = () => <Route uriPrefix={prefix}/>;
 
 export default RouteApp;
+
+
+//Trocar o icone do movimento solidario
+//Retornar todos os indicados e nao indicados
+//Desabilitar os indicados
+//Desabilitar o botao indicar dos indicados e alterar o label para 'já indicado'

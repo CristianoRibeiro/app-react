@@ -75,11 +75,16 @@ export default function Main(props) {
     }
   }
 
+  async function _handleScreen(item){
+    await dispatch({type: 'EVENTITEM', payload: item});
+    props.navigation.navigate('EventItem');
+  }
+
   function _renderItem(item, index) {
     return (
       <Link
         key={index}
-        onPress={() => props.navigation.navigate('EventItem', {item})}>
+        onPress={() => _handleScreen(item)}>
         <View
           style={{
             alignItems: 'center',

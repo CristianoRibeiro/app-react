@@ -14,7 +14,7 @@ import reducers from '../reducers/reducer';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  //blacklist: ['loading'] // navigation will not be persisted
+  blacklist: ['voucheritem', 'item']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

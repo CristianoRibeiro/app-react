@@ -32,9 +32,11 @@ import {
   CardImage,
   SubTitle
 } from './styles';
+import Voucher from "~/model/Voucher";
 
 export default function Main(props) {
   const data = useSelector(state => state.eventold);
+  const eventitem = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
   const [events, setEvents] = useState(data);
@@ -63,9 +65,14 @@ export default function Main(props) {
     setLoading(false);
   }
 
+  async function _handleScreen(item){
+    await dispatch({type: 'EVENTITEM', payload: item});
+    props.navigation.navigate('EventItem');
+  }
+
   function _renderItem(item) {
     return (
-      <Link onPress={() => props.navigation.navigate('EventItem', {item})}>
+      <Link onPress={() => _handleScreen(item)}>
         <Card>
           <CardImage>
             <Image

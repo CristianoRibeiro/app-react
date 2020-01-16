@@ -13,6 +13,7 @@ import {
   FlatList,
   RefreshControl,
   Alert,
+  TouchableOpacity
 } from 'react-native';
 import {FAB} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
 
 export default function Main(props) {
   const data = useSelector(state => state.products);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -68,11 +70,13 @@ export default function Main(props) {
     setLoading(true);
     try {
       let response = await api.get('/api/ms/produtos');
+      let response_user = await api.get('/api/auth/user');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
       await dispatch({type: 'PRODUCTS', payload: response.data});
+      await dispatch({type: 'USER', payload: response_user.data});
 
       //setNotifications(response.data);
     } catch (error) {
@@ -84,9 +88,10 @@ export default function Main(props) {
     setLoading(false);
   }
 
-  function _getProduct(value) {
+  async function _getProduct(value) {
+    await dispatch({type: 'ITEM', payload: value});
     setModal(false);
-    props.navigation.navigate('ExtractItem', {itemId: value});
+    props.navigation.navigate('ExtractItem');
   }
 
   return (
@@ -125,53 +130,53 @@ export default function Main(props) {
           </TextLight>
 
           <TextLight style={{fontSize: 18, fontWeight: '800'}}>
-            125 pontos
+            {user.coins}
           </TextLight>
         </View>
 
         <FlatList
-          contentContainerStyle={{paddingBottom: 20}}
+          contentContainerStyle={{paddingBottom: 75}}
           data={data}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={<EmptyList text="Que pena, você ainda não realizou nenhuma doação!"/>}
-          renderItem={(item, index) => (
-            <Card>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginVertical: 8,
-                }}>
-                <View style={{alignItems: 'center', justifyContent: 'center', paddingRight: 10}}>
+          renderItem={({item, index}) => (
+              <Card>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginVertical: 8,
+                  }}>
+                  <View style={{alignItems: 'center', justifyContent: 'center', paddingRight: 10}}>
 
-                  <FontAwesome5
-                    name="coins"
-                    size={20}
-                    color={'#999'}
-                  />
+                    <FontAwesome5
+                      name="coins"
+                      size={20}
+                      color={'#999'}
+                    />
+                  </View>
+                  <View style={{flex: 1, justifyContent: 'center'}}>
+                    <TextDark style={{fontWeight: '500', fontSize: 13}}>
+                      {item ? item.name : ''}
+                    </TextDark>
+
+                    <TextDark
+                      style={{fontSize: 16, marginTop: 5, fontWeight: '700', color: 'red'}}>
+                      - {item ? item.append_price : ''}
+                    </TextDark>
+                  </View>
+
+                  <View style={{alignItems: 'center'}}>
+                    <TextDark style={{fontSize: 11, fontWeight: '700', color: '#888'}}>
+                      {item ? item.append_date : ''}
+                    </TextDark>
+
+                    <TextDark style={{fontSize: 16, marginTop: 5, fontWeight: '700'}}>
+                      {item ? item.append_cupom : ''}
+                    </TextDark>
+                  </View>
                 </View>
-                <View style={{flex: 1, justifyContent: 'center'}}>
-                  <TextDark style={{fontWeight: '500', fontSize: 13}}>
-                    {item.item.name}
-                  </TextDark>
-
-                  <TextDark
-                    style={{fontSize: 16, marginTop: 5, fontWeight: '700', color: item.item.doacao ? 'red' : 'green'}}>
-                    {item.item.append_price}
-                  </TextDark>
-                </View>
-
-                <View style={{alignItems: 'center'}}>
-                  <TextDark style={{fontSize: 11, fontWeight: '700', color: '#888'}}>
-                    {item.item.append_date}
-                  </TextDark>
-
-                  <TextDark style={{fontSize: 16, marginTop: 5, fontWeight: '700'}}>
-                    {item.item.append_cupom}
-                  </TextDark>
-                </View>
-              </View>
-            </Card>
+              </Card>
           )}
         />
       </ScrollView>
