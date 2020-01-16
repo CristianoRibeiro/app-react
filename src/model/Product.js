@@ -1,4 +1,4 @@
-export const User = {
+export default User = {
   "id": "",
   "active": "",
   "name": "",
@@ -8,5 +8,6 @@ export const User = {
   "created_at": "",
   "updated_at": "",
   "sku": "",
-  "append_image": ""
+  "append_image": "",
+  "append_date": ""
 }

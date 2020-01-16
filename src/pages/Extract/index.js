@@ -115,7 +115,7 @@ export default function Main(props) {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            flex:1,
+            flex: 1,
             backgroundColor: '#999',
             paddingVertical: 10
           }}>
@@ -157,17 +157,17 @@ export default function Main(props) {
 
                   <TextDark
                     style={{fontSize: 16, marginTop: 5, fontWeight: '700', color: item.item.doacao ? 'red' : 'green'}}>
-                    {item.item.price} pontos
+                    {item.item.append_price}
                   </TextDark>
                 </View>
 
                 <View style={{alignItems: 'center'}}>
                   <TextDark style={{fontSize: 11, fontWeight: '700', color: '#888'}}>
-                    14/01/2020 12:16:27
+                    {item.item.append_date}
                   </TextDark>
 
                   <TextDark style={{fontSize: 16, marginTop: 5, fontWeight: '700'}}>
-                    +3 cupons
+                    {item.item.append_cupom}
                   </TextDark>
                 </View>
               </View>
@@ -192,7 +192,7 @@ export default function Main(props) {
       <FAB
         style={styles.fab}
         icon="add"
-        onPress={() =>  _getProduct(1)}
+        onPress={() => setModal(true)}
       />
     </Content>
   );

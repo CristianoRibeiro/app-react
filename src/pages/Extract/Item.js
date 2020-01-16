@@ -122,7 +122,8 @@ export default function Main(props) {
             <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
               <TextDark style={{fontSize: 18}}>Saldo</TextDark>
               <TextDark style={{fontSize: 18, fontWeight: '700'}}>{saldo} pontos</TextDark>
-            </View>}
+            </View>
+          }
 
           <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
             <TextDark style={{fontSize: 18}}>Doação</TextDark>

@@ -86,6 +86,15 @@ export default function Main(props) {
         type: null,
       },
       {
+        navigation: 'UsefulInfo',
+        image: require('~/assets/icons/info.png'),
+        name: 'INFORMAÇÕES ÚTEIS',
+        item: item,
+        //permission: app_functions.useful_info,
+        permission: false,
+        type: null,
+      },
+      {
         navigation: 'ScheduleEvent',
         image: require('~/assets/icons/calendar.png'),
         name: 'PROGRAMAÇÃO',
