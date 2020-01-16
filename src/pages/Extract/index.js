@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 });
 
 export default function Main(props) {
-  const data = useSelector(state => state.lottery);
+  const data = useSelector(state => state.products);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -67,15 +67,16 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
-      let response = await api.get('/api/lottery');
+      let response = await api.get('/api/ms/produtos');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'LOTTERY', payload: response.data});
+      await dispatch({type: 'PRODUCTS', payload: response.data});
 
       //setNotifications(response.data);
     } catch (error) {
+      await dispatch({type: 'PRODUCTS', payload: []});
       if (__DEV__) {
         console.tron.log(error.message);
       }
@@ -85,7 +86,7 @@ export default function Main(props) {
 
   function _getProduct(value) {
     setModal(false);
-    props.navigation.navigate('ExtractItem');
+    props.navigation.navigate('ExtractItem', {itemId: value});
   }
 
   return (
@@ -130,17 +131,7 @@ export default function Main(props) {
 
         <FlatList
           contentContainerStyle={{paddingBottom: 20}}
-          data={[
-            {
-              name: 'Caixa Bluetooth JBL Pulse 3 – Branca',
-              price: '-15',
-              doacao: true
-            },
-            {
-              name: 'Mochila Victorinox Scout Vx - Sport',
-              price: '+18',
-              doacao: false
-            }]}
+          data={data}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={<EmptyList text="Que pena, você ainda não realizou nenhuma doação!"/>}
           renderItem={(item, index) => (
@@ -201,7 +192,7 @@ export default function Main(props) {
       <FAB
         style={styles.fab}
         icon="add"
-        onPress={() => setModal(true)}
+        onPress={() =>  _getProduct(1)}
       />
     </Content>
   );

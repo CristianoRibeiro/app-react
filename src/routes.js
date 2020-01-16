@@ -278,19 +278,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    // Extract: {
-    //   screen: Extract,
-    //   path: 'extract',
-    //   navigationOptions: {
-    //     drawerLabel: props => (
-    //       <DrawerItem
-    //         {...props}
-    //         title="Movimento solidário"
-    //         icon={require('~/assets/menu/premios.png')}
-    //       />
-    //     ),
-    //   },
-    // },
+    Extract: {
+      screen: Extract,
+      path: 'extract',
+      navigationOptions: {
+        drawerLabel: props => (
+          <DrawerItem
+            {...props}
+            title="Movimento solidário"
+            icon={require('~/assets/menu/premios.png')}
+          />
+        ),
+      },
+    },
   },
   {
     contentComponent: props => <SideBar {...props} />,

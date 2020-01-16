@@ -41,34 +41,40 @@ import {
   TextLight,
 } from './styles';
 
+import Product from '~/model/Product';
+
 export default function Main(props) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const [saldo, setSaldo] = useState(20);
   const [doacao, setDoacao] = useState(10);
+  const [item, setItem] = useState(null);
+  const [product, setProduct] = useState(Product);
 
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [modalCancel, setModalCancel] = useState(false);
   const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
 
   useEffect(() => {
     _getData();
+
+    if (__DEV__) {
+      console.tron.log(props.navigation.state.params);
+    }
   }, []);
 
   async function _getData() {
     setLoading(true);
     try {
-      let response = await api.get('/api/lottery');
+      let response = await api.post('/api/ms/produto', {id: props.navigation.state.params.itemId});
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'LOTTERY', payload: response.data});
 
-      //setNotifications(response.data);
+      setProduct(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -87,7 +93,7 @@ export default function Main(props) {
       <ScrollView>
         <Card>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Title>Nome do produto</Title>
+            <Title>{product.name}</Title>
 
             <Image
               resizeMode="cover"
@@ -97,14 +103,13 @@ export default function Main(props) {
                 marginBottom: 5,
                 marginTop: 10,
               }}
-              source={{uri: 'https://2516.cdn.simplo7.net/static/2516/sku/mochilas-taticas-mochila-tatica-mission-1470884673823.jpg'}}
+              source={{uri: product.append_image}}
             />
 
           </View>
         </Card>
 
         <Card>
-
 
           {saldo < doacao ?
             <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
@@ -125,12 +130,21 @@ export default function Main(props) {
           </View>
 
           <Card
-            style={{marginTop: 5, marginBottom: 15, padding: 10, borderRadius: 5, alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderStyle: 'dashed'}}>
+            style={{
+              marginTop: 5,
+              marginBottom: 15,
+              padding: 10,
+              borderRadius: 5,
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: '#ccc',
+              borderStyle: 'dashed'
+            }}>
             <TextDark>Você receberá 3 cupons!</TextDark>
           </Card>
 
           <View style={{flexDirection: 'row'}}>
-            <BtnCancel onPress={()=>props.navigation.navigate('Extract')}>
+            <BtnCancel onPress={() => props.navigation.navigate('Extract')}>
               <TextLight>CANCELAR</TextLight>
             </BtnCancel>
 
