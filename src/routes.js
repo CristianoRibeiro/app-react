@@ -128,46 +128,46 @@ const TabsRoute = createMaterialBottomTabNavigator(
         ),
       },
     },
-    Notification: {
-      screen: Notification,
-      path: 'notification',
-      navigationOptions: {
-        title: 'notificações',
-        tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => (
-          <MaterialIcons name="notifications" size={24} color={tintColor} />
-        ),
-      },
-    },
-    // Rede: {
-    //   screen: Rede,
-    //   path: 'rede',
+    // Notification: {
+    //   screen: Notification,
+    //   path: 'notification',
     //   navigationOptions: {
-    //     title: '',
+    //     title: 'notificações',
     //     tabBarColor: '#fff',
-    //     tabBarIcon: ({tintColor}) => tintColor === '#0D4274' ? (
-    //         <Image
-    //           source={require('~/assets/rede/Rede1.png')}
-    //           style={{
-    //             height: 40,
-    //             width: 40,
-    //           }}
-    //           resizeMode="cover"
-    //         />
-    //       )
-    //       :
-    //       (
-    //         <Image
-    //           source={require('~/assets/rede/Rede2.png')}
-    //           style={{
-    //             height: 40,
-    //             width: 40,
-    //           }}
-    //           resizeMode="cover"
-    //         />
-    //       ),
+    //     tabBarIcon: ({tintColor}) => (
+    //       <MaterialIcons name="notifications" size={24} color={tintColor} />
+    //     ),
     //   },
     // },
+    Rede: {
+      screen: Rede,
+      path: 'rede',
+      navigationOptions: {
+        title: '',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => tintColor === '#0D4274' ? (
+            <Image
+              source={require('~/assets/rede/Rede1.png')}
+              style={{
+                height: 40,
+                width: 40,
+              }}
+              resizeMode="cover"
+            />
+          )
+          :
+          (
+            <Image
+              source={require('~/assets/rede/Rede2.png')}
+              style={{
+                height: 40,
+                width: 40,
+              }}
+              resizeMode="cover"
+            />
+          ),
+      },
+    },
   },
   {
     initialRouteName: 'Home',

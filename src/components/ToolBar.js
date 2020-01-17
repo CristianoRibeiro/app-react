@@ -71,22 +71,22 @@ export default function Main({navigation}) {
           />
         </View>
 
-        <View style={{ width: 60 }} />
-        {/*<TouchableOpacity*/}
-        {/*  onPress={_goNotification}*/}
-        {/*  style={{*/}
-        {/*    width: 60,*/}
-        {/*    height: 50,*/}
-        {/*    alignItems: "center",*/}
-        {/*    justifyContent: "center"*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  <Appbar.Action*/}
-        {/*    icon="notifications"*/}
-        {/*    onPress={_goNotification}*/}
-        {/*    color={'#fff'}*/}
-        {/*  />*/}
-        {/*</TouchableOpacity>*/}
+        {/*<View style={{ width: 60 }} />*/}
+        <TouchableOpacity
+          onPress={_goNotification}
+          style={{
+            width: 60,
+            height: 50,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Appbar.Action
+            icon="notifications"
+            onPress={_goNotification}
+            color={'#fff'}
+          />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

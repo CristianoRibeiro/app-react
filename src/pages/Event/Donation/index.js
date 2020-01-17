@@ -89,6 +89,7 @@ export default function Main(props) {
   }
 
   async function _getProduct(value) {
+    setModal(false);
     setLoading(true);
     try {
       let response = await api.post('/api/ms/produto', {id: value});
@@ -101,7 +102,7 @@ export default function Main(props) {
       if (response.data){
         await dispatch({type: 'ITEM', payload: response.data});
         await dispatch({type: 'USER', payload: response_user.data});
-        props.navigation.navigate('ExtractItem');
+        props.navigation.navigate('DonationItem');
       }
       else{
         Alert.alert(null, 'Item não encontrado.');
@@ -114,7 +115,6 @@ export default function Main(props) {
     }
 
     setLoading(false);
-    setModal(false);
   }
 
   return (
@@ -148,11 +148,11 @@ export default function Main(props) {
             paddingVertical: 10
           }}>
 
-          <TextLight style={{fontSize: 18, fontWeight: '500'}}>
-            Saldo atual:
+          <TextLight style={{fontSize: 16, fontWeight: '500'}}>
+            Saldo de pontos no Mundo Caixa:
           </TextLight>
 
-          <TextLight style={{fontSize: 18, fontWeight: '800'}}>
+          <TextLight style={{fontSize: 16, fontWeight: '700'}}>
             {user.coins}
           </TextLight>
         </View>
@@ -220,7 +220,7 @@ export default function Main(props) {
       <FAB
         style={styles.fab}
         icon="add"
-        onPress={() => setModal(true)}
+        onPress={() => setModal(1)}
       />
     </Content>
   );

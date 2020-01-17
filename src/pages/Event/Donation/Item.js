@@ -125,7 +125,7 @@ export default function Main(props) {
 
   function _confirm() {
     setModal(false);
-    props.navigation.navigate('Extract');
+    props.navigation.navigate('Donation');
   }
 
   return (
@@ -186,7 +186,7 @@ export default function Main(props) {
 
           {user.id ?
             <View style={{flexDirection: 'row'}}>
-              <BtnCancel onPress={() => props.navigation.navigate('Extract')}>
+              <BtnCancel onPress={() => props.navigation.navigate('Donation')}>
                 <TextLight>CANCELAR</TextLight>
               </BtnCancel>
 
