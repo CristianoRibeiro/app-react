@@ -25,8 +25,8 @@ import News from '~/pages/News';
 import EventNews from '~/pages/News/EventNews';
 import NewsDetail from '~/pages/News/Detail';
 import Friends from '~/pages/Friends';
-import Extract from '~/pages/Extract';
-import ExtractItem from '~/pages/Extract/Item';
+import Donation from '~/pages/Event/Donation';
+import DonationItem from '~/pages/Event/Donation/Item';
 import PrizeUser from '~/pages/Prize';
 import Rede from '~/pages/Rede';
 
@@ -52,13 +52,14 @@ import Faq from '~/pages/Event/Faq';
 import ScheduleEvent from '~/pages/Event/ScheduleEvent';
 import ScheduleEventDetail from '~/pages/Event/ScheduleEvent/Detail';
 import Certificate from '~/pages/Certificate';
-import Games from '~/pages/Event/Games';
-import EventCupons from '~/pages/Event/Games/Cupons';
+import Cupom from '~/pages/Event/Cupom';
+import EventCupons from '~/pages/Event/Cupom/Cupons';
 import Gallery from '~/pages/Event/Gallery';
 import FriendsEvent from '~/pages/Event/Friends';
 import EventRegulation from '~/pages/Event/Regulation';
 import EventGuia from '~/pages/Event/Guia';
 import EventMaterial from '~/pages/Event/Guia/Material';
+import Games from '~/pages/Event/Games';
 
 //Campanhas
 import Campaigns from '~/pages/Campaigns';
@@ -127,36 +128,46 @@ const TabsRoute = createMaterialBottomTabNavigator(
         ),
       },
     },
-
-    Rede: {
-      screen: Rede,
-      path: 'rede',
+    Notification: {
+      screen: Notification,
+      path: 'notification',
       navigationOptions: {
-        title: '',
+        title: 'notificações',
         tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => tintColor === '#0D4274' ? (
-            <Image
-              source={require('~/assets/rede/Rede1.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="cover"
-            />
-          )
-          :
-          (
-            <Image
-              source={require('~/assets/rede/Rede2.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="cover"
-            />
-          ),
+        tabBarIcon: ({tintColor}) => (
+          <MaterialIcons name="notifications" size={24} color={tintColor} />
+        ),
       },
     },
+    // Rede: {
+    //   screen: Rede,
+    //   path: 'rede',
+    //   navigationOptions: {
+    //     title: '',
+    //     tabBarColor: '#fff',
+    //     tabBarIcon: ({tintColor}) => tintColor === '#0D4274' ? (
+    //         <Image
+    //           source={require('~/assets/rede/Rede1.png')}
+    //           style={{
+    //             height: 40,
+    //             width: 40,
+    //           }}
+    //           resizeMode="cover"
+    //         />
+    //       )
+    //       :
+    //       (
+    //         <Image
+    //           source={require('~/assets/rede/Rede2.png')}
+    //           style={{
+    //             height: 40,
+    //             width: 40,
+    //           }}
+    //           resizeMode="cover"
+    //         />
+    //       ),
+    //   },
+    // },
   },
   {
     initialRouteName: 'Home',
@@ -279,19 +290,7 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-    // Extract: {
-    //   screen: Extract,
-    //   path: 'extract',
-    //   navigationOptions: {
-    //     drawerLabel: props => (
-    //       <DrawerItem
-    //         {...props}
-    //         title="Movimento solidário"
-    //         icon={require('~/assets/menu/premios.png')}
-    //       />
-    //     ),
-    //   },
-    // },
+
   },
   {
     contentComponent: props => <SideBar {...props} />,
@@ -721,9 +720,9 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
-    Games: {
-      screen: Games,
-      path: 'games',
+    Cupom: {
+      screen: Cupom,
+      path: 'cupom',
       navigationOptions: {
         headerTitle: 'Meus Cupons',
         headerStyle: {
@@ -868,11 +867,11 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
-    ExtractItem: {
-      screen: ExtractItem,
-      path: 'extract/item',
+    DonationItem: {
+      screen: DonationItem,
+      path: 'donation/item',
       navigationOptions: {
-        headerTitle: 'Extrato',
+        headerTitle: 'Movimento solidário',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -888,11 +887,21 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
-    Extract: {
-      screen: Extract,
-      path: 'extract',
+    Donation: {
+      screen: Donation,
+      path: 'donation',
       navigationOptions: {
         headerTitle: 'Movimento solidário',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    Games: {
+      screen: Games,
+      path: 'games',
+      navigationOptions: {
+        headerTitle: 'Games',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -998,7 +1007,7 @@ const RouteApp = () => <Route uriPrefix={prefix}/>;
 export default RouteApp;
 
 
-//Trocar o icone do movimento solidario
+//Trocar o icone do movimento solidario - cor: #ff881f
 //Retornar todos os indicados e nao indicados
 //Desabilitar os indicados
 //Desabilitar o botao indicar dos indicados e alterar o label para 'já indicado'

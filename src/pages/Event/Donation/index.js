@@ -89,9 +89,32 @@ export default function Main(props) {
   }
 
   async function _getProduct(value) {
-    await dispatch({type: 'ITEM', payload: value});
+    setLoading(true);
+    try {
+      let response = await api.post('/api/ms/produto', {id: value});
+      let response_user = await api.get('/api/auth/user');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      if (response.data){
+        await dispatch({type: 'ITEM', payload: response.data});
+        await dispatch({type: 'USER', payload: response_user.data});
+        props.navigation.navigate('ExtractItem');
+      }
+      else{
+        Alert.alert(null, 'Item não encontrado.');
+      }
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+
+    setLoading(false);
     setModal(false);
-    props.navigation.navigate('ExtractItem');
   }
 
   return (

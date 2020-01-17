@@ -14,6 +14,8 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
+import Modal from "react-native-modal";
+import QRCodeScanner from "react-native-qrcode-scanner";
 import Voucher from '~/model/Voucher';
 
 import api from '~/services/api';
@@ -22,10 +24,15 @@ import {Header, TextDark, Card, Link} from './styles';
 import {Container, Content, Title} from '~/style';
 import {Event} from '~/model/Event';
 
+import {
+  TextLight, Btn,
+} from '~/pages/Event/Donation/styles';
+
 export default function Main(props) {
   const eventitem = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
+  const [modal, setModal] = useState(false);
   const [item, setItem] = useState(Event);
   const [voucher, setVoucher] = useState([]);
   const [app_functions, setFunctions] = useState(
@@ -43,7 +50,7 @@ export default function Main(props) {
     _screen();
   }, []);
 
-  async function _getVoucher(){
+  async function _getVoucher() {
     try {
       let response = await api.get(
         `/api/voucher/${eventitem.id}`
@@ -90,9 +97,13 @@ export default function Main(props) {
       } else {
         props.navigation.navigate(item.navigation, {item: item.item});
       }
+    } else if (item.type === 'games') {
+      //setModal(true);
+      _scanner(20);
     } else {
       props.navigation.navigate(item.navigation, {item: item.item});
     }
+
   }
 
   function _screen() {
@@ -150,15 +161,15 @@ export default function Main(props) {
         type: null,
       },
       {
-        navigation: '',
+        navigation: 'Donation',
         image: require('~/assets/icons/games.png'),
-        name: 'EXTRATO',
+        name: 'MOVIMENTO SOLIDÁRIO',
         item: item,
-        permission: app_functions ? app_functions.extract : false,
+        permission: app_functions ? app_functions.donation : false,
         type: null,
       },
       {
-        navigation: 'Games',
+        navigation: 'Cupom',
         image: require('~/assets/icons/games.png'),
         name: 'MEUS CUPONS',
         item: item,
@@ -269,15 +280,24 @@ export default function Main(props) {
         //permission: true,
         type: null,
       },
-      {
-        navigation: 'Extract',
-        image: require('~/assets/icons/books.png'),
-        name: 'MOVIMENTO SOLIDÁRIO',
-        item: item,
-        //permission: app_functions ? app_functions.material : false,
-        permission: true,
-        type: null,
-      },
+      // {
+      //   navigation: 'Donation',
+      //   image: require('~/assets/icons/movimento.png'),
+      //   name: 'MOVIMENTO SOLIDÁRIO',
+      //   item: item,
+      //   //permission: app_functions ? app_functions.material : false,
+      //   permission: true,
+      //   type: null,
+      // },
+      // {
+      //   navigation: 'Games',
+      //   image: require('~/assets/icons/games.png'),
+      //   name: 'GAMES',
+      //   item: item,
+      //   permission: app_functions ? app_functions.games_toten : false,
+      //   //permission: true,
+      //   type: 'games',
+      // },
     ];
 
     const filtered = screen.filter(value => value.permission === true);
@@ -358,6 +378,32 @@ export default function Main(props) {
     }
   }
 
+  async function _scanner(value) {
+    setLoading(true);
+    try {
+      let response = await api.post('/api/games/toten', {event_id: eventitem.id, code: value});
+
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      if (response.data.active) {
+        props.navigation.navigate('Games', {item: response.data});
+      } else {
+        Alert.alert(null, response.data.msg);
+      }
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+
+    setLoading(false);
+
+    setModal(false);
+  }
+
   return (
     <Content>
       <ScrollView>
@@ -389,6 +435,19 @@ export default function Main(props) {
           renderItem={({item}) => _renderItem(item)}
         />
       </ScrollView>
+
+      <Modal isVisible={modal} style={{margin: 0}}>
+        <QRCodeScanner
+          onRead={e => _scanner(e.data)}
+          showMarker={true}
+          reactivate={false}
+          bottomContent={
+            <Btn onPress={() => setModal(!modal)}>
+              <TextLight>CANCELAR</TextLight>
+            </Btn>
+          }
+        />
+      </Modal>
     </Content>
   );
 }

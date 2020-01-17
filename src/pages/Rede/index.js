@@ -126,17 +126,16 @@ export default function Main(props) {
   function _removeImagePost(item) {
 
     let list = imagePost;
-    // list.splice( list.indexOf(item), 1 );
-    //
-    // setImagePost(list);
+    let newValues = new Array();
 
-    list.filter(function (returnableObjects) {
-      return returnableObjects !== item;
+    let i = 0;
+    list.forEach((element, index) => {
+      if (item.item != element) {
+        newValues[i] = element;
+        i++;
+      }
     });
-
-    alert(JSON.stringify(list));
-
-    setImagePost(list);
+    setImagePost(newValues);
   }
 
   return (

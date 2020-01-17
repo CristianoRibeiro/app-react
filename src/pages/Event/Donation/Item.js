@@ -50,7 +50,7 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState('');
-  const [product, setProduct] = useState(Product);
+  //const [product, setProduct] = useState(Product);
 
   const [disableComfirm, setDisableConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getData();
+    //_getData();
 
     if (__DEV__) {
       console.tron.log(item);
@@ -66,39 +66,39 @@ export default function Main(props) {
   }, []);
 
 
-  async function _getData() {
-    setLoading(true);
-
-    if (user.coins < product.price) {
-      setDisableConfirm(true);
-    } else {
-      setDisableConfirm(false);
-    }
-
-    try {
-      let response = await api.post('/api/ms/produto', {id: item});
-      let response_user = await api.get('/api/auth/user');
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-
-      setProduct(response.data);
-      await dispatch({type: 'USER', payload: response_user.data});
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-
-
-    setLoading(false);
-  }
+  // async function _getData() {
+  //   setLoading(true);
+  //
+  //   if (user.coins < product.price) {
+  //     setDisableConfirm(true);
+  //   } else {
+  //     setDisableConfirm(false);
+  //   }
+  //
+  //   try {
+  //     let response = await api.post('/api/ms/produto', {id: item});
+  //     let response_user = await api.get('/api/auth/user');
+  //     //alert(JSON.stringify(response));
+  //     if (__DEV__) {
+  //       console.tron.log(response.data);
+  //     }
+  //
+  //     setProduct(response.data);
+  //     await dispatch({type: 'USER', payload: response_user.data});
+  //   } catch (error) {
+  //     if (__DEV__) {
+  //       console.tron.log(error.message);
+  //     }
+  //   }
+  //
+  //
+  //   setLoading(false);
+  // }
 
   async function _sendDonate() {
     setLoading(true);
     try {
-      let response = await api.post('/api/ms/doar', {product_id: item, event_id: eventitem.id});
+      let response = await api.post('/api/ms/doar', {product_id: item.id, event_id: eventitem.id});
       let response_user = await api.get('/api/auth/user');
       let response_produtos = await api.get('/api/ms/produtos');
       //alert(JSON.stringify(response));
@@ -130,16 +130,10 @@ export default function Main(props) {
 
   return (
     <Content>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={() => _getData()}
-          />
-        }>
+      <ScrollView>
         <Card>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Title>{product.name}</Title>
+            <Title>{item.name}</Title>
 
             <Image
               resizeMode="cover"
@@ -149,7 +143,7 @@ export default function Main(props) {
                 marginBottom: 5,
                 marginTop: 10,
               }}
-              source={{uri: product.append_image}}
+              source={{uri: item.append_image}}
             />
 
           </View>
@@ -157,7 +151,7 @@ export default function Main(props) {
 
         <Card>
 
-          {user.coins < product.price ?
+          {user.coins < item.price ?
             <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
               <TextDark style={{fontSize: 18, color: '#bf360c'}}>Saldo insuficiente</TextDark>
               <TextDark style={{fontSize: 18, fontWeight: '700', color: '#bf360c'}}>{user.coins} pontos</TextDark>
@@ -173,7 +167,7 @@ export default function Main(props) {
 
           <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
             <TextDark style={{fontSize: 18}}>Doação</TextDark>
-            <TextDark style={{fontSize: 18, fontWeight: '700'}}>{product.price} pontos</TextDark>
+            <TextDark style={{fontSize: 18, fontWeight: '700'}}>{item.price} pontos</TextDark>
           </View>
 
           <Card
