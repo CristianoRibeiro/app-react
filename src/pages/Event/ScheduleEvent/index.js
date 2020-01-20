@@ -36,19 +36,20 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.schedule);
+  //const data = useSelector(state => state.schedule);
   const eventitem = useSelector(state => state.eventitem);
   const dispatch = useDispatch();
 
-  const [schedules, setEvents] = useState(data);
+  //const [schedules, setSchedules] = useState([]);
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (__DEV__) {
-      console.tron.log(schedules);
+      console.tron.log(eventitem.schedule);
     }
+    //setSchedules(JSON.parse(eventitem.schedule));
   }, []);
 
   function _openUrl() {
@@ -69,6 +70,10 @@ export default function Main(props) {
     }
   }
 
+  function _renderModal(){
+    return null;
+  }
+
   function _renderItem(item) {
     const time = item.start.substr(10, 6);
     let firstDate = item.start
@@ -76,6 +81,7 @@ export default function Main(props) {
       .split('/')
       .reverse()
       .join('-');
+
     firstDate = parseISO(firstDate + time);
     const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
     const html =
@@ -120,8 +126,8 @@ export default function Main(props) {
   return (
     <Content>
       <FlatList
-        style={{margimBottom: 50}}
-        data={JSON.parse(schedules)}
+        contentContainerStyle={{paddingBottom: 15}}
+        data={JSON.parse(eventitem.schedule)}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
           <EmptyList text="Em breve" />

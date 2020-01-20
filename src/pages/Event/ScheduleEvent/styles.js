@@ -83,8 +83,6 @@ export const Send = styled.TouchableOpacity`
 
 
 export const Link = styled.TouchableOpacity`
-flex: 1;
-  color: #fff
 `;
 
 export const List = styled.FlatList.attrs({

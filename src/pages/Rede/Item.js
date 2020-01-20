@@ -22,6 +22,7 @@ import StarRating from 'react-native-star-rating';
 import {Divider, Menu} from 'react-native-paper';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
+import Rede from '~/model/Rede';
 import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
 
@@ -50,7 +51,7 @@ export default function Main(props) {
   const data = useSelector(state => state.lottery);
   const dispatch = useDispatch();
 
-  const [post, setPost] = useState('');
+  const [post, setPost] = useState(Rede);
   const [imagePost, setImagePost] = useState(null);
   const [imageComment, setImageComment] = useState(null);
   const [subComment, setSubComment] = useState('');
@@ -58,6 +59,7 @@ export default function Main(props) {
   const [type, setType] = useState(null);
 
   const [hideComment, setHideComment] = useState(false);
+  const [urlImages, setUrlImages] = useState([]);
   const [hideMenu, setHideMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
@@ -69,20 +71,18 @@ export default function Main(props) {
 
   async function _getData() {
     setLoading(true);
-    // try {
-    //   let response = await api.get('/api/lottery');
-    //   //alert(JSON.stringify(response));
-    //   if (__DEV__) {
-    //     console.tron.log(response.data);
-    //   }
-    //   await dispatch({type: 'LOTTERY', payload: response.data});
-    //
-    //   //setNotifications(response.data);
-    // } catch (error) {
-    //   if (__DEV__) {
-    //     console.tron.log(error.message);
-    //   }
-    // }
+    try {
+      //alert(JSON.stringify(response));
+      // if (__DEV__) {
+      //   console.tron.log(props.item);
+      // }
+      setPost(props.item.item);
+      setUrlImages(props.item.item.imagens ? props.item.item.imagens : []);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
     setLoading(false);
   }
 
@@ -193,7 +193,7 @@ export default function Main(props) {
                 <View style={{marginHorizontal: 15, marginVertical: 5}}>
                   <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                     <Image
-                      source={{uri: user.append_avatar}}
+                      source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
                       style={{
                         height: 34,
                         width: 34,
@@ -244,7 +244,7 @@ export default function Main(props) {
               }}>
 
               <Image
-                source={{uri: user.append_avatar}}
+                source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
                 style={{
                   height: 34,
                   width: 34,
@@ -453,7 +453,7 @@ export default function Main(props) {
               }}>
 
               <Image
-                source={{uri: user.append_avatar}}
+                source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
                 style={{
                   height: 34,
                   width: 34,
@@ -463,7 +463,8 @@ export default function Main(props) {
               />
 
               <View style={{flex: 1, marginHorizontal: 10}}>
-                <TextDark style={{fontSize: 18, textTransform: 'uppercase'}}>Nome</TextDark>
+                <TextDark
+                  style={{fontSize: 18, textTransform: 'uppercase'}}>{post ? post.nomeParticipante : null}</TextDark>
                 <TextDark style={{fontSize: 11}}>10/01/2020</TextDark>
               </View>
 
@@ -487,14 +488,32 @@ export default function Main(props) {
             <View style={{marginTop: 15, paddingHorizontal: 5}}>
 
               <TextDark>
-                It is a long established fact that a reader will be distracted by the readable content of a page when
-                looking at its layout.
+                {post ? post.texto : null}
               </TextDark>
             </View>
 
             <View style={{flex: 1, margin: 5}}>
-              <FitImage source={{uri: 'https://images.pexels.com/photos/1227520/pexels-photo-1227520.jpeg'}}
-                        resizeMode="contain"/>
+              {/*<FlatList*/}
+              {/*  style={{margimBottom: 50}}*/}
+              {/*  data={[ "Pankaj", "Rita", "Mohan", "Amit", "Babulal", "Sakshi"]}*/}
+              {/*  keyExtractor={(item, index) => item.toString()}*/}
+              {/*  ListEmptyComponent={<EmptyList text="Nenhum sorteado encontrado!"/>}*/}
+              {/*  renderItem={(item, i) => <View key={i}>*/}
+              {/*    <FitImage source={{uri: item}}*/}
+              {/*              resizeMode="contain"/>*/}
+              {/*    <TextDark > { JSON.stringify(item) } </TextDark>*/}
+              {/*  </View>}*/}
+              {/*/>*/}
+
+              {urlImages.map((item, key) => (
+                  <View key={key}>
+                    <FitImage source={{uri: item}}
+                              resizeMode="contain"/>
+                  </View>
+                )
+              )}
+
+
             </View>
 
             <View
@@ -527,7 +546,7 @@ export default function Main(props) {
               }}>
 
               <Image
-                source={{uri: user.append_avatar}}
+                source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
                 style={{
                   height: 34,
                   width: 34,
@@ -586,14 +605,14 @@ export default function Main(props) {
             <Divider/>
 
             <FlatList
-              data={[{id: 1}, {id: 2}]}
+              data={post.comentarios ? post.comentarios : []}
               //numColumns={4}
               keyExtractor={(item, index) => index.toString()}
               renderItem={(item, index) =>
                 <View style={{marginHorizontal: 5, marginVertical: 5}}>
                   <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                     <Image
-                      source={{uri: user.append_avatar}}
+                      source={{uri: item.item.imagemPerfil ? item.item.imagemPerfil : ''}}
                       style={{
                         height: 34,
                         width: 34,
@@ -602,13 +621,13 @@ export default function Main(props) {
                       resizeMode="cover"
                     />
                     <Card style={{width: 100, flex: 1, padding: 2}}>
-                      <TextDark style={{fontSize: 18, textTransform: 'uppercase'}}>Nome</TextDark>
+                      <TextDark
+                        style={{fontSize: 18, textTransform: 'uppercase'}}>{item.item.nomeParticipante}</TextDark>
                       <TextDark style={{fontSize: 11}}>10/01/2020</TextDark>
                     </Card>
                   </View>
                   <TextDark style={{fontSize: 14, fontWeight: '700'}}>
-                    It is a long established fact that a reader will be distracted by the readable content of a page
-                    when looking at its layout.
+                    {item.item.texto}
                   </TextDark>
 
                   {_renderComment(item)}

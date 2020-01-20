@@ -160,14 +160,7 @@ export default function Main(props) {
         //permission: true,
         type: null,
       },
-      {
-        navigation: 'Donation',
-        image: require('~/assets/icons/games.png'),
-        name: 'MOVIMENTO SOLIDÁRIO',
-        item: item,
-        permission: app_functions ? app_functions.donation : false,
-        type: null,
-      },
+
       {
         navigation: 'Cupom',
         image: require('~/assets/icons/games.png'),
@@ -177,15 +170,6 @@ export default function Main(props) {
         //permission: true,
         type: null,
       },
-      // {
-      //   navigation: 'EventCupons',
-      //   image: require('~/assets/icons/games.png'),
-      //   name: 'MEUS CUPONS',
-      //   item: item,
-      //   //permission: app_functions ? app_functions.games,
-      //   permission: true,
-      //   type: null,
-      // },
       {
         navigation: 'Streaming',
         image: require('~/assets/icons/transmision.png'),
@@ -285,7 +269,7 @@ export default function Main(props) {
         image: require('~/assets/icons/movimento.png'),
         name: 'MOVIMENTO SOLIDÁRIO',
         item: item,
-        //permission: app_functions ? app_functions.material : false,
+        //permission: app_functions ? app_functions.donation : false,
         permission: true,
         type: null,
       },
