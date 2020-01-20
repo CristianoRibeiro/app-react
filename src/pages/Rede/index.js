@@ -263,9 +263,3 @@ export default function Main(props) {
     </Content>
   );
 }
-
-//Retornar data de publicacao
-//Api com os dados do usuario
-// "imagens": [
-//   {"image": "https://audityrededoconhecimento.blob.core.windows.net/foto-post/637148814546023025.png"}
-// ],
