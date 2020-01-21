@@ -98,8 +98,8 @@ export default function Main(props) {
         props.navigation.navigate(item.navigation, {item: item.item});
       }
     } else if (item.type === 'games') {
-      //setModal(true);
-      _scanner(20);
+      setModal(true);
+      //_scanner(20);
     } else {
       props.navigation.navigate(item.navigation, {item: item.item});
     }
