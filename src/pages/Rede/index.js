@@ -27,7 +27,7 @@ import ImagePicker from "react-native-image-crop-picker";
 
 import Item from '~/pages/Rede/Item';
 
-import api from '~/services/api';
+import api from 'axios';
 
 import {Container, Content} from '~/style';
 
@@ -59,6 +59,7 @@ export default function Main(props) {
   const [postEvent, setPostEvent] = useState('');
   const [type, setType] = useState(null);
 
+  const [posts, setPosts] = useState([]);
   const [hideComment, setHideComment] = useState(false);
   const [hideMenu, setHideMenu] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -71,20 +72,31 @@ export default function Main(props) {
 
   async function _getData() {
     setLoading(true);
-    // try {
-    //   let response = await api.get('/api/lottery');
-    //   //alert(JSON.stringify(response));
-    //   if (__DEV__) {
-    //     console.tron.log(response.data);
-    //   }
-    //   await dispatch({type: 'LOTTERY', payload: response.data});
-    //
-    //   //setNotifications(response.data);
-    // } catch (error) {
-    //   if (__DEV__) {
-    //     console.tron.log(error.message);
-    //   }
-    // }
+    try {
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": "28475201806",
+        "pageIndex": 0,
+        "pageSize": 30,
+        "search": null,
+        "dataInicio": null,
+        "dataFim": null
+      };
+
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      //await dispatch({type: 'LOTTERY', payload: response.data});
+
+      setPosts(response.data);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
     setLoading(false);
   }
 
@@ -242,7 +254,7 @@ export default function Main(props) {
 
         <FlatList
           style={{margimBottom: 50}}
-          data={[{}, {}]}
+          data={posts.retorno}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={<EmptyList text="Nenhum sorteado encontrado!"/>}
           renderItem={(item, index) => <Item item={item}/>}

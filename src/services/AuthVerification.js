@@ -96,7 +96,7 @@ export default function Main(props) {
               console.tron.log('Tag!');
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             if (__DEV__) {
               console.tron.log('Erro enviar tags!' + error.message);
             }
@@ -105,13 +105,16 @@ export default function Main(props) {
 
       //setNotifications(response.data);
     } catch (error) {
-      if (error.message === 'Request failed with status code 401') {
+      if (error.message === 'Request failed with status code 401' || error.message === 'Request failed with status code 500') {
         props.navigation.navigate('Login');
         AsyncStorage.removeItem(
           'token'
         );
         AsyncStorage.removeItem(
           'user'
+        );
+        AsyncStorage.removeItem(
+          'event'
         );
       }
     }

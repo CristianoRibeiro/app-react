@@ -630,6 +630,7 @@ export default function Main(props) {
                         numberOfLines={3}
                         onChangeText={setFrase}
                         autoCorrect={true}
+                        maxLength={255}
                         label="Somos futuro, somos..."
                       />
                     </Form>
