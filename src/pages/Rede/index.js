@@ -52,18 +52,14 @@ export default function Main(props) {
   const data = useSelector(state => state.lottery);
   const dispatch = useDispatch();
 
+  const [user_rede, setUserRede] = useState([]);
   const [post, setPost] = useState('');
   const [imagePost, setImagePost] = useState(null);
-  const [imageComment, setImageComment] = useState(null);
-  const [subComment, setSubComment] = useState('');
-  const [postEvent, setPostEvent] = useState('');
+  const [imageBase64, setImageBase64] = useState(null);
   const [type, setType] = useState(1);
 
   const [posts, setPosts] = useState([]);
-  const [hideComment, setHideComment] = useState(false);
-  const [hideMenu, setHideMenu] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -75,7 +71,7 @@ export default function Main(props) {
     try {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
-        "cpf": "28475201806",
+        "cpf": user.doc,
         "pageIndex": 0,
         "pageSize": 30,
         "search": null,
@@ -84,13 +80,15 @@ export default function Main(props) {
       };
 
       let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      let response_user = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/social/info', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
-        console.tron.log(response.data);
+        console.tron.log(response_user.data.retorno);
       }
 
       //await dispatch({type: 'LOTTERY', payload: response.data});
 
+      setUserRede(response_user.data.retorno);
       setPosts(response.data);
     } catch (error) {
       if (__DEV__) {
@@ -107,14 +105,21 @@ export default function Main(props) {
       takePhotoButtonTitle: 'Usar Camera',
       chooseFromLibraryButtonTitle: 'Carregar da galeria',
       multiple: true,
-      mediaType: 'photo'
+      mediaType: 'photo',
+      includeBase64: true
     };
 
     await ImagePicker.openPicker(options)
       .then(response => {
         let tempArray = [];
+        let tempArray2 = [];
 
         response.forEach((item) => {
+
+          if (__DEV__) {
+            console.tron.log(item);
+          }
+
           let image = {
             uri: item.path,
             width: item.width,
@@ -122,15 +127,18 @@ export default function Main(props) {
             mime: item.mime,
             type: 'image/jpeg',
             name: item.path.substring(item.path.lastIndexOf('/') + 1),
+            data: item.data,
           }
 
-          tempArray.push(image)
+          tempArray.push(image);
+          tempArray2.push('data:' + item.mime + ';base64, ' + item.data);
           // console.log('savedimageuri====='+item.path);
 
         });
         setImagePost(tempArray);
+        setImageBase64(tempArray2);
         if (__DEV__) {
-          console.tron.log(tempArray);
+          console.tron.log(tempArray2);
         }
       });
   }
@@ -155,27 +163,27 @@ export default function Main(props) {
     try {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
-        "cpf": "28475201806",
+        "cpf": user.doc,
         "idPost": null,
         "texto": post,
         "tipoPost": type,
-        "idsConexoes": [15, 19],
-        "imagem": null
+        "idsConexoes": null,
+        "imagens": imageBase64
       };
 
       if (__DEV__) {
         console.tron.log(data);
       }
 
-      // let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/curtir', data);
-      // //alert(JSON.stringify(response));
-      // if (__DEV__) {
-      //   console.tron.log(response.data);
-      // }
-      //
-      // //await dispatch({type: 'LOTTERY', payload: response.data});
-      //
-      // setPosts(response.data);
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      //await dispatch({type: 'LOTTERY', payload: response.data});
+
+      //setPosts(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -199,7 +207,7 @@ export default function Main(props) {
             }}>
 
             <Image
-              source={{uri: user.append_avatar}}
+              source={{uri: user_rede.urlFoto}}
               style={{
                 height: 34,
                 width: 34,
@@ -286,7 +294,7 @@ export default function Main(props) {
           data={posts.retorno}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={<EmptyList text="Nenhum sorteado encontrado!"/>}
-          renderItem={(item, index) => <Item item={item}/>}
+          renderItem={(item, index) => <Item item={item} user={user_rede}/>}
         />
       </ScrollView>
     </Content>

@@ -65,6 +65,18 @@ export const Input = styled.TextInput.attrs({
   border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
 `;
 
+export const InputDark = styled.TextInput.attrs({
+  placeholderTextColor: '#999',
+  keyboardAppearance: 'dark',
+  maxLength: 255
+})`
+  padding: 12px 15px;
+  border-radius: 4px;
+  color: #222;
+  background: rgba(200,200,200, 0.7);
+  border: 1px solid ${props => (props.error ? '#FF7272' : '#FFf')};
+`;
+
 export const Submit = styled.TouchableOpacity`
   background: #0F60A8;
   margin-left: 10px;
@@ -79,6 +91,14 @@ export const Send = styled(Button).attrs({
 })`
   border-radius: 5px;
   border: 1px solid #fff;
+`;
+
+export const Cancel = styled(Button).attrs({
+  mode: 'contained',
+  color: '#fff'
+})`
+  border-radius: 5px;
+  border: 1px solid #666;
 `;
 
 export const Btn = styled(Button).attrs({

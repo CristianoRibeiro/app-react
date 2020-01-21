@@ -37,14 +37,15 @@ import {
   Header,
   TextTitle,
   Card,
-  Link,
+  Cancel,
   TextDark,
   ItemQuestion,
   Input,
-  Submit,
+  InputDark,
   Send,
   TextLight,
 } from './styles';
+import Modal from "react-native-modal";
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
@@ -52,17 +53,21 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [post, setPost] = useState(Rede);
+  const [userPost, setUserPost] = useState([]);
   const [imagePost, setImagePost] = useState(null);
   const [imageComment, setImageComment] = useState(null);
   const [subComment, setSubComment] = useState('');
   const [postEvent, setPostEvent] = useState('');
-  const [type, setType] = useState(null);
+  const [like, setLike] = useState(false);
+
+  const [inputDenuncia, setInputDenuncia] = useState('');
 
   const [hideComment, setHideComment] = useState(false);
   const [urlImages, setUrlImages] = useState([]);
   const [hideMenu, setHideMenu] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState();
+  const [modal, setModal] = useState(false);
+  const [modalAlert, setModalAlert] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -78,6 +83,9 @@ export default function Main(props) {
       // }
       setPost(props.item.item);
       setUrlImages(props.item.item.imagens ? props.item.item.imagens : []);
+      setUserPost(props.user ? props.user : []);
+      setLike(props.item.item.curtiu);
+
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -108,7 +116,7 @@ export default function Main(props) {
             mime: item.mime,
             type: 'image/jpeg',
             name: item.path.substring(item.path.lastIndexOf('/') + 1),
-          }
+          };
 
           tempArray.push(image)
           // console.log('savedimageuri====='+item.path);
@@ -157,11 +165,11 @@ export default function Main(props) {
   }
 
   async function _like(idPost) {
-    alert(idPost);
+    //alert(idPost);
     try {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
-        "cpf": "28475201806",
+        "cpf": user.doc,
         "idPost": idPost,
       };
 
@@ -171,14 +179,80 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
 
-      //await dispatch({type: 'LOTTERY', payload: response.data});
+      _getData();
+      setLike(response.data.curtiu);
 
-      setPosts(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
+  }
+
+  async function _denunciar() {
+    //alert(idPost);
+    setModal(false);
+    try {
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "idPost": post.id,
+        "motivo": inputDenuncia
+      };
+
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/denunciar', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      setInputDenuncia('');
+      setModalAlert(true);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+
+  }
+
+  async function _sendExcluir() {
+
+    try {
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "idPost": post.id
+      };
+
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/remover', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+  }
+
+  async function _excluir() {
+    //alert(idPost);
+
+    Alert.alert(
+      null,
+      'Deseja excluir este post?',
+      [
+        {
+          text: 'Sim',
+          onPress: () => _sendExcluir(),
+          style: 'cancel',
+        },
+        {text: 'Não', onPress: () => null},
+      ],
+      {cancelable: false},
+    );
   }
 
   function _renderComment(item) {
@@ -330,7 +404,7 @@ export default function Main(props) {
             <View style={{flex: 1, marginHorizontal: 10}}>
               <TextDark
                 style={{fontSize: 18, textTransform: 'uppercase'}}>{post ? post.nomeParticipante : null}</TextDark>
-              <TextDark style={{fontSize: 11}}>10/01/2020</TextDark>
+              <TextDark style={{fontSize: 11}}>{post ? post.data : null}</TextDark>
             </View>
 
             <Menu
@@ -346,8 +420,19 @@ export default function Main(props) {
                 </TouchableOpacity>
               }
             >
-              <Menu.Item onPress={() => {
-              }} title="Denunciar"/>
+
+              {userPost.nome === post.nomeParticipante ?
+                <View>
+                  <Menu.Item onPress={() => {
+                  }} title="Editar"/>
+                  <Menu.Item onPress={() => _excluir()} title="Excluir"/>
+                  <Menu.Item onPress={() => setModal(true)} title="Denunciar"/>
+                </View>
+                :
+                <Menu.Item onPress={() => {
+                }} title="Denunciar"/>
+              }
+
             </Menu>
           </View>
           <View style={{marginTop: 15, paddingHorizontal: 5}}>
@@ -378,14 +463,22 @@ export default function Main(props) {
             }}>
 
             <Btn onPress={() => _like(post.id)}>
-              <AntDesign
-                name="like2"
-                size={26}
-                color={'#666'}
-              />
+
+              {like ?
+                <AntDesign
+                  name="like1"
+                  size={26}
+                  color={'#F36F21'}
+                />
+                : <AntDesign
+                  name="like2"
+                  size={26}
+                  color={'#666'}
+                />}
+
             </Btn>
 
-            <TextDark style={{marginTop: -5}}>0</TextDark>
+            <TextDark style={{marginTop: -5}}>{post.curtidas}</TextDark>
 
           </View>
 
@@ -489,25 +582,66 @@ export default function Main(props) {
           />
 
         </View>
+
+        <Modal
+          isVisible={modal}
+          style={{marginVertical: 50, backgroundColor: '#fff', margin: 0}}>
+
+          <View style={{margin: 10}}>
+            <TextDark style={{marginBottom: 8}}>Por quê você deseja denunciar esta publicação?</TextDark>
+            <InputDark
+              value={inputDenuncia}
+              error={error}
+              multiline
+              maxLength={255}
+              onChangeText={setInputDenuncia}
+              placeholder=""
+            />
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <View style={{flex: 1}}>
+              <Cancel
+                onPress={() => setModal(false)}
+                style={{marginBottom: 10, marginHorizontal: 15}}>
+                <TextDark>CANCELAR</TextDark>
+              </Cancel>
+            </View>
+            <View style={{flex: 1}}>
+              <Send
+                disabled={inputDenuncia ? false : true}
+                onPress={() => _denunciar()}
+                style={{marginBottom: 10, marginHorizontal: 15}}>
+                <TextLight>DENUNCIAR</TextLight>
+              </Send>
+            </View>
+          </View>
+        </Modal>
+
+
+        {/*<Modal*/}
+        {/*  isVisible={modalAlert}*/}
+        {/*  style={{marginVertical: 50, backgroundColor: '#fff', margin: 0}}>*/}
+
+        {/*  <View style={{margin: 10}}>*/}
+        {/*    <TextDark style={{marginBottom: 8, fontSize: 18}}>DENÚNCIA REALIZADA COM SUCESSO!</TextDark>*/}
+        {/*    <TextDark style={{marginBottom: 8}}>Em breve nossa equipe irá avaliar o seu reporte e tomar as providências*/}
+        {/*      cabíveis.</TextDark>*/}
+        {/*    <TextDark style={{marginBottom: 8}}>A Rede do Conhecimento agradece.</TextDark>*/}
+
+        {/*  </View>*/}
+
+        {/*  <Send*/}
+        {/*    onPress={() => setModalAlert(false)}*/}
+        {/*    style={{marginBottom: 10, marginHorizontal: 15}}>*/}
+        {/*    <TextLight>OK</TextLight>*/}
+        {/*  </Send>*/}
+
+        {/*</Modal>*/}
+
       </Card>
     );
 
-  }
-
-  function _removeImagePost(item) {
-
-    let list = imagePost;
-    // list.splice( list.indexOf(item), 1 );
-    //
-    // setImagePost(list);
-
-    list.filter(function (returnableObjects) {
-      return returnableObjects !== item;
-    });
-
-    alert(JSON.stringify(list));
-
-    setImagePost(list);
   }
 
   return _renderItem();
