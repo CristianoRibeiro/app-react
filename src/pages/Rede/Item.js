@@ -359,15 +359,13 @@ export default function Main(props) {
 
           <View style={{flex: 1, margin: 5}}>
 
-
             {urlImages.map((item, key) => (
-                <View key={key}>
+                <View style={{marginBottom: 3}} key={key}>
                   <FitImage source={{uri: item}}
                             resizeMode="contain"/>
                 </View>
               )
             )}
-
 
           </View>
 

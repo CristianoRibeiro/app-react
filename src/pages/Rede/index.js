@@ -57,7 +57,7 @@ export default function Main(props) {
   const [imageComment, setImageComment] = useState(null);
   const [subComment, setSubComment] = useState('');
   const [postEvent, setPostEvent] = useState('');
-  const [type, setType] = useState(null);
+  const [type, setType] = useState(1);
 
   const [posts, setPosts] = useState([]);
   const [hideComment, setHideComment] = useState(false);
@@ -150,6 +150,39 @@ export default function Main(props) {
     setImagePost(newValues);
   }
 
+  async function _sendPost() {
+
+    try {
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": "28475201806",
+        "idPost": null,
+        "texto": post,
+        "tipoPost": type,
+        "idsConexoes": [15, 19],
+        "imagem": null
+      };
+
+      if (__DEV__) {
+        console.tron.log(data);
+      }
+
+      // let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/curtir', data);
+      // //alert(JSON.stringify(response));
+      // if (__DEV__) {
+      //   console.tron.log(response.data);
+      // }
+      //
+      // //await dispatch({type: 'LOTTERY', payload: response.data});
+      //
+      // setPosts(response.data);
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+  }
+
   return (
     <Content>
       <ScrollView
@@ -229,23 +262,19 @@ export default function Main(props) {
               paddingHorizontal: 3
             }}>
               <Select
-                placeholder={{
-                  label: 'Publico',
-                  value: 0,
-                  color: '#9EA0A4',
-                }}
+                placeholder={{}}
                 value={type}
                 onValueChange={value => setType(value)}
                 items={[
-                  {label: 'Todos da rede (Público)', value: 0},
-                  {label: 'Somente minhas conexões', value: 1},
-                  {label: 'Conexões específicas', value: 2},
+                  {label: 'Todos da rede (Público)', value: 1},
+                  {label: 'Somente minhas conexões', value: 2},
+                  {label: 'Conexões específicas', value: 3},
                 ]}
               />
             </View>
 
             <View style={{flex: 1, margin: 2, marginTop: 10}}>
-              <Send style={{flex: 1, justifyContent: 'center'}}>
+              <Send onPress={() => _sendPost()} style={{flex: 1, justifyContent: 'center'}}>
                 <TextLight>Publicar</TextLight>
               </Send>
             </View>
