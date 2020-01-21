@@ -11,7 +11,7 @@ import {
   Alert,
   ScrollView,
   KeyboardAvoidingView,
-  TouchableOpacity, AsyncStorage,
+  TouchableOpacity, AsyncStorage, RefreshControl,
 } from 'react-native';
 import {FAB} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -41,6 +41,7 @@ import {
 import {Container, Content} from '../../style';
 import {User} from '~/model/User';
 import {MaskService} from "react-native-masked-text";
+import OneSignal from "react-native-onesignal";
 
 const styles = StyleSheet.create({
   fab: {
@@ -53,10 +54,11 @@ const styles = StyleSheet.create({
 });
 
 export default function Profile(props) {
-  const data = useSelector(state => state.user);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const [user, setUser] = useState(data ? data : User);
+  //const [user, setUser] = useState(data ? data : User);
+  const [loading, setLoading] = useState(false);
   const [birthdate, setBirthdate] = useState();
   const [error, setError] = useState(false);
 
@@ -66,8 +68,37 @@ export default function Profile(props) {
       const formattedDate = format(firstDate, 'dd/MM/YYY');
       setBirthdate(formattedDate);
     }
-    setUser(data);
-  }, [data]);
+    //setUser(data);
+    _onRefresh();
+  }, []);
+
+  async function _onRefresh() {
+    setLoading(true);
+    try {
+      let response = await api.get('/api/auth/user');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+      await dispatch({type: 'USER', payload: response.data});
+
+      //setNotifications(response.data);
+    } catch (error) {
+      if (error.message === 'Request failed with status code 401' || error.message === 'Request failed with status code 500') {
+        props.navigation.navigate('Login');
+        AsyncStorage.removeItem(
+          'token'
+        );
+        AsyncStorage.removeItem(
+          'user'
+        );
+        AsyncStorage.removeItem(
+          'event'
+        );
+      }
+    }
+    setLoading(false);
+  }
 
   const iconSize = 32;
 
@@ -88,7 +119,9 @@ export default function Profile(props) {
       source={require('~/assets/bg-login.jpg')}
       style={styles.container}
       resizeMode="cover">
-      <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={() => _onRefresh()}/>
+      } style={{flex: 1}} keyboardDismissMode="interactive">
         <View
           style={{
             alignItems: 'center',
