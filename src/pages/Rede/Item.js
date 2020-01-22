@@ -20,11 +20,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import StarRating from 'react-native-star-rating';
 import {Divider, Menu} from 'react-native-paper';
-import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
-import EmptyList from '~/components/EmptyList';
-import Rede from '~/model/Rede';
 import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
+import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
+import EmptyList from '~/components/EmptyList';
+import Comentario from '~/pages/Rede/Comentario';
+import PostComentario from '~/pages/Rede/PostComentario';
+import Rede from '~/model/Rede';
 
 import api from '~/services/api';
 
@@ -46,6 +48,7 @@ import {
   TextLight,
 } from './styles';
 import Modal from "react-native-modal";
+import ItemComentario from "~/pages/Rede/ItemComentario";
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
@@ -55,14 +58,18 @@ export default function Main(props) {
   const [post, setPost] = useState(Rede);
   const [userPost, setUserPost] = useState([]);
   const [imagePost, setImagePost] = useState(null);
+  const [imageBase64, setImageBase64] = useState(null);
   const [imageComment, setImageComment] = useState(null);
   const [subComment, setSubComment] = useState('');
   const [postEvent, setPostEvent] = useState('');
   const [like, setLike] = useState(false);
 
   const [inputDenuncia, setInputDenuncia] = useState('');
+  const [inputEditarPost, setInputEditarPost] = useState('');
 
   const [hideComment, setHideComment] = useState(false);
+  const [hideEdit, setHideEdit] = useState(true);
+  const [hideEditComentario, setHideEditComentario] = useState(true);
   const [urlImages, setUrlImages] = useState([]);
   const [hideMenu, setHideMenu] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,6 +89,7 @@ export default function Main(props) {
       //   console.tron.log(props.item);
       // }
       setPost(props.item.item);
+      setInputEditarPost(props.item.item.texto);
       setUrlImages(props.item.item.imagens ? props.item.item.imagens : []);
       setUserPost(props.user ? props.user : []);
       setLike(props.item.item.curtiu);
@@ -136,14 +144,21 @@ export default function Main(props) {
       takePhotoButtonTitle: 'Usar Camera',
       chooseFromLibraryButtonTitle: 'Carregar da galeria',
       multiple: true,
-      mediaType: 'photo'
+      mediaType: 'photo',
+      includeBase64: true
     };
 
     await ImagePicker.openPicker(options)
       .then(response => {
         let tempArray = [];
+        let tempArray2 = [];
 
         response.forEach((item) => {
+
+          if (__DEV__) {
+            console.tron.log(item);
+          }
+
           let image = {
             uri: item.path,
             width: item.width,
@@ -151,15 +166,18 @@ export default function Main(props) {
             mime: item.mime,
             type: 'image/jpeg',
             name: item.path.substring(item.path.lastIndexOf('/') + 1),
+            data: item.data,
           }
 
-          tempArray.push(image)
+          tempArray.push(image);
+          tempArray2.push('data:' + item.mime + ';base64, ' + item.data);
           // console.log('savedimageuri====='+item.path);
 
         });
-        setImageComment(tempArray);
+        setImagePost(tempArray);
+        setImageBase64(tempArray2);
         if (__DEV__) {
-          console.tron.log(tempArray);
+          console.tron.log(tempArray2);
         }
       });
   }
@@ -187,6 +205,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    props.getData();
   }
 
   async function _denunciar() {
@@ -212,7 +231,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
-
+    props.getData();
   }
 
   async function _sendExcluir() {
@@ -235,6 +254,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    props.getData();
   }
 
   async function _excluir() {
@@ -255,127 +275,57 @@ export default function Main(props) {
     );
   }
 
-  function _renderComment(item) {
-    return (
-      <View>
+  async function _sendEditar() {
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+    try {
 
-          <TouchableOpacity style={{marginVertical: 5, marginRight: 10}}>
-            <AntDesign
-              name="like2"
-              size={26}
-              color={'#666'}
-            />
-          </TouchableOpacity>
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "idPost": post.id,
+        "texto": inputEditarPost,
+        "tipoPost": 1
+      };
 
-          <TextDark>0</TextDark>
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
+      //alert(JSON.stringify(response));
 
-          <TouchableOpacity onPress={() => setHideComment(item.item.id)}
-                            style={{flex: 1, justifyContent: 'center', marginLeft: 20}}>
-            <TextDark style={{color: '#ff8f00'}}>Comentar</TextDark>
-          </TouchableOpacity>
-        </View>
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    setHideEdit(true);
+    props.getData();
+  }
 
-        {hideComment === item.item.id ?
-          <View style={{borderWidth: 1, borderColor: '#ddd'}}>
-            <FlatList
-              style={{margimBottom: 50}}
-              data={[{}]}
-              //numColumns={4}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={(item, index) =>
-                <View style={{marginHorizontal: 15, marginVertical: 5}}>
-                  <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                    <Image
-                      source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
-                      style={{
-                        height: 34,
-                        width: 34,
-                        borderRadius: 16,
-                      }}
-                      resizeMode="cover"
-                    />
-                    <Card style={{width: 100, flex: 1, padding: 2}}>
-                      <TextDark style={{fontSize: 18, textTransform: 'uppercase'}}>Nome</TextDark>
-                      <TextDark style={{fontSize: 11}}>10/01/2020</TextDark>
-                    </Card>
-                  </View>
-                  <TextDark style={{fontSize: 14, fontWeight: '700'}}>
-                    It is a long established fact that a reader will be distracted by the readable content of a page
-                    when looking at its layout.
-                  </TextDark>
+  async function _sendComentario() {
 
-                  <View
-                    style={{
-                      width: 35,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
+    try {
 
-                    <TouchableOpacity style={{marginVertical: 5, marginRight: 10}}>
-                      <AntDesign
-                        name="like2"
-                        size={26}
-                        color={'#666'}
-                      />
-                    </TouchableOpacity>
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "idPost": post.id,
+        "texto": postEvent,
+      };
 
-                    <TextDark>0</TextDark>
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      //alert(JSON.stringify(data));
 
-                  </View>
-
-                </View>
-              }
-            />
-
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 5,
-                marginTop: 15
-              }}>
-
-              <Image
-                source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
-                style={{
-                  height: 34,
-                  width: 34,
-                  borderRadius: 16,
-                }}
-                resizeMode="cover"
-              />
-
-              <Input
-                value={subComment}
-                error={error}
-                multiline
-                maxLength={255}
-                onChangeText={setSubComment}
-                placeholder="Comente a postagem"
-              />
-
-              <TouchableOpacity style={{marginLeft: 5}}>
-                <MaterialCommunityIcons
-                  name="send"
-                  size={26}
-                  color={'#666'}
-                />
-              </TouchableOpacity>
-
-
-            </View>
-
-          </View>
-          : null}
-      </View>
-    );
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    setHideEdit(true);
+    props.getData();
   }
 
   function _renderItem(item) {
@@ -424,9 +374,17 @@ export default function Main(props) {
               {userPost.nome === post.nomeParticipante ?
                 <View>
                   <Menu.Item onPress={() => {
+                    setHideEdit(!hideEdit);
+                    setHideMenu(false);
                   }} title="Editar"/>
-                  <Menu.Item onPress={() => _excluir()} title="Excluir"/>
-                  <Menu.Item onPress={() => setModal(true)} title="Denunciar"/>
+                  <Menu.Item onPress={() => {
+                    _excluir();
+                    setHideMenu(false);
+                  }} title="Excluir"/>
+                  <Menu.Item onPress={() => {
+                    setModal(true);
+                    setHideMenu(false);
+                  }} title="Denunciar"/>
                 </View>
                 :
                 <Menu.Item onPress={() => {
@@ -435,8 +393,8 @@ export default function Main(props) {
 
             </Menu>
           </View>
-          <View style={{marginTop: 15, paddingHorizontal: 5}}>
 
+          <View style={{marginTop: 15, paddingHorizontal: 5}}>
             <TextDark>
               {post ? post.texto : null}
             </TextDark>
@@ -482,6 +440,15 @@ export default function Main(props) {
 
           </View>
 
+          <View style={{margin: 8}}>
+            <FlatList
+              data={post.comentarios ? post.comentarios : []}
+              //numColumns={4}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={(item, index) => <PostComentario item={item.item} post={post} userPost={userPost}
+                                                           getData={props.getData}/>}
+            />
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -492,7 +459,7 @@ export default function Main(props) {
             }}>
 
             <Image
-              source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
+              source={{uri: props.user.urlFoto ? props.user.urlFoto : ''}}
               style={{
                 height: 34,
                 width: 34,
@@ -523,7 +490,7 @@ export default function Main(props) {
           <View style={{backgroundColor: '#fff'}}>
             <FlatList
               style={{margimBottom: 50}}
-              data={imageComment}
+              data={imagePost}
               horizontal
               //numColumns={4}
               keyExtractor={(item, index) => index.toString()}
@@ -531,55 +498,26 @@ export default function Main(props) {
 
                 <Card style={{width: 100, flex: 1, padding: 2}}>
                   <View style={{alignItems: 'flex-end'}}>
-                    {/*<TouchableOpacity onPress={() => _removeImagePost(item)} style={{height: 20, width: 20}}>*/}
-                    {/*  <MaterialCommunityIcons*/}
-                    {/*    name="close"*/}
-                    {/*    size={18}*/}
-                    {/*    color={'#666'}*/}
-                    {/*  />*/}
-                    {/*</TouchableOpacity>*/}
+                    <TouchableOpacity onPress={() => _removeImagePost(item)} style={{height: 20, width: 20}}>
+                      <MaterialCommunityIcons
+                        name="close"
+                        size={18}
+                        color={'#666'}
+                      />
+                    </TouchableOpacity>
                   </View>
                   <FitImage source={{uri: item.item.uri}} resizeMode="contain"/>
                 </Card>
               </View>}
             />
           </View>
-          <Send style={{flex: 1, justifyContent: 'center', marginVertical: 10}}>
+
+          <Send disabled={postEvent ? false : true} onPress={() => _sendComentario()}
+                style={{flex: 1, justifyContent: 'center', marginVertical: 10}}>
             <TextLight>Comentar</TextLight>
           </Send>
 
           <Divider/>
-
-          <FlatList
-            data={post.comentarios ? post.comentarios : []}
-            //numColumns={4}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={(item, index) =>
-              <View style={{marginHorizontal: 5, marginVertical: 5}}>
-                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                  <Image
-                    source={{uri: item.item.imagemPerfil ? item.item.imagemPerfil : ''}}
-                    style={{
-                      height: 34,
-                      width: 34,
-                      borderRadius: 16,
-                    }}
-                    resizeMode="cover"
-                  />
-                  <Card style={{width: 100, flex: 1, padding: 2}}>
-                    <TextDark
-                      style={{fontSize: 18, textTransform: 'uppercase'}}>{item.item.nomeParticipante}</TextDark>
-                    <TextDark style={{fontSize: 11}}>10/01/2020</TextDark>
-                  </Card>
-                </View>
-                <TextDark style={{fontSize: 14, fontWeight: '700'}}>
-                  {item.item.texto}
-                </TextDark>
-
-                {_renderComment(item)}
-              </View>
-            }
-          />
 
         </View>
 
@@ -642,6 +580,21 @@ export default function Main(props) {
       </Card>
     );
 
+  }
+
+  function _removeImagePost(item) {
+
+    let list = imagePost;
+    let newValues = new Array();
+
+    let i = 0;
+    list.forEach((element, index) => {
+      if (item.item != element) {
+        newValues[i] = element;
+        i++;
+      }
+    });
+    setImagePost(newValues);
   }
 
   return _renderItem();

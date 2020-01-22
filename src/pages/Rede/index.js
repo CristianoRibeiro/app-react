@@ -17,10 +17,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import StarRating from 'react-native-star-rating';
-import {Menu, Divider} from 'react-native-paper';
-import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
+import {ActivityIndicator} from 'react-native-paper';
 import EmptyList from '~/components/EmptyList';
 import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
@@ -40,7 +37,7 @@ import {
   Card,
   Link,
   TextDark,
-  ItemQuestion,
+  MultipleSelect,
   Input,
   Submit,
   Send,
@@ -49,10 +46,13 @@ import {
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
-  const data = useSelector(state => state.lottery);
+  const data = useSelector(state => state.rede);
   const dispatch = useDispatch();
 
   const [user_rede, setUserRede] = useState([]);
+  const [conexoes, setConexoes] = useState([]);
+  const [conexao, setConexao] = useState('');
+  const [conexaoId, setConexaoId] = useState('');
   const [post, setPost] = useState('');
   const [imagePost, setImagePost] = useState(null);
   const [imageBase64, setImageBase64] = useState(null);
@@ -69,6 +69,7 @@ export default function Main(props) {
   async function _getData() {
     setLoading(true);
     try {
+      await dispatch({type: 'REDE', payload: []});
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
@@ -86,10 +87,22 @@ export default function Main(props) {
         console.tron.log(response_user.data.retorno);
       }
 
-      //await dispatch({type: 'LOTTERY', payload: response.data});
+      await dispatch({type: 'REDE', payload: response.data});
 
       setUserRede(response_user.data.retorno);
-      setPosts(response.data);
+      //setPosts(response.data);
+
+      let list = response_user.data.retorno.conexoes;
+      let newValues = new Array();
+
+      let i = 0;
+      list.forEach((element, index) => {
+
+        newValues[i] = {'id': element.id, 'name': element.amigo.nome};
+        i++;
+      });
+      setConexoes(newValues);
+      //alert(JSON.stringify(newValues));
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -167,7 +180,7 @@ export default function Main(props) {
         "idPost": null,
         "texto": post,
         "tipoPost": type,
-        "idsConexoes": null,
+        "idsConexoes": conexao,
         "imagens": imageBase64
       };
 
@@ -181,14 +194,17 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
 
-      //await dispatch({type: 'LOTTERY', payload: response.data});
+      _getData();
 
-      //setPosts(response.data);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
+    setConexao([]);
+    setType(1);
+    setPost('');
+    setImagePost(null);
   }
 
   return (
@@ -262,7 +278,7 @@ export default function Main(props) {
           <View style={{margin: 3, marginTop: 5}}>
             <View style={{
               flex: 1,
-              backgroundColor: '#eee',
+              backgroundColor: '#ddd',
               borderRadius: 5,
               margin: 2,
               minHeight: 40,
@@ -281,6 +297,43 @@ export default function Main(props) {
               />
             </View>
 
+            {/*<TextDark>{JSON.stringify(user_rede.conexoes)}</TextDark>*/}
+            {type === 3 ?
+              <View style={{marginVertical: 10}}>
+                <View style={{marginHorizontal: 5}}>
+                  <TextDark>Selecione os contatos com os quais você deseja compartilhar a publicação</TextDark>
+                </View>
+
+                <MultipleSelect
+                  items={[
+                    // this is the parent or 'item'
+                    {
+                      name: 'Contatos',
+                      id: 0,
+                      // these are the children or 'sub items'
+                      children: conexoes,
+                    },
+                  ]}
+                  uniqueKey="id"
+                  subKey="children"
+                  confirmText="OK"
+                  selectText="Contatos"
+                  showDropDowns={false}
+                  hideSearch={true}
+                  //single
+                  styles={{selectToggle: {padding: 0}}}
+                  modalWithSafeAreaView={true}
+                  readOnlyHeadings={true}
+                  onSelectedItemsChange={setConexao}
+                  // onSelectedItemObjectsChange={value =>
+                  //   props.setFieldValue("days", value)
+                  // }
+                  selectedItems={conexao}
+                />
+
+              </View>
+              : null}
+
             <View style={{flex: 1, margin: 2, marginTop: 10}}>
               <Send onPress={() => _sendPost()} style={{flex: 1, justifyContent: 'center'}}>
                 <TextLight>Publicar</TextLight>
@@ -288,14 +341,19 @@ export default function Main(props) {
             </View>
           </View>
         </Header>
-
-        <FlatList
-          style={{margimBottom: 50}}
-          data={posts.retorno}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Nenhum sorteado encontrado!"/>}
-          renderItem={(item, index) => <Item item={item} user={user_rede}/>}
-        />
+        {loading ?
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50}}>
+            <ActivityIndicator size={'large'} animating={true}/>
+          </View>
+          :
+          <FlatList
+            style={{margimBottom: 50}}
+            data={data.retorno}
+            keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
+            renderItem={(item, index) => <Item item={item} user={user_rede} getData={_getData}/>}
+          />
+        }
       </ScrollView>
     </Content>
   );

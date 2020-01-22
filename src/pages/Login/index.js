@@ -115,7 +115,7 @@ export default function Main(props) {
           console.tron.log(response.data);
         }
       } catch (error) {
-        Alert.alert(null, error.message);
+        Alert.alert(null, 'Erro ao efetuar o login, tente mais tarde.');
         setModal(false);
       }
     }

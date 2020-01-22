@@ -264,24 +264,24 @@ export default function Main(props) {
         //permission: true,
         type: null,
       },
-      {
-        navigation: 'Donation',
-        image: require('~/assets/icons/movimento.png'),
-        name: 'MOVIMENTO SOLIDÁRIO',
-        item: item,
-        //permission: app_functions ? app_functions.donation : false,
-        permission: true,
-        type: null,
-      },
-      {
-        navigation: 'Games',
-        image: require('~/assets/icons/games.png'),
-        name: 'GAMES',
-        item: item,
-        //permission: app_functions ? app_functions.games_toten : false,
-        permission: true,
-        type: 'games',
-      },
+      // {
+      //   navigation: 'Donation',
+      //   image: require('~/assets/icons/movimento.png'),
+      //   name: 'MOVIMENTO SOLIDÁRIO',
+      //   item: item,
+      //   //permission: app_functions ? app_functions.donation : false,
+      //   permission: true,
+      //   type: null,
+      // },
+      // {
+      //   navigation: 'Games',
+      //   image: require('~/assets/icons/games.png'),
+      //   name: 'GAMES',
+      //   item: item,
+      //   //permission: app_functions ? app_functions.games_toten : false,
+      //   permission: true,
+      //   type: 'games',
+      // },
     ];
 
     const filtered = screen.filter(value => value.permission === true);

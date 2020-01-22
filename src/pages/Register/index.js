@@ -79,7 +79,7 @@ export default function Main(props) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const [code, setCode] = useState('');
+  //const [code, setCode] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [email_personal, setEmailPersonal] = useState('');
@@ -87,7 +87,7 @@ export default function Main(props) {
   const [apcef, setApcef] = useState('');
   const [phone, setPhone] = useState('');
   const [doc, setDoc] = useState('');
-  const [sex, setSex] = useState('');
+  const [sex, setSex] = useState(null);
   const [password, setPassword] = useState('');
   const [address_state, setState] = useState('');
   const [birthdate, setBirthdate] = useState('');
@@ -112,7 +112,6 @@ export default function Main(props) {
     if (__DEV__) {
       console.tron.log({
         phone: p.trim(),
-        code,
         name,
         doc: cpf,
         email: email.trim(),
@@ -127,10 +126,10 @@ export default function Main(props) {
 
       let response = await api.post('/api/auth/signup', {
         phone: p.trim(),
-        code,
         name,
         doc: cpf,
         email: email.trim(),
+        email_personal: email_personal,
         apcef,
         password: '123',
         sex,
@@ -146,7 +145,7 @@ export default function Main(props) {
           response.data.access_token,
         );
 
-        props.navigation.navigate('MainNavigator');
+        props.navigation.navigate('Auth');
       } else {
         Alert.alert(null, response.data.message);
         setModal(false);
@@ -175,9 +174,9 @@ export default function Main(props) {
       // if (!name) err.name = message;
       // if (!email) err.email = message;
 
-      if (!code) {
-        errors.name = 'Código obrigatório!';
-      }
+      // if (!code) {
+      //   errors.name = 'Código obrigatório!';
+      // }
 
       if (!name) {
         errors.name = 'Nome obrigatório!';
@@ -195,13 +194,13 @@ export default function Main(props) {
         errors.password = 'A senha deve conter pelo menos 4 caracteres';
       }
 
-      // if (!email_personal.trim()) {
-      //   errors.email_personal = 'E-mail pessoal obrigatório!';
-      // } else if (
-      //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal.trim())
-      // ) {
-      //   errors.email_personal = 'Digite um e-mail pessoal válido!';
-      // }
+      if (!email_personal.trim()) {
+        errors.email_personal = 'E-mail pessoal obrigatório!';
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal.trim())
+      ) {
+        errors.email_personal = 'Digite um e-mail pessoal válido!';
+      }
 
       if (!phone.trim()) {
         errors.phone = 'Telefone obrigatório!';
@@ -256,20 +255,20 @@ export default function Main(props) {
           <ScrollView style={{flex: 1}} keyboardDismissMode="interactive">
             {/* <Avatar /> */}
 
-            <Card>
-              <Input
-                value={code}
-                error={!code}
-                maxLength={50}
-                autoCapitalize="characters"
-                onChangeText={setCode}
-                textContentType="code"
-                autoCorrect={false}
-                label="Código"
-              />
+            {/*<Card>*/}
+            {/*  <Input*/}
+            {/*    value={code}*/}
+            {/*    error={!code}*/}
+            {/*    maxLength={50}*/}
+            {/*    autoCapitalize="characters"*/}
+            {/*    onChangeText={setCode}*/}
+            {/*    textContentType="code"*/}
+            {/*    autoCorrect={false}*/}
+            {/*    label="Código"*/}
+            {/*  />*/}
 
-              <TextError>{errors.code}</TextError>
-            </Card>
+            {/*  <TextError>{errors.code}</TextError>*/}
+            {/*</Card>*/}
 
             <Card>
               <Input
@@ -299,9 +298,9 @@ export default function Main(props) {
 
               <Input
                 value={email_personal}
-                //error={!email_personal}
+                error={!email_personal}
                 maxLength={14}
-                onChangeText={setEmailPersonal}
+                onChangeText={text => setEmailPersonal(text.trim())}
                 textContentType="emailAddress"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -323,7 +322,7 @@ export default function Main(props) {
               />
               <TextError>{errors.doc}</TextError>
 
-              {/* 
+              {/*
               <Input
                 value={matricula}
                 error={!matricula}
@@ -334,10 +333,10 @@ export default function Main(props) {
                 autoCorrect={false}
                 label="Matrícula"
               />
-            
+
             <TextError>{errors.matricula}</TextError> */}
 
-              {/* 
+              {/*
               <Input
                 value={apcef}
                 error={!apcef}
@@ -347,7 +346,7 @@ export default function Main(props) {
                 autoCorrect={false}
                 label="APCEF"
               />
-            
+
             <TextError>{errors.apcef}</TextError> */}
 
               <View

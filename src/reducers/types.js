@@ -32,3 +32,4 @@ export const GAMES = 'GAMES';
 export const UNITS = 'UNITS';
 export const PRODUCTS = 'PRODUCTS';
 export const ITEM = 'ITEM';
+export const REDE = 'REDE';

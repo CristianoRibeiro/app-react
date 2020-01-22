@@ -51,22 +51,18 @@ export default function Main(props) {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState({uri: user.append_avatar});
+  const [image, setImage] = useState(user.avatar ? {uri: user.append_avatar} : '');
 
   const [photo, setPhoto] = useState(user ? user.append_avatar : '');
   const [name, setName] = useState(user ? user.name : '');
   const [email, setEmail] = useState(user ? user.email : '');
-  const [email_personal, setEmailPersonal] = useState(
-    user ? user.email_personal : '',
-  );
+  const [email_personal, setEmailPersonal] = useState(user ? user.email_personal : '');
   const [matricula, setMatricula] = useState(user ? user.matricula : '');
   const [apcef, setApcef] = useState(user ? user.apcef : '');
   const [phone, setPhone] = useState(user.phone ? user.phone.trim() : '');
   const [sex, setSex] = useState(user ? user.sex : '');
   const [address_state, setState] = useState(user ? user.address_state : '');
-  const [birthdate, setBirthdate] = useState(
-    user.birthdate ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '',
-  );
+  const [birthdate, setBirthdate] = useState(user.birthdate ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '');
   const [shirt, setShirt] = useState(user ? user.shirt : '');
   const [frase, setFrase] = useState(user ? user.phrase : '');
   const [whatsapp, setWhatsapp] = useState(user.whatsapp ? user.whatsapp.trim() : '');
@@ -135,7 +131,7 @@ export default function Main(props) {
         apcef,
         sex,
         birthdate: formataStringData(birthdate),
-        address_state,
+        uf: address_state,
         shirt: shirt,
         phrase: frase,
         whatsapp,
@@ -189,13 +185,15 @@ export default function Main(props) {
         errors.email = 'E-mail obrigatório!';
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.trim())) {
         errors.email = 'Digite um e-mail válido!';
-      } else if (!email_personal.trim()) {
+      }
+      else if (!email_personal) {
         errors.email_personal = 'E-mail pessoal obrigatório!';
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email_personal.trim())
       ) {
         errors.email_personal = 'Digite um e-mail pessoal válido!';
-      } else if (!phone.trim()) {
+      }
+      else if (!phone.trim()) {
         errors.phone = 'Telefone obrigatório!';
       } else if (
         MaskService.toMask('cel-phone', phone.trim(), {
@@ -369,7 +367,7 @@ export default function Main(props) {
                   value={email_personal}
                   error={errors.email_personal}
                   maxLength={14}
-                  onChangeText={setEmailPersonal}
+                  onChangeText={text => setEmailPersonal(text.trim())}
                   textContentType="emailAddress"
                   autoCapitalize="none"
                   autoCorrect={false}

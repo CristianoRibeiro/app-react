@@ -73,7 +73,7 @@ export default function Main(props) {
       await dispatch({type: 'USER', payload: response.data});
 
       if (!response.data.updated) {
-        props.navigation.navigate('ProfileE');
+        props.navigation.navigate('ProfileEdit');
       }
 
       const user = response.data;
@@ -90,6 +90,8 @@ export default function Main(props) {
         OneSignal.sendTags({
           user_id: user.id,
           email: user.email,
+          apcef: user.apcef,
+          uf: user.uf,
         })
           .then(data => {
             if (__DEV__) {

@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import LinearGradient from "react-native-linear-gradient";
 import {Button} from "react-native-paper";
 import RNPickerSelect from "react-native-picker-select";
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -101,6 +102,15 @@ export const Cancel = styled(Button).attrs({
   border: 1px solid #666;
 `;
 
+export const BtnConecxoes = styled(Button).attrs({
+  mode: 'contained',
+  color: '#444'
+})`
+  background: #eee;
+  border-radius: 5px;
+  border: 1px solid #666;
+`;
+
 export const Btn = styled(Button).attrs({
   mode: 'text',
   uppercase: true,
@@ -138,8 +148,24 @@ export const TextTitle = styled.Text`
   margin: 5px 0;
 `;
 
-
-// export const Image = styled.Image`
-//   width: 100%;
-//   aspect-ratio: ${props => props.aspect};
-// `;
+export const MultipleSelect = styled(SectionedMultiSelect).attrs({
+  modalWithTouchable: true,
+  modalWithSafeAreaView: true,
+  selectedText: 'selecionados',
+  styles: {
+    selectToggle: {
+      borderRadius: 2,
+      paddingHorizontal: 10,
+      paddingVertical: 16,
+      backgroundColor: '#ececec',
+    },
+  },
+  colors: {
+    selectToggleTextColor: '#666',
+    text: '#222',
+    primary: '#0D4274',
+    success: '#f2b442',
+  }
+})`
+  flex: 1;
+`;
