@@ -16,6 +16,7 @@ export const User = {
   "instagram": "",
   "facebook": "",
   "birthdate": "0000-00-00",
+  "formatedData": "00-00-0000",
   "address_state": "",
   "email_verified_at": "",
   "points": "",
@@ -36,3 +37,4 @@ export const User = {
   "append_avatar": "",
   "registered_inspira": ""
 }
+

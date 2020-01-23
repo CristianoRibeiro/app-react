@@ -47,9 +47,9 @@ export const Form = styled.View`
 `;
 
 export const Card = styled.View`
-  margin: 3px;
+  margin: 2px;
   border-radius: 3px;
-  padding: 5px 5px;
+  padding: 3px;
   background-color: #fff;
 `;
 

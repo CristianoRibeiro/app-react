@@ -13,9 +13,13 @@ import {
   Linking,
   Alert,
   FlatList,
+  Platform
 } from 'react-native';
 import Modal from "react-native-modal";
 import QRCodeScanner from "react-native-qrcode-scanner";
+import {YouTubeStandaloneIOS} from 'react-native-youtube';
+import {YouTubeStandaloneAndroid} from 'react-native-youtube';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Voucher from '~/model/Voucher';
 
 import api from '~/services/api';
@@ -38,9 +42,10 @@ export default function Main(props) {
   const [app_functions, setFunctions] = useState(
     eventitem.app_functions
       ? JSON.parse(eventitem.app_functions)
-      : [],
+      : []
   );
   const [loading, setLoading] = useState(false);
+  const [loadingStreaming, setLoadingStreaming] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -100,10 +105,78 @@ export default function Main(props) {
     } else if (item.type === 'games') {
       setModal(true);
       //_scanner(20);
+    } else if (item.type === 'streaming') {
+
+      _getStreaming();
+
+    } else if (item.type === 'certificates') {
+
+      _openUrl('https://viva-fenae.strongtecnologia.com.br');
+
     } else {
       props.navigation.navigate(item.navigation, {item: item.item});
     }
+  }
 
+  function _openUrl(url) {
+    try {
+      Linking.canOpenURL(url).then(supported => {
+        if (supported) {
+          Linking.openURL(url).catch(err =>
+            console.error('An error occurred', err),
+          );
+        }
+      });
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
+  async function _getStreaming() {
+
+    setLoadingStreaming(true);
+    try {
+      let response = await api.post('/api/streaming', {event_id: eventitem.id});
+      //alert(JSON.stringify(response));
+      setLoadingStreaming(false);
+
+      if (response.data.success) {
+        setTimeout(() => {
+            if (__DEV__) {
+              console.tron.log(response.data);
+            }
+            if (Platform.OS === 'ios') {
+              YouTubeStandaloneIOS.playVideo(response.data.videoId)
+                .then(message => console.log(message))
+                .catch(() => Alert.alert(null, 'Link de transmissão invalido.'));
+            } else {
+              YouTubeStandaloneAndroid.playVideo({
+                apiKey: 'AIzaSyCSP0AQ_76MTDu7Q4QQV-UL2QbYOQcQf4M', // Your YouTube Developer API Key
+                videoId: response.data.videoId, // YouTube video ID
+                autoplay: true, // Autoplay the video
+                startTime: 120, // Starting point of video (in seconds)
+              })
+                .then(() => console.log('Standalone Player Exited'))
+                .catch(() => Alert.alert(null, 'Link de transmissão invalido.'));
+            }
+          },
+          1000
+        );
+      } else {
+        setTimeout(() => {
+            Alert.alert(null, response.data.message);
+          },
+          800
+        );
+      }
+
+    } catch (error) {
+      Alert.alert(null, 'Transmissão não disponível no momento.');
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    setLoadingStreaming(false);
   }
 
   function _screen() {
@@ -176,7 +249,7 @@ export default function Main(props) {
         name: 'TRANSMISSÃO',
         item: item,
         permission: app_functions ? app_functions.transmission : false,
-        type: null,
+        type: 'streaming',
       },
       {
         navigation: 'PrizeEvent',
@@ -193,7 +266,7 @@ export default function Main(props) {
         name: 'CERTIFICADO',
         item: item,
         permission: app_functions ? app_functions.certificate : false,
-        type: null,
+        type: 'certificates',
       },
       {
         navigation: 'Faq',
@@ -264,24 +337,24 @@ export default function Main(props) {
         //permission: true,
         type: null,
       },
-      // {
-      //   navigation: 'Donation',
-      //   image: require('~/assets/icons/movimento.png'),
-      //   name: 'MOVIMENTO SOLIDÁRIO',
-      //   item: item,
-      //   //permission: app_functions ? app_functions.donation : false,
-      //   permission: true,
-      //   type: null,
-      // },
-      // {
-      //   navigation: 'Games',
-      //   image: require('~/assets/icons/games.png'),
-      //   name: 'GAMES',
-      //   item: item,
-      //   //permission: app_functions ? app_functions.games_toten : false,
-      //   permission: true,
-      //   type: 'games',
-      // },
+      {
+        navigation: 'Donation',
+        image: require('~/assets/icons/movimento.png'),
+        name: 'MOVIMENTO SOLIDÁRIO',
+        item: item,
+        //permission: app_functions ? app_functions.donation : false,
+        permission: true,
+        type: null,
+      },
+      {
+        navigation: 'Games',
+        image: require('~/assets/icons/games.png'),
+        name: 'GAMES',
+        item: item,
+        //permission: app_functions ? app_functions.games_toten : false,
+        permission: true,
+        type: 'games',
+      },
     ];
 
     const filtered = screen.filter(value => value.permission === true);
@@ -419,6 +492,13 @@ export default function Main(props) {
           renderItem={({item}) => _renderItem(item)}
         />
       </ScrollView>
+
+      <Spinner
+        visible={loadingStreaming}
+        textStyle={{color: '#fff'}}
+        color={'#fff'}
+        textContent={'Caregando...'}
+      />
 
       <Modal isVisible={modal} style={{margin: 0}}>
         <QRCodeScanner

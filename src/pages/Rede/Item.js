@@ -143,43 +143,25 @@ export default function Main(props) {
       cancelButtonTitle: 'Cancelar',
       takePhotoButtonTitle: 'Usar Camera',
       chooseFromLibraryButtonTitle: 'Carregar da galeria',
-      multiple: true,
+      multiple: false,
       mediaType: 'photo',
       includeBase64: true
     };
 
-    await ImagePicker.openPicker(options)
-      .then(response => {
-        let tempArray = [];
-        let tempArray2 = [];
+    await ImagePicker.openPicker(options).then(async image => {
+      //alert(JSON.stringify(image));
+      let img = {
+        uri: image.path,
+        width: image.width,
+        height: image.height,
+        mime: image.mime,
+        type: 'image/jpeg',
+        name: image.path.substring(image.path.lastIndexOf('/') + 1),
+      };
 
-        response.forEach((item) => {
-
-          if (__DEV__) {
-            console.tron.log(item);
-          }
-
-          let image = {
-            uri: item.path,
-            width: item.width,
-            height: item.height,
-            mime: item.mime,
-            type: 'image/jpeg',
-            name: item.path.substring(item.path.lastIndexOf('/') + 1),
-            data: item.data,
-          }
-
-          tempArray.push(image);
-          tempArray2.push('data:' + item.mime + ';base64, ' + item.data);
-          // console.log('savedimageuri====='+item.path);
-
-        });
-        setImagePost(tempArray);
-        setImageBase64(tempArray2);
-        if (__DEV__) {
-          console.tron.log(tempArray2);
-        }
-      });
+      setImagePost(img);
+      setImageBase64('data:' + image.mime + ';base64, ' + image.data);
+    });
   }
 
   async function _like(idPost) {
@@ -311,6 +293,7 @@ export default function Main(props) {
         "cpf": user.doc,
         "idPost": post.id,
         "texto": postEvent,
+        "imagem": imageBase64
       };
 
       let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
@@ -328,17 +311,48 @@ export default function Main(props) {
     props.getData();
   }
 
+  function _renderEdit() {
+    if (hideEdit) {
+      return (
+        <View style={{marginTop: 10, marginBottom: 5, paddingHorizontal: 5}}>
+          <TextDark>
+            {post.texto ? post.texto : null}
+          </TextDark>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{marginTop: 15, paddingHorizontal: 5, flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <InputDark
+              value={inputEditarPost}
+              multiline
+              maxLength={255}
+              onChangeText={setInputEditarPost}
+              placeholder="Editar postagem"
+            />
+          </View>
+
+          <Send onPress={() => _sendEditar()} style={{justifyContent: 'center', alignItems: 'center'}}>
+            <TextLight>Editar</TextLight>
+          </Send>
+        </View>
+      );
+    }
+  }
+
   function _renderItem(item) {
 
     return (
-      <Card style={{marginTop: 15, marginRight: 6, marginLeft: 6}}>
+      <Card style={{marginTop: 15, marginRight: 3, marginLeft: 3}}>
         <View>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              paddingHorizontal: 5
+              paddingHorizontal: 5,
+              marginTop: 10
             }}>
 
             <Image
@@ -394,11 +408,7 @@ export default function Main(props) {
             </Menu>
           </View>
 
-          <View style={{marginTop: 15, paddingHorizontal: 5}}>
-            <TextDark>
-              {post ? post.texto : null}
-            </TextDark>
-          </View>
+          {_renderEdit()}
 
           <View style={{flex: 1, margin: 5}}>
 
@@ -488,28 +498,10 @@ export default function Main(props) {
           </View>
 
           <View style={{backgroundColor: '#fff'}}>
-            <FlatList
-              style={{margimBottom: 50}}
-              data={imagePost}
-              horizontal
-              //numColumns={4}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={(item, index) => <View style={{flex: 1}}>
 
-                <Card style={{width: 100, flex: 1, padding: 2}}>
-                  <View style={{alignItems: 'flex-end'}}>
-                    <TouchableOpacity onPress={() => _removeImagePost(item)} style={{height: 20, width: 20}}>
-                      <MaterialCommunityIcons
-                        name="close"
-                        size={18}
-                        color={'#666'}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <FitImage source={{uri: item.item.uri}} resizeMode="contain"/>
-                </Card>
-              </View>}
-            />
+            {imagePost ?
+              <FitImage source={imagePost} resizeMode="contain"/>
+              : null}
           </View>
 
           <Send disabled={postEvent ? false : true} onPress={() => _sendComentario()}

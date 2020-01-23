@@ -46,6 +46,7 @@ import {
   TextLight,
 } from './styles';
 import Modal from "react-native-modal";
+import PostComentario from "~/pages/Rede/PostComentario";
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
@@ -56,13 +57,11 @@ export default function Main(props) {
   const [comentario, setComentario] = useState([]);
   const [userPost, setUserPost] = useState([]);
   const [hideMenu, setHideMenu] = useState(false);
-  const [postEvent, setPostEvent] = useState('');
   const [like, setLike] = useState(false);
 
-  const [inputDenuncia, setInputDenuncia] = useState('');
-  const [inputEditarPost, setInputEditarPost] = useState('');
+  const [inputEditarPost, setInputEditarPost] = useState(props.item ? props.item.texto : '');
 
-  const [hideComment, setHideComment] = useState(false);
+  const [hideComment, setHideComment] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -110,11 +109,75 @@ export default function Main(props) {
     );
   }
 
+  async function _sendEditar() {
+
+    try {
+
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": props.userPost.cpf,
+        //"idPost": props.post.id,
+        "idComentario": props.item.id,
+        "texto": inputEditarPost
+      };
+
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      //alert(JSON.stringify(data));
+
+      if (__DEV__) {
+        console.tron.log(data);
+      }
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    //setHideEditComment(true);
+    //props.getData();
+  }
+
+  function _renderEdit() {
+    if (hideComment) {
+      return (
+        <View style={{marginTop: 2, marginBottom: 8, paddingHorizontal: 5}}>
+          <TextDark>
+            {props.item ? props.item.texto : null}
+          </TextDark>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{marginTop: 15, paddingHorizontal: 5, flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <InputDark
+              value={inputEditarPost}
+              multiline
+              maxLength={255}
+              onChangeText={setInputEditarPost}
+              placeholder="Editar postagem"
+            />
+          </View>
+
+          <Send onPress={() => _sendEditar()} style={{justifyContent: 'center', alignItems: 'center'}}>
+            <TextLight>Editar</TextLight>
+          </Send>
+        </View>
+      );
+    }
+  }
+
   function _renderItem() {
 
     return (
 
       <View style={{marginHorizontal: 5, marginVertical: 5}}>
+
+        {/*<TextDark>{JSON.stringify(props.item)}</TextDark>*/}
+
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
           <Image
             source={{uri: props.item.imagemPerfil ? props.item.imagemPerfil : ''}}
@@ -128,10 +191,10 @@ export default function Main(props) {
           <Card style={{width: 100, flex: 1, padding: 2}}>
             <TextDark
               style={{fontSize: 18, textTransform: 'uppercase'}}>{props.item.nomeParticipante}</TextDark>
-            <TextDark style={{fontSize: 11}}>10/01/2020</TextDark>
+            <TextDark style={{fontSize: 11}}>{props.item.data}</TextDark>
           </Card>
 
-          {props.userPost.nome === props.post.nomeParticipante ?
+          {props.item.nomeParticipante === props.userPost.nome ?
           <Menu
             visible={hideMenu}
             onDismiss={() => setHideMenu(false)}
@@ -145,27 +208,44 @@ export default function Main(props) {
               </TouchableOpacity>
             }
           >
-
-
-              <View>
-                <Menu.Item onPress={() => {
-                  setHideComment(!hideComment);
-                  setHideMenu(false);
-                }} title="Editar"/>
-                <Menu.Item onPress={() => {
-                  _excluir();
-                  setHideMenu(false);
-                }} title="Excluir"/>
-              </View>
+            <View>
+              <Menu.Item onPress={() => {setHideComment(!hideComment); setHideMenu(false);}} title="Editar"/>
+              <Menu.Item onPress={() => {
+                _excluir();
+                setHideMenu(false);
+              }} title="Excluir"/>
+            </View>
 
           </Menu>
             : null}
-
         </View>
-        <TextDark style={{fontSize: 14, fontWeight: '700'}}>
-          {props.item.texto}
-        </TextDark>
 
+        {/*<TextDark>*/}
+        {/*  {props.item ? props.item.texto : null}*/}
+        {/*</TextDark>*/}
+
+        {_renderEdit()}
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+
+          <TouchableOpacity style={{marginVertical: 5, marginRight: 10}}>
+            <AntDesign
+              name="like2"
+              size={26}
+              color={'#666'}
+            />
+          </TouchableOpacity>
+
+          <TextDark>0</TextDark>
+
+          {/*<TouchableOpacity onPress={() => setHideComment(props.item.id)} style={{flex: 1, justifyContent: 'center', marginLeft: 20}}>*/}
+          {/*  <TextDark style={{color: '#ff8f00'}}>Comentar</TextDark>*/}
+          {/*</TouchableOpacity>*/}
+        </View>
       </View>
 
     );

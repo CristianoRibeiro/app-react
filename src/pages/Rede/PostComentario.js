@@ -21,7 +21,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import StarRating from 'react-native-star-rating';
 import {Divider, Menu} from 'react-native-paper';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
-import EmptyList from '~/components/EmptyList';
+import ItemComentario from '~/pages/Rede/ItemComentario';
 import Rede from '~/model/Rede';
 import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
@@ -62,6 +62,7 @@ export default function Main(props) {
 
   const [hideComment, setHideComment] = useState(null);
   const [inputEditarPost, setInputEditarPost] = useState(props.item.texto);
+  const [inputComent, setInputComent] = useState('');
 
   const [hideEditComment, setHideEditComment] = useState(true);
   const [error, setError] = useState(false);
@@ -77,23 +78,28 @@ export default function Main(props) {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": props.userPost.cpf,
-        "idPost": props.post.id,
+        //"idPost": props.post.id,
         "idComentario": props.item.id,
         "texto": inputEditarPost,
+        "imagem": ""
       };
 
       let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
       //alert(JSON.stringify(data));
 
       if (__DEV__) {
+        console.tron.log(data);
+      }
+      if (__DEV__) {
         console.tron.log(response.data);
       }
+
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
-    setHideEditComment(true);
+    //setHideEditComment(true);
     props.getData();
   }
 
@@ -103,13 +109,13 @@ export default function Main(props) {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
-        "idPost": props.post.id
+        "idComentario": props.item.id
       };
 
-      //let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/remover', data);
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/remover', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
-        //console.tron.log(response.data);
+        console.tron.log(response.data);
       }
 
     } catch (error) {
@@ -136,6 +142,64 @@ export default function Main(props) {
       ],
       {cancelable: false},
     );
+  }
+
+  async function _sendComent() {
+
+    try {
+
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": props.userPost.cpf,
+        //"idPost": props.post.id,
+        "idComentarioPai": props.item.id,
+        "texto": inputComent
+      };
+
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      //alert(JSON.stringify(data));
+
+      if (__DEV__) {
+        console.tron.log(data);
+      }
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    //setHideEditComment(true);
+    props.getData();
+  }
+
+  function _renderComentar() {
+
+    return (
+      <View style={{marginTop: 15, paddingHorizontal: 5, flexDirection: 'row'}}>
+        <View style={{flex: 1}}>
+          <InputDark
+            value={inputComent}
+            multiline
+            maxLength={255}
+            onChangeText={setInputComent}
+            placeholder="Comente"
+          />
+        </View>
+        <View>
+          <Send onPress={() => _sendComent()} style={{justifyContent: 'center', alignItems: 'center'}}>
+            <MaterialCommunityIcons
+              name="send"
+              size={26}
+              color={'#fff'}
+            />
+          </Send>
+        </View>
+      </View>
+    );
+
   }
 
   function _renderComment(item) {
@@ -165,8 +229,18 @@ export default function Main(props) {
         </View>
 
         {hideComment === props.item.id ?
-          <TextDark></TextDark>
+          _renderComentar()
           : null}
+
+        <View style={{borderWidth: 1, borderColor: '#cecece', marginTop: 5, borderRadius: 5, marginHorizontal: 5}}>
+          <FlatList
+            data={props.item.comentarioRespostas ? props.item.comentarioRespostas : []}
+            //numColumns={4}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={(item, index) => <ItemComentario item={item.item} post={props.post} userPost={props.userPost}
+                                                         getData={props.getData}/>}
+          />
+        </View>
       </View>
     );
   }
@@ -205,7 +279,6 @@ export default function Main(props) {
   function _renderItem() {
 
     return (
-
       <View style={{marginHorizontal: 5, marginVertical: 5}}>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
           <Image
@@ -220,7 +293,7 @@ export default function Main(props) {
           <Card style={{width: 100, flex: 1, padding: 2}}>
             <TextDark
               style={{fontSize: 18, textTransform: 'uppercase'}}>{props.item.nomeParticipante}</TextDark>
-            <TextDark style={{fontSize: 11}}>10/01/2020</TextDark>
+            <TextDark style={{fontSize: 11}}>{props.item.data}</TextDark>
           </Card>
 
           {props.userPost.nome === props.item.nomeParticipante ?
@@ -238,7 +311,6 @@ export default function Main(props) {
               }
             >
 
-
               <View>
                 <Menu.Item onPress={() => {
                   setHideEditComment(!hideEditComment);
@@ -255,7 +327,12 @@ export default function Main(props) {
             : null}
 
         </View>
+
         {_renderEdit()}
+
+        {props.item.imagem ?
+          <FitImage source={{uri: props.item.imagem}} resizeMode="contain"/>
+          : null}
 
         {_renderComment()}
       </View>

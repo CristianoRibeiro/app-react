@@ -38,6 +38,7 @@ target 'appfenae' do
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
   pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
   pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
+  pod 'XCDYouTubeKit', '~> 2.8'
 
   target 'appfenaeTests' do
     inherit! :search_paths

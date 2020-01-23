@@ -61,6 +61,7 @@ export default function Main(props) {
       }
       await dispatch({type: 'VOUCHER', payload: response.data});
     } catch (error) {
+      await dispatch({type: 'VOUCHER', payload: []});
       if (__DEV__) {
         console.tron.log(error.message);
       }

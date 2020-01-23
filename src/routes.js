@@ -45,13 +45,12 @@ import Prize from '~/pages/Event/Prize';
 import PrizeAll from '~/pages/Event/Prize/All';
 import Flight from '~/pages/Event/Flight';
 import Transfer from '~/pages/Event/Transfer';
-import Streaming from '~/pages/Event/Streaming';
 import Info from '~/pages/Event/Info';
 import UsefulInfo from '~/pages/Event/Info/Useful';
 import Faq from '~/pages/Event/Faq';
 import ScheduleEvent from '~/pages/Event/ScheduleEvent';
 import ScheduleEventDetail from '~/pages/Event/ScheduleEvent/Detail';
-import Certificate from '~/pages/Certificate';
+import Certificate from '~/pages/Event/Certificate';
 import Cupom from '~/pages/Event/Cupom';
 import EventCupons from '~/pages/Event/Cupom/Cupons';
 import Gallery from '~/pages/Event/Gallery';
@@ -497,17 +496,6 @@ const MainNavigator = createStackNavigator(
       header: null,
       navigationOptions: {
         headerTitle: 'Passagens',
-        headerStyle: {
-          backgroundColor: '#FF6666',
-        },
-      },
-    },
-    Streaming: {
-      screen: Streaming,
-      path: 'streaming',
-      header: null,
-      navigationOptions: {
-        headerTitle: 'Transmissão',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

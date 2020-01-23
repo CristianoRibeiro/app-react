@@ -62,7 +62,7 @@ export default function Main(props) {
   const [phone, setPhone] = useState(user.phone ? user.phone.trim() : '');
   const [sex, setSex] = useState(user ? user.sex : '');
   const [address_state, setState] = useState(user ? user.address_state : '');
-  const [birthdate, setBirthdate] = useState(user.birthdate ? format(parseISO(user.birthdate), 'dd/MM/YYY') : '');
+  const [birthdate, setBirthdate] = useState(user.formatedData ?user.formatedData : '');
   const [shirt, setShirt] = useState(user ? user.shirt : '');
   const [frase, setFrase] = useState(user ? user.phrase : '');
   const [whatsapp, setWhatsapp] = useState(user.whatsapp ? user.whatsapp.trim() : '');
