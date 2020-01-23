@@ -68,10 +68,10 @@ export default function Main(props) {
     setLoading(false);
   }
 
- async function _handleScreen(item){
-  await dispatch({type: 'VOUCHERITEM', payload: item});
-  props.navigation.navigate('VoucherItem');
- }
+  async function _handleScreen(item) {
+    await dispatch({type: 'VOUCHERITEM', payload: item});
+    props.navigation.navigate('VoucherItem');
+  }
 
   function _renderItem(item) {
     return (
@@ -102,10 +102,10 @@ export default function Main(props) {
         style={{margimBottom: 75}}
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum voucher encontrado!" />}
+        ListEmptyComponent={<EmptyList text="Nenhum voucher encontrado!"/>}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _onRefresh()} />
+          <RefreshControl refreshing={loading} onRefresh={() => _onRefresh()}/>
         }
       />
 
