@@ -389,7 +389,6 @@ export default function Main(props) {
                 <View>
                   <Menu.Item onPress={() => {
                     setHideEdit(!hideEdit);
-                    setHideMenu(false);
                   }} title="Editar"/>
                   <Menu.Item onPress={() => {
                     _excluir();

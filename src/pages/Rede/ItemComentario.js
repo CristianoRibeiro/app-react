@@ -96,7 +96,7 @@ export default function Main(props) {
 
     Alert.alert(
       null,
-      'Deseja excluir este post?',
+      'Deseja excluir este comentário?',
       [
         {
           text: 'Sim',
@@ -212,7 +212,7 @@ export default function Main(props) {
               <Menu.Item onPress={() => {setHideComment(!hideComment); setHideMenu(false);}} title="Editar"/>
               <Menu.Item onPress={() => {
                 _excluir();
-                setHideMenu(false);
+                setHideMenu(!hideMenu);
               }} title="Excluir"/>
             </View>
 

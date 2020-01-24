@@ -61,6 +61,7 @@ export default function Main(props) {
   const [like, setLike] = useState(false);
 
   const [hideComment, setHideComment] = useState(null);
+  const [hideComment2, setHideComment2] = useState(false);
   const [inputEditarPost, setInputEditarPost] = useState(props.item.texto);
   const [inputComent, setInputComent] = useState('');
 
@@ -131,7 +132,7 @@ export default function Main(props) {
 
     Alert.alert(
       null,
-      'Deseja excluir este post?',
+      'Deseja excluir este comentário?',
       [
         {
           text: 'Sim',
@@ -222,13 +223,13 @@ export default function Main(props) {
 
           <TextDark>0</TextDark>
 
-          <TouchableOpacity onPress={() => setHideComment(props.item.id)}
+          <TouchableOpacity onPress={() => {setHideComment(props.item.id); setHideComment2(!hideComment2)}}
                             style={{flex: 1, justifyContent: 'center', marginLeft: 20}}>
             <TextDark style={{color: '#ff8f00'}}>Comentar</TextDark>
           </TouchableOpacity>
         </View>
 
-        {hideComment === props.item.id ?
+        {hideComment === props.item.id && hideComment2 ?
           _renderComentar()
           : null}
 
@@ -314,7 +315,7 @@ export default function Main(props) {
               <View>
                 <Menu.Item onPress={() => {
                   setHideEditComment(!hideEditComment);
-                  setHideMenu(false);
+                  setHideMenu(!hideEditComment);
                   setInputEditarPost(props.item.texto);
                 }} title="Editar"/>
                 <Menu.Item onPress={() => {
