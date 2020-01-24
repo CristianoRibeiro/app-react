@@ -59,17 +59,15 @@ export default function Main(props) {
   const [userPost, setUserPost] = useState([]);
   const [imagePost, setImagePost] = useState(null);
   const [imageBase64, setImageBase64] = useState(null);
-  const [imageComment, setImageComment] = useState(null);
-  const [subComment, setSubComment] = useState('');
   const [postEvent, setPostEvent] = useState('');
-  const [like, setLike] = useState(false);
+  const [likeItem, setLikeItem] = useState(props.item.item.curtiu);
+  const [likeNumber, setLikeNumber] = useState(props.item.item.curtidas);
+  const [comentarios, setComentario] = useState(props.item.item.comentarios ? props.item.item.comentarios : []);
 
   const [inputDenuncia, setInputDenuncia] = useState('');
   const [inputEditarPost, setInputEditarPost] = useState('');
 
-  const [hideComment, setHideComment] = useState(false);
   const [hideEdit, setHideEdit] = useState(true);
-  const [hideEditComentario, setHideEditComentario] = useState(true);
   const [urlImages, setUrlImages] = useState([]);
   const [hideMenu, setHideMenu] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -92,7 +90,6 @@ export default function Main(props) {
       setInputEditarPost(props.item.item.texto);
       setUrlImages(props.item.item.imagens ? props.item.item.imagens : []);
       setUserPost(props.user ? props.user : []);
-      setLike(props.item.item.curtiu);
 
     } catch (error) {
       if (__DEV__) {
@@ -179,15 +176,16 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
 
-      _getData();
-      setLike(response.data.curtiu);
+      setLikeItem(response.data.curtiu);
+      setLikeNumber(response.data.curtidas);
 
+      _getData();
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
-    props.getData();
+    //props.getData();
   }
 
   async function _denunciar() {
@@ -213,11 +211,10 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
-    props.getData();
+    //props.getData();
   }
 
   async function _sendExcluir() {
-
     try {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
@@ -237,6 +234,7 @@ export default function Main(props) {
       }
     }
     props.getData();
+    //props.excluir(props.item.item);
   }
 
   async function _excluir() {
@@ -280,6 +278,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setHideMenu(false);
     setHideEdit(true);
     props.getData();
   }
@@ -297,18 +296,36 @@ export default function Main(props) {
       };
 
       let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
-      //alert(JSON.stringify(data));
 
       if (__DEV__) {
         console.tron.log(response.data);
       }
+
+      let item = {
+        "id": response.data.idComentario,
+        "texto": postEvent,
+        "imagem": imagePost,
+        "imagemPerfil": props.user.urlFoto,
+        "nomeParticipante": props.user.nome,
+        "data": response.data.data,
+        "curtiu": false,
+        "curtidas": 0,
+        "comentarioRespostas": null
+      };
+
+      setComentario([item, ...comentarios]);
+
+      setImagePost(null);
+      setPostEvent(null);
+
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
+      Alert.alert(null, 'Erro ao realizar comentário.');
     }
     setHideEdit(true);
-    props.getData();
+    //props.getData();
   }
 
   function _renderEdit() {
@@ -316,7 +333,7 @@ export default function Main(props) {
       return (
         <View style={{marginTop: 10, marginBottom: 5, paddingHorizontal: 5}}>
           <TextDark>
-            {post.texto ? post.texto : null}
+            {inputEditarPost}
           </TextDark>
         </View>
       );
@@ -339,6 +356,43 @@ export default function Main(props) {
         </View>
       );
     }
+  }
+
+  async function _removeComentario(item) {
+
+
+    try {
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "idComentario": item.id
+      };
+
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/remover', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      let list = comentarios;
+      let newValues = new Array();
+
+      let i = 0;
+      list.forEach((element, index) => {
+        if (item.id != element.id) {
+          newValues[i] = element;
+          i++;
+        }
+      });
+      setComentario(newValues);
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    //alert(JSON.stringify(item));
+
   }
 
   function _renderItem(item) {
@@ -384,7 +438,6 @@ export default function Main(props) {
                 </TouchableOpacity>
               }
             >
-
               {userPost.nome === post.nomeParticipante ?
                 <View>
                   <Menu.Item onPress={() => {
@@ -409,6 +462,8 @@ export default function Main(props) {
 
           {_renderEdit()}
 
+          {/*<TextDark>{JSON.stringify(props.user)}</TextDark>*/}
+
           <View style={{flex: 1, margin: 5}}>
 
             {urlImages.map((item, key) => (
@@ -423,15 +478,13 @@ export default function Main(props) {
 
           <View
             style={{
-              width: 40,
-              justifyContent: 'space-between',
+              flexDirection: 'row',
               alignItems: 'center',
-              paddingHorizontal: 5
             }}>
 
-            <Btn onPress={() => _like(post.id)}>
+            <TouchableOpacity onPress={() => _like(post.id)} style={{marginVertical: 5, marginRight: 10, marginLeft: 5}}>
 
-              {like ?
+              {likeItem ?
                 <AntDesign
                   name="like1"
                   size={26}
@@ -443,19 +496,18 @@ export default function Main(props) {
                   color={'#666'}
                 />}
 
-            </Btn>
+            </TouchableOpacity>
 
-            <TextDark style={{marginTop: -5}}>{post.curtidas}</TextDark>
+            <TextDark>{likeNumber}</TextDark>
 
           </View>
 
           <View style={{margin: 8}}>
             <FlatList
-              data={post.comentarios ? post.comentarios : []}
+              data={comentarios ? comentarios : []}
               //numColumns={4}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={(item, index) => <PostComentario item={item.item} post={post} userPost={userPost}
-                                                           getData={props.getData}/>}
+              renderItem={(item, index) => <PostComentario item={item.item} post={post} userPost={userPost} getData={props.getData} removeComentario={_removeComentario}/>}
             />
           </View>
           <View
@@ -548,25 +600,25 @@ export default function Main(props) {
         </Modal>
 
 
-        {/*<Modal*/}
-        {/*  isVisible={modalAlert}*/}
-        {/*  style={{marginVertical: 50, backgroundColor: '#fff', margin: 0}}>*/}
+        <Modal
+          isVisible={modalAlert}
+          style={{marginVertical: 50, backgroundColor: '#fff', margin: 0}}>
 
-        {/*  <View style={{margin: 10}}>*/}
-        {/*    <TextDark style={{marginBottom: 8, fontSize: 18}}>DENÚNCIA REALIZADA COM SUCESSO!</TextDark>*/}
-        {/*    <TextDark style={{marginBottom: 8}}>Em breve nossa equipe irá avaliar o seu reporte e tomar as providências*/}
-        {/*      cabíveis.</TextDark>*/}
-        {/*    <TextDark style={{marginBottom: 8}}>A Rede do Conhecimento agradece.</TextDark>*/}
+          <View style={{margin: 10}}>
+            <TextDark style={{marginBottom: 8, fontSize: 18}}>DENÚNCIA REALIZADA COM SUCESSO!</TextDark>
+            <TextDark style={{marginBottom: 8}}>Em breve nossa equipe irá avaliar o seu reporte e tomar as providências
+              cabíveis.</TextDark>
+            <TextDark style={{marginBottom: 8}}>A Rede do Conhecimento agradece.</TextDark>
 
-        {/*  </View>*/}
+          </View>
 
-        {/*  <Send*/}
-        {/*    onPress={() => setModalAlert(false)}*/}
-        {/*    style={{marginBottom: 10, marginHorizontal: 15}}>*/}
-        {/*    <TextLight>OK</TextLight>*/}
-        {/*  </Send>*/}
+          <Send
+            onPress={() => setModalAlert(false)}
+            style={{marginBottom: 10, marginHorizontal: 15}}>
+            <TextLight>OK</TextLight>
+          </Send>
 
-        {/*</Modal>*/}
+        </Modal>
 
       </Card>
     );

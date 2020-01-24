@@ -53,11 +53,9 @@ export default function Main(props) {
   const data = useSelector(state => state.lottery);
   const dispatch = useDispatch();
 
-  const [post, setPost] = useState([]);
-  const [comentario, setComentario] = useState([]);
-  const [userPost, setUserPost] = useState([]);
   const [hideMenu, setHideMenu] = useState(false);
   const [like, setLike] = useState(false);
+  const [likeNumber, setLikeNumber] = useState(0);
 
   const [inputEditarPost, setInputEditarPost] = useState(props.item ? props.item.texto : '');
 
@@ -66,7 +64,9 @@ export default function Main(props) {
 
   useEffect(() => {
     //alert(JSON.stringify(props.userPost));
-  }, []);
+    setLike(props.item.curtiu);
+    setLikeNumber(props.item.curtidas);
+  }, [props.item]);
 
   async function _sendExcluir() {
 
@@ -74,13 +74,13 @@ export default function Main(props) {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
-        "idPost": props.post.id
+        "idComentario": props.item.id
       };
 
-      //let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/remover', data);
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/remover', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
-        //console.tron.log(response.data);
+        console.tron.log(response.data);
       }
 
     } catch (error) {
@@ -109,6 +109,35 @@ export default function Main(props) {
     );
   }
 
+  async function _like() {
+
+    try {
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": props.userPost.cpf,
+        "idComentario": props.item.id,
+      };
+
+      //alert(JSON.stringify(data));
+
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/curtir', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      setLike(response.data.curtiu);
+      setLikeNumber(response.data.curtidas);
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+      Alert.alert(null,'Ocorreu um erro. tente novamente mais tarde');
+    }
+    //props.getData();
+  }
+
   async function _sendEditar() {
 
     try {
@@ -127,6 +156,7 @@ export default function Main(props) {
       if (__DEV__) {
         console.tron.log(data);
       }
+
       if (__DEV__) {
         console.tron.log(response.data);
       }
@@ -136,7 +166,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
-    //setHideEditComment(true);
+    setHideComment(true);
     //props.getData();
   }
 
@@ -145,7 +175,7 @@ export default function Main(props) {
       return (
         <View style={{marginTop: 2, marginBottom: 8, paddingHorizontal: 5}}>
           <TextDark>
-            {props.item ? props.item.texto : null}
+            {inputEditarPost}
           </TextDark>
         </View>
       );
@@ -195,28 +225,31 @@ export default function Main(props) {
           </Card>
 
           {props.item.nomeParticipante === props.userPost.nome ?
-          <Menu
-            visible={hideMenu}
-            onDismiss={() => setHideMenu(false)}
-            anchor={
-              <TouchableOpacity onPress={() => setHideMenu(true)}>
-                <MaterialCommunityIcons
-                  name="dots-horizontal"
-                  size={26}
-                  color={'#666'}
-                />
-              </TouchableOpacity>
-            }
-          >
-            <View>
-              <Menu.Item onPress={() => {setHideComment(!hideComment); setHideMenu(false);}} title="Editar"/>
-              <Menu.Item onPress={() => {
-                _excluir();
-                setHideMenu(!hideMenu);
-              }} title="Excluir"/>
-            </View>
+            <Menu
+              visible={hideMenu}
+              onDismiss={() => setHideMenu(false)}
+              anchor={
+                <TouchableOpacity onPress={() => setHideMenu(true)}>
+                  <MaterialCommunityIcons
+                    name="dots-horizontal"
+                    size={26}
+                    color={'#666'}
+                  />
+                </TouchableOpacity>
+              }
+            >
+              <View>
+                <Menu.Item onPress={() => {
+                  setHideComment(!hideComment);
+                  setHideMenu(false);
+                }} title="Editar"/>
+                <Menu.Item onPress={() => {
+                  _excluir();
+                  setHideMenu(!hideMenu);
+                }} title="Excluir"/>
+              </View>
 
-          </Menu>
+            </Menu>
             : null}
         </View>
 
@@ -232,15 +265,21 @@ export default function Main(props) {
             alignItems: 'center',
           }}>
 
-          <TouchableOpacity style={{marginVertical: 5, marginRight: 10}}>
-            <AntDesign
-              name="like2"
-              size={26}
-              color={'#666'}
-            />
+          <TouchableOpacity onPress={()=>_like()} style={{marginVertical: 5, marginRight: 10}}>
+            {like ?
+              <AntDesign
+                name="like1"
+                size={26}
+                color={'#F36F21'}
+              />
+              : <AntDesign
+                name="like2"
+                size={26}
+                color={'#666'}
+              />}
           </TouchableOpacity>
 
-          <TextDark>0</TextDark>
+          <TextDark>{likeNumber}</TextDark>
 
           {/*<TouchableOpacity onPress={() => setHideComment(props.item.id)} style={{flex: 1, justifyContent: 'center', marginLeft: 20}}>*/}
           {/*  <TextDark style={{color: '#ff8f00'}}>Comentar</TextDark>*/}

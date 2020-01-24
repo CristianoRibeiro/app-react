@@ -55,10 +55,12 @@ export default function Main(props) {
 
   const [post, setPost] = useState([]);
   const [comentario, setComentario] = useState([]);
+  const [comentarios, setComentarios] = useState(props.item.comentarioRespostas ? props.item.comentarioRespostas : []);
   const [userPost, setUserPost] = useState([]);
   const [hideMenu, setHideMenu] = useState(false);
   const [postEvent, setPostEvent] = useState('');
   const [like, setLike] = useState(false);
+  const [likeNumber, setLikeNumber] = useState(0);
 
   const [hideComment, setHideComment] = useState(null);
   const [hideComment2, setHideComment2] = useState(false);
@@ -69,8 +71,10 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    //alert(JSON.stringify(props.userPost));
-  }, []);
+    setLike(props.item.curtiu);
+    setLikeNumber(props.item.curtidas);
+    setComentarios(props.item.comentarioRespostas ? props.item.comentarioRespostas : []);
+  }, [props.item]);
 
   async function _sendEditar() {
 
@@ -89,42 +93,23 @@ export default function Main(props) {
       //alert(JSON.stringify(data));
 
       if (__DEV__) {
-        console.tron.log(data);
-      }
-      if (__DEV__) {
         console.tron.log(response.data);
       }
 
+      setHideEditComment(true);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
     //setHideEditComment(true);
-    props.getData();
+    //props.getData();
   }
 
   async function _sendExcluir() {
 
-    try {
-      let data = {
-        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
-        "cpf": user.doc,
-        "idComentario": props.item.id
-      };
-
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/remover', data);
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-    props.getData();
+    props.removeComentario(props.item);
+    //props.getData();
   }
 
   async function _excluir() {
@@ -147,6 +132,7 @@ export default function Main(props) {
 
   async function _sendComent() {
 
+
     try {
 
       let data = {
@@ -167,13 +153,56 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
 
+      let item = {
+        "id": response.data.idComentario,
+        "texto": inputComent,
+        "imagemPerfil": props.userPost.urlFoto,
+        "nomeParticipante": props.userPost.nome,
+        "data": response.data.data,
+        "curtiu": false,
+        "curtidas": 0,
+      };
+
+      setComentarios([item, ...comentarios]);
+
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
+
+
+    if (__DEV__) {
+      console.tron.log(comentarios);
+    }
     //setHideEditComment(true);
-    props.getData();
+    //props.getData();
+  }
+
+  async function _like() {
+    try {
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "idComentario": props.item.id,
+      };
+
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/curtir', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      setLike(response.data.curtiu);
+      setLikeNumber(response.data.curtidas);
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+      Alert.alert(null,'Ocorreu um erro. tente novamente mais tarde');
+    }
+    //props.getData();
   }
 
   function _renderComentar() {
@@ -213,15 +242,21 @@ export default function Main(props) {
             alignItems: 'center',
           }}>
 
-          <TouchableOpacity style={{marginVertical: 5, marginRight: 10}}>
-            <AntDesign
-              name="like2"
-              size={26}
-              color={'#666'}
-            />
+          <TouchableOpacity onPress={()=>_like()} style={{marginVertical: 5, marginRight: 10}}>
+            {like ?
+              <AntDesign
+                name="like1"
+                size={26}
+                color={'#F36F21'}
+              />
+              : <AntDesign
+                name="like2"
+                size={26}
+                color={'#666'}
+              />}
           </TouchableOpacity>
 
-          <TextDark>0</TextDark>
+          <TextDark>{likeNumber}</TextDark>
 
           <TouchableOpacity onPress={() => {setHideComment(props.item.id); setHideComment2(!hideComment2)}}
                             style={{flex: 1, justifyContent: 'center', marginLeft: 20}}>
@@ -235,7 +270,7 @@ export default function Main(props) {
 
         <View style={{borderWidth: 1, borderColor: '#cecece', marginTop: 5, borderRadius: 5, marginHorizontal: 5}}>
           <FlatList
-            data={props.item.comentarioRespostas ? props.item.comentarioRespostas : []}
+            data={comentarios}
             //numColumns={4}
             keyExtractor={(item, index) => index.toString()}
             renderItem={(item, index) => <ItemComentario item={item.item} post={props.post} userPost={props.userPost}
@@ -252,7 +287,7 @@ export default function Main(props) {
       return (
         <View style={{marginTop: 2, marginBottom: 8, paddingHorizontal: 5}}>
           <TextDark>
-            {props.item ? props.item.texto : null}
+            {inputEditarPost}
           </TextDark>
         </View>
       );
@@ -316,7 +351,6 @@ export default function Main(props) {
                 <Menu.Item onPress={() => {
                   setHideEditComment(!hideEditComment);
                   setHideMenu(!hideEditComment);
-                  setInputEditarPost(props.item.texto);
                 }} title="Editar"/>
                 <Menu.Item onPress={() => {
                   _excluir();
@@ -332,7 +366,7 @@ export default function Main(props) {
         {_renderEdit()}
 
         {props.item.imagem ?
-          <FitImage source={{uri: props.item.imagem}} resizeMode="contain"/>
+          <FitImage source={props.item.imagem.uri ? props.item.imagem : {uri: props.item.imagem}} resizeMode="contain"/>
           : null}
 
         {_renderComment()}
