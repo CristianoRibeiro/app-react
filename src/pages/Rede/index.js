@@ -59,13 +59,15 @@ export default function Main(props) {
   const [type, setType] = useState(1);
 
   const [page, setPage] = useState(0);
-  const [posts, setPosts] = useState(rede);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(false);
   const [end, setEnd] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     _getData();
+    //alert(page);
   }, []);
 
   // useEffect(() => {
@@ -85,7 +87,7 @@ export default function Main(props) {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
         "pageIndex": page,
-        "pageSize": 10,
+        "pageSize": 35,
         "search": null,
         "dataInicio": null,
         "dataFim": null
@@ -94,20 +96,8 @@ export default function Main(props) {
       let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
       let response_user = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/social/info', data);
       //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data.retorno);
-      }
 
-      await dispatch({type: 'REDE', payload: response.data.retorno});
 
-      setPosts([...response.data.retorno, ...posts]);
-
-      if (response.data.retorno.length){
-        setEnd(true);
-      }
-      else{
-        setEnd(false);
-      }
       setUserRede(response_user.data.retorno);
       //alert(JSON.stringify(response_user.data.retorno));
       //setPosts(response.data);
@@ -122,14 +112,63 @@ export default function Main(props) {
         i++;
       });
       setConexoes(newValues);
+
+      if (response.data.retorno.length){
+        setEnd(true);
+        setPage(page + 1);
+        await dispatch({type: 'REDE', payload: response.data.retorno});
+
+        setPosts([...response.data.retorno, ...posts]);
+      }
+      else{
+        setEnd(false);
+      }
+
+      if (__DEV__) {
+        console.tron.log([...response.data.retorno, ...posts]);
+      }
       //alert(JSON.stringify(newValues));
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
-    setPage(page + 1);
     setLoading(false);
+  }
+
+
+  async function _reloadData() {
+
+    setReload(true);
+    try {
+      await dispatch({type: 'REDE', payload: []});
+      setPosts([]);
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "pageIndex": 0,
+        "pageSize": 10,
+        "search": null,
+        "dataInicio": null,
+        "dataFim": null
+      };
+
+      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data.retorno);
+      }
+
+      await dispatch({type: 'REDE', payload: response.data.retorno});
+
+      setPosts(response.data.retorno);
+      //alert(JSON.stringify(newValues));
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    setReload(false);
   }
 
   async function _uploadImagePost() {
@@ -201,7 +240,7 @@ export default function Main(props) {
         "idPost": null,
         "texto": post,
         "tipoPost": type,
-        "idsConexoes": conexao,
+        "idsConexoes": conexao.length ? conexao : null,
         "imagens": imageBase64
       };
 
@@ -215,7 +254,6 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
 
-      _getData();
 
     } catch (error) {
       if (__DEV__) {
@@ -226,6 +264,7 @@ export default function Main(props) {
     setType(1);
     setPost('');
     setImagePost(null);
+    _reloadData();
   }
 
 
@@ -388,7 +427,7 @@ export default function Main(props) {
             : null}
 
           <View style={{flex: 1, margin: 2, marginTop: 10}}>
-            <Send onPress={() => _sendPost()} style={{flex: 1, justifyContent: 'center'}}>
+            <Send disabled={post ? false : true} onPress={() => _sendPost()} style={{flex: 1, justifyContent: 'center'}}>
               <TextLight>Publicar</TextLight>
             </Send>
           </View>
@@ -400,6 +439,11 @@ export default function Main(props) {
   return (
     <Content>
 
+      {reload ?
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50}}>
+          <ActivityIndicator size={'large'} animating={true}/>
+        </View>
+        :
           <FlatList
             ListHeaderComponent={_renderHeader()}
             refreshControl={
@@ -407,14 +451,22 @@ export default function Main(props) {
             }
             style={{margimBottom: 50}}
             data={posts}
+            extraData={{
+              data: posts,
+              // Realm mutates the array instead of returning a new copy,
+              // thus for a FlatList to update, we can use a timestamp as
+              // extraData prop
+              timestamp: Date.now(),
+            }}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
-            renderItem={(item, index) => <Item item={item} excluir={_excluir} user={user_rede} getData={_getData}/>}
+            renderItem={(item, index) =><Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_reloadData}/>}
             onEndReached={()=>_getData()}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.3}
             ListFooterComponent={renderFooter}
-            //initialNumToRender={10}
+            initialNumToRender={30}
           />
+      }
 
     </Content>
   );

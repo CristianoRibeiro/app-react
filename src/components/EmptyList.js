@@ -37,11 +37,11 @@ export default function Main(props) {
     <View style={{margin: 5, padding: 20}}>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <MaterialCommunityIcons name="alert-circle-outline" size={50} color={props.color ? props.color : '#444'} />
-        <TextDark style={{marginTop: 15}}>
+        <TextDark style={{marginTop: 15, textAlign: 'center'}}>
             {props.text}
         </TextDark>
       </View>
-       
+
     </View>
   );
 }

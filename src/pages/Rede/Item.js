@@ -56,7 +56,7 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [post, setPost] = useState(Rede);
-  const [userPost, setUserPost] = useState([]);
+  //const [userPost, setUserPost] = useState(props.user ? props.user : []);
   const [imagePost, setImagePost] = useState(null);
   const [imageBase64, setImageBase64] = useState(null);
   const [postEvent, setPostEvent] = useState('');
@@ -65,10 +65,10 @@ export default function Main(props) {
   const [comentarios, setComentario] = useState(props.item.item.comentarios ? props.item.item.comentarios : []);
 
   const [inputDenuncia, setInputDenuncia] = useState('');
-  const [inputEditarPost, setInputEditarPost] = useState('');
+  const [inputEditarPost, setInputEditarPost] = useState(props.item.item.texto);
 
   const [hideEdit, setHideEdit] = useState(true);
-  const [urlImages, setUrlImages] = useState([]);
+  const [urlImages, setUrlImages] = useState(props.item.item.imagens ? props.item.item.imagens : []);
   const [hideMenu, setHideMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
@@ -76,28 +76,9 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getData();
-  }, []);
+    //_getData();
+  }, [props.item.item]);
 
-  async function _getData() {
-    setLoading(true);
-    try {
-      //alert(JSON.stringify(response));
-      // if (__DEV__) {
-      //   console.tron.log(props.item);
-      // }
-      setPost(props.item.item);
-      setInputEditarPost(props.item.item.texto);
-      setUrlImages(props.item.item.imagens ? props.item.item.imagens : []);
-      setUserPost(props.user ? props.user : []);
-
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-    setLoading(false);
-  }
 
   async function _uploadImagePost() {
     const options = {
@@ -179,7 +160,7 @@ export default function Main(props) {
       setLikeItem(response.data.curtiu);
       setLikeNumber(response.data.curtidas);
 
-      _getData();
+      //_getData();
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -195,7 +176,7 @@ export default function Main(props) {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
-        "idPost": post.id,
+        "idPost": props.item.item.id,
         "motivo": inputDenuncia
       };
 
@@ -219,7 +200,7 @@ export default function Main(props) {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
-        "idPost": post.id
+        "idPost": props.item.item.id
       };
 
       let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/remover', data);
@@ -262,7 +243,7 @@ export default function Main(props) {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
-        "idPost": post.id,
+        "idPost": props.item.item.id,
         "texto": inputEditarPost,
         "tipoPost": 1
       };
@@ -290,7 +271,7 @@ export default function Main(props) {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
-        "idPost": post.id,
+        "idPost": props.item.item.id,
         "texto": postEvent,
         "imagem": imageBase64
       };
@@ -410,7 +391,7 @@ export default function Main(props) {
             }}>
 
             <Image
-              source={{uri: post.imagemPerfil ? post.imagemPerfil : ''}}
+              source={{uri: props.item.item.imagemPerfil ? props.item.item.imagemPerfil : ''}}
               style={{
                 height: 34,
                 width: 34,
@@ -421,8 +402,8 @@ export default function Main(props) {
 
             <View style={{flex: 1, marginHorizontal: 10}}>
               <TextDark
-                style={{fontSize: 18, textTransform: 'uppercase'}}>{post ? post.nomeParticipante : null}</TextDark>
-              <TextDark style={{fontSize: 11}}>{post ? post.data : null}</TextDark>
+                style={{fontSize: 18, textTransform: 'uppercase'}}>{props.item.item ? props.item.item.nomeParticipante : null}</TextDark>
+              <TextDark style={{fontSize: 11}}>{props.item.item ? props.item.item.data : null}</TextDark>
             </View>
 
             <Menu
@@ -438,7 +419,8 @@ export default function Main(props) {
                 </TouchableOpacity>
               }
             >
-              {userPost.nome === post.nomeParticipante ?
+
+              {props.user.nome === props.item.item.nomeParticipante ?
                 <View>
                   <Menu.Item onPress={() => {
                     setHideEdit(!hideEdit);
@@ -482,7 +464,7 @@ export default function Main(props) {
               alignItems: 'center',
             }}>
 
-            <TouchableOpacity onPress={() => _like(post.id)} style={{marginVertical: 5, marginRight: 10, marginLeft: 5}}>
+            <TouchableOpacity onPress={() => _like(props.item.item.id)} style={{marginVertical: 5, marginRight: 10, marginLeft: 5}}>
 
               {likeItem ?
                 <AntDesign
@@ -507,7 +489,7 @@ export default function Main(props) {
               data={comentarios ? comentarios : []}
               //numColumns={4}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={(item, index) => <PostComentario item={item.item} post={post} userPost={userPost} getData={props.getData} removeComentario={_removeComentario}/>}
+              renderItem={(item, index) => <PostComentario item={item.item} post={props.item.item} userPost={props.user} getData={props.getData} removeComentario={_removeComentario}/>}
             />
           </View>
           <View
