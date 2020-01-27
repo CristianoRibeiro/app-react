@@ -859,7 +859,7 @@ const MainNavigator = createStackNavigator(
       screen: DonationItem,
       path: 'donation/item',
       navigationOptions: {
-        headerTitle: 'Movimento solidário',
+        headerTitle: 'Movimento Solidário',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
@@ -879,7 +879,7 @@ const MainNavigator = createStackNavigator(
       screen: Donation,
       path: 'donation',
       navigationOptions: {
-        headerTitle: 'Movimento solidário',
+        headerTitle: 'Movimento Solidário',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

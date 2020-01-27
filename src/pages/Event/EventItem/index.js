@@ -34,6 +34,7 @@ import {
 
 export default function Main(props) {
   const eventitem = useSelector(state => state.eventitem);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState(false);
@@ -103,7 +104,12 @@ export default function Main(props) {
         props.navigation.navigate(item.navigation, {item: item.item});
       }
     } else if (item.type === 'games') {
-      setModal(true);
+      if (user.matricula){
+        setModal(true);
+      }else{
+        Alert.alert(null,'Você não possui matrícula.');
+      }
+
       //_scanner(20);
     } else if (item.type === 'streaming') {
 

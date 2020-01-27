@@ -53,6 +53,7 @@ export default function Main(props) {
       let prizes = await api.post('/api/prizes');
       let banners = await api.get('/api/banners');
       let bannerCampaigns = await api.get('/api/banners/campaign');
+      let response_user = await api.get('/api/auth/user');
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(events.data);
@@ -62,6 +63,7 @@ export default function Main(props) {
       await dispatch({type: 'EVENT', payload: events.data});
       await dispatch({type: 'BANNER', payload: banners.data});
       await dispatch({type: 'BANNERCAMPAIGNS', payload: bannerCampaigns.data});
+      await dispatch({type: 'USER', payload: response_user.data});
       //setCampaigns(response.data);
     } catch (error) {
       if (__DEV__) {

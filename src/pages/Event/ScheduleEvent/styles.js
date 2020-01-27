@@ -13,9 +13,10 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 14;
+  font-size: 20;
   color: #333;
   font-weight: 400;
+  margin-bottom: 10px;
 `;
 
 export const TextLight = styled.Text`
@@ -26,7 +27,7 @@ export const TextLight = styled.Text`
 `;
 
 export const TextDark = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   font-weight: 600;
 `;
@@ -40,7 +41,7 @@ export const EventTitle = styled.Text`
 `;
 
 export const EventDate = styled.Text`
-  font-size: 10px;
+  font-size: 14px;
   color: #7c7c7c;
   font-weight: bold;
   margin: 5px 0 0 0;
@@ -61,24 +62,32 @@ export const Card = styled.View`
   flex-direction: row;
 `;
 
-export const Submit = styled.TouchableOpacity`
-  background: #0F60A8;
-  margin-left: 10px;
+export const Btn = styled.TouchableOpacity`
+  background: #0D4274;
+  margin-left: 8px;
   justify-content: center;
   border-radius: 4px;
-  padding: 0 14px;
+  padding: 2px 12px;
+  margin-bottom: 3px;
 `;
 
-export const Send = styled.TouchableOpacity`
-  background: rgba(000,000,000, 0.2);
-  margin-left: 10px;
-  margin-right: 10px;
-  justify-content: center;
-  border-radius: 30px;
-  padding: 15px 14px;
-  align-items: center;
+export const BtnConfirm = styled(Button).attrs({
+  mode: 'contained',
+  uppercase: true,
+  color: '#0058b8'
+})`
+  padding: 0px;
+  border-radius: 5px;
   border: 1px solid #fff;
-  flex: 1;
+`;
+
+export const BtnCancel = styled(Button).attrs({
+  mode: 'contained',
+  uppercase: true,
+  color: '#efefef'
+})`
+  border-radius: 5px;
+  border: 1px solid #fff;
 `;
 
 
@@ -86,7 +95,7 @@ export const Link = styled.TouchableOpacity`
 `;
 
 export const List = styled.FlatList.attrs({
-  contentContainerStyle: { paddingHorizontal: 20 },
+  contentContainerStyle: {paddingHorizontal: 20},
   showsVerticalScrollIndicator: false,
 })`
   margin-top: 20px;
@@ -105,4 +114,14 @@ export const ButtonDark = styled(Button).attrs({
   background: #0058b8;
   border-radius: 5px;
   border: 1px solid #fff;
+`;
+
+export const Input = styled(TextInput).attrs({
+  placeholderTextColor: '#777',
+  keyboardAppearance: 'light',
+  maxLength: 255,
+})`
+  border-radius: 4px;
+  font-size: 16px;
+  color: #222;
 `;

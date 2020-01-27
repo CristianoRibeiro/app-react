@@ -17,7 +17,9 @@ import {
 import Modal from 'react-native-modal';
 import {WebView} from 'react-native-webview';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
+import StarRating from 'react-native-star-rating';
 import EmptyList from '~/components/EmptyList';
+import Detail from '~/pages/Event/ScheduleEvent/Detail';
 
 //Api
 import api from '~/services/api';
@@ -33,7 +35,9 @@ import {
   TextDark,
   TextLight,
   ButtonDark,
+  Btn
 } from './styles';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Main(props) {
   //const data = useSelector(state => state.schedule);
@@ -42,6 +46,8 @@ export default function Main(props) {
 
   //const [schedules, setSchedules] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modalEvaluation, setModalEvalution] = useState(false);
+  const [startCount, setStarCount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -52,74 +58,9 @@ export default function Main(props) {
     //setSchedules(JSON.parse(eventitem.schedule));
   }, []);
 
-  function _openUrl() {
-    if (eventitem.url_schedule) {
-      try {
-        Linking.canOpenURL(eventitem.url_schedule).then(supported => {
-          if (supported) {
-            Linking.openURL(eventitem.url_schedule).catch(err =>
-              console.error('An error occurred', err),
-            );
-          }
-        });
-      } catch (e) {
-        console.error(e.message);
-      }
-    } else {
-      setModal(true);
-    }
-  }
-
-  function _renderModal(){
-    return null;
-  }
-
   function _renderItem(item) {
-    const time = item.start.substr(10, 6);
-    let firstDate = item.start
-      .substr(0, 10)
-      .split('/')
-      .reverse()
-      .join('-');
-
-    firstDate = parseISO(firstDate + time);
-    const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
-    const html =
-      '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body>' +
-      item.content +
-      '</body></html>';
-
     return (
-      <View>
-        <Link onPress={() => _openUrl()}>
-          <Card>
-            <View style={{flex: 1, justifyContent: 'center'}}>
-              <EventDate>{formattedDate}</EventDate>
-              <TextDark>{item.title}</TextDark>
-              <SubTitle>{item.speaker}</SubTitle>
-            </View>
-          </Card>
-        </Link>
-        <Modal
-          isVisible={modal}
-          style={{marginTop: 50, backgroundColor: '#fff', margin: 0}}>
-          <WebView
-            source={{html: html}}
-            onShouldStartLoadWithRequest={event => {
-              if (!/^[data:text, about:blank]/.test(event.url)) {
-                Linking.openURL(event.url);
-                return false;
-              }
-              return true;
-            }}
-          />
-          <ButtonDark
-            onPress={() => setModal(false)}
-            style={{marginBottom: 10, marginHorizontal: 15}}>
-            <TextLight>OK</TextLight>
-          </ButtonDark>
-        </Modal>
-      </View>
+      <Detail item={item}/>
     );
   }
 
@@ -130,7 +71,7 @@ export default function Main(props) {
         data={JSON.parse(eventitem.schedule)}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
-          <EmptyList text="Em breve" />
+          <EmptyList text="Em breve"/>
         }
         renderItem={({item}) => _renderItem(item)}
       />
