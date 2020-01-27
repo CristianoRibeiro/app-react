@@ -14,11 +14,12 @@ import {
   RefreshControl,
   Alert, Linking,
 } from 'react-native';
+import FitImage from 'react-native-fit-image';
 import {Surface} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
-import EmptyList from '~/components/EmptyList';
+import EmptyListHorizontal from '~/components/EmptyListHorizontal';
 import Modal from "react-native-modal";
 
 import api from '~/services/api';
@@ -52,7 +53,8 @@ export default function Main(props) {
   const [message, setMessage] = useState('');
   //const [product, setProduct] = useState(Product);
 
-  const [disableComfirm, setDisableConfirm] = useState(false);
+  const [coins, setSaldo] = useState(user.coins);
+  const [disableComfirm, setDisableConfirm] = useState(coins < item.price ? true : false);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
@@ -69,7 +71,7 @@ export default function Main(props) {
   // async function _getData() {
   //   setLoading(true);
   //
-  //   if (user.coins < product.price) {
+  //   if (coins < product.price) {
   //     setDisableConfirm(true);
   //   } else {
   //     setDisableConfirm(false);
@@ -132,36 +134,35 @@ export default function Main(props) {
     <Content>
       <ScrollView>
         <Card>
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Title>{item.name}</Title>
-
-            <Image
-              resizeMode="cover"
-              style={{
-                width: 200,
-                height: 200,
-                marginBottom: 5,
-                marginTop: 10,
-              }}
-              source={{uri: item.append_image}}
-            />
+          <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20, marginTop: 10}}>
+            <Title style={{fontSize: 30}}>{item.name}</Title>
 
           </View>
+          <View style={{paddingHorizontal: 40, paddingTop: 15}}>
+          <FitImage
+            resizeMode="cover"
+            style={{
+              flex:1
+            }}
+            source={{uri: item.append_image}}
+          />
+          </View>
+          <EmptyListHorizontal iconSize={24} text={'Verifique a disponibilidade de cores no balcão de retirada.'}/>
         </Card>
 
         <Card>
 
-          {user.coins < item.price ?
+          {coins < item.price ?
             <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
               <TextDark style={{fontSize: 18, color: '#bf360c'}}>Saldo insuficiente</TextDark>
-              <TextDark style={{fontSize: 18, fontWeight: '700', color: '#bf360c'}}>{user.coins} pontos</TextDark>
+              <TextDark style={{fontSize: 18, fontWeight: '700', color: '#bf360c'}}>{coins} pontos</TextDark>
             </View>
 
             :
 
             <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
               <TextDark style={{fontSize: 18}}>Saldo</TextDark>
-              <TextDark style={{fontSize: 18, fontWeight: '700'}}>{user.coins} pontos</TextDark>
+              <TextDark style={{fontSize: 18, fontWeight: '700'}}>{coins} pontos</TextDark>
             </View>
           }
 

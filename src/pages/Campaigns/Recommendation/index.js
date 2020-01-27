@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EmptyList from '~/components/EmptyList';
+import Detail from '~/pages/Campaigns/Recommendation/Detail';
 import {Searchbar} from 'react-native-paper';
 
 //Api
@@ -43,7 +44,7 @@ export default function Main(props) {
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
-  const [users, setUsers] = useState('');
+  const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [end, setEnd] = useState(0);
   const [error, setError] = useState(false);
@@ -51,6 +52,24 @@ export default function Main(props) {
   useEffect(() => {
     _getData();
   }, []);
+
+  useEffect(() => {
+    setUsers([]);
+    setPage(0);
+  }, [name]);
+
+  // async function _search() {
+  //   //setName('');
+  //   await setUsers([]);
+  //   setUsers([]);
+  //   setPage(0);
+  //   setTimeout(() => {
+  //       _getData();
+  //     },
+  //     900
+  //   );
+  //
+  // }
 
   async function _getData() {
     if (loading) {
@@ -66,19 +85,17 @@ export default function Main(props) {
           "page": page,
         };
 
-        response = await api.post('/api/user/unassociated/', data);
+        response = await api.post('/api/user/unassociated/paginate', data);
 
         if (response.data.data.length) {
           setEnd(true);
           setUsers([...response.data.data, ...users]);
           setPage(page + 1);
-        } else {
-          setEnd(false);
         }
       }
 
       if (__DEV__) {
-        console.tron.log(response.data);
+        console.tron.log(users);
       }
 
     } catch (error) {
@@ -97,7 +114,6 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
       Alert.alert(null, response.data.message);
-      _getData();
       let indicate = await api.get('/api/indicate');
 
       await dispatch({type: 'INDICATED', payload: indicate.data});
@@ -109,50 +125,8 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
-    return (
-      <Card>
-        <CardImage>
-          <Image
-            source={{uri: item.append_avatar}}
-            style={{
-              height: 60,
-              width: 60,
-              borderRadius: 30,
-            }}
-            resizeMode="contain"
-          />
-        </CardImage>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <View style={{flex: 1}}>
-            <UserTitle style={{marginRight: 5}}>{item.name}</UserTitle>
-            <SubTitle style={{fontWeight: '700'}}>
-              {item.address_state}
-            </SubTitle>
-          </View>
+    return(<Detail item={item}/>);
 
-          {item.indicated ?
-            <Send style={{backgroundColor: '#eee'}} onPress={() => _setData(item.id)}>
-              <TextDark style={{color: '#0058b8', fontSize: 10}}>
-                INDICAR
-              </TextDark>
-            </Send>
-            :
-            <Send disabled={true} onPress={() => _setData(item.id)}>
-              <TextDark style={{color: '#bbb', fontSize: 10}}>
-                INDICADO
-              </TextDark>
-            </Send>
-          }
-
-        </View>
-      </Card>
-    );
   }
 
   function renderFooter() {
@@ -160,7 +134,7 @@ export default function Main(props) {
 
     return (
       <View style={{paddingVertical: 5, alignItems: 'center', justifyContent: 'center'}}>
-        <TextDark>Caregando...</TextDark>
+        {/*<TextDark>Caregando...</TextDark>*/}
       </View>
     );
   };
@@ -201,6 +175,7 @@ export default function Main(props) {
         ListFooterComponent={renderFooter}
         initialNumToRender={20}
       />
+
     </Content>
   );
 }

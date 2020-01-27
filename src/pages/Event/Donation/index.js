@@ -220,7 +220,7 @@ export default function Main(props) {
       <FAB
         style={styles.fab}
         icon="add"
-        onPress={() => setModal(1)}
+        onPress={() => setModal(true)}
       />
     </Content>
   );
