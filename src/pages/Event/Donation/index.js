@@ -92,7 +92,7 @@ export default function Main(props) {
     setModal(false);
     setLoading(true);
     try {
-      let response = await api.post('/api/ms/produto', {id: value});
+      let response = await api.post('/api/ms/produto', {sku: value});
       let response_user = await api.get('/api/auth/user');
       //alert(JSON.stringify(response));
       if (__DEV__) {
