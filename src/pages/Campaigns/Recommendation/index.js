@@ -38,12 +38,14 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  const data = useSelector(state => state.users);
+  //const data = useSelector(state => state.users);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [users, setUsers] = useState('');
+  const [page, setPage] = useState(0);
+  const [end, setEnd] = useState(0);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -51,18 +53,34 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    if (loading) {
+      return;
+    }
+
     setLoading(true);
     try {
       let response = null;
       if (name) {
-        response = await api.get('/api/user/unassociated/' + name);
-        setUsers(response.data);
+        let data = {
+          "name": name,
+          "page": page,
+        };
+
+        response = await api.post('/api/user/unassociated/', data);
+
+        if (response.data.data.length) {
+          setEnd(true);
+          setUsers([...response.data.data, ...users]);
+          setPage(page + 1);
+        } else {
+          setEnd(false);
+        }
       }
 
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      
+
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -81,7 +99,7 @@ export default function Main(props) {
       Alert.alert(null, response.data.message);
       _getData();
       let indicate = await api.get('/api/indicate');
-      
+
       await dispatch({type: 'INDICATED', payload: indicate.data});
     } catch (error) {
       if (__DEV__) {
@@ -118,43 +136,71 @@ export default function Main(props) {
             </SubTitle>
           </View>
 
-          <Send onPress={() => _setData(item.id)}>
-            <TextDark style={{color: '#0058b8', fontSize: 10}}>
-              INDICAR
-            </TextDark>
-          </Send>
+          {item.indicated ?
+            <Send style={{backgroundColor: '#eee'}} onPress={() => _setData(item.id)}>
+              <TextDark style={{color: '#0058b8', fontSize: 10}}>
+                INDICAR
+              </TextDark>
+            </Send>
+            :
+            <Send disabled={true} onPress={() => _setData(item.id)}>
+              <TextDark style={{color: '#bbb', fontSize: 10}}>
+                INDICADO
+              </TextDark>
+            </Send>
+          }
+
         </View>
       </Card>
     );
   }
 
+  function renderFooter() {
+    if (!end) return null;
+
+    return (
+      <View style={{paddingVertical: 5, alignItems: 'center', justifyContent: 'center'}}>
+        <TextDark>Caregando...</TextDark>
+      </View>
+    );
+  };
+
+  function _renderHeader() {
+    return (
+      <Header style={{alignItems: 'center'}}>
+        <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 5}}>
+          <Input
+            placeholder="Pesquisar"
+            onChangeText={query => setName(query)}
+            value={name}
+          />
+          <Search style={{marginLeft: 5, backgroundColor: '#fff'}} onPress={() => _getData()}>
+            <MaterialIcons name="search" size={24} color={'#666'}/>
+          </Search>
+        </View>
+      </Header>
+    );
+  }
+
   return (
     <Content>
-      <ScrollView>
-        <Header style={{alignItems: 'center'}}>
-          <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 5}}>
-            <Input
-              placeholder="Pesquisar"
-              onChangeText={query => setName(query)}
-              value={name}
-            />
-            <Search style={{marginLeft: 5, backgroundColor: '#fff'}} onPress={() => _getData()}>
-              <MaterialIcons name="search" size={24} color={'#666'} />
-            </Search>
-          </View>
-        </Header>
 
-        <FlatList
-          style={{margimBottom: 50}}
-          data={users}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!" />}
-          renderItem={({item}) => _renderItem(item)}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
-          }
-        />
-      </ScrollView>
+
+      <FlatList
+        ListHeaderComponent={_renderHeader()}
+        style={{margimBottom: 50}}
+        data={users}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!"/>}
+        renderItem={({item}) => _renderItem(item)}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
+        }
+        onEndReached={() => _getData()}
+        onEndReachedThreshold={0.2}
+        ListFooterComponent={renderFooter}
+        initialNumToRender={20}
+      />
     </Content>
   );
 }

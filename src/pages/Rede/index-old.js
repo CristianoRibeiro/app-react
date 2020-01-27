@@ -73,7 +73,7 @@ export default class App extends Component {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": '28475201806',
         "pageIndex": page,
-        "pageSize": 35,
+        "pageSize": 5,
         "search": null,
         "dataInicio": null,
         "dataFim": null
@@ -158,7 +158,7 @@ export default class App extends Component {
         onEndReached={()=>this._getData()}
         onEndReachedThreshold={0.1}
         //ListFooterComponent={renderFooter}
-        initialNumToRender={35}
+        initialNumToRender={5}
       />
     );
   }

@@ -236,7 +236,7 @@ export default function Main(props) {
 
       {
         navigation: 'Cupom',
-        image: require('~/assets/icons/games.png'),
+        image: require('~/assets/icons/coupom.png'),
         name: 'MEUS CUPONS',
         item: item,
         permission: app_functions ? app_functions.games : false,
@@ -515,3 +515,6 @@ export default function Main(props) {
     </Content>
   );
 }
+
+
+//Cor icones #FF881F

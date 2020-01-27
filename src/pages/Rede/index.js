@@ -89,7 +89,7 @@ export default function Main(props) {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
         "pageIndex": page,
-        "pageSize": 45,
+        "pageSize": 50,
         "search": null,
         "dataInicio": null,
         "dataFim": null
@@ -117,10 +117,11 @@ export default function Main(props) {
 
       if (response.data.retorno.length){
         setEnd(true);
-        setPage(page + 1);
         await dispatch({type: 'REDE', payload: response.data.retorno});
-
-        setPosts([...response.data.retorno, ...posts]);
+        const data_posts = posts;
+        setPosts([]);
+        setPosts([...response.data.retorno, ...data_posts]);
+        setPage(page + 1);
       }
       else{
         setEnd(false);
@@ -469,9 +470,9 @@ export default function Main(props) {
             ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
             renderItem={(item, index) => _renderItem(item, index)}
             onEndReached={()=>_getData()}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.2}
             ListFooterComponent={renderFooter}
-            initialNumToRender={45}
+            initialNumToRender={50}
           />
 
           {/*<ListView*/}

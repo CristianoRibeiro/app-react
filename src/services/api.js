@@ -1,8 +1,8 @@
 import {AsyncStorage} from 'react-native';
 import axios from 'axios';
 
-const API = 'https://viva-fenae.strongtecnologia.com.br';
-//const API = "http://192.168.0.55:8085";
+//const API = 'https://viva-fenae.strongtecnologia.com.br';
+const API = "http://10.1.1.17:8085";
 
 const api = axios.create({
   baseURL: API,
@@ -16,7 +16,7 @@ api.interceptors.request.use(
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Version: '1.5.8',
+        Version: '1.5.9',
       };
     }
 
