@@ -21,6 +21,8 @@ import {ActivityIndicator} from 'react-native-paper';
 import EmptyList from '~/components/EmptyList';
 import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
+import InfiniteScrollView from 'react-native-infinite-scroll-view';
+
 
 import Item from '~/pages/Rede/Item';
 
@@ -66,7 +68,7 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getData();
+      _getData();
     //alert(page);
   }, []);
 
@@ -87,7 +89,7 @@ export default function Main(props) {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
         "pageIndex": page,
-        "pageSize": 35,
+        "pageSize": 45,
         "search": null,
         "dataInicio": null,
         "dataFim": null
@@ -436,6 +438,10 @@ export default function Main(props) {
     );
   }
 
+  function _renderItem(item, index){
+    return(<Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_reloadData}/>);
+  }
+
   return (
     <Content>
 
@@ -444,6 +450,7 @@ export default function Main(props) {
           <ActivityIndicator size={'large'} animating={true}/>
         </View>
         :
+        <View>
           <FlatList
             ListHeaderComponent={_renderHeader()}
             refreshControl={
@@ -460,12 +467,21 @@ export default function Main(props) {
             }}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
-            renderItem={(item, index) =><Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_reloadData}/>}
+            renderItem={(item, index) => _renderItem(item, index)}
             onEndReached={()=>_getData()}
-            onEndReachedThreshold={0.3}
+            onEndReachedThreshold={0.1}
             ListFooterComponent={renderFooter}
-            initialNumToRender={30}
+            initialNumToRender={45}
           />
+
+          {/*<ListView*/}
+          {/*  renderScrollComponent={props => <InfiniteScrollView {...props} />}*/}
+          {/*  dataSource={posts}*/}
+          {/*  renderRow={_renderItem()}*/}
+          {/*  canLoadMore={_getData()}*/}
+          {/*  onLoadMoreAsync={this._getData()}*/}
+          {/*/>*/}
+        </View>
       }
 
     </Content>
