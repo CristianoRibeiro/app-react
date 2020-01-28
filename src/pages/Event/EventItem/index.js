@@ -267,14 +267,14 @@ export default function Main(props) {
         //permission: true,
         type: null,
       },
-      {
-        navigation: 'Certificate',
-        image: require('~/assets/icons/certificate.png'),
-        name: 'CERTIFICADO',
-        item: item,
-        permission: app_functions ? app_functions.certificate : false,
-        type: 'certificates',
-      },
+      // {
+      //   navigation: 'Certificate',
+      //   image: require('~/assets/icons/certificate.png'),
+      //   name: 'CERTIFICADO',
+      //   item: item,
+      //   permission: app_functions ? app_functions.certificate : false,
+      //   type: 'certificates',
+      // },
       {
         navigation: 'Faq',
         image: require('~/assets/icons/faq.png'),
@@ -445,7 +445,7 @@ export default function Main(props) {
   async function _scanner(value) {
     setLoading(true);
     try {
-      let response = await api.post('/api/games/toten', {event_id: eventitem.id, code: value});
+      let response = await api.post('/api/games/toten', {event_id: eventitem.id, code: value, user_id: user.id});
 
       if (__DEV__) {
         console.tron.log(response.data);
