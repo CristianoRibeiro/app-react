@@ -64,6 +64,7 @@ export default function Main(props) {
       await dispatch({type: 'BANNER', payload: banners.data});
       await dispatch({type: 'BANNERCAMPAIGNS', payload: bannerCampaigns.data});
       await dispatch({type: 'USER', payload: response_user.data});
+
       //setCampaigns(response.data);
     } catch (error) {
       if (__DEV__) {

@@ -58,7 +58,7 @@ export default function Main(props) {
 
   useEffect(() => {
     if (__DEV__) {
-      console.tron.log(JSON.parse(eventitem.app_functions));
+      console.tron.log(props.item);
     }
     //setSchedules(JSON.parse(eventitem.schedule));
     _getEvalution();
@@ -197,20 +197,20 @@ export default function Main(props) {
 
               <View style={{justifyContent: 'flex-end'}}>
 
-                {props.item.content_status ?
+                {props.item.content_status === "true" ?
                   <Btn onPress={() => _openUrl()}>
                     <MaterialCommunityIcons name="information-outline" size={24}
-                                            color={props.color ? props.color : '#fff'}/>
+                                            color={'#fff'}/>
                   </Btn>
                   : null}
-                {props.item.rating ?
 
+                {props.item.rating === "true" ?
                   <Btn onPress={() => setModalEvalution(true)}>
                     <MaterialCommunityIcons name={startCount ? "star" : "star-outline"} size={24} color={'#fff'}/>
                   </Btn>
                   : null}
 
-                {props.item.question ?
+                {props.item.question === "true" ?
                   <Btn onPress={() => setModalQuestion(true)}>
                     <MaterialCommunityIcons name="comment-question-outline" size={24}
                                             color={props.color ? props.color : '#fff'}/>

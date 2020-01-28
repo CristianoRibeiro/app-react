@@ -104,6 +104,7 @@ export default function Main(props) {
         props.navigation.navigate(item.navigation, {item: item.item});
       }
     } else if (item.type === 'games') {
+
       if (user.matricula){
         setModal(true);
       }else{
@@ -348,8 +349,8 @@ export default function Main(props) {
         image: require('~/assets/icons/movimento.png'),
         name: 'MOVIMENTO SOLIDÁRIO',
         item: item,
-        //permission: app_functions ? app_functions.donation : false,
-        permission: true,
+        permission: app_functions ? app_functions.donation : false,
+        //permission: true,
         type: null,
       },
       {
@@ -357,8 +358,8 @@ export default function Main(props) {
         image: require('~/assets/icons/games.png'),
         name: 'GAMES',
         item: item,
-        //permission: app_functions ? app_functions.games_toten : false,
-        permission: true,
+        permission: app_functions ? app_functions.games_toten : false,
+        //permission: true,
         type: 'games',
       },
     ];
