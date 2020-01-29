@@ -51,6 +51,7 @@ export default function Main(props) {
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState('');
+  const [title, setTitle] = useState('');
   //const [product, setProduct] = useState(Product);
 
   const [coins, setSaldo] = useState(user.coins);
@@ -100,8 +101,10 @@ export default function Main(props) {
 
   async function _sendDonate() {
     setLoading(true);
+    const data = {product_id: item.id, event_id: eventitem.id};
+    //alert(JSON.stringify(data));
     try {
-      let response = await api.post('/api/ms/doar', {product_id: item.id, event_id: eventitem.id});
+      let response = await api.post('/api/ms/doar', data);
       let response_user = await api.get('/api/auth/user');
       let response_produtos = await api.get('/api/ms/produtos');
       //alert(JSON.stringify(response));
@@ -114,8 +117,10 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
       //Alert.alert(null, response.data.msg);
+      //alert(JSON.stringify(response.data));
 
       setMessage(response.data.msg);
+      setTitle(response.data.title);
       setModal(true);
 
     } catch (error) {
@@ -128,7 +133,7 @@ export default function Main(props) {
 
   function _confirmModal() {
     setModalConfirm(false);
-    //_sendDonate();
+    _sendDonate();
   }
 
   function _confirm() {
@@ -209,7 +214,7 @@ export default function Main(props) {
         isVisible={modal}
         style={{backgroundColor: '#fff', margin: 0}}>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10}}>
-          <Title style={{marginBottom: 10, fontSize: 30, marginBottom: 50}}>Obrigado!</Title>
+          <Title style={{marginBottom: 10, fontSize: 30, marginBottom: 50}}>{title}</Title>
           <TextDark style={{textAlign: 'center', fontSize: 20}}>
             {message}
           </TextDark>
@@ -228,9 +233,15 @@ export default function Main(props) {
         isVisible={modalConfirm}
         style={{backgroundColor: '#fff', margin: 0}}>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10}}>
-          <Title style={{marginBottom: 10, fontSize: 30, marginBottom: 50}}>Obrigado!</Title>
-          <TextDark style={{textAlign: 'center', fontSize: 20}}>
-            {message}
+          <Title style={{marginBottom: 10, fontSize: 30, marginBottom: 50}}>TERMO DE ACEITE</Title>
+          <TextDark style={{fontSize: 20}}>
+            Diante da referida premiação, declaro para todos os fins que aceito doar pontos para o
+            Programa Movimento Solidário, para desenvolver os objetivos de desenvolvimento
+            sustentável, na qual disponho do valor em prol ao programa.
+          </TextDark>
+
+          <TextDark style={{fontSize: 20, marginTop: 15}}>
+            “Segundo a legislação fiscal vigente esta doação não é dedutível do Imposto de Renda”.
           </TextDark>
 
         </View>
