@@ -35,6 +35,7 @@ export const User = {
   "unit_id": "",
   "first_access_at": "",
   "append_avatar": "",
-  "registered_inspira": ""
+  "registered_inspira": "",
+  "participant_id": ""
 }
 

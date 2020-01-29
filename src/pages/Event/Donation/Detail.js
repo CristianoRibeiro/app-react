@@ -57,6 +57,7 @@ export default function Main(props) {
   const [disableComfirm, setDisableConfirm] = useState(coins < item.price ? true : false);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
+  const [modalConfirm, setModalConfirm] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -125,6 +126,11 @@ export default function Main(props) {
     setLoading(false);
   }
 
+  function _confirmModal() {
+    setModalConfirm(false);
+    //_sendDonate();
+  }
+
   function _confirm() {
     setModal(false);
     props.navigation.navigate('Donation');
@@ -191,7 +197,7 @@ export default function Main(props) {
                 <TextLight>CANCELAR</TextLight>
               </BtnCancel>
 
-              <BtnConfirm disabled={disableComfirm} onPress={() => _sendDonate()}>
+              <BtnConfirm disabled={disableComfirm} onPress={() => setModalConfirm(true)}>
                 <TextLight>CONFIRMAR</TextLight>
               </BtnConfirm>
             </View>
@@ -212,6 +218,25 @@ export default function Main(props) {
 
         <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
           <Btn onPress={() => _confirm()}>
+            <TextLight>OK</TextLight>
+          </Btn>
+        </View>
+      </Modal>
+
+
+      <Modal
+        isVisible={modalConfirm}
+        style={{backgroundColor: '#fff', margin: 0}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10}}>
+          <Title style={{marginBottom: 10, fontSize: 30, marginBottom: 50}}>Obrigado!</Title>
+          <TextDark style={{textAlign: 'center', fontSize: 20}}>
+            {message}
+          </TextDark>
+
+        </View>
+
+        <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
+          <Btn onPress={() => _confirmModal()}>
             <TextLight>OK</TextLight>
           </Btn>
         </View>

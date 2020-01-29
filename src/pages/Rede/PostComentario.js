@@ -89,7 +89,7 @@ export default function Main(props) {
         "imagem": ""
       };
 
-      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
       //alert(JSON.stringify(data));
 
       if (__DEV__) {
@@ -143,7 +143,7 @@ export default function Main(props) {
         "texto": inputComent
       };
 
-      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
       //alert(JSON.stringify(data));
 
       if (__DEV__) {

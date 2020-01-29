@@ -99,12 +99,11 @@ export default function Main(props) {
         console.tron.log(response.data);
       }
 
-      if (response.data){
+      if (response.data) {
         await dispatch({type: 'ITEM', payload: response.data});
         await dispatch({type: 'USER', payload: response_user.data});
         props.navigation.navigate('DonationItem');
-      }
-      else{
+      } else {
         Alert.alert(null, 'Item não encontrado.');
       }
 
@@ -117,111 +116,130 @@ export default function Main(props) {
     setLoading(false);
   }
 
-  return (
-    <Content>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
-        }>
-        <Header>
+  function _renderItem() {
+    if (user.participant_id) {
+      return (
+        <Content>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
+            }>
+            <Header>
 
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Image
-              resizeMode="cover"
-              style={{
-                width: 100,
-                height: 85,
-                marginBottom: 15
-              }}
-              source={require('~/assets/Movimento-Solidario.png')}
-            />
-          </View>
-
-        </Header>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flex: 1,
-            backgroundColor: '#999',
-            paddingVertical: 10
-          }}>
-
-          <TextLight style={{fontSize: 16, fontWeight: '500'}}>
-            Saldo de pontos no Mundo Caixa:
-          </TextLight>
-
-          <TextLight style={{fontSize: 16, fontWeight: '700'}}>
-            {user.coins}
-          </TextLight>
-        </View>
-
-        <FlatList
-          contentContainerStyle={{paddingBottom: 75}}
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Que pena, você ainda não realizou nenhuma doação!"/>}
-          renderItem={({item, index}) => (
-              <Card>
-                <View
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Image
+                  resizeMode="cover"
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginVertical: 8,
-                  }}>
-                  <View style={{alignItems: 'center', justifyContent: 'center', paddingRight: 10}}>
+                    width: 100,
+                    height: 85,
+                    marginBottom: 15
+                  }}
+                  source={require('~/assets/Movimento-Solidario.png')}
+                />
+              </View>
 
-                    <FontAwesome5
-                      name="coins"
-                      size={20}
-                      color={'#999'}
-                    />
+            </Header>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+                backgroundColor: '#999',
+                paddingVertical: 10
+              }}>
+
+              <TextLight style={{fontSize: 16, fontWeight: '500'}}>
+                Saldo de pontos no Mundo Caixa:
+              </TextLight>
+
+              <TextLight style={{fontSize: 16, fontWeight: '700'}}>
+                {user.coins}
+              </TextLight>
+            </View>
+
+            <FlatList
+              contentContainerStyle={{paddingBottom: 75}}
+              data={data}
+              keyExtractor={(item, index) => index.toString()}
+              ListEmptyComponent={<EmptyList text="Que pena, você ainda não realizou nenhuma doação pelo APP!"/>}
+              renderItem={({item, index}) => (
+                <Card>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginVertical: 8,
+                    }}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', paddingRight: 10}}>
+
+                      <FontAwesome5
+                        name="coins"
+                        size={20}
+                        color={'#999'}
+                      />
+                    </View>
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                      <TextDark style={{fontWeight: '500', fontSize: 13}}>
+                        {item ? item.name : ''}
+                      </TextDark>
+
+                      <TextDark
+                        style={{fontSize: 16, marginTop: 5, fontWeight: '700', color: 'red'}}>
+                        - {item ? item.append_price : ''}
+                      </TextDark>
+                    </View>
+
+                    <View style={{alignItems: 'center'}}>
+                      <TextDark style={{fontSize: 11, fontWeight: '700', color: '#888'}}>
+                        {item ? item.append_date : ''}
+                      </TextDark>
+
+                      <TextDark style={{fontSize: 16, marginTop: 5, fontWeight: '700'}}>
+                        {item ? item.append_cupom : ''}
+                      </TextDark>
+                    </View>
                   </View>
-                  <View style={{flex: 1, justifyContent: 'center'}}>
-                    <TextDark style={{fontWeight: '500', fontSize: 13}}>
-                      {item ? item.name : ''}
-                    </TextDark>
+                </Card>
+              )}
+            />
+          </ScrollView>
 
-                    <TextDark
-                      style={{fontSize: 16, marginTop: 5, fontWeight: '700', color: 'red'}}>
-                      - {item ? item.append_price : ''}
-                    </TextDark>
-                  </View>
+          <Modal isVisible={modal} style={{margin: 0}}>
+            <QRCodeScanner
+              onRead={e => _getProduct(e.data)}
+              showMarker={true}
+              reactivate={false}
+              bottomContent={
+                <Btn onPress={() => setModal(!modal)}>
+                  <TextLight>CANCELAR</TextLight>
+                </Btn>
+              }
+            />
+          </Modal>
 
-                  <View style={{alignItems: 'center'}}>
-                    <TextDark style={{fontSize: 11, fontWeight: '700', color: '#888'}}>
-                      {item ? item.append_date : ''}
-                    </TextDark>
+          <FAB
+            style={styles.fab}
+            icon="add"
+            onPress={() => setModal(true)}
+          />
+        </Content>
+      );
+    } else {
+      return (
+        <Content>
+          <View style={{margin: 5, padding: 20}}>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <MaterialCommunityIcons name="alert-circle-outline" size={50} color={'#444'}/>
+              <TextDark style={{marginTop: 15, textAlign: 'center'}}>
+                Usuário não identificado.
+              </TextDark>
+            </View>
+          </View>
+        </Content>
+      );
+    }
+  }
 
-                    <TextDark style={{fontSize: 16, marginTop: 5, fontWeight: '700'}}>
-                      {item ? item.append_cupom : ''}
-                    </TextDark>
-                  </View>
-                </View>
-              </Card>
-          )}
-        />
-      </ScrollView>
-
-      <Modal isVisible={modal} style={{margin: 0}}>
-        <QRCodeScanner
-          onRead={e => _getProduct(e.data)}
-          showMarker={true}
-          reactivate={false}
-          bottomContent={
-            <Btn onPress={() => setModal(!modal)}>
-              <TextLight>CANCELAR</TextLight>
-            </Btn>
-          }
-        />
-      </Modal>
-
-      <FAB
-        style={styles.fab}
-        icon="add"
-        onPress={() => setModal(true)}
-      />
-    </Content>
-  );
+  return _renderItem();
 }

@@ -21,7 +21,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import EmptyList from '~/components/EmptyList';
 import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
+//import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
 
 import Item from '~/pages/Rede/Item';
@@ -95,7 +95,7 @@ export default function Main(props) {
         "dataFim": null
       };
 
-      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
       let response_user = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/social/info', data);
       //alert(JSON.stringify(response));
 
@@ -156,7 +156,7 @@ export default function Main(props) {
         "dataFim": null
       };
 
-      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data.retorno);
@@ -251,7 +251,7 @@ export default function Main(props) {
         console.tron.log(data);
       }
 
-      let response = await api.post('http://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);

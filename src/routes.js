@@ -26,7 +26,7 @@ import EventNews from '~/pages/News/EventNews';
 import NewsDetail from '~/pages/News/Detail';
 import Friends from '~/pages/Friends';
 import Donation from '~/pages/Event/Donation';
-import DonationItem from '~/pages/Event/Donation/Item';
+import DonationItem from '~/pages/Event/Donation/Detail';
 import PrizeUser from '~/pages/Prize';
 import Rede from '~/pages/Rede';
 
@@ -889,6 +889,7 @@ const MainNavigator = createStackNavigator(
       screen: Games,
       path: 'games',
       navigationOptions: {
+        gesturesEnabled: false,
         headerTitle: 'Games',
         headerStyle: {
           backgroundColor: '#FF6666',

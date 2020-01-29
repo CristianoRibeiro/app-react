@@ -4,6 +4,7 @@ import axios from 'axios';
 //const API = 'https://viva-fenae.strongtecnologia.com.br';
 const API = "http://10.1.1.17:8085";
 
+
 const api = axios.create({
   baseURL: API,
 });

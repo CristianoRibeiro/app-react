@@ -58,18 +58,18 @@ export default function Main(props) {
     setPage(0);
   }, [name]);
 
-  // async function _search() {
-  //   //setName('');
-  //   await setUsers([]);
-  //   setUsers([]);
-  //   setPage(0);
-  //   setTimeout(() => {
-  //       _getData();
-  //     },
-  //     900
-  //   );
-  //
-  // }
+  async function _search() {
+    //setName('');
+    await setUsers([]);
+    setUsers([]);
+    setPage(0);
+    // setTimeout(() => {
+    //     _getData();
+    //   },
+    //   900
+    // );
+
+  }
 
   async function _getData() {
     if (loading) {
@@ -80,6 +80,7 @@ export default function Main(props) {
     try {
       let response = null;
       if (name) {
+        //alert(JSON.stringify(page));
         let data = {
           "name": name,
           "page": page,
@@ -87,10 +88,21 @@ export default function Main(props) {
 
         response = await api.post('/api/user/unassociated/paginate', data);
 
+        if (__DEV__) {
+          console.tron.log(response);
+          console.tron.log(page);
+        }
+
         if (response.data.data.length) {
+
           setEnd(true);
+          // if (response.data.last_page != page){
           setUsers([...response.data.data, ...users]);
+          //}
+
           setPage(page + 1);
+        } else {
+          setPage(0);
         }
       }
 
@@ -125,8 +137,7 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
-    return(<Detail item={item}/>);
-
+    return (<Detail item={item}/>);
   }
 
   function renderFooter() {
@@ -159,7 +170,6 @@ export default function Main(props) {
   return (
     <Content>
 
-
       <FlatList
         ListHeaderComponent={_renderHeader()}
         style={{margimBottom: 50}}
@@ -171,9 +181,9 @@ export default function Main(props) {
           <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
         }
         onEndReached={() => _getData()}
-        onEndReachedThreshold={0.2}
+        onEndReachedThreshold={0.1}
         ListFooterComponent={renderFooter}
-        initialNumToRender={20}
+        //initialNumToRender={20}
       />
 
     </Content>
