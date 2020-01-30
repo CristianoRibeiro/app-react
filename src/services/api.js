@@ -1,8 +1,8 @@
 import {AsyncStorage} from 'react-native';
 import axios from 'axios';
 
-// const API = 'https://viva-fenae.strongtecnologia.com.br';
-const API = "http://viva-fenae.test";
+const API = 'https://viva-fenae.strongtecnologia.com.br';
+//const API = "http://viva-fenae.test";
 
 
 const api = axios.create({

@@ -270,7 +270,7 @@ export default function Main(props) {
     }
     setHideMenu(false);
     setHideEdit(true);
-    props.getData();
+    //props.getData();
   }
 
   async function _sendComentario() {
