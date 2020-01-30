@@ -50,7 +50,7 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    _getData();
+    //_getData();
   }, []);
 
   useEffect(() => {
@@ -58,17 +58,20 @@ export default function Main(props) {
     setPage(0);
   }, [name]);
 
-  async function _search() {
-    //setName('');
-    await setUsers([]);
+
+  function _reset() {
     setUsers([]);
     setPage(0);
-    // setTimeout(() => {
-    //     _getData();
-    //   },
-    //   900
-    // );
+  }
 
+  function _pesquisar() {
+    setUsers([]);
+    setPage(0);
+    setTimeout(() => {
+        _getData();
+      },
+      900
+    );
   }
 
   async function _getData() {
@@ -78,33 +81,39 @@ export default function Main(props) {
 
     setLoading(true);
     try {
-      let response = null;
-      if (name) {
-        //alert(JSON.stringify(page));
-        let data = {
-          "name": name,
-          "page": page,
-        };
+      // if (name) {
+      //alert(JSON.stringify(page));
+      let data = {
+        "name": name,
+        "page": 0,
+      };
 
-        response = await api.post('/api/user/unassociated/paginate', data);
+      const response = await api.post('/api/user/unassociated/paginate', data);
 
-        if (__DEV__) {
-          console.tron.log(response);
-          console.tron.log(page);
-        }
-
-        if (response.data.data.length) {
-
-          setEnd(true);
-          // if (response.data.last_page != page){
-          setUsers([...response.data.data, ...users]);
-          //}
-
-          setPage(page + 1);
-        } else {
-          setPage(0);
-        }
+      if (__DEV__) {
+        console.tron.log(response);
+        console.tron.log(page);
       }
+
+      //alert(response.data.data.length);
+      if (response.data.data.length) {
+
+        // if (page < response.data.last_page) {
+
+        let list = [...response.data.data, ...users];
+
+        list.sort(function (a, b) {
+          return b.id - a.id;
+        });
+
+        //const novoArray = [...new Set(list)];
+        setUsers(list);
+      }
+      //}
+      // } else {
+      //   setPage(0);
+      // }
+      // }
 
       if (__DEV__) {
         console.tron.log(users);
@@ -115,6 +124,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    await setPage(page + 1);
     setLoading(false);
   }
 
@@ -141,7 +151,7 @@ export default function Main(props) {
   }
 
   function renderFooter() {
-    if (!end) return null;
+    if (!loading) return null;
 
     return (
       <View style={{paddingVertical: 5, alignItems: 'center', justifyContent: 'center'}}>
@@ -159,7 +169,7 @@ export default function Main(props) {
             onChangeText={query => setName(query)}
             value={name}
           />
-          <Search style={{marginLeft: 5, backgroundColor: '#fff'}} onPress={() => _getData()}>
+          <Search style={{marginLeft: 5, backgroundColor: '#fff'}} onPress={() => _pesquisar()}>
             <MaterialIcons name="search" size={24} color={'#666'}/>
           </Search>
         </View>
@@ -170,21 +180,32 @@ export default function Main(props) {
   return (
     <Content>
 
+      <View>
       <FlatList
         ListHeaderComponent={_renderHeader()}
-        style={{margimBottom: 50}}
+        //style={{margimBottom: 50}}
         data={users}
+        extraData={{
+          data: users,
+          // Realm mutates the array instead of returning a new copy,
+          // thus for a FlatList to update, we can use a timestamp as
+          // extraData prop
+          timestamp: Date.now(),
+        }}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!"/>}
         renderItem={({item}) => _renderItem(item)}
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
-        }
-        onEndReached={() => _getData()}
-        onEndReachedThreshold={0.1}
-        ListFooterComponent={renderFooter}
+        // refreshControl={
+        //   <RefreshControl refreshing={loading} onRefresh={() => _reset()}/>
+        // }
+        // onEndReached={_getData}
+        // onEndReachedThreshold={0.1}
+        // initialNumToRender={20}
+        // maxToRenderPerBatch={2}
+        // ListFooterComponent={renderFooter}
         //initialNumToRender={20}
       />
+      </View>
 
     </Content>
   );

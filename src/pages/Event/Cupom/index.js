@@ -31,7 +31,11 @@ import {
   Card,
   Link,
   SubTitle,
+  TextLight
 } from './styles';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {Input, Search} from "~/pages/Campaigns/Recommendation/styles";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 export default function Main(props) {
   const data = useSelector(state => state.games);
@@ -50,8 +54,8 @@ export default function Main(props) {
 
   async function _getData() {
     try {
-      //let response = await api.get('/api/games/'+eventitem.id);
-      let response = await api.get('/api/games/'+eventitem.id);
+      //let response = await api.get('/api/games/'+eventitem.id, {event_id: eventitem.id});
+      let response = await api.post('/api/coupons/group', {event_id: eventitem.id});
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -73,33 +77,69 @@ export default function Main(props) {
       formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
     }
 
-    return (
-      <Card>
-        <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            {item.created_at ? <EventDate>{formattedDate}</EventDate> : null}
-            <SubTitle>{item.type}</SubTitle>
+    if (item.coupon || item.active) {
+      return (
+        <Card style={{alignItems: 'center', justifyContent: 'center'}}>
+          {item.icon ?
+            <MaterialCommunityIcons style={{marginRight: 10}} name={item.icon} size={30} color={'#777'}/>
+            :
+            <Image
+              style={{height: 24, width: 24, marginRight: 10, marginLeft: 3}}
+              source={{uri: item.image}}
+              resizeMode="contain"
+            />}
+          <View style={{flex: 1}}>
+            <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                <SubTitle>{item.name}</SubTitle>
+              </View>
+
+            </View>
+            <View style={{justifyContent: 'center'}}>
+              <TextDark>{item.coupon} cupons</TextDark>
+            </View>
           </View>
-          <View style={{justifyContent: 'center'}}>
-            {item.qty ? <TextDark>{item.qty}</TextDark> : null}
+        </Card>
+      );
+    } else {
+      if (item.active || item.title) {
+        return (
+          <View style={{flex: 1, justifyContent: 'center', marginTop: 15, marginBottom: 5, marginHorizontal: 10}}>
+            <SubTitle style={{fontSize: 22, fontWeight: '700'}}>{item.name}</SubTitle>
           </View>
-        </View>
-      </Card>
-    );
+        );
+      } else {
+        return null;
+      }
+    }
   }
 
   return (
     <Content>
+
+      <Header>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <MaterialCommunityIcons name="ticket-outline" size={24} color={'#fff'}/>
+
+          <TextLight style={{fontSize: 18, fontWeight: '700'}}>Total de cupons: {data.total}</TextLight>
+        </View>
+      </Header>
+
       <FlatList
         style={{margimBottom: 50}}
-        data={data}
+        data={data.data}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
-          <EmptyList text="Aqui você poderá consultar os seus cupons gerados a partir das interações no evento" />
+          <EmptyList text="Aqui você poderá consultar os seus cupons gerados a partir das interações no evento"/>
         }
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
         }
       />
     </Content>
