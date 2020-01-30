@@ -56,13 +56,7 @@ export default function Main(props) {
     <Content>
       <WebView
         source={{uri: props.navigation.state.params.item.url}}
-        // onShouldStartLoadWithRequest={event => {
-        //   if (!/^[data:text, about:blank]/.test(event.url)) {
-        //     Linking.openURL(event.url);
-        //     return false;
-        //   }
-        //   return true;
-        // }}
+        mediaPlaybackRequiresUserAction={false}
       />
     </Content>
   );
