@@ -63,26 +63,37 @@ export default function Main(props) {
   const [page, setPage] = useState(0);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState(0);
   const [end, setEnd] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-      _getData();
+      _getUser();
     //alert(page);
   }, []);
 
-  // useEffect(() => {
-  //   _excluir();
-  // }, [excluido]);
+  useEffect(() => {
+    setPosts([]);
+    setPage(0);
+  }, [reload, user_rede]);
 
-  async function _getData() {
+  useEffect(() => {
+    _getData();
+  }, [user_rede]);
 
-    if (loading){
-      return;
-    }
+  async function _reload() {
+    setReload(reload + 1);
+    setPosts([]);
+    setPage(0);
+    setTimeout(() => {
+        _getData();
+      },
+      900
+    );
+  }
 
-    setLoading(true);
+  async function _getUser(){
+
     try {
       await dispatch({type: 'REDE', payload: []});
       let data = {
@@ -95,7 +106,6 @@ export default function Main(props) {
         "dataFim": null
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
       let response_user = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/social/info', data);
       //alert(JSON.stringify(response));
 
@@ -114,22 +124,54 @@ export default function Main(props) {
         i++;
       });
       setConexoes(newValues);
+      //alert(JSON.stringify(newValues));
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+  }
 
-      if (response.data.retorno.length){
-        setEnd(true);
-        await dispatch({type: 'REDE', payload: response.data.retorno});
-        const data_posts = posts;
-        setPosts([]);
-        setPosts([...response.data.retorno, ...data_posts]);
-        setPage(page + 1);
-      }
-      else{
-        setEnd(false);
-      }
+  async function _getData() {
+
+    if (loading){
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await dispatch({type: 'REDE', payload: []});
+      let data = {
+        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+        "cpf": user.doc,
+        "pageIndex": page,
+        "pageSize": 5,
+        "search": null,
+        "dataInicio": null,
+        "dataFim": null
+      };
 
       if (__DEV__) {
-        console.tron.log([...response.data.retorno, ...posts]);
+        console.tron.log(data);
       }
+
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+
+      // if (response.data.retorno.length){
+        //await dispatch({type: 'REDE', payload: response.data.retorno});
+      let list = [...response.data.retorno, ...posts];
+
+      list.sort(function(a,b) {
+        return b.id - a.id;
+      });
+
+      setPosts(list);
+      setPage(page + 1);
+      if (__DEV__) {
+        console.tron.log(list);
+      }
+
+
       //alert(JSON.stringify(newValues));
     } catch (error) {
       if (__DEV__) {
@@ -139,40 +181,6 @@ export default function Main(props) {
     setLoading(false);
   }
 
-
-  async function _reloadData() {
-
-    setReload(true);
-    try {
-      await dispatch({type: 'REDE', payload: []});
-      setPosts([]);
-      let data = {
-        "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
-        "cpf": user.doc,
-        "pageIndex": 0,
-        "pageSize": 10,
-        "search": null,
-        "dataInicio": null,
-        "dataFim": null
-      };
-
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data.retorno);
-      }
-
-      await dispatch({type: 'REDE', payload: response.data.retorno});
-
-      setPosts(response.data.retorno);
-      //alert(JSON.stringify(newValues));
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
-    setReload(false);
-  }
 
   async function _uploadImagePost() {
     const options = {
@@ -267,7 +275,7 @@ export default function Main(props) {
     setType(1);
     setPost('');
     setImagePost(null);
-    _reloadData();
+    _reload();
   }
 
 
@@ -297,11 +305,11 @@ export default function Main(props) {
   }
 
   function renderFooter () {
-    if (!end) return null;
+    // if (!end) return null;
 
     return (
       <View style={{paddingVertical: 5, alignItems: 'center', justifyContent: 'center'}}>
-        <TextDark>Caregando...</TextDark>
+        {/*<TextDark>Caregando...</TextDark>*/}
       </View>
     );
   };
@@ -440,22 +448,22 @@ export default function Main(props) {
   }
 
   function _renderItem(item, index){
-    return(<Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_reloadData}/>);
+    return(<Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_reload}/>);
   }
 
   return (
     <Content>
 
-      {reload ?
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50}}>
-          <ActivityIndicator size={'large'} animating={true}/>
-        </View>
-        :
+      {/*{reload ?*/}
+      {/*  <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50}}>*/}
+      {/*    <ActivityIndicator size={'large'} animating={true}/>*/}
+      {/*  </View>*/}
+      {/*  :*/}
         <View>
           <FlatList
             ListHeaderComponent={_renderHeader()}
             refreshControl={
-              <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
+              <RefreshControl refreshing={loading} onRefresh={() => _reload()}/>
             }
             style={{margimBottom: 50}}
             data={posts}
@@ -470,9 +478,9 @@ export default function Main(props) {
             ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
             renderItem={(item, index) => _renderItem(item, index)}
             onEndReached={()=>_getData()}
-            onEndReachedThreshold={0.2}
+            onEndReachedThreshold={0.1}
             ListFooterComponent={renderFooter}
-            initialNumToRender={50}
+            //initialNumToRender={50}
           />
 
           {/*<ListView*/}
@@ -483,7 +491,7 @@ export default function Main(props) {
           {/*  onLoadMoreAsync={this._getData()}*/}
           {/*/>*/}
         </View>
-      }
+      {/*}*/}
 
     </Content>
   );
