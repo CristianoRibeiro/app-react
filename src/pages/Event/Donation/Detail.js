@@ -19,6 +19,7 @@ import {Surface} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
+import Spinner from 'react-native-loading-spinner-overlay';
 import EmptyListHorizontal from '~/components/EmptyListHorizontal';
 import Modal from "react-native-modal";
 
@@ -52,9 +53,9 @@ export default function Main(props) {
 
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
-  //const [product, setProduct] = useState(Product);
 
   const [coins, setSaldo] = useState(user.coins);
+  //const [coins, setSaldo] = useState(50000);
   const [disableComfirm, setDisableConfirm] = useState(coins < item.price ? true : false);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
@@ -62,7 +63,6 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    //_getData();
 
     if (__DEV__) {
       console.tron.log(item);
@@ -149,14 +149,14 @@ export default function Main(props) {
             <Title style={{fontSize: 30}}>{item.name}</Title>
 
           </View>
-          <View style={{paddingHorizontal: 40, paddingTop: 15}}>
-          <FitImage
-            resizeMode="cover"
-            style={{
-              flex:1
-            }}
-            source={{uri: item.append_image}}
-          />
+          <View style={{paddingHorizontal: 60, paddingTop: 15}}>
+            <FitImage
+              resizeMode="cover"
+              style={{
+                flex: 1
+              }}
+              source={{uri: item.append_image}}
+            />
           </View>
           <EmptyListHorizontal iconSize={24} text={'Verifique a disponibilidade de cores no balcão de retirada.'}/>
         </Card>
@@ -164,20 +164,20 @@ export default function Main(props) {
         <Card>
 
           {coins < item.price ?
-            <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
+            <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 10}}>
               <TextDark style={{fontSize: 18, color: '#bf360c'}}>Saldo insuficiente</TextDark>
               <TextDark style={{fontSize: 18, fontWeight: '700', color: '#bf360c'}}>{coins} pontos</TextDark>
             </View>
 
             :
 
-            <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
+            <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 10}}>
               <TextDark style={{fontSize: 18}}>Saldo</TextDark>
               <TextDark style={{fontSize: 18, fontWeight: '700'}}>{coins} pontos</TextDark>
             </View>
           }
 
-          <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 20}}>
+          <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: 10}}>
             <TextDark style={{fontSize: 18}}>Doação</TextDark>
             <TextDark style={{fontSize: 18, fontWeight: '700'}}>{item.price} pontos</TextDark>
           </View>
@@ -246,12 +246,27 @@ export default function Main(props) {
 
         </View>
 
-        <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
-          <Btn onPress={() => _confirmModal()}>
-            <TextLight>OK</TextLight>
-          </Btn>
+        <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20, flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <Btn onPress={() => setModalConfirm(false)}>
+              <TextLight>CANCELAR</TextLight>
+            </Btn>
+          </View>
+          <View style={{flex: 1}}>
+            <Btn onPress={() => _confirmModal()}>
+              <TextLight>OK</TextLight>
+            </Btn>
+          </View>
         </View>
       </Modal>
+
+      <Spinner
+        overlayColor={'rgba(0, 0, 0, 0.80)'}
+        visible={loading}
+        textStyle={{color: '#fff'}}
+        color={'#fff'}
+        textContent={'Carregando...'}
+      />
 
     </Content>
   );

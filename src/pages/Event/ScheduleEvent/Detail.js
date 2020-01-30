@@ -52,6 +52,7 @@ export default function Main(props) {
   const [startCount, setStarCount] = useState(0);
   const [modalQuestion, setModalQuestion] = useState(false);
   const [question, setQuestion] = useState('');
+  const [statusEvalution, setEvalution] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -63,6 +64,12 @@ export default function Main(props) {
     //setSchedules(JSON.parse(eventitem.schedule));
     _getEvalution();
   }, []);
+
+  useEffect(() => {
+    if (__DEV__) {
+      console.tron.log(props.item);
+    }
+  }, [statusEvalution, startCount]);
 
   function _openUrl() {
     if (eventitem.url_schedule) {
@@ -91,11 +98,12 @@ export default function Main(props) {
       };
 
       let response = await api.post('/api/rating/get', data);
-      //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
       if (response.data.success) {
+        //alert(JSON.stringify(data));
+        setEvalution(true);
         setStarCount(response.data.rating.rating);
       }
 
@@ -117,6 +125,7 @@ export default function Main(props) {
 
       let response = await api.post('/api/rating', data);
       //alert(JSON.stringify(response));
+      setEvalution(true);
       if (__DEV__) {
         console.tron.log(response.data);
       }
@@ -125,14 +134,15 @@ export default function Main(props) {
         },
         800
       );
+      setModalEvalution(true);
 
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
     }
-    //setStarCount(0);
     setModalEvalution(false);
+    //setStarCount(0);
   }
 
   async function _sendQuestion() {
@@ -204,6 +214,7 @@ export default function Main(props) {
                   </Btn>
                   : null}
 
+                {/*<TextDark>{startCount}</TextDark>*/}
                 {props.item.rating === "true" ?
                   <Btn onPress={() => setModalEvalution(true)}>
                     <MaterialCommunityIcons name={startCount ? "star" : "star-outline"} size={24} color={'#fff'}/>
@@ -255,7 +266,7 @@ export default function Main(props) {
             }}>{props.item.speaker}</TextDark>
             <View style={{margin: 20}}>
               <StarRating
-                disabled={false}
+                disabled={statusEvalution}
                 maxStars={5}
                 rating={startCount}
                 fullStarColor="#FFC400"

@@ -81,17 +81,6 @@ export default function Main(props) {
     _getData();
   }, [user_rede]);
 
-  // async function _reload() {
-  //   setReload(reload + 1);
-  //   setPosts([]);
-  //   setPage(0);
-  //   setTimeout(() => {
-  //       _getData();
-  //     },
-  //     3000
-  //   );
-  // }
-
   async function _getUser() {
 
     try {
@@ -107,11 +96,17 @@ export default function Main(props) {
       };
 
       let response_user = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/social/info', data);
+
+      let user_response = await apiApp.get('/api/auth/user');
+      //alert(JSON.stringify(user_response));
+      if (__DEV__) {
+        console.tron.log(user_response.data);
+      }
+      await dispatch({type: 'USER', payload: user_response.data});
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response_user);
       }
-
 
       setUserRede(response_user.data.retorno);
       //alert(JSON.stringify(response_user.data.retorno));
@@ -128,13 +123,6 @@ export default function Main(props) {
       });
       setConexoes(newValues);
       //alert(JSON.stringify(newValues));
-
-      let r_user = await api.get('/api/auth/user');
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(r_user.data);
-      }
-      await dispatch({type: 'USER', payload: r_user.data});
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
@@ -228,6 +216,9 @@ export default function Main(props) {
     try {
 
       let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+
+      let user_response = await apiApp.get('/api/auth/user');
+      await dispatch({type: 'USER', payload: user_response.data});
 
       let list = response.data.retorno;
 
@@ -375,6 +366,9 @@ export default function Main(props) {
         if (post.includes('#inspirafenae')) {
 
           let response_post = await apiApp.post('/api/post/inspira', {post_ms: response.data.idPost});
+
+          let user_response = await apiApp.get('/api/auth/user');
+          await dispatch({type: 'USER', payload: user_response.data});
           //alert(JSON.stringify(response));
           if (__DEV__) {
             console.tron.log(response_post.data);
@@ -400,7 +394,6 @@ export default function Main(props) {
     setImageBase64(null);
 
     _getResetPost();
-
   }
 
 

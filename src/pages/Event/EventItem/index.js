@@ -507,6 +507,7 @@ export default function Main(props) {
       </ScrollView>
 
       <Spinner
+        overlayColor={'rgba(0, 0, 0, 0.80)'}
         visible={loadingStreaming}
         textStyle={{color: '#fff'}}
         color={'#fff'}

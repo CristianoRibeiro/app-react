@@ -76,7 +76,6 @@ export default function Main(props) {
   const [modal, setModal] = useState(false);
   const [modalAlert, setModalAlert] = useState(false);
   const [error, setError] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     //_getData();
@@ -213,6 +212,8 @@ export default function Main(props) {
       };
 
       let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/remover', data);
+
+      let response_delete = await api.post('/api/post/inspira', {delete: true, post_id: props.item.item.id});
       //alert(JSON.stringify(response.data));
       if (__DEV__) {
         //console.tron.log(response.data);
@@ -340,27 +341,6 @@ export default function Main(props) {
           {/*  {inputEditarPost}*/}
           {/*</TextDark>*/}
           <HTML html={inputEditarPost}/>
-
-          {
-            props.item.item.post ?
-              <TouchableOpacity style={{marginTop: 25}}
-                                onPress={() => _openUrl('https://fenae.sfo2.digitaloceanspaces.com/viva-fenae/Ebook_NovasTecnologias.pdf')}>
-
-                <View style={{borderWidth: 1, borderColor: '#bbb', padding: 8, borderStyle: 'dashed'}}>
-                  <TextDark>Parabéns! Você ganhou o e-book <TextDark
-                    style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>'Novas tecnologias
-                    para
-                    a
-                    produtividade'</TextDark>. Boa leitura!</TextDark>
-                  <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <TextDark style={{fontWeight: '700', marginTop: 15}}>#INSPIRAFENAE</TextDark>
-                  </View>
-                </View>
-
-              </TouchableOpacity>
-              : null
-
-          }
         </View>
       );
     } else {
@@ -505,6 +485,27 @@ export default function Main(props) {
                 </View>
               )
             )}
+
+            {
+              props.item.item.id === user.post_ms ?
+                <TouchableOpacity style={{marginTop: 25}}
+                                  onPress={() => _openUrl('https://fenae.sfo2.digitaloceanspaces.com/viva-fenae/Ebook_NovasTecnologias.pdf')}>
+
+                  <View style={{borderWidth: 1, borderColor: '#bbb', padding: 8, borderStyle: 'dashed'}}>
+                    <TextDark>Parabéns! Você ganhou o e-book <TextDark
+                      style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>Novas tecnologias
+                      para
+                      a
+                      produtividade</TextDark>. Boa leitura!</TextDark>
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                      <TextDark style={{fontWeight: '700', marginTop: 15}}>#INSPIRAFENAE</TextDark>
+                    </View>
+                  </View>
+
+                </TouchableOpacity>
+                : null
+
+            }
 
           </View>
 
