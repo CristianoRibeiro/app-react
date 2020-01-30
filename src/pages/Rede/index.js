@@ -24,7 +24,7 @@ import ImagePicker from "react-native-image-crop-picker";
 //import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
 
-import Item from '~/pages/Rede/Item';
+import Item from '~/pages/Rede/Detail';
 
 import api from 'axios';
 
@@ -64,11 +64,10 @@ export default function Main(props) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(0);
-  const [end, setEnd] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-      _getUser();
+    _getUser();
     //alert(page);
   }, []);
 
@@ -81,18 +80,18 @@ export default function Main(props) {
     _getData();
   }, [user_rede]);
 
-  async function _reload() {
-    setReload(reload + 1);
-    setPosts([]);
-    setPage(0);
-    setTimeout(() => {
-        _getData();
-      },
-      900
-    );
-  }
+  // async function _reload() {
+  //   setReload(reload + 1);
+  //   setPosts([]);
+  //   setPage(0);
+  //   setTimeout(() => {
+  //       _getData();
+  //     },
+  //     3000
+  //   );
+  // }
 
-  async function _getUser(){
+  async function _getUser() {
 
     try {
       await dispatch({type: 'REDE', payload: []});
@@ -100,7 +99,7 @@ export default function Main(props) {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
         "pageIndex": page,
-        "pageSize": 50,
+        "pageSize": 10,
         "search": null,
         "dataInicio": null,
         "dataFim": null
@@ -108,6 +107,9 @@ export default function Main(props) {
 
       let response_user = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/social/info', data);
       //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response_user);
+      }
 
 
       setUserRede(response_user.data.retorno);
@@ -134,13 +136,12 @@ export default function Main(props) {
 
   async function _getData() {
 
-    if (loading){
+    if (loading) {
       return;
     }
 
     setLoading(true);
     try {
-      await dispatch({type: 'REDE', payload: []});
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
         "cpf": user.doc,
@@ -158,10 +159,10 @@ export default function Main(props) {
       let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
 
       // if (response.data.retorno.length){
-        //await dispatch({type: 'REDE', payload: response.data.retorno});
+      //await dispatch({type: 'REDE', payload: response.data.retorno});
       let list = [...response.data.retorno, ...posts];
 
-      list.sort(function(a,b) {
+      list.sort(function (a, b) {
         return b.id - a.id;
       });
 
@@ -179,6 +180,87 @@ export default function Main(props) {
       }
     }
     setLoading(false);
+  }
+
+  async function _getReset() {
+
+    setReload(reload + 1);
+    setLoading(true);
+    let data = {
+      "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+      "cpf": user.doc,
+      "pageIndex": 0,
+      "pageSize": 5,
+      "search": null,
+      "dataInicio": null,
+      "dataFim": null
+    };
+
+    //alert(JSON.stringify(data));
+
+    try {
+
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+
+      let list = response.data.retorno;
+
+      list.sort(function (a, b) {
+        return b.id - a.id;
+      });
+
+      setPosts([list]);
+
+      if (__DEV__) {
+        console.tron.log(list);
+      }
+
+      //alert(JSON.stringify(newValues));
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    setLoading(false);
+  }
+
+  async function _getResetPost() {
+
+    //setReload(reload + 1);
+    setPage(0);
+    let data = {
+      "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
+      "cpf": user.doc,
+      "pageIndex": 0,
+      "pageSize": 5,
+      "search": null,
+      "dataInicio": null,
+      "dataFim": null
+    };
+
+    //alert(JSON.stringify(data));
+
+    try {
+
+      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+
+      let list = response.data.retorno;
+
+      list.sort(function (a, b) {
+        return b.id - a.id;
+      });
+
+      setPosts([list]);
+
+      if (__DEV__) {
+        console.tron.log(list);
+      }
+
+      //alert(JSON.stringify(newValues));
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
   }
 
 
@@ -271,17 +353,23 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
-    setConexao([]);
+    //setConexao([]);
     setType(1);
     setPost('');
     setImagePost(null);
-    _reload();
+    setImageBase64(null);
+
+    _getResetPost();
+
   }
 
 
   async function _excluir(item) {
     //alert(JSON.stringify(item));
-    setExcluido(!excluido);
+    //setPage(0);
+    //Alert.alert(null,'Post excluido com sucesso!');
+
+    //setExcluido(!excluido);
     let list = posts;
     let newValues = new Array();
 
@@ -290,8 +378,7 @@ export default function Main(props) {
       if (item.id != element.id) {
         newValues[i] = element;
         i++;
-      }
-      else{
+      } else {
         if (__DEV__) {
           console.tron.log(element);
         }
@@ -300,11 +387,22 @@ export default function Main(props) {
     if (__DEV__) {
       console.tron.log(newValues);
     }
+
+    newValues.sort(function (a, b) {
+      return b.id - a.id;
+    });
+
     setPosts(newValues);
+
+    //setPosts([]);
+
+    if (__DEV__) {
+      console.tron.log(newValues);
+    }
 
   }
 
-  function renderFooter () {
+  function renderFooter() {
     // if (!end) return null;
 
     return (
@@ -315,7 +413,7 @@ export default function Main(props) {
   };
 
   function _renderHeader() {
-    return(
+    return (
       <Header>
         <View
           style={{
@@ -438,7 +536,8 @@ export default function Main(props) {
             : null}
 
           <View style={{flex: 1, margin: 2, marginTop: 10}}>
-            <Send disabled={post ? false : true} onPress={() => _sendPost()} style={{flex: 1, justifyContent: 'center'}}>
+            <Send disabled={post ? false : true} onPress={() => _sendPost()}
+                  style={{flex: 1, justifyContent: 'center'}}>
               <TextLight>Publicar</TextLight>
             </Send>
           </View>
@@ -447,8 +546,8 @@ export default function Main(props) {
     );
   }
 
-  function _renderItem(item, index){
-    return(<Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_reload}/>);
+  function _renderItem(item, index) {
+    return (<Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_getReset}/>);
   }
 
   return (
@@ -459,38 +558,38 @@ export default function Main(props) {
       {/*    <ActivityIndicator size={'large'} animating={true}/>*/}
       {/*  </View>*/}
       {/*  :*/}
-        <View>
-          <FlatList
-            ListHeaderComponent={_renderHeader()}
-            refreshControl={
-              <RefreshControl refreshing={loading} onRefresh={() => _reload()}/>
-            }
-            style={{margimBottom: 50}}
-            data={posts}
-            extraData={{
-              data: posts,
-              // Realm mutates the array instead of returning a new copy,
-              // thus for a FlatList to update, we can use a timestamp as
-              // extraData prop
-              timestamp: Date.now(),
-            }}
-            keyExtractor={(item, index) => index.toString()}
-            ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
-            renderItem={(item, index) => _renderItem(item, index)}
-            onEndReached={()=>_getData()}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={renderFooter}
-            //initialNumToRender={50}
-          />
+      <View>
+        <FlatList
+          ListHeaderComponent={_renderHeader()}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={() => _getReset()}/>
+          }
+          style={{margimBottom: 50}}
+          data={posts}
+          extraData={{
+            data: posts,
+            // Realm mutates the array instead of returning a new copy,
+            // thus for a FlatList to update, we can use a timestamp as
+            // extraData prop
+            timestamp: Date.now(),
+          }}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
+          renderItem={(item, index) => _renderItem(item, index)}
+          onEndReached={() => _getData()}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={renderFooter}
+          //initialNumToRender={50}
+        />
 
-          {/*<ListView*/}
-          {/*  renderScrollComponent={props => <InfiniteScrollView {...props} />}*/}
-          {/*  dataSource={posts}*/}
-          {/*  renderRow={_renderItem()}*/}
-          {/*  canLoadMore={_getData()}*/}
-          {/*  onLoadMoreAsync={this._getData()}*/}
-          {/*/>*/}
-        </View>
+        {/*<ListView*/}
+        {/*  renderScrollComponent={props => <InfiniteScrollView {...props} />}*/}
+        {/*  dataSource={posts}*/}
+        {/*  renderRow={_renderItem()}*/}
+        {/*  canLoadMore={_getData()}*/}
+        {/*  onLoadMoreAsync={this._getData()}*/}
+        {/*/>*/}
+      </View>
       {/*}*/}
 
     </Content>

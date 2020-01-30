@@ -66,6 +66,7 @@ export default function Main(props) {
     //alert(JSON.stringify(props.userPost));
     setLike(props.item.curtiu);
     setLikeNumber(props.item.curtidas);
+    setInputEditarPost(props.item ? props.item.texto : '');
   }, [props.item]);
 
   async function _sendExcluir() {
@@ -88,7 +89,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
-    props.getData();
+    props.excluirComentario(props.item);
   }
 
   async function _excluir() {

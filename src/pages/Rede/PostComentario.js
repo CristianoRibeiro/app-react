@@ -74,6 +74,7 @@ export default function Main(props) {
     setLike(props.item.curtiu);
     setLikeNumber(props.item.curtidas);
     setComentarios(props.item.comentarioRespostas ? props.item.comentarioRespostas : []);
+    setInputEditarPost(props.item.texto ? props.item.texto : '');
   }, [props.item]);
 
   async function _sendEditar() {
@@ -171,10 +172,10 @@ export default function Main(props) {
       }
     }
 
-
     if (__DEV__) {
       console.tron.log(comentarios);
     }
+    setInputComent('');
     //setHideEditComment(true);
     //props.getData();
   }
@@ -203,6 +204,45 @@ export default function Main(props) {
       Alert.alert(null,'Ocorreu um erro. tente novamente mais tarde');
     }
     //props.getData();
+  }
+
+  async function _excluirComentario(item) {
+    //alert(JSON.stringify(item));
+    //setPage(0);
+    //Alert.alert(null,'Post excluido com sucesso!');
+
+    //setExcluido(!excluido);
+    let list = comentarios;
+    let newValues = new Array();
+
+    let i = 0;
+    list.forEach((element, index) => {
+      if (item.id != element.id) {
+        newValues[i] = element;
+        i++;
+      } else {
+        if (__DEV__) {
+          console.tron.log(element);
+        }
+      }
+    });
+    if (__DEV__) {
+      console.tron.log(newValues);
+    }
+
+    newValues.sort(function (a, b) {
+      return b.id - a.id;
+    });
+
+    setComentarios(newValues);
+    setInputComent('');
+
+    //setPosts([]);
+
+    if (__DEV__) {
+      console.tron.log(newValues);
+    }
+
   }
 
   function _renderComentar() {
@@ -274,7 +314,7 @@ export default function Main(props) {
             //numColumns={4}
             keyExtractor={(item, index) => index.toString()}
             renderItem={(item, index) => <ItemComentario item={item.item} post={props.post} userPost={props.userPost}
-                                                         getData={props.getData}/>}
+                                                         getData={props.getData} excluirComentario={_excluirComentario}/>}
           />
         </View>
       </View>

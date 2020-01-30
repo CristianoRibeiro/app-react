@@ -22,7 +22,7 @@ import EmptyList from '~/components/EmptyList';
 import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
 
-import Item from '~/pages/Rede/Item';
+import Item from '~/pages/Rede/Detail';
 
 import api from 'axios';
 
