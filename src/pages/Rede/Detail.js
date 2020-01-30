@@ -318,6 +318,20 @@ export default function Main(props) {
     //props.getData();
   }
 
+  function _openUrl(item) {
+    try {
+      Linking.canOpenURL(item).then(supported => {
+        if (supported) {
+          Linking.openURL(item).catch(err =>
+            console.error('An error occurred', err),
+          );
+        }
+      });
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
   function _renderEdit() {
     if (hideEdit) {
       return (
@@ -325,7 +339,23 @@ export default function Main(props) {
           {/*<TextDark>*/}
           {/*  {inputEditarPost}*/}
           {/*</TextDark>*/}
-          <HTML html={inputEditarPost} />
+          <HTML html={inputEditarPost}/>
+
+          {inputEditarPost.includes('#inspirafenae') ?
+            <TouchableOpacity style={{marginTop: 25}} onPress={() => _openUrl('https://fenae.sfo2.digitaloceanspaces.com/viva-fenae/Ebook_NovasTecnologias.pdf')}>
+
+              <View style={{borderWidth: 1, borderColor: '#ccc', padding: 8, borderStyle: 'dashed'}}>
+                <TextDark>Parabéns! Você ganhou o e-book <TextDark
+                  style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>'Novas tecnologias para
+                  a
+                  produtividade'</TextDark>. Boa leitura!</TextDark>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                  <TextDark style={{fontWeight: '700', marginTop: 15}}>#INSPIRAFENAE</TextDark>
+                </View>
+              </View>
+
+            </TouchableOpacity>
+            : null}
         </View>
       );
     } else {

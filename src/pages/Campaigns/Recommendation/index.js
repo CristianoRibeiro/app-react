@@ -85,7 +85,7 @@ export default function Main(props) {
       //alert(JSON.stringify(page));
       let data = {
         "name": name,
-        "page": page,
+        "page": 0,
       };
 
       const response = await api.post('/api/user/unassociated/paginate', data);
@@ -108,7 +108,6 @@ export default function Main(props) {
 
         //const novoArray = [...new Set(list)];
         setUsers(list);
-        await setPage(page + 1);
       }
       //}
       // } else {
@@ -125,6 +124,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    await setPage(page + 1);
     setLoading(false);
   }
 
@@ -198,11 +198,11 @@ export default function Main(props) {
         // refreshControl={
         //   <RefreshControl refreshing={loading} onRefresh={() => _reset()}/>
         // }
-        onEndReached={_getData}
-        onEndReachedThreshold={0.1}
-        initialNumToRender={20}
-        maxToRenderPerBatch={2}
-        ListFooterComponent={renderFooter}
+        // onEndReached={_getData}
+        // onEndReachedThreshold={0.1}
+        // initialNumToRender={20}
+        // maxToRenderPerBatch={2}
+        // ListFooterComponent={renderFooter}
         //initialNumToRender={20}
       />
       </View>
