@@ -10,6 +10,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {Avatar, FAB} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -36,7 +37,7 @@ import {
   Link,
   Send,
   SubTitle,
-  TextDate,
+  TextDate
 } from './styles';
 
 import {Container, Content} from '../../style';
@@ -59,7 +60,26 @@ export default function Profile(props) {
 
   const iconSize = 32;
 
+  function __renderItem(item)
+  {
+    return (
+      <ListItem
+        title="Check-in realizado"
+        text={item.created_at}
+        color="#444"
+        icon={
+          <MaterialCommunityIcons
+            name="account-check"
+            size={iconSize}
+            color={'#444'}
+          />
+        }
+      />
+    );
+  }
+
   function _render() {
+    console.log(data.checkin);
     if(data.code){
       return (
         <Content source={require('~/assets/bg-login.jpg')} resizeMode="cover">
@@ -127,6 +147,31 @@ export default function Profile(props) {
                 </View>
                 <TextDark style={{color: '#666', fontWeight: '700'}}>{data.code}</TextDark>
               </Card>
+
+              <Card>
+                {data.event_id == 1 ? (
+                  <ListItem
+                    title="Kit"
+                    text={data.kit ? 'Retirado' : 'Não retirado'}
+                    color="#444"
+                    icon={
+                      <MaterialCommunityIcons
+                        name="package"
+                        size={iconSize}
+                        color={'#444'}
+                      />
+                    }
+                  />
+                ) : null}
+
+                <FlatList
+                  style={{margimBottom: 50}}
+                  data={data.checkin}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({item}) => __renderItem(item)}
+                />
+              </Card>
+
               <Card>
                 <ListItem
                   title="CPF"
