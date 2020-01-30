@@ -27,6 +27,7 @@ import ImagePicker from "react-native-image-crop-picker";
 import Item from '~/pages/Rede/Detail';
 
 import api from 'axios';
+import apiApp from '~/services/api';
 
 import {Container, Content} from '~/style';
 
@@ -127,10 +128,35 @@ export default function Main(props) {
       });
       setConexoes(newValues);
       //alert(JSON.stringify(newValues));
+
+      let r_user = await api.get('/api/auth/user');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(r_user.data);
+      }
+      await dispatch({type: 'USER', payload: r_user.data});
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);
       }
+    }
+  }
+
+  function _searchTag(array = []) {
+
+    let tempArray = array;
+
+    tempArray.map((item, key) => {
+      tempArray[key] = item;
+      if (item.id === user.post_ms) {
+        tempArray[key]['post'] = true;
+      }
+    });
+
+    setPosts(tempArray);
+
+    if (__DEV__) {
+      console.tron.log(tempArray);
     }
   }
 
@@ -166,7 +192,8 @@ export default function Main(props) {
         return b.id - a.id;
       });
 
-      setPosts(list);
+      _searchTag(list);
+
       setPage(page + 1);
       if (__DEV__) {
         console.tron.log(list);
@@ -208,7 +235,7 @@ export default function Main(props) {
         return b.id - a.id;
       });
 
-      setPosts([list]);
+      _searchTag(list);
 
       if (__DEV__) {
         console.tron.log(list);
@@ -249,7 +276,7 @@ export default function Main(props) {
         return b.id - a.id;
       });
 
-      setPosts([list]);
+      _searchTag(list);
 
       if (__DEV__) {
         console.tron.log(list);
@@ -326,6 +353,7 @@ export default function Main(props) {
 
   async function _sendPost() {
 
+    let response = null;
     try {
       let data = {
         "token": "5031619C-9203-4FB3-BE54-DE6077075F9D",
@@ -342,6 +370,17 @@ export default function Main(props) {
       }
 
       let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
+
+      if (post) {
+        if (post.includes('#inspirafenae')) {
+
+          let response_post = await apiApp.post('/api/post/inspira', {post_ms: response.data.idPost});
+          //alert(JSON.stringify(response));
+          if (__DEV__) {
+            console.tron.log(response_post.data);
+          }
+        }
+      }
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -353,6 +392,7 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+
     //setConexao([]);
     setType(1);
     setPost('');

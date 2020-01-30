@@ -86,7 +86,7 @@ export default function Main(props) {
     setLikeNumber(props.item.item.curtidas);
     setLikeItem(props.item.item.curtiu);
 
-  }, [props.item.item]);
+  }, [props.item.item, user]);
 
 
   async function _uploadImagePost() {
@@ -341,21 +341,26 @@ export default function Main(props) {
           {/*</TextDark>*/}
           <HTML html={inputEditarPost}/>
 
-          {inputEditarPost.includes('#inspirafenae') ?
-            <TouchableOpacity style={{marginTop: 25}} onPress={() => _openUrl('https://fenae.sfo2.digitaloceanspaces.com/viva-fenae/Ebook_NovasTecnologias.pdf')}>
+          {
+            props.item.item.post ?
+              <TouchableOpacity style={{marginTop: 25}}
+                                onPress={() => _openUrl('https://fenae.sfo2.digitaloceanspaces.com/viva-fenae/Ebook_NovasTecnologias.pdf')}>
 
-              <View style={{borderWidth: 1, borderColor: '#ccc', padding: 8, borderStyle: 'dashed'}}>
-                <TextDark>Parabéns! Você ganhou o e-book <TextDark
-                  style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>'Novas tecnologias para
-                  a
-                  produtividade'</TextDark>. Boa leitura!</TextDark>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                  <TextDark style={{fontWeight: '700', marginTop: 15}}>#INSPIRAFENAE</TextDark>
+                <View style={{borderWidth: 1, borderColor: '#bbb', padding: 8, borderStyle: 'dashed'}}>
+                  <TextDark>Parabéns! Você ganhou o e-book <TextDark
+                    style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>'Novas tecnologias
+                    para
+                    a
+                    produtividade'</TextDark>. Boa leitura!</TextDark>
+                  <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <TextDark style={{fontWeight: '700', marginTop: 15}}>#INSPIRAFENAE</TextDark>
+                  </View>
                 </View>
-              </View>
 
-            </TouchableOpacity>
-            : null}
+              </TouchableOpacity>
+              : null
+
+          }
         </View>
       );
     } else {

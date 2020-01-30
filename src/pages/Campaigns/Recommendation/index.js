@@ -180,8 +180,8 @@ export default function Main(props) {
   return (
     <Content>
 
-      <View>
       <FlatList
+        style={{flex:1}}
         ListHeaderComponent={_renderHeader()}
         //style={{margimBottom: 50}}
         data={users}
@@ -195,9 +195,9 @@ export default function Main(props) {
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!"/>}
         renderItem={({item}) => _renderItem(item)}
-        // refreshControl={
-        //   <RefreshControl refreshing={loading} onRefresh={() => _reset()}/>
-        // }
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _reset()}/>
+        }
         // onEndReached={_getData}
         // onEndReachedThreshold={0.1}
         // initialNumToRender={20}
@@ -205,7 +205,6 @@ export default function Main(props) {
         // ListFooterComponent={renderFooter}
         //initialNumToRender={20}
       />
-      </View>
 
     </Content>
   );
