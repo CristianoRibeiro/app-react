@@ -17,6 +17,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EmptyList from '~/components/EmptyList';
 import Detail from '~/pages/Campaigns/Recommendation/Detail';
 import {Searchbar} from 'react-native-paper';
+import Pagination from 'react-native-pagination';
 
 //Api
 import api from '~/services/api';

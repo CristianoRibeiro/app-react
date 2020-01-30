@@ -6091,6 +6091,11 @@ react-native-infinite-scroll-view@^0.4.5:
     react-clone-referenced-element "^1.0.1"
     react-native-scrollable-mixin "^1.0.0"
 
+react-native-laravel-pagination@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-laravel-pagination/-/react-native-laravel-pagination-1.0.1.tgz#4e0c398ba0cb9c4e6c1a27ada89cfcdef4965d00"
+  integrity sha512-ArSquOdKOu1KipCHvKIaVmtUZxjeLVpRKHfGtlOm5Jlms04QWn8PpWaNZsKLSg3ikfe2ckwnNsabfzfN/f/Nog==
+
 react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
