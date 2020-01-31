@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EmptyList from '~/components/EmptyList';
-import Detail from '~/pages/Campaigns/Recommendation/Detail';
 import {Searchbar} from 'react-native-paper';
 
 //Api
@@ -39,84 +38,29 @@ import {
 } from './styles';
 
 export default function Main(props) {
-  //const data = useSelector(state => state.users);
+  const data = useSelector(state => state.users);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
-  const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(0);
-  const [end, setEnd] = useState(0);
+  const [users, setUsers] = useState('');
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    //_getData();
+    _getData();
   }, []);
 
-  useEffect(() => {
-    setUsers([]);
-    setPage(0);
-  }, [name]);
-
-
-  function _reset() {
-    setUsers([]);
-    setPage(0);
-  }
-
-  function _pesquisar() {
-    setUsers([]);
-    setPage(0);
-    setTimeout(() => {
-        _getData();
-      },
-      900
-    );
-  }
-
   async function _getData() {
-    if (loading) {
-      return;
-    }
-
     setLoading(true);
     try {
-      // if (name) {
-      //alert(JSON.stringify(page));
-      let data = {
-        "name": name,
-        "page": 0,
-      };
-
-      const response = await api.post('/api/user/unassociated/paginate', data);
-
-      if (__DEV__) {
-        console.tron.log(response);
-        console.tron.log(page);
+      let response = null;
+      if (name) {
+        response = await api.get('/api/user/unassociated/' + name);
+        setUsers(response.data);
       }
 
-      //alert(response.data.data.length);
-      if (response.data.data.length) {
-
-        // if (page < response.data.last_page) {
-
-        let list = [...response.data.data, ...users];
-
-        list.sort(function (a, b) {
-          return b.id - a.id;
-        });
-
-        //const novoArray = [...new Set(list)];
-        setUsers(list);
-      }
-      //}
-      // } else {
-      //   setPage(0);
-      // }
-      // }
-
       if (__DEV__) {
-        console.tron.log(users);
+        console.tron.log(response.data);
       }
 
     } catch (error) {
@@ -124,18 +68,17 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
-    await setPage(page + 1);
     setLoading(false);
   }
 
   async function _setData(id) {
     try {
       let response = await api.post('/api/indicate', {user_id: id});
-      //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
       }
       Alert.alert(null, response.data.message);
+      _getData();
       let indicate = await api.get('/api/indicate');
 
       await dispatch({type: 'INDICATED', payload: indicate.data});
@@ -147,65 +90,70 @@ export default function Main(props) {
   }
 
   function _renderItem(item) {
-    return (<Detail item={item}/>);
-  }
-
-  function renderFooter() {
-    if (!loading) return null;
-
     return (
-      <View style={{paddingVertical: 5, alignItems: 'center', justifyContent: 'center'}}>
-        {/*<TextDark>Caregando...</TextDark>*/}
-      </View>
-    );
-  };
-
-  function _renderHeader() {
-    return (
-      <Header style={{alignItems: 'center'}}>
-        <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 5}}>
-          <Input
-            placeholder="Pesquisar"
-            onChangeText={query => setName(query)}
-            value={name}
+      <Card>
+        <CardImage>
+          <Image
+            source={{uri: item.append_avatar}}
+            style={{
+              height: 60,
+              width: 60,
+              borderRadius: 30,
+            }}
+            resizeMode="contain"
           />
-          <Search style={{marginLeft: 5, backgroundColor: '#fff'}} onPress={() => _pesquisar()}>
-            <MaterialIcons name="search" size={24} color={'#666'}/>
-          </Search>
+        </CardImage>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <View style={{flex: 1}}>
+            <UserTitle style={{marginRight: 5}}>{item.name}</UserTitle>
+            <SubTitle style={{fontWeight: '700'}}>
+              {item.address_state}
+            </SubTitle>
+          </View>
+
+          <Send onPress={() => _setData(item.id)}>
+            <TextDark style={{color: '#0058b8', fontSize: 10}}>
+              INDICAR
+            </TextDark>
+          </Send>
         </View>
-      </Header>
+      </Card>
     );
   }
 
   return (
     <Content>
+      <ScrollView>
+        <Header style={{alignItems: 'center'}}>
+          <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 5}}>
+            <Input
+              placeholder="Pesquisar"
+              onChangeText={query => setName(query)}
+              value={name}
+            />
+            <Search style={{marginLeft: 5, backgroundColor: '#fff'}} onPress={() => _getData()}>
+              <MaterialIcons name="search" size={24} color={'#666'} />
+            </Search>
+          </View>
+        </Header>
 
-      <FlatList
-        style={{flex:1}}
-        ListHeaderComponent={_renderHeader()}
-        //style={{margimBottom: 50}}
-        data={users}
-        extraData={{
-          data: users,
-          // Realm mutates the array instead of returning a new copy,
-          // thus for a FlatList to update, we can use a timestamp as
-          // extraData prop
-          timestamp: Date.now(),
-        }}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!"/>}
-        renderItem={({item}) => _renderItem(item)}
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={() => _reset()}/>
-        }
-        // onEndReached={_getData}
-        // onEndReachedThreshold={0.1}
-        // initialNumToRender={20}
-        // maxToRenderPerBatch={2}
-        // ListFooterComponent={renderFooter}
-        //initialNumToRender={20}
-      />
-
+        <FlatList
+          style={{margimBottom: 50}}
+          data={users}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={<EmptyList text="Nenhum usuário encontrado!" />}
+          renderItem={({item}) => _renderItem(item)}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+          }
+        />
+      </ScrollView>
     </Content>
   );
 }
