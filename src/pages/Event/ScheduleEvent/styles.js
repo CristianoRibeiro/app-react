@@ -66,6 +66,7 @@ export const Btn = styled.TouchableOpacity`
   background: #0D4274;
   margin-left: 8px;
   justify-content: center;
+  align-items: center;
   border-radius: 4px;
   padding: 2px 12px;
   margin-bottom: 3px;

@@ -40,6 +40,7 @@ import {
 } from './styles';
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Entypo from "react-native-vector-icons/Entypo";
 
 export default function Main(props) {
   //const data = useSelector(state => state.schedule);
@@ -49,10 +50,11 @@ export default function Main(props) {
   //const [schedules, setSchedules] = useState([]);
   const [modal, setModal] = useState(false);
   const [modalEvaluation, setModalEvalution] = useState(false);
-  const [startCount, setStarCount] = useState(0);
+  const [startCount, setStarCount] = useState(props.item.avaliacao ? props.item.avaliacao : 0);
   const [modalQuestion, setModalQuestion] = useState(false);
   const [question, setQuestion] = useState('');
-  const [statusEvalution, setEvalution] = useState(false);
+  const [statusEvalution, setEvalution] = useState(props.item.avaliado ? props.item.avaliado : 0);
+  const [modalSpeaker, setModalSpeaker] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -62,7 +64,7 @@ export default function Main(props) {
       console.tron.log(props.item);
     }
     //setSchedules(JSON.parse(eventitem.schedule));
-    _getEvalution();
+    //_getEvalution();
   }, []);
 
   useEffect(() => {
@@ -86,31 +88,6 @@ export default function Main(props) {
       }
     } else {
       setModal(true);
-    }
-  }
-
-  async function _getEvalution() {
-    try {
-      let data = {
-        event_id: eventitem.id,
-        title: props.item.title,
-        speaker: props.item.speaker
-      };
-
-      let response = await api.post('/api/rating/get', data);
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-      if (response.data.success) {
-        //alert(JSON.stringify(data));
-        setEvalution(true);
-        setStarCount(response.data.rating.rating);
-      }
-
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
     }
   }
 
@@ -207,7 +184,7 @@ export default function Main(props) {
 
               <View style={{justifyContent: 'flex-end'}}>
 
-                {props.item.content_status === "true" ?
+                {props.item.content_status ?
                   <Btn onPress={() => _openUrl()}>
                     <MaterialCommunityIcons name="information-outline" size={24}
                                             color={'#fff'}/>
@@ -215,16 +192,23 @@ export default function Main(props) {
                   : null}
 
                 {/*<TextDark>{startCount}</TextDark>*/}
-                {props.item.rating === "true" ?
+                {props.item.rating ?
                   <Btn onPress={() => setModalEvalution(true)}>
                     <MaterialCommunityIcons name={startCount ? "star" : "star-outline"} size={24} color={'#fff'}/>
                   </Btn>
                   : null}
 
-                {props.item.question === "true" ?
+                {props.item.question ?
                   <Btn onPress={() => setModalQuestion(true)}>
                     <MaterialCommunityIcons name="comment-question-outline" size={24}
                                             color={props.color ? props.color : '#fff'}/>
+                  </Btn>
+                  : null}
+
+                {props.item.speaker_item ?
+                  <Btn onPress={() => setModalSpeaker(true)}>
+                    <Entypo name="graduation-cap" size={24}
+                            color={props.color ? props.color : '#fff'}/>
                   </Btn>
                   : null}
               </View>
@@ -331,6 +315,45 @@ export default function Main(props) {
                   <TextDark>CANCELAR</TextDark>
                 </BtnCancel>
               </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          isVisible={modalSpeaker}
+          style={{backgroundColor: '#fff', margin: 0}}>
+          {props.item.speaker_item ?
+            <View style={{backgroundColor: '#fff', paddingVertical: 10, flex: 1}}>
+              <View style={{margin: 15, alignItems: 'center'}}>
+                <TextDark style={{marginVertical: 20, fontSize: 20}}>{props.item.speaker_item.name}</TextDark>
+
+                <Image
+                  source={{uri: props.item.speaker_item.image}}
+                  style={{
+                    height: 150,
+                    width: 150,
+                    borderRadius: 75,
+                    marginTop: 20
+                  }}
+                  resizeMode="cover"
+                />
+
+                <TextDark style={{marginTop: 20}}>{props.item.speaker_item.body}</TextDark>
+              </View>
+
+
+            </View>
+            : null}
+
+          <View style={{flexDirection: 'row'}}>
+            <View style={{flex: 1}}>
+              <BtnCancel
+                onPress={() => {
+                  setModalSpeaker(false);
+                }}
+                style={{marginBottom: 10, marginHorizontal: 15}}>
+                <TextDark>OK</TextDark>
+              </BtnCancel>
             </View>
           </View>
         </Modal>

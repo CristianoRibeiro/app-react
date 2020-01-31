@@ -583,48 +583,68 @@ export default function Main(props) {
     return (<Item key={index} item={item} excluir={_excluir} user={user_rede} getData={_getReset}/>);
   }
 
-  return (
-    <Content>
+  function _render() {
 
-      {/*{reload ?*/}
-      {/*  <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50}}>*/}
-      {/*    <ActivityIndicator size={'large'} animating={true}/>*/}
-      {/*  </View>*/}
-      {/*  :*/}
-      <View>
-        <FlatList
-          ListHeaderComponent={_renderHeader()}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={() => _getReset()}/>
-          }
-          style={{margimBottom: 50}}
-          data={posts}
-          extraData={{
-            data: posts,
-            // Realm mutates the array instead of returning a new copy,
-            // thus for a FlatList to update, we can use a timestamp as
-            // extraData prop
-            timestamp: Date.now(),
-          }}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
-          renderItem={(item, index) => _renderItem(item, index)}
-          onEndReached={() => _getData()}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          //initialNumToRender={50}
-        />
+    if (user_rede) {
+      return (
+        <Content>
 
-        {/*<ListView*/}
-        {/*  renderScrollComponent={props => <InfiniteScrollView {...props} />}*/}
-        {/*  dataSource={posts}*/}
-        {/*  renderRow={_renderItem()}*/}
-        {/*  canLoadMore={_getData()}*/}
-        {/*  onLoadMoreAsync={this._getData()}*/}
-        {/*/>*/}
-      </View>
-      {/*}*/}
+          {/*{reload ?*/}
+          {/*  <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50}}>*/}
+          {/*    <ActivityIndicator size={'large'} animating={true}/>*/}
+          {/*  </View>*/}
+          {/*  :*/}
+          <View>
+            <FlatList
+              ListHeaderComponent={_renderHeader()}
+              refreshControl={
+                <RefreshControl refreshing={loading} onRefresh={() => _getReset()}/>
+              }
+              style={{margimBottom: 50}}
+              data={posts}
+              extraData={{
+                data: posts,
+                // Realm mutates the array instead of returning a new copy,
+                // thus for a FlatList to update, we can use a timestamp as
+                // extraData prop
+                timestamp: Date.now(),
+              }}
+              keyExtractor={(item, index) => index.toString()}
+              ListEmptyComponent={<EmptyList text="Nenhum post encontrado!"/>}
+              renderItem={(item, index) => _renderItem(item, index)}
+              onEndReached={() => _getData()}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={renderFooter}
+              //initialNumToRender={50}
+            />
 
-    </Content>
-  );
+            {/*<ListView*/}
+            {/*  renderScrollComponent={props => <InfiniteScrollView {...props} />}*/}
+            {/*  dataSource={posts}*/}
+            {/*  renderRow={_renderItem()}*/}
+            {/*  canLoadMore={_getData()}*/}
+            {/*  onLoadMoreAsync={this._getData()}*/}
+            {/*/>*/}
+          </View>
+          {/*}*/}
+
+        </Content>
+      );
+    } else {
+      return (
+        <Content>
+          <View style={{margin: 5, padding: 20}}>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <MaterialCommunityIcons name="alert-circle-outline" size={50} color={'#444'}/>
+              <TextDark style={{marginTop: 15, textAlign: 'center'}}>
+                Usuário não identificado.
+              </TextDark>
+            </View>
+          </View>
+        </Content>
+      );
+    }
+  }
+
+  return _render();
 }

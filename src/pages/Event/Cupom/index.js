@@ -53,6 +53,7 @@ export default function Main(props) {
   }, []);
 
   async function _getData() {
+    setLoading(true);
     try {
       //let response = await api.get('/api/games/'+eventitem.id, {event_id: eventitem.id});
       let response = await api.post('/api/coupons/group', {event_id: eventitem.id});
@@ -68,6 +69,7 @@ export default function Main(props) {
       }
       await dispatch({type: 'GAMES', payload: []});
     }
+    setLoading(false);
   }
 
   function _renderItem(item) {

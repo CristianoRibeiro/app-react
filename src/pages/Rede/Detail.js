@@ -489,14 +489,11 @@ export default function Main(props) {
             {
               props.item.item.id === user.post_ms ?
                 <TouchableOpacity style={{marginTop: 25}}
-                                  onPress={() => _openUrl('https://fenae.sfo2.digitaloceanspaces.com/viva-fenae/Ebook_NovasTecnologias.pdf')}>
+                                  onPress={() => _openUrl('https://fenae.sfo2.digitaloceanspaces.com/viva-fenae/Ebook_NovasTecnologiasViajar.pdf')}>
 
                   <View style={{borderWidth: 1, borderColor: '#bbb', padding: 8, borderStyle: 'dashed'}}>
                     <TextDark>Parabéns! Você ganhou o e-book <TextDark
-                      style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>Novas tecnologias
-                      para
-                      a
-                      produtividade</TextDark>. Boa leitura!</TextDark>
+                      style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>Novas tecnologias para viajar like a boss</TextDark>. Boa leitura!</TextDark>
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                       <TextDark style={{fontWeight: '700', marginTop: 15}}>#INSPIRAFENAE</TextDark>
                     </View>

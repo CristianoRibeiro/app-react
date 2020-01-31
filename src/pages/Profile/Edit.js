@@ -412,7 +412,7 @@ export default function Main(props) {
                     value: null,
                     color: '#9EA0A4',
                   }}
-                  value={apcef}
+                  value={apcef.trim()}
                   onValueChange={value => setApcef(value)}
                   items={[
                     {value: 'APCEF/AC', label: 'APCEF/AC'},

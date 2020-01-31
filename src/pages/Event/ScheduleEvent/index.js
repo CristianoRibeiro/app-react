@@ -49,12 +49,14 @@ export default function Main(props) {
   const [modalEvaluation, setModalEvalution] = useState(false);
   const [startCount, setStarCount] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [schedules, setSchedule] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (__DEV__) {
       console.tron.log(eventitem.schedule);
     }
+    _getData();
     //setSchedules(JSON.parse(eventitem.schedule));
   }, []);
 
@@ -64,11 +66,40 @@ export default function Main(props) {
     );
   }
 
+  async function _getData() {
+    setLoading(true);
+    try {
+      let data = {
+        event_id: eventitem.id,
+      };
+
+      let response = await api.post('/api/schedules', data);
+
+      if (response.data){
+        setSchedule(response.data);
+      }
+
+
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+      setSchedule([]);
+    }
+    setLoading(false);
+  }
+
   return (
     <Content>
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={() => _getData()} />
+        }
         contentContainerStyle={{paddingBottom: 15}}
-        data={JSON.parse(eventitem.schedule)}
+        data={schedules}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
           <EmptyList text="Em breve"/>
