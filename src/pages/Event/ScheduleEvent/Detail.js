@@ -65,7 +65,9 @@ export default function Main(props) {
     }
     //setSchedules(JSON.parse(eventitem.schedule));
     //_getEvalution();
-  }, []);
+    setStarCount(props.item.avaliacao ? props.item.avaliacao : 0);
+    setEvalution(props.item.avaliado ? props.item.avaliado : 0);
+  }, [props.item]);
 
   useEffect(() => {
     if (__DEV__) {
@@ -96,7 +98,7 @@ export default function Main(props) {
       let data = {
         event_id: eventitem.id,
         title: props.item.title,
-        speaker: props.item.speaker_item ? props.item.speaker_item.id : 0,
+        speaker: props.item.speaker_item ? props.item.speaker_item.name : 0,
         rating: startCount,
       };
 
