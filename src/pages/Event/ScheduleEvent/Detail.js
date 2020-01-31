@@ -96,7 +96,7 @@ export default function Main(props) {
       let data = {
         event_id: eventitem.id,
         title: props.item.title,
-        speaker: props.item.speaker,
+        speaker: props.item.speaker_item ? props.item.speaker_item.id : 0,
         rating: startCount,
       };
 
