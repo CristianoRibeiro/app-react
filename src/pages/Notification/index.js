@@ -13,7 +13,6 @@ import {
   KeyboardAvoidingView,
   FlatList,
   RefreshControl,
-  Button,
   Alert,
 } from 'react-native';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
@@ -26,13 +25,14 @@ import {Container, Content} from '../../style';
 import {
   NotificationTitle,
   NotificationDate,
-  NotificationLink,
+  TextDark,
   Header,
-  TextTitle,
   Card,
   Link,
+  Btn,
   NotificationText,
 } from './styles';
+import {Send, TextLight} from "~/pages/Profile/styles";
 
 export default function Main(props) {
   const data = useSelector(state => state.notification);
@@ -80,7 +80,7 @@ export default function Main(props) {
       );
 
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
 
   }
@@ -89,7 +89,7 @@ export default function Main(props) {
     const firstDate = parseISO(item.created_at);
     const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
 
-    if(item.user_id){
+    if (item.user_id) {
       return (
         <Card style={{backgroundColor: '#0058b8'}}>
           <View>
@@ -97,18 +97,16 @@ export default function Main(props) {
             <NotificationTitle style={{color: '#fff'}}>{item.title}</NotificationTitle>
             <NotificationText style={{color: '#fff'}}>{item.content}</NotificationText>
             {item.status == 1 ? (
-                <View style={styles.container}>
-                <Button
-                title='Sim'
-                color='#3258ac'
-                onPress={() => _postReceived(item)}
-                />
-                </View>
+              <View style={{flex: 1}}>
+                <Btn onPress={() => _postReceived(item)} style={{marginTop: 15}}>
+                  <TextDark>SALVAR</TextDark>
+                </Btn>
+              </View>
             ) : null}
           </View>
         </Card>
       );
-    }else{
+    } else {
       return (
         <Card>
           <View>
@@ -125,14 +123,14 @@ export default function Main(props) {
 
   const styles = StyleSheet.create({
     container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    width: '100%',
-    borderRadius: 15,
-    marginTop: 15,
-    textAlign: 'center'
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      width: '100%',
+      borderRadius: 15,
+      marginTop: 15,
+      textAlign: 'center'
     }
   });
 
@@ -142,7 +140,7 @@ export default function Main(props) {
         style={{margimBottom: 50}}
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={<EmptyList text="Nenhuma notificação encontrada!" />}
+        ListEmptyComponent={<EmptyList text="Nenhuma notificação encontrada!"/>}
         renderItem={({item}) => _renderItem(item)}
         refreshControl={
           <RefreshControl

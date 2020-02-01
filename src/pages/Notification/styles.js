@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import LinearGradient from "react-native-linear-gradient";
+import {Button} from "react-native-paper";
 //import LinearGradient from 'react-native-linear-gradient';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -69,8 +70,6 @@ export const Card = styled.View`
   border-radius: 5px;
   padding: 5px 5px;
   background-color: #fff;
-  display: flex;
-  flex-direction: row;
 `;
 
 export const CardImage = styled.View`
@@ -139,6 +138,17 @@ export const TextTitle = styled.Text`
   margin: 5px 0;
 `;
 
+export const Btn = styled(Button).attrs({
+  mode: 'contained',
+})`
+  background: #fff;
+  margin-left: 10px;
+  margin-right: 10px;
+  justify-content: center;
+  border-radius: 30px;
+  align-items: center;
+  border: 1px solid #fff;
+`;
 
 // export const Image = styled.Image`
 //   width: 100%;
