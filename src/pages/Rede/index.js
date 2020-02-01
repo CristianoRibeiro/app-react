@@ -28,6 +28,7 @@ import Item from '~/pages/Rede/Detail';
 
 import api from 'axios';
 import apiApp from '~/services/api';
+import apiRede from '~/services/apiRede';
 
 import {Container, Content} from '~/style';
 
@@ -95,7 +96,7 @@ export default function Main(props) {
         "dataFim": null
       };
 
-      let response_user = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/social/info', data);
+      let response_user = await apiRede.post('/api/rededoconhecimento/social/info', data);
 
       let user_response = await apiApp.get('/api/auth/user');
       //alert(JSON.stringify(user_response));
@@ -170,7 +171,7 @@ export default function Main(props) {
         console.tron.log(data);
       }
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/recuperar', data);
 
       // if (response.data.retorno.length){
       //await dispatch({type: 'REDE', payload: response.data.retorno});
@@ -215,7 +216,7 @@ export default function Main(props) {
 
     try {
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/recuperar', data);
 
       let user_response = await apiApp.get('/api/auth/user');
       await dispatch({type: 'USER', payload: user_response.data});
@@ -259,7 +260,7 @@ export default function Main(props) {
 
     try {
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/recuperar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/recuperar', data);
 
       let list = response.data.retorno;
 
@@ -360,7 +361,7 @@ export default function Main(props) {
         console.tron.log(data);
       }
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/enviar', data);
 
       if (post) {
         if (post.includes('#inspirafenae')) {

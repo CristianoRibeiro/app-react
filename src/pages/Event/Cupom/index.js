@@ -98,7 +98,7 @@ export default function Main(props) {
 
             </View>
             <View style={{justifyContent: 'center'}}>
-              <TextDark>{item.coupon} cupons</TextDark>
+              <TextDark>{item.coupon} {item.coupon > 1 ? 'cupons' : 'cupom'}</TextDark>
             </View>
           </View>
         </Card>

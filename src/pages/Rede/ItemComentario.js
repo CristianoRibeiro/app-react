@@ -27,6 +27,7 @@ import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
 
 import api from '~/services/api';
+import apiRede from '~/services/apiRede';
 
 import {Container, Content} from '~/style';
 
@@ -78,7 +79,7 @@ export default function Main(props) {
         "idComentario": props.item.id
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/remover', data);
+      let response = await apiRede.post('/api/rededoconhecimento/comentario/remover', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -121,7 +122,7 @@ export default function Main(props) {
 
       //alert(JSON.stringify(data));
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/curtir', data);
+      let response = await apiRede.post('/api/rededoconhecimento/comentario/curtir', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -151,7 +152,7 @@ export default function Main(props) {
         "texto": inputEditarPost
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/comentar', data);
       //alert(JSON.stringify(data));
 
       if (__DEV__) {

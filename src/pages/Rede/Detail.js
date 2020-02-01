@@ -31,6 +31,7 @@ import {WebView} from 'react-native-webview';
 import Rede from '~/model/Rede';
 
 import api from '~/services/api';
+import apiRede from '~/services/apiRede';
 
 import {Container, Content} from '~/style';
 
@@ -159,7 +160,7 @@ export default function Main(props) {
         "idPost": idPost,
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/curtir', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/curtir', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -188,7 +189,7 @@ export default function Main(props) {
         "motivo": inputDenuncia
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/denunciar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/denunciar', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -211,7 +212,7 @@ export default function Main(props) {
         "idPost": props.item.item.id
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/remover', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/remover', data);
 
       let response_delete = await api.post('/api/post/inspira', {delete: true, post_id: props.item.item.id});
       //alert(JSON.stringify(response.data));
@@ -258,7 +259,7 @@ export default function Main(props) {
         "tipoPost": 1
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/enviar', data);
       //alert(JSON.stringify(response));
 
       if (__DEV__) {
@@ -286,7 +287,7 @@ export default function Main(props) {
         "imagem": imageBase64
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/comentar', data);
 
       if (__DEV__) {
         console.tron.log(response.data);
@@ -374,7 +375,7 @@ export default function Main(props) {
         "idComentario": item.id
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/comentario/remover', data);
+      let response = await apiRede.post('/api/rededoconhecimento/comentario/remover', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);

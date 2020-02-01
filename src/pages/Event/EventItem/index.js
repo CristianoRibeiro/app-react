@@ -75,6 +75,27 @@ export default function Main(props) {
     }
   }
 
+  async function _getCertificate() {
+    setLoadingStreaming(true);
+    try {
+      let response = await api.post('/api/certificate', {event_id: eventitem.id});
+      //alert(JSON.stringify(response.data));
+      if (response.data.success) {
+        _openUrl(response.data.url);
+      } else {
+        Alert.alert(null, response.data.message);
+      }
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+    setLoadingStreaming(false);
+  }
+
   async function _handleItem(item) {
     //alert(JSON.stringify(voucher));
     if (item.type === 'unavailable') {
@@ -105,10 +126,10 @@ export default function Main(props) {
       }
     } else if (item.type === 'games') {
 
-      if (user.matricula){
+      if (user.matricula) {
         setModal(true);
-      }else{
-        Alert.alert(null,'É necessário ter matrícula para poder jogar. Por favor, dirija-se ao balcão de atendimento.');
+      } else {
+        Alert.alert(null, 'É necessário ter matrícula para poder jogar. Por favor, dirija-se ao balcão de atendimento.');
       }
 
       //_scanner(20);
@@ -118,7 +139,7 @@ export default function Main(props) {
 
     } else if (item.type === 'certificates') {
 
-      _openUrl('https://viva-fenae.strongtecnologia.com.br/app/certificado/'+user.id+'/'+eventitem.id);
+      _getCertificate();
 
     } else {
       props.navigation.navigate(item.navigation, {item: item.item});

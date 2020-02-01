@@ -27,6 +27,7 @@ import FitImage from "react-native-fit-image";
 import ImagePicker from "react-native-image-crop-picker";
 
 import api from '~/services/api';
+import apiRede from '~/services/apiRede';
 
 import {Container, Content} from '~/style';
 
@@ -101,7 +102,7 @@ export default function Main(props) {
         "idPost": idPost,
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/curtir', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/curtir', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -128,7 +129,7 @@ export default function Main(props) {
         "idPost": post.id
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/remover', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/remover', data);
       //alert(JSON.stringify(response));
       if (__DEV__) {
         console.tron.log(response.data);
@@ -172,7 +173,7 @@ export default function Main(props) {
         "tipoPost": 1
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/enviar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/enviar', data);
       //alert(JSON.stringify(response));
 
       if (__DEV__) {
@@ -197,7 +198,7 @@ export default function Main(props) {
         "texto": postEvent,
       };
 
-      let response = await api.post('https://rededoconhecimento-ws-hml.azurewebsites.net/api/rededoconhecimento/post/comentar', data);
+      let response = await apiRede.post('/api/rededoconhecimento/post/comentar', data);
       //alert(JSON.stringify(response));
 
       if (__DEV__) {

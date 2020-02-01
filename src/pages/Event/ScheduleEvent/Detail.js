@@ -13,6 +13,7 @@ import {
   FlatList,
   RefreshControl,
   Linking,
+  SafeAreaView
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {WebView} from 'react-native-webview';
@@ -41,6 +42,8 @@ import {
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
+import HTML from 'react-native-render-html';
+import {Divider} from 'react-native-paper';
 
 export default function Main(props) {
   //const data = useSelector(state => state.schedule);
@@ -187,7 +190,7 @@ export default function Main(props) {
               <View style={{justifyContent: 'flex-end'}}>
 
                 {props.item.content_status ?
-                  <Btn onPress={() => _openUrl()}>
+                  <Btn onPress={() => setModalSpeaker(true)}>
                     <MaterialCommunityIcons name="information-outline" size={24}
                                             color={'#fff'}/>
                   </Btn>
@@ -207,36 +210,16 @@ export default function Main(props) {
                   </Btn>
                   : null}
 
-                {props.item.speaker_item ?
-                  <Btn onPress={() => setModalSpeaker(true)}>
-                    <Entypo name="graduation-cap" size={24}
-                            color={props.color ? props.color : '#fff'}/>
-                  </Btn>
-                  : null}
+                {/*{props.item.speaker_item ?*/}
+                {/*  <Btn onPress={() => setModalSpeaker(true)}>*/}
+                {/*    <Entypo name="graduation-cap" size={24}*/}
+                {/*            color={props.color ? props.color : '#fff'}/>*/}
+                {/*  </Btn>*/}
+                {/*  : null}*/}
               </View>
             </View>
           </View>
         </Card>
-
-        <Modal
-          isVisible={modal}
-          style={{marginTop: 50, backgroundColor: '#fff', margin: 0}}>
-          <WebView
-            source={{html: html}}
-            onShouldStartLoadWithRequest={event => {
-              if (!/^[data:text, about:blank]/.test(event.url)) {
-                Linking.openURL(event.url);
-                return false;
-              }
-              return true;
-            }}
-          />
-          <BtnConfirm
-            onPress={() => setModal(false)}
-            style={{marginBottom: 10, marginHorizontal: 15}}>
-            <TextLight>OK</TextLight>
-          </BtnConfirm>
-        </Modal>
 
         <Modal
           isVisible={modalEvaluation}
@@ -261,24 +244,39 @@ export default function Main(props) {
               />
             </View>
 
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1}}>
-                <BtnConfirm
-                  onPress={() => _sendEvalution()}
-                  style={{marginBottom: 10, marginHorizontal: 15}}>
-                  <TextLight>OK</TextLight>
-                </BtnConfirm>
+            {!statusEvalution ?
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1}}>
+                  <BtnConfirm
+                    onPress={() => _sendEvalution()}
+                    style={{marginBottom: 10, marginHorizontal: 15}}>
+                    <TextLight>OK</TextLight>
+                  </BtnConfirm>
+                </View>
+                <View style={{flex: 1}}>
+                  <BtnCancel
+                    onPress={() => {
+                      setModalEvalution(false);
+                      setStarCount(0);
+                    }}
+                    style={{marginBottom: 10, marginHorizontal: 15}}>
+                    <TextDark>CANCELAR</TextDark>
+                  </BtnCancel>
+                </View>
               </View>
-              <View style={{flex: 1}}>
-                <BtnCancel
-                  onPress={() => {
-                    setModalEvalution(false);
-                  }}
-                  style={{marginBottom: 10, marginHorizontal: 15}}>
-                  <TextDark>CANCELAR</TextDark>
-                </BtnCancel>
+              :
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1}}>
+                  <BtnConfirm
+                    onPress={() => {
+                      setModalEvalution(false);
+                    }}
+                    style={{marginBottom: 10, marginHorizontal: 15}}>
+                    <TextLight>VOCÊ JÁ AVALIOU!</TextLight>
+                  </BtnConfirm>
+                </View>
               </View>
-            </View>
+            }
           </View>
 
         </Modal>
@@ -322,43 +320,88 @@ export default function Main(props) {
         </Modal>
 
         <Modal
+          isVisible={modal}
+          style={{marginTop: 50, backgroundColor: '#fff', margin: 0}}>
+          <WebView
+            source={{html: html}}
+            onShouldStartLoadWithRequest={event => {
+              if (!/^[data:text, about:blank]/.test(event.url)) {
+                Linking.openURL(event.url);
+                return false;
+              }
+              return true;
+            }}
+          />
+          <BtnConfirm
+            onPress={() => setModal(false)}
+            style={{marginBottom: 10, marginHorizontal: 15}}>
+            <TextLight>OK</TextLight>
+          </BtnConfirm>
+        </Modal>
+
+        <Modal
           isVisible={modalSpeaker}
           style={{backgroundColor: '#fff', margin: 0}}>
-          {props.item.speaker_item ?
+          <SafeAreaView style={{backgroundColor: '#fff', flex: 1}}>
             <ScrollView>
-              <View style={{backgroundColor: '#fff', paddingVertical: 10, flex: 1}}>
-                <View style={{margin: 15, alignItems: 'center'}}>
-                  <TextDark style={{marginVertical: 20, fontSize: 20}}>{props.item.speaker_item.name}</TextDark>
 
-                  <Image
-                    source={{uri: props.item.speaker_item.image}}
-                    style={{
-                      height: 150,
-                      width: 150,
-                      borderRadius: 75,
-                      marginTop: 20
-                    }}
-                    resizeMode="cover"
-                  />
+              <View style={{margin: 10}}>
 
-                  <TextDark style={{marginTop: 20}}>{props.item.speaker_item.body}</TextDark>
+                  <TextDark style={{fontSize: 26, fontWeight: '600', marginBottom: 20}}>Palestra</TextDark>
+                  <TextDark style={{marginVertical: 20, fontSize: 20, textAlign: 'center'}}>{props.item.title}</TextDark>
+
+                <View style={{
+                  borderWidth: 1,
+                  borderColor: '#ccc',
+                  borderStyle: 'dashed',
+                  padding: 5,
+                  flex:1
+                }}>
+                  {props.item.content ?
+                    <HTML html={props.item.content}/>
+                    : null}
                 </View>
 
-              </View>
-            </ScrollView>
-            : null}
+                {props.item.speaker_item ?
+                  <View>
+                    <TextDark style={{marginTop: 40, marginBottom: 20, fontSize: 26, fontWeight: '600'}}>Palestrante</TextDark>
+                    <View style={{alignItems: 'center'}}>
 
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-              <BtnCancel
-                onPress={() => {
-                  setModalSpeaker(false);
-                }}
-                style={{marginBottom: 10, marginHorizontal: 15}}>
-                <TextDark>OK</TextDark>
-              </BtnCancel>
-            </View>
-          </View>
+                      <Image
+                        source={{uri: props.item.speaker_item.image}}
+                        style={{
+                          height: 150,
+                          width: 150,
+                          borderRadius: 75,
+                          marginTop: 20
+                        }}
+                        resizeMode="cover"
+                      />
+                      <TextDark style={{marginVertical: 20, fontSize: 20}}>{props.item.speaker_item.name}</TextDark>
+                    </View>
+                    <View style={{borderWidth: 1, borderColor: '#ccc', borderStyle: 'dashed', padding: 5}}>
+                    <HTML html={props.item.speaker_item.body}/>
+                    </View>
+                  </View>
+                  : null}
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1}}>
+                  <BtnConfirm
+                    onPress={() => {
+                      setModalSpeaker(false);
+                    }}
+                    style={{marginBottom: 10, marginHorizontal: 15}}>
+                    <TextLight>OK</TextLight>
+                  </BtnConfirm>
+                </View>
+              </View>
+
+            </ScrollView>
+          </SafeAreaView>
+
+
         </Modal>
       </View>
     );
