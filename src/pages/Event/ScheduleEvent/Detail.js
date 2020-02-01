@@ -325,26 +325,27 @@ export default function Main(props) {
           isVisible={modalSpeaker}
           style={{backgroundColor: '#fff', margin: 0}}>
           {props.item.speaker_item ?
-            <View style={{backgroundColor: '#fff', paddingVertical: 10, flex: 1}}>
-              <View style={{margin: 15, alignItems: 'center'}}>
-                <TextDark style={{marginVertical: 20, fontSize: 20}}>{props.item.speaker_item.name}</TextDark>
+            <ScrollView>
+              <View style={{backgroundColor: '#fff', paddingVertical: 10, flex: 1}}>
+                <View style={{margin: 15, alignItems: 'center'}}>
+                  <TextDark style={{marginVertical: 20, fontSize: 20}}>{props.item.speaker_item.name}</TextDark>
 
-                <Image
-                  source={{uri: props.item.speaker_item.image}}
-                  style={{
-                    height: 150,
-                    width: 150,
-                    borderRadius: 75,
-                    marginTop: 20
-                  }}
-                  resizeMode="cover"
-                />
+                  <Image
+                    source={{uri: props.item.speaker_item.image}}
+                    style={{
+                      height: 150,
+                      width: 150,
+                      borderRadius: 75,
+                      marginTop: 20
+                    }}
+                    resizeMode="cover"
+                  />
 
-                <TextDark style={{marginTop: 20}}>{props.item.speaker_item.body}</TextDark>
+                  <TextDark style={{marginTop: 20}}>{props.item.speaker_item.body}</TextDark>
+                </View>
+
               </View>
-
-
-            </View>
+            </ScrollView>
             : null}
 
           <View style={{flexDirection: 'row'}}>
