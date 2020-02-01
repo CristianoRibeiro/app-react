@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState, useEffect, Component} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -12,6 +13,8 @@ import {
   KeyboardAvoidingView,
   FlatList,
   RefreshControl,
+  Button,
+  Alert,
 } from 'react-native';
 import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
@@ -59,6 +62,29 @@ export default function Main(props) {
     }
   }
 
+  async function _postReceived(item) {
+    try {
+      let data = {
+        history_id: item.history_id,
+        notification_id: item.id
+      };
+
+
+      let response = await api.post('api/ms/received', data);
+
+      setTimeout(() => {
+          Alert.alert(null, response.data.msg);
+          _getNotification();
+        },
+        800
+      );
+
+    } catch (error) {
+        console.log(error.message);
+    }
+
+  }
+
   function _renderItem(item) {
     const firstDate = parseISO(item.created_at);
     const formattedDate = format(firstDate, "dd/MM/YYY', às ' HH:mm'h'");
@@ -70,6 +96,15 @@ export default function Main(props) {
             <NotificationDate style={{color: '#fff'}}>{formattedDate}</NotificationDate>
             <NotificationTitle style={{color: '#fff'}}>{item.title}</NotificationTitle>
             <NotificationText style={{color: '#fff'}}>{item.content}</NotificationText>
+            {item.status == 1 ? (
+                <View style={styles.container}>
+                <Button
+                title='Sim'
+                color='#3258ac'
+                onPress={() => _postReceived(item)}
+                />
+                </View>
+            ) : null}
           </View>
         </Card>
       );
@@ -80,19 +115,29 @@ export default function Main(props) {
             <NotificationDate>{formattedDate}</NotificationDate>
             <NotificationTitle>{item.title}</NotificationTitle>
             <NotificationText>{item.content}</NotificationText>
+
           </View>
         </Card>
       );
     }
-    
+
   }
+
+  const styles = StyleSheet.create({
+    container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    width: '100%',
+    borderRadius: 15,
+    marginTop: 15,
+    textAlign: 'center'
+    }
+  });
 
   return (
     <Content>
-      {/* <Header style={{alignItems: 'center'}}>
-        <TextTitle>NOTIFICAÇÕES</TextTitle>
-      </Header> */}
-
       <FlatList
         style={{margimBottom: 50}}
         data={data}
@@ -108,4 +153,5 @@ export default function Main(props) {
       />
     </Content>
   );
+
 }
