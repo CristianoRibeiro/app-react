@@ -1,5 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {Pagination} from 'react-laravel-paginex';
+
 import {
   Text,
   Image,
@@ -52,22 +54,13 @@ export default function Main(props) {
 
   async function _getData() {
     setLoading(true);
-    try {
-      let response = null;
-      if (name) {
-        response = await api.get('/api/user/unassociated/' + name);
-        setUsers(response.data);
-      }
 
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
+    let response = null;
+    if (name) {
+      response = await api.get('/api/user/unassociated/' + name);
+      setUsers(response.data);
     }
+
     setLoading(false);
   }
 

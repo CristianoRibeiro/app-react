@@ -5,33 +5,33 @@ import LinearGradient from "react-native-linear-gradient";
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export const Title = styled.Text`
-  font-size: 32px;
+  font-size: 34px;
   color: #FFF;
   font-weight: bold;
   padding: 0 20px;
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 18px;
+  font-size: 20px;
   color: #333;
   font-weight: 700;
 `;
 
 export const TextLight = styled.Text`
-  font-size: 14;
+  font-size: 16;
   color: #FFF;
   font-weight: 600;
   padding: 0 20px;
 `;
 
 export const TextDark = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   font-weight: 600;
 `;
 
 export const NotificationTitle = styled.Text`
-  font-size: 12px;
+  font-size: 14px;
   color: #0058b8;
   font-weight: bold;
   text-transform: uppercase;
@@ -39,12 +39,12 @@ export const NotificationTitle = styled.Text`
 `;
 
 export const NotificationText = styled.Text`
-  font-size: 12px;
+  font-size: 14px;
   color: #727272;
 `;
 
 export const NotificationDate = styled.Text`
-  font-size: 10px;
+  font-size: 12px;
   color: #7c7c7c;
   font-weight: bold;
   margin: 5px 0 0 0;
