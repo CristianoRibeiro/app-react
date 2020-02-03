@@ -59,7 +59,11 @@ export default function Main(props) {
 
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [selected, setSelected] = useState();
+  const [modalMsg, setModalMsg] = useState(false);
+
+  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState('');
+
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -85,6 +89,33 @@ export default function Main(props) {
         console.tron.log(error.message);
       }
     }
+    setLoading(false);
+  }
+
+  async function _getCheck() {
+    setModal(false);
+    setLoading(true);
+    try {
+      let response = await api.get('/api/ms/doar/check/time');
+      //alert(JSON.stringify(response));
+      if (__DEV__) {
+        console.tron.log(response.data);
+      }
+
+      if (response.data.success) {
+        setModal(true);
+      } else {
+        setMessage(response.data.msg);
+        setTitle(response.data.title);
+        setModalMsg(true);
+      }
+
+    } catch (error) {
+      if (__DEV__) {
+        console.tron.log(error.message);
+      }
+    }
+
     setLoading(false);
   }
 
@@ -218,24 +249,47 @@ export default function Main(props) {
             />
           </Modal>
 
+          <Modal
+            isVisible={modalMsg}
+            style={{backgroundColor: '#fff', margin: 0}}>
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10}}>
+              <Title style={{marginBottom: 10, fontSize: 30, marginBottom: 50}}>{title}</Title>
+              <TextDark style={{textAlign: 'center', fontSize: 20}}>
+                {message}
+              </TextDark>
+
+            </View>
+
+            <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
+              <Btn onPress={() => setModalMsg(false)}>
+                <TextLight>OK</TextLight>
+              </Btn>
+            </View>
+          </Modal>
+
           <FAB
             style={styles.fab}
             icon="add"
-            onPress={() => setModal(true)}
+            onPress={() => _getCheck()}
           />
         </Content>
       );
     } else {
       return (
         <Content>
-          <View style={{margin: 5, padding: 20}}>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <MaterialCommunityIcons name="alert-circle-outline" size={50} color={'#444'}/>
-              <TextDark style={{marginTop: 15, textAlign: 'center'}}>
-                Usuário não identificado.
-              </TextDark>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={() => _getData()}/>
+            }>
+            <View style={{margin: 5, padding: 20}}>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <MaterialCommunityIcons name="alert-circle-outline" size={50} color={'#444'}/>
+                <TextDark style={{marginTop: 15, textAlign: 'center'}}>
+                  Usuário não identificado.
+                </TextDark>
+              </View>
             </View>
-          </View>
+          </ScrollView>
         </Content>
       );
     }

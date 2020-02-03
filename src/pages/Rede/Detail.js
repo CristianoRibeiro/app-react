@@ -26,6 +26,7 @@ import {parseISO, format, formatRelative, formatDistance} from 'date-fns';
 import EmptyList from '~/components/EmptyList';
 import Comentario from '~/pages/Rede/Comentario';
 import PostComentario from '~/pages/Rede/PostComentario';
+import Pill from '~/pages/Rede/Pill';
 import HTML from 'react-native-render-html';
 import {WebView} from 'react-native-webview';
 import Rede from '~/model/Rede';
@@ -342,6 +343,9 @@ export default function Main(props) {
           {/*  {inputEditarPost}*/}
           {/*</TextDark>*/}
           <HTML html={inputEditarPost}/>
+          {props.item.item.curso ?
+            <Pill item={props.item.item.curso}/>
+            : null}
         </View>
       );
     } else {
@@ -494,7 +498,8 @@ export default function Main(props) {
 
                   <View style={{borderWidth: 1, borderColor: '#bbb', padding: 8, borderStyle: 'dashed'}}>
                     <TextDark>Parabéns! Você ganhou o e-book <TextDark
-                      style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>Novas tecnologias para viajar like a boss</TextDark>. Boa leitura!</TextDark>
+                      style={{fontWeight: '700', textDecorationLine: 'underline', color: '#01579b'}}>Novas tecnologias
+                      para viajar like a boss</TextDark>. Boa leitura!</TextDark>
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                       <TextDark style={{fontWeight: '700', marginTop: 15}}>#INSPIRAFENAE</TextDark>
                     </View>

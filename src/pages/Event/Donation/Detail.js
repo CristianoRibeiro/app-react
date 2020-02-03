@@ -124,6 +124,9 @@ export default function Main(props) {
       setModal(true);
 
     } catch (error) {
+      // if (error.message === 'Request failed with status code 429') {
+      //   Alert.alert(null, 'Aguarde um momento para fazer uma nova doação.');
+      // }
       if (__DEV__) {
         console.tron.log(error.message);
       }

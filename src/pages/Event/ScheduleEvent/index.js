@@ -60,9 +60,9 @@ export default function Main(props) {
     //setSchedules(JSON.parse(eventitem.schedule));
   }, []);
 
-  function _renderItem(item) {
+  function _renderItem(item, index) {
     return (
-      <Detail item={item}/>
+      <Detail item={item} index={index}/>
     );
   }
 
@@ -104,7 +104,7 @@ export default function Main(props) {
         ListEmptyComponent={
           <EmptyList text="Em breve"/>
         }
-        renderItem={({item}) => _renderItem(item)}
+        renderItem={({item, index}) => _renderItem(item, index)}
       />
     </Content>
   );

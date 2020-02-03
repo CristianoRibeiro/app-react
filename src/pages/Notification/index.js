@@ -99,7 +99,7 @@ export default function Main(props) {
             {item.status == 1 ? (
               <View style={{flex: 1}}>
                 <Btn onPress={() => _postReceived(item)} style={{marginTop: 15}}>
-                  <TextDark>SALVAR</TextDark>
+                  <TextDark>CONFIRMAR</TextDark>
                 </Btn>
               </View>
             ) : null}

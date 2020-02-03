@@ -347,24 +347,33 @@ export default function Main(props) {
 
               <View style={{margin: 10}}>
 
-                  <TextDark style={{fontSize: 26, fontWeight: '600', marginBottom: 20}}>Palestra</TextDark>
-                  <TextDark style={{marginVertical: 20, fontSize: 20, textAlign: 'center'}}>{props.item.title}</TextDark>
+                <TextDark style={{
+                  fontSize: 26,
+                  fontWeight: '600',
+                  marginBottom: 20
+                }}>{props.item.title}</TextDark>
 
-                <View style={{
-                  borderWidth: 1,
-                  borderColor: '#ccc',
-                  borderStyle: 'dashed',
-                  padding: 5,
-                  flex:1
-                }}>
-                  {props.item.content ?
+                {props.item.content ?
+                  <View style={{
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    borderStyle: 'dashed',
+                    padding: 5,
+                    flex: 1
+                  }}>
+
                     <HTML html={props.item.content}/>
-                    : null}
-                </View>
+
+                  </View>
+                  : null}
 
                 {props.item.speaker_item ?
                   <View>
-                    <TextDark style={{marginTop: 40, marginBottom: 20, fontSize: 26, fontWeight: '600'}}>Palestrante</TextDark>
+                    <TextDark
+                      style={{marginTop: 40, marginBottom: 20, fontSize: 26, fontWeight: '600'}}>
+                      {props.index ? 'Palestrante' : 'Mestre de cerimônia'}
+                    </TextDark>
+
                     <View style={{alignItems: 'center'}}>
 
                       <Image
@@ -380,7 +389,7 @@ export default function Main(props) {
                       <TextDark style={{marginVertical: 20, fontSize: 20}}>{props.item.speaker_item.name}</TextDark>
                     </View>
                     <View style={{borderWidth: 1, borderColor: '#ccc', borderStyle: 'dashed', padding: 5}}>
-                    <HTML html={props.item.speaker_item.body}/>
+                      <HTML html={props.item.speaker_item.body}/>
                     </View>
                   </View>
                   : null}

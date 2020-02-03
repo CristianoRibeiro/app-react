@@ -169,3 +169,12 @@ export const MultipleSelect = styled(SectionedMultiSelect).attrs({
 })`
   flex: 1;
 `;
+
+export const BtnCancel = styled(Button).attrs({
+  mode: 'contained',
+  uppercase: true,
+  color: '#efefef'
+})`
+  border-radius: 5px;
+  border: 1px solid #fff;
+`;
