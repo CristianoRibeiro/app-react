@@ -128,6 +128,7 @@ export default function Main(props) {
 
       if (user.matricula) {
         setModal(true);
+        //_scanner(6);
       } else {
         Alert.alert(null, 'É necessário ter matrícula para poder jogar. Por favor, dirija-se ao balcão de atendimento.');
       }
@@ -470,6 +471,7 @@ export default function Main(props) {
   }
 
   async function _scanner(value) {
+    setModal(false);
     setLoading(true);
     try {
       let response = await api.post('/api/games/toten', {event_id: eventitem.id, code: value, user_id: user.id});
@@ -481,7 +483,9 @@ export default function Main(props) {
       if (response.data.active) {
         props.navigation.navigate('Games', {item: response.data});
       } else {
-        Alert.alert(null, response.data.msg);
+        setTimeout(Alert.alert(null, response.data.msg),
+          900
+        );
       }
 
     } catch (error) {
@@ -492,7 +496,6 @@ export default function Main(props) {
 
     setLoading(false);
 
-    setModal(false);
   }
 
   return (

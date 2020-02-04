@@ -364,7 +364,7 @@ export default function Main(props) {
       let response = await apiRede.post('/api/rededoconhecimento/post/enviar', data);
 
       if (post) {
-        if (post.includes('#inspirafenae')) {
+        if (post.toLowerCase().includes('#inspirafenae')) {
 
           let response_post = await apiApp.post('/api/post/inspira', {post_ms: response.data.idPost});
 
