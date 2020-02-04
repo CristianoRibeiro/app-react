@@ -141,8 +141,8 @@ android {
         applicationId "br.com.vivafenae"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 28
-        versionName "1.6.3"
+        versionCode 29
+        versionName "1.6.4"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
