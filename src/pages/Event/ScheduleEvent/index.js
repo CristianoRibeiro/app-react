@@ -53,7 +53,7 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (__DEV__) {
+    if (__DEV__) {z
       console.tron.log(eventitem.schedule);
     }
     _getData();

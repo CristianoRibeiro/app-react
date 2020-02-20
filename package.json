@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@bam.tech/react-native-make": "^1.0.3",
     "axios": "^0.19.0",
     "date-fns": "^2.5.1",
     "formik": "2.0",

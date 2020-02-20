@@ -23,6 +23,7 @@ const theme = {
   }
 };
 
+console.disableYellowBox = true;
 
 const App = () => (
   <Provider store={store}>

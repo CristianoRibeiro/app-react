@@ -495,7 +495,6 @@ export default function Main(props) {
     }
 
     setLoading(false);
-
   }
 
   return (

@@ -9,17 +9,33 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* appfenaeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* appfenaeTests.m */; };
 		081B0BBE01A709346C0C50AA /* libPods-appfenae.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1321A5BC50403C41692DAF8 /* libPods-appfenae.a */; };
+		0AF8B35F65394226853B34F0 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3275055D27445E3BB0B04D3 /* Feather.ttf */; };
+		0ED37E05E6EF4998B50393E0 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6D165CDC43E4E7D8E208240 /* MaterialIcons.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1449C7DD2E924F528F43C84D /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91399093DEBA4A07A84A91CE /* FontAwesome5_Regular.ttf */; };
+		2499DCAF6679407FBAF90CF8 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDBDB7238D764C65B6A95BDD /* MaterialCommunityIcons.ttf */; };
+		2765C3C9FC1A413DB141B45E /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4430B5E7350D4C56BC0874EE /* EvilIcons.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* appfenaeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* appfenaeTests.m */; };
+		402FD077C9C040C7A41AF572 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D268DE9202A64C2E9D7586D4 /* FontAwesome5_Solid.ttf */; };
+		66FE6851A5C84B9DBFE192C9 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F06804A8E357498BB8E2D118 /* Zocial.ttf */; };
+		6F5111C7CE72405A9598500C /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B1472996E4076B5811F29 /* Ionicons.ttf */; };
 		8445F5BCC409228F687FF7E1 /* libPods-appfenaeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC590D514F6D30A5F2F2208E /* libPods-appfenaeTests.a */; };
+		846E0629344944DEBAFD6D3B /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31B8C564BF364A7693141110 /* Fontisto.ttf */; };
+		879A1FDE03C04431864297A0 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D575C275A73345F2BDCBD13E /* FontAwesome5_Brands.ttf */; };
+		90251AE79619491388DDD0D4 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B27353F4B1C24FD9AF58E330 /* AntDesign.ttf */; };
+		9BA8E4A1373C40F68F1BF95D /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7BF1AB223FA4ACF90B08653 /* FontAwesome.ttf */; };
 		A3DD30374E476BD723B0098B /* libPods-appfenae-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1296819AD23EA78FFAEFE35B /* libPods-appfenae-tvOSTests.a */; };
+		CAE24DB4711341A8BC5BBA90 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3644E5D59C04C7CB726A29B /* SimpleLineIcons.ttf */; };
+		D75D348D166B4E60BC0522B8 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E48EF70CD49B4ED79330CDCF /* Octicons.ttf */; };
 		DDCE4BC966544695B6DA97E4 /* libPods-appfenae-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F101B7D5005ABC35013CAAF5 /* libPods-appfenae-tvOS.a */; };
+		DFF62FCAEF3E45C8AC193A59 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75000AFA24EC419CBDE1FA68 /* Entypo.ttf */; };
+		E0863D4690B64A64B233B0C5 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D138CEF4CA85446DA6ED11A4 /* Foundation.ttf */; };
 		FB2082A92369E12700DC6546 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2082A82369E12700DC6546 /* NotificationService.swift */; };
 		FB2082AD2369E12700DC6546 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB2082A62369E12700DC6546 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBC7846023857BF500B13409 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC7845F23857BF500B13409 /* GoogleService-Info.plist */; };
@@ -76,27 +92,43 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = appfenae/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = appfenae/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = appfenae/main.m; sourceTree = "<group>"; };
+		1A8B1472996E4076B5811F29 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* appfenae-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "appfenae-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* appfenae-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "appfenae-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31B8C564BF364A7693141110 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		32A65D0456FE627E5DA44E02 /* Pods-appfenae.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenae.release.xcconfig"; path = "Target Support Files/Pods-appfenae/Pods-appfenae.release.xcconfig"; sourceTree = "<group>"; };
+		4430B5E7350D4C56BC0874EE /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		4C85977B50175CC284981B0E /* Pods-appfenae-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenae-tvOS.release.xcconfig"; path = "Target Support Files/Pods-appfenae-tvOS/Pods-appfenae-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		5E245A15AD6C4C55DB518186 /* Pods-appfenaeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenaeTests.release.xcconfig"; path = "Target Support Files/Pods-appfenaeTests/Pods-appfenaeTests.release.xcconfig"; sourceTree = "<group>"; };
 		63E2AB7345D797418D9405B8 /* Pods-appfenae-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenae-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-appfenae-tvOSTests/Pods-appfenae-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		75000AFA24EC419CBDE1FA68 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		863D21A74D7AD8201FCB8AE0 /* Pods-appfenae-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenae-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-appfenae-tvOSTests/Pods-appfenae-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		91399093DEBA4A07A84A91CE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		B1321A5BC50403C41692DAF8 /* libPods-appfenae.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appfenae.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D9E64D4F5A879D749DA183 /* Pods-appfenae-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenae-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-appfenae-tvOS/Pods-appfenae-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		B27353F4B1C24FD9AF58E330 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		C0672DB11E3305D90CE29470 /* Pods-appfenae.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenae.debug.xcconfig"; path = "Target Support Files/Pods-appfenae/Pods-appfenae.debug.xcconfig"; sourceTree = "<group>"; };
+		C6D165CDC43E4E7D8E208240 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		C7BF1AB223FA4ACF90B08653 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		D138CEF4CA85446DA6ED11A4 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		D268DE9202A64C2E9D7586D4 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		D3275055D27445E3BB0B04D3 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		D575C275A73345F2BDCBD13E /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		E48EF70CD49B4ED79330CDCF /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		EC590D514F6D30A5F2F2208E /* libPods-appfenaeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appfenaeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F012B1DB7803FBF27F2702F5 /* Pods-appfenaeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appfenaeTests.debug.xcconfig"; path = "Target Support Files/Pods-appfenaeTests/Pods-appfenaeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F06804A8E357498BB8E2D118 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		F101B7D5005ABC35013CAAF5 /* libPods-appfenae-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appfenae-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3644E5D59C04C7CB726A29B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		FB2082A12369E03000DC6546 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FB2082A62369E12700DC6546 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2082A82369E12700DC6546 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		FB2082AA2369E12700DC6546 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB670BB92360F3A700C6A8AF /* VIVA FENAE APCEF.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "VIVA FENAE APCEF.entitlements"; path = "appfenae/VIVA FENAE APCEF.entitlements"; sourceTree = "<group>"; };
 		FBC7845F23857BF500B13409 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FDBDB7238D764C65B6A95BDD /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +237,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				C5BCA91156D67D8FA4EF1284 /* Pods */,
+				DA4CCEC892BC41D9A7C438AB /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -236,6 +269,29 @@
 				5E245A15AD6C4C55DB518186 /* Pods-appfenaeTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DA4CCEC892BC41D9A7C438AB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B27353F4B1C24FD9AF58E330 /* AntDesign.ttf */,
+				75000AFA24EC419CBDE1FA68 /* Entypo.ttf */,
+				4430B5E7350D4C56BC0874EE /* EvilIcons.ttf */,
+				D3275055D27445E3BB0B04D3 /* Feather.ttf */,
+				C7BF1AB223FA4ACF90B08653 /* FontAwesome.ttf */,
+				D575C275A73345F2BDCBD13E /* FontAwesome5_Brands.ttf */,
+				91399093DEBA4A07A84A91CE /* FontAwesome5_Regular.ttf */,
+				D268DE9202A64C2E9D7586D4 /* FontAwesome5_Solid.ttf */,
+				31B8C564BF364A7693141110 /* Fontisto.ttf */,
+				D138CEF4CA85446DA6ED11A4 /* Foundation.ttf */,
+				1A8B1472996E4076B5811F29 /* Ionicons.ttf */,
+				FDBDB7238D764C65B6A95BDD /* MaterialCommunityIcons.ttf */,
+				C6D165CDC43E4E7D8E208240 /* MaterialIcons.ttf */,
+				E48EF70CD49B4ED79330CDCF /* Octicons.ttf */,
+				F3644E5D59C04C7CB726A29B /* SimpleLineIcons.ttf */,
+				F06804A8E357498BB8E2D118 /* Zocial.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		FB2082A72369E12700DC6546 /* OneSignalNotificationServiceExtension */ = {
@@ -355,7 +411,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1110;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Fenae;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -420,6 +476,22 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				FBC7846023857BF500B13409 /* GoogleService-Info.plist in Resources */,
+				90251AE79619491388DDD0D4 /* AntDesign.ttf in Resources */,
+				DFF62FCAEF3E45C8AC193A59 /* Entypo.ttf in Resources */,
+				2765C3C9FC1A413DB141B45E /* EvilIcons.ttf in Resources */,
+				0AF8B35F65394226853B34F0 /* Feather.ttf in Resources */,
+				9BA8E4A1373C40F68F1BF95D /* FontAwesome.ttf in Resources */,
+				879A1FDE03C04431864297A0 /* FontAwesome5_Brands.ttf in Resources */,
+				1449C7DD2E924F528F43C84D /* FontAwesome5_Regular.ttf in Resources */,
+				402FD077C9C040C7A41AF572 /* FontAwesome5_Solid.ttf in Resources */,
+				846E0629344944DEBAFD6D3B /* Fontisto.ttf in Resources */,
+				E0863D4690B64A64B233B0C5 /* Foundation.ttf in Resources */,
+				6F5111C7CE72405A9598500C /* Ionicons.ttf in Resources */,
+				2499DCAF6679407FBAF90CF8 /* MaterialCommunityIcons.ttf in Resources */,
+				0ED37E05E6EF4998B50393E0 /* MaterialIcons.ttf in Resources */,
+				D75D348D166B4E60BC0522B8 /* Octicons.ttf in Resources */,
+				CAE24DB4711341A8BC5BBA90 /* SimpleLineIcons.ttf in Resources */,
+				66FE6851A5C84B9DBFE192C9 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,22 +580,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RSKImageCropperStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WKYTPlayerView.bundle",
 			);
@@ -788,12 +844,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "appfenae/VIVA FENAE APCEF.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = J4HMWZWCKH;
 				INFOPLIST_FILE = appfenae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -815,11 +871,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "appfenae/VIVA FENAE APCEF.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = J4HMWZWCKH;
 				INFOPLIST_FILE = appfenae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1052,14 +1108,14 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = J4HMWZWCKH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.vivafenae.OneSignalNotificationServiceExtension;
@@ -1083,14 +1139,14 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = J4HMWZWCKH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.vivafenae.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";

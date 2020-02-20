@@ -29,6 +29,8 @@ import Donation from '~/pages/Event/Donation';
 import DonationItem from '~/pages/Event/Donation/Detail';
 import PrizeUser from '~/pages/Prize';
 import Rede from '~/pages/Rede';
+import Whatsapp from '~/pages/Main/Whatsapp.js';
+import QrCode from '~/pages/Games';
 
 //Event
 import Event from '~/pages/Event';
@@ -111,62 +113,39 @@ const TabsRoute = createMaterialBottomTabNavigator(
         ),
       },
     },
-
-    News: {
-      screen: News,
-      path: 'news',
-      navigationOptions: {
-        title: 'notícias',
-        tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => (
-          <MaterialCommunityIcons
-            name="newspaper"
-            size={24}
-            color={tintColor}
-          />
-        ),
-      },
-    },
-    // Notification: {
-    //   screen: Notification,
-    //   path: 'notification',
-    //   navigationOptions: {
-    //     title: 'notificações',
-    //     tabBarColor: '#fff',
-    //     tabBarIcon: ({tintColor}) => (
-    //       <MaterialIcons name="notifications" size={24} color={tintColor} />
-    //     ),
-    //   },
-    // },
     Rede: {
       screen: Rede,
       path: 'rede',
       navigationOptions: {
-        title: '',
+        title: 'rede social',
         tabBarColor: '#fff',
-        tabBarIcon: ({tintColor}) => tintColor === '#0D4274' ? (
-            <Image
-              source={require('~/assets/rede/Rede1.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="cover"
-            />
-          )
-          :
-          (
-            <Image
-              source={require('~/assets/rede/Rede2.png')}
-              style={{
-                height: 40,
-                width: 40,
-              }}
-              resizeMode="cover"
-            />
-          ),
+        tabBarIcon: ({tintColor}) => (
+          <MaterialCommunityIcons name="account-group" size={24} color={tintColor}/>
+        ),
       },
     },
+    Whatsapp: {
+      screen: Whatsapp,
+      path: 'whatsapp',
+      navigationOptions: {
+        title: 'whatsapp',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialCommunityIcons name="whatsapp" size={24} color={tintColor}/>
+        ),
+      }
+    },
+    QrCode: {
+      screen: QrCode,
+      path: 'qrcode',
+      navigationOptions: {
+        title: 'qrcode',
+        tabBarColor: '#fff',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialCommunityIcons name="qrcode" size={24} color={tintColor}/>
+        ),
+      }
+    }
   },
   {
     initialRouteName: 'Home',
@@ -289,7 +268,19 @@ const DrawerRoutes = createDrawerNavigator(
         ),
       },
     },
-
+    News: {
+      screen: News,
+      path: 'news',
+      navigationOptions: {
+        drawerLabel: props => (
+          <DrawerItem
+            {...props}
+            title="Notícias"
+            icon={require('~/assets/menu/noticias.png')}
+          />
+        ),
+      },
+    },
   },
   {
     contentComponent: props => <SideBar {...props} />,
