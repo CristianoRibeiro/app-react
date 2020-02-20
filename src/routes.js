@@ -879,13 +879,19 @@ const MainNavigator = createStackNavigator(
     Games: {
       screen: Games,
       path: 'games',
-      navigationOptions: {
+      navigationOptions: ({navigation}) => ({
+        headerLeft: () => (
+          <Appbar.BackAction
+            color={'#fff'}
+            onPress={() => navigation.navigate('Home')}
+          />
+        ),
         gesturesEnabled: false,
         headerTitle: 'Games',
         headerStyle: {
           backgroundColor: '#FF6666',
         },
-      },
+      }),
     },
   },
   {
