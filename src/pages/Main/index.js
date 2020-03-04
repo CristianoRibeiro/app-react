@@ -108,10 +108,19 @@ export default function Main(props) {
     );
   }
 
+  function _goTo(item) {
+    if (item.id === 5) {
+      props.navigation.navigate('WomenDay', {item});
+    } else {
+      props.navigation.navigate('CampaignsItem', {item});
+    }
+  }
+
   function _renderCampaingn(item) {
     return (
-      // <Link onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
-      <Link onPress={() => props.navigation.navigate('WomenDay', {item})}>
+      <Link onPress={() => _goTo(item)}>
+
+
         <Card style={{width: 140, flex: 1}}>
           <FitImage source={{uri: item.image}} resizeMode="contain" />
           <View

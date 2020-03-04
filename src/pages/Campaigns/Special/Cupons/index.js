@@ -41,6 +41,8 @@ import {
 export default function Main(props) {
   const dispatch = useDispatch();
 
+  const user = useSelector(state => state.user);
+
   const [cupons, setCupons] = useState( []);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
@@ -66,25 +68,30 @@ export default function Main(props) {
         </Header>
 
         <Card>
-          <FlatList
-            style={{margimBottom: 50}}
-            data={cupons}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={(item, index) => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginVertical: 8,
-                }}>
-                <TextDark>{item.item.type}</TextDark>
+          {user.sex == 'Feminino' ? (
+            <FlatList
+              style={{margimBottom: 50}}
+              data={cupons}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={(item, index) => (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginVertical: 8,
+                  }}>
+                  <TextDark>{item.item.type}</TextDark>
 
-                <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
-                  {item.item.coupons}
-                </TextDark>
-              </View>
-            )}
-          />
+                  <TextDark style={{fontWeight: '800', color: '#f7893e'}}>
+                    {item.item.coupons}
+                  </TextDark>
+                </View>
+              )}
+            />
+          ) : (
+            <TextDark>Você não está participando da campanha.</TextDark>
+          )}
+
         </Card>
       </ScrollView>
     </Content>

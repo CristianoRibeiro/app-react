@@ -45,8 +45,6 @@ export default function Banner() {
     try {
       let response = await api.get('/api/banners/campaign');
       await dispatch({type: 'BANNERCAMPAIGNS', payload: response.data});
-      conole.tron.log(1);
-      console.tron.log(banner);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);

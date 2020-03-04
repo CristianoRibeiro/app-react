@@ -208,7 +208,9 @@ export default function Main(props) {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
-            paddingBottom: 20
+            paddingBottom: 20,
+            flexDirection: 'row',
+            height: '100%'
           }}>
 
           <TextDark style={{ fontSize: 22 }}>Frases </TextDark>
