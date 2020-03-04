@@ -42,9 +42,6 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (__DEV__) {
-      console.tron.log(event);
-    }
     _getData();
   }, []);
 

@@ -48,9 +48,6 @@ export default function Main(props) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (__DEV__) {
-      console.tron.log(props.navigation.state.params.item);
-    }
     if (props.navigation.state.params) {
       if(props.navigation.state.params.item){
         setInfo(props.navigation.state.params.item);

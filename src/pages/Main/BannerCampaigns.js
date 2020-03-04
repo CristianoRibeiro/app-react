@@ -34,7 +34,7 @@ export default function Banner() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    
+
   }, []);
 
   useEffect(() => {
@@ -44,12 +44,9 @@ export default function Banner() {
   async function _getBanners() {
     try {
       let response = await api.get('/api/banners/campaign');
-      //alert(JSON.stringify(response.data));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
       await dispatch({type: 'BANNERCAMPAIGNS', payload: response.data});
-      //setBanners(response.data);
+      conole.tron.log(1);
+      console.tron.log(banner);
     } catch (error) {
       if (__DEV__) {
         console.tron.log(error.message);

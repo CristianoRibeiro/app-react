@@ -46,10 +46,6 @@ export default function Main(props) {
     setLoading(true);
     try {
       let response = await api.get(eventitem.url_news);
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
       setNews(response.data.rows);
     } catch (error) {
       if (__DEV__) {

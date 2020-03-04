@@ -41,5 +41,7 @@ allprojects {
 
         // ADD THIS
         maven { url "https://www.jitpack.io" }
+        
+        mavenCentral()
     }
 }

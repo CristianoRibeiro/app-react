@@ -82,6 +82,9 @@ import Recommendation from '~/pages/Campaigns/Recommendation';
 import RecommendationIndicated from '~/pages/Campaigns/Recommendation/Indicated';
 import RecommendationConverted from '~/pages/Campaigns/Recommendation/Converted';
 
+import WomenDay from '~/pages/Campaigns/Special/WomenDay';
+import CuponsWomenDay from '~/pages/Campaigns/Special/Cupons';
+
 //Components
 import DrawerItem from '~/components/DrawerItem';
 import ToolBar from '~/components/ToolBar';
@@ -596,6 +599,16 @@ const MainNavigator = createStackNavigator(
         },
       },
     },
+    WomenDay: {
+      screen: WomenDay,
+      path: 'womenday',
+      navigationOptions: {
+        headerTitle: 'Dia da Mulher',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
     Quiz: {
       screen: Quiz,
       path: 'quiz',
@@ -631,6 +644,16 @@ const MainNavigator = createStackNavigator(
       path: 'cupons',
       navigationOptions: {
         headerTitle: 'Número da sorte',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    CuponsWomenDay: {
+      screen: CuponsWomenDay,
+      path: 'cuponsdiadamulher',
+      navigationOptions: {
+        headerTitle: 'Cupons Dia da Mulher',
         headerStyle: {
           backgroundColor: '#FF6666',
         },

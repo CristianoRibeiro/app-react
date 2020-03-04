@@ -2,6 +2,7 @@ import {AsyncStorage} from 'react-native';
 import axios from 'axios';
 
 const API = 'https://viva-fenae.strongtecnologia.com.br';
+// const API = 'http://493066aa.ngrok.io';
 //const API = "http://10.1.1.17:8085";
 
 const api = axios.create({

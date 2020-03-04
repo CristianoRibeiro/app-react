@@ -1,4 +1,4 @@
-package com.appfenae;
+package br.com.vivafenae;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

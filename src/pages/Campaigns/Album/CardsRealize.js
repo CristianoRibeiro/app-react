@@ -63,11 +63,6 @@ export default function Main(props) {
     setLoading(true);
     try {
       let response = await api.post('/api/cards/history');
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
-
       setCards(response.data);
     } catch (error) {
       if (__DEV__) {
@@ -196,7 +191,7 @@ export default function Main(props) {
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
+                // justifyContent: 'space-between',
                 alignItems: 'center',
                 flex: 1,
                 justifyContent: 'center',

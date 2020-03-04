@@ -60,11 +60,11 @@ export default function Main(props) {
   const [matricula, setMatricula] = useState(user ? user.matricula : '');
   const [apcef, setApcef] = useState(user ? user.apcef : '');
   const [phone, setPhone] = useState(user.phone ? user.phone.trim() : '');
-  const [sex, setSex] = useState(user ? user.sex : '');
+  const [sex, setSex] = useState(user ? user.sex === 'Masculino' ? 1 : user.sex === 'Feminino' ? 0 : '' : '');
   const [address_state, setState] = useState(user ? user.address_state : '');
   const [birthdate, setBirthdate] = useState(user.formatedData ?user.formatedData : '');
   const [shirt, setShirt] = useState(user ? user.shirt : '');
-  const [frase, setFrase] = useState(user ? user.phrase : '');
+  const [frase, setFrase] = useState(user ? user.campaign_phrase : '');
   const [whatsapp, setWhatsapp] = useState(user.whatsapp ? user.whatsapp.trim() : '');
   const [facebook, setFacebook] = useState(user ? user.facebook : '');
   const [instagram, setInstagram] = useState(user ? user.instagram : '');
@@ -133,7 +133,7 @@ export default function Main(props) {
         birthdate: formataStringData(birthdate),
         uf: address_state,
         shirt: shirt,
-        phrase: frase,
+        campaign_phrase: frase,
         whatsapp,
         facebook,
         instagram
@@ -472,7 +472,6 @@ export default function Main(props) {
 
               <View style={{backgroundColor: '#dfdfdf', padding: Platform.OS === 'ios' ? 18 : 4}}>
                 <Select
-                  disabled={editable}
                   placeholder={{
                     label: 'Sexo',
                     value: null,
@@ -617,9 +616,9 @@ export default function Main(props) {
               </Form>
               <TextError>{errors.whatsapp}</TextError>
 
-              {user.registered_inspira ?
+              {user.sex == 'Feminino' ?
                 <View>
-                  <TextDark style={{paddingLeft: 0, marginBottom: 5}}>Para uso exclusivo no Inspira 2020:</TextDark>
+                  <TextDark style={{paddingLeft: 0, marginBottom: 5}}>Mês da mulher: escreva uma frase com o tema "Lute como uma bancária"</TextDark>
                   <View style={{borderWidth: 1, borderColor: '#ccc', padding: 8, borderStyle: 'dashed'}}>
                     <Form style={{marginTop: 2, marginBottom: 2}}>
                       <Input
@@ -629,7 +628,7 @@ export default function Main(props) {
                         onChangeText={setFrase}
                         autoCorrect={true}
                         maxLength={255}
-                        label="Somos futuro, somos..."
+                        label=""
                       />
                     </Form>
 

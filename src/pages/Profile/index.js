@@ -73,10 +73,11 @@ export default function Profile(props) {
   }, []);
 
   async function _onRefresh() {
+     console.tron.log(user.campaign_phrase);
     setLoading(true);
     try {
       let response = await api.get('/api/auth/user');
-      //alert(JSON.stringify(response));
+
       if (__DEV__) {
         console.tron.log(response.data);
       }
@@ -201,6 +202,19 @@ export default function Profile(props) {
           />
 
           <ListItem
+            title="Sexo"
+            text={user ? user.sex : ''}
+            color="#444"
+            icon={
+              <MaterialCommunityIcons
+                name="account-outline"
+                size={iconSize}
+                color={'#444'}
+              />
+            }
+          />
+
+          <ListItem
             title="UF"
             text={user ? user.address_state : ''}
             color="#444"
@@ -280,15 +294,15 @@ export default function Profile(props) {
           />
 
 
-          {user.registered_inspira ?
+          {user.registered_inspira && user.sex == 'Feminino' ?
             <View style={{marginTop: 10}}>
-              <TextDark style={{paddingLeft: 0, marginBottom: 5}}>Para uso exclusivo no Inspira 2020:</TextDark>
+              <TextDark style={{paddingLeft: 0, marginBottom: 5}}>Para uso exclusivo na Campanha do Dia da Mulher:</TextDark>
               <View style={{borderWidth: 1, borderColor: '#ccc', padding: 8, borderStyle: 'dashed'}}>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                  {user.phrase ?
-                    <TextDark>Somos futuro, somos <TextDark
-                      style={{fontWeight: '700'}}>{user ? user.phrase : ''}</TextDark></TextDark>
-                    : <TextDark style={{fontWeight: '400'}}>Cadastre a sua frase e ganhe 2 cupons!</TextDark>}
+                  {user.campaign_phrase ?
+                    <TextDark><TextDark
+                      style={{fontWeight: '700'}}>{user ? user.campaign_phrase : ''}</TextDark></TextDark>
+                    : <TextDark style={{fontWeight: '400'}}>Cadastre sua frase com o tema "Lute como uma bancária" atualize seus dados para ganhar 15 cupons!</TextDark>}
                 </View>
               </View>
             </View>

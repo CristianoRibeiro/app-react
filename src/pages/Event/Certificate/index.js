@@ -44,13 +44,7 @@ export default function Main(props) {
     setLoading(true);
     try {
       let response = await api.get('/api/certificates');
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
       await dispatch({type: 'CERTIFICATES', payload: response.data});
-
-      //setNotifications(response.data);
     } catch (error) {
       await dispatch({type: 'CERTIFICATES', payload: []});
       if (__DEV__) {

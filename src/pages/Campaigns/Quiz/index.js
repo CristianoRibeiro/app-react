@@ -62,10 +62,6 @@ export default function Main(props) {
     setLoading(true);
     try {
       let response = await api.post('/api/quizzes');
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
       await dispatch({type: 'QUIZZES', payload: response.data});
 
       if (response.data.time) {

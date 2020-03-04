@@ -54,16 +54,14 @@ export default function Main(props) {
       let banners = await api.get('/api/banners');
       let bannerCampaigns = await api.get('/api/banners/campaign');
       let response_user = await api.get('/api/auth/user');
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(events.data);
-      }
       await dispatch({type: 'CAMPAIGNS', payload: campaigns.data});
       await dispatch({type: 'PRIZE', payload: prizes.data});
       await dispatch({type: 'EVENT', payload: events.data});
       await dispatch({type: 'BANNER', payload: banners.data});
       await dispatch({type: 'BANNERCAMPAIGNS', payload: bannerCampaigns.data});
       await dispatch({type: 'USER', payload: response_user.data});
+
+      console.tron.log(bannerCampaigns.data);
 
       //setCampaigns(response.data);
     } catch (error) {
@@ -112,7 +110,8 @@ export default function Main(props) {
 
   function _renderCampaingn(item) {
     return (
-      <Link onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
+      // <Link onPress={() => props.navigation.navigate('CampaignsItem', {item})}>
+      <Link onPress={() => props.navigation.navigate('WomenDay', {item})}>
         <Card style={{width: 140, flex: 1}}>
           <FitImage source={{uri: item.image}} resizeMode="contain" />
           <View
@@ -187,7 +186,7 @@ export default function Main(props) {
             <MaterialIcons name="search" size={24} color={'#444'} />
 
             <TextLight style={{color: '#444', fontWeight: '700'}}>
-              Fique por dentro das campanhas
+              Fique por dentro das campanhas'
             </TextLight>
           </View>
         </HeaderTitle>

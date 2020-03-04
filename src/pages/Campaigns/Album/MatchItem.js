@@ -234,7 +234,7 @@ export default function Main(props) {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              // justifyContent: 'space-between',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
