@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Container, Content} from '../../style';
 import EmptyList from "~/components/EmptyList";
+import api from "~/services/api";
 
 export default function Whatsapp(props) {
 
@@ -21,6 +22,9 @@ export default function Whatsapp(props) {
   }, []);
 
   function _redirect(redirect) {
+    let response = api.get('/api/campaign/women/whatsapp').then((response) => {
+      console.tron.log(response);
+    });
     const msg = 'Olá! Estou navegando no aplicativo Viva Fenae/Apcef.';
     Linking.openURL('whatsapp://send?text=' + msg + '&phone=5561981428428');
     alert('O Whatsapp será aberto.');

@@ -137,7 +137,7 @@ export default function Main(props) {
 
     tempArray.map((item, key) => {
       tempArray[key] = item;
-      if (item.id === user.post_ms) {
+      if (item.id === user.post_wd) {
         tempArray[key]['post'] = true;
       }
     });
@@ -364,9 +364,9 @@ export default function Main(props) {
       let response = await apiRede.post('/api/rededoconhecimento/post/enviar', data);
 
       if (post) {
-        if (post.toLowerCase().includes('#acaixaétodasua') && post.toLowerCase().includes('#sororidade')) {
+        if ((post.toLowerCase().includes('#acaixaétodasua') || post.toLowerCase().includes('#acaixaetodasua')) && post.toLowerCase().includes('#sororidade')) {
 
-          let response_post = await apiApp.post('/api/post/inspira', {post_ms: response.data.idPost});
+          let response_post = await apiApp.post('/api/post/inspira', {post_wd: response.data.idPost});
 
           let user_response = await apiApp.get('/api/auth/user');
           await dispatch({type: 'USER', payload: user_response.data});
