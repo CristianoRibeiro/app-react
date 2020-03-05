@@ -151,6 +151,20 @@ export default function Main(props) {
     );
   }
 
+  function _openUrl(item) {
+    try {
+      Linking.canOpenURL(item).then(supported => {
+        if (supported) {
+          Linking.openURL(item).catch(err =>
+            console.error('An error occurred', err),
+          );
+        }
+      });
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
   function _renderItem() {
     return (
       <View style={{marginBottom: 15, marginTop: 15}}>
@@ -170,7 +184,7 @@ export default function Main(props) {
             </Card>
           </Link>
 
-          <Link onPress={() => props.navigation.navigate('Regulation')}>
+          <Link onPress={() =>  _openUrl('https://strongtecnologia.com.br/arquivos/regulamento.pdf')}>
             <Card>
               <Image
                 source={require('~/assets/icons/ico_regras.png')}
