@@ -109,7 +109,6 @@ export default function Main(props) {
   }
 
   function _goTo(item) {
-    props.navigation.navigate('WomenDay', {item});
     if (item.id === 5) {
       props.navigation.navigate('WomenDay', {item});
     } else {
