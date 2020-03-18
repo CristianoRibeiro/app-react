@@ -80,7 +80,10 @@ export const Input = styled.TextInput.attrs({
 export const Btn = styled(Button).attrs({
   mode: 'contained',
   uppercase: true,
-  color: '#0D4274'
+  color: '#0D4274',
+  marginLeft: 10,
+  marginRight: 10,
+  marginBottom: 20
 })`
   border-radius: 5px;
   border: 1px solid #fff;
@@ -132,6 +135,11 @@ export const TextTitle = styled.Text`
   color: #fff;
   margin: 5px 0;
 `;
+
+export const Send = styled(Button).attrs({
+  mode: 'contained',
+  color: '#0D4274'
+})
 
 
 // export const Image = styled.Image`

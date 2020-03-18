@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import {WebView} from 'react-native-webview';
 
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 import api from '~/services/api';
 
@@ -27,7 +27,7 @@ import QRCodeScanner from "react-native-qrcode-scanner";
 import {Btn, TextLight} from "~/pages/Event/Donation/styles";
 import Modal from "react-native-modal";
 
-import { AsyncStorage } from "react-native";
+import {AsyncStorage} from "react-native";
 
 export default function Main(props) {
   const user = useSelector(state => state.user);
@@ -43,20 +43,9 @@ export default function Main(props) {
   useEffect(() => {
 
     const didBlur = () => {
-      // props.navigation.navigate('Home');
-      setModal(false);
     };
     const didFocus = () => {
-      _retrieveData().done((value) => {
-        if (value == 'true') {
-          _storeData('false').done(() => {
-            setModal(false);
-            props.navigation.navigate('Home');
-          });
-        } else {
-          setModal(true);
-        }
-      });
+      setModal(true);
     };
 
     const blurSubscription = props.navigation.addListener('didBlur', didBlur);
@@ -68,50 +57,31 @@ export default function Main(props) {
     };
   }, []);
 
-  async function _storeData(stats) {
-    try {
-      await AsyncStorage.setItem('played', stats);
-    } catch (error) {
-      // Error saving data
-    }
-  }
-
-  async function _retrieveData() {
-    try {
-      const value = await AsyncStorage.getItem('played');
-      if (value !== null) {
-        return value;
-      }
-
-      return false;
-    } catch (error) {
-      // Error retrieving data
-    }
-  }
-
   async function _scanner(value) {
-    setModal(false);
     setLoading(true);
 
-    _retrieveData().done((value) => {
-      if (value == 'true') {
-        _storeData('false').done(() => {
-          setModal(false);
-          props.navigation.navigate('Home');
-        });
-      }
-    });
-
     try {
-      let response = await api.post('/api/games/toten', {event_id: 1, code: value, user_id: user.id});
+      let response = await api.post('/api/game_quiz/check', {code: value});
 
-      if (response.data.active) {
-        _storeData('true').then(() => {
-          props.navigation.navigate('Games', {item: response.data});
-        });
-
+      if (response.data.success) {
+        setModal(false);
+        props.navigation.navigate('QuizGame', {code: value});
       } else {
+        Alert.alert(
+          'Não foi possível realizar a ação',
+           response.data.msg,
+          [
+            {
+              text: 'OK', onPress: () => {
+                props.navigation.navigate('Home');
+                setModal(false);
+              }
+            }
+          ],
+          {cancelable: false},
+        );
         props.navigation.navigate('Home');
+
       }
 
     } catch (error) {
@@ -132,8 +102,8 @@ export default function Main(props) {
           reactivate={false}
           bottomContent={
             <Btn onPress={() => {
-              // props.navigation.navigate('Home');
-              _scanner(5);
+              props.navigation.navigate('Home');
+              setModal(false);
             }}>
               <TextLight>CANCELAR</TextLight>
             </Btn>

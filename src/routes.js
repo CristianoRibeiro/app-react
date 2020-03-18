@@ -61,6 +61,8 @@ import EventRegulation from '~/pages/Event/Regulation';
 import EventGuia from '~/pages/Event/Guia';
 import EventMaterial from '~/pages/Event/Guia/Material';
 import Games from '~/pages/Event/Games';
+import QuizGame from '~/pages/Games/Quiz';
+import End from '~/pages/Games/End';
 
 //Campanhas
 import Campaigns from '~/pages/Campaigns';
@@ -915,6 +917,26 @@ const MainNavigator = createStackNavigator(
           backgroundColor: '#FF6666',
         },
       }),
+    },
+    QuizGame: {
+      screen: QuizGame,
+      path: 'games/quiz',
+      navigationOptions: {
+        headerTitle: 'Quiz',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
+    },
+    End: {
+      screen: End,
+      path: 'games/end',
+      navigationOptions: {
+        headerTitle: 'Obrigado',
+        headerStyle: {
+          backgroundColor: '#FF6666',
+        },
+      },
     },
   },
   {

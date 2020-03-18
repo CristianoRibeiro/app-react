@@ -357,10 +357,6 @@ export default function Main(props) {
         "imagens": imageBase64
       };
 
-      if (__DEV__) {
-        console.tron.log(data);
-      }
-
       let response = await apiRede.post('/api/rededoconhecimento/post/enviar', data);
 
       if (post) {
@@ -370,23 +366,10 @@ export default function Main(props) {
 
           let user_response = await apiApp.get('/api/auth/user');
           await dispatch({type: 'USER', payload: user_response.data});
-          //alert(JSON.stringify(response));
-          if (__DEV__) {
-            console.tron.log(response_post.data);
-          }
         }
       }
-      //alert(JSON.stringify(response));
-      if (__DEV__) {
-        console.tron.log(response.data);
-      }
 
-
-    } catch (error) {
-      if (__DEV__) {
-        console.tron.log(error.message);
-      }
-    }
+    } catch (error) {}
 
     //setConexao([]);
     setType(1);
