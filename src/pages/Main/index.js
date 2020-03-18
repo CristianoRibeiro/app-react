@@ -49,7 +49,7 @@ export default function Main(props) {
   async function _getData() {
     try {
       let events = await api.post('/api/events');
-      let campaigns = await api.post('/api/campaigns');
+      let campaigns = await api.post('/api/campaigns/featured');
       let prizes = await api.post('/api/prizes');
       let banners = await api.get('/api/banners');
       let bannerCampaigns = await api.get('/api/banners/campaign');
