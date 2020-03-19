@@ -37,7 +37,7 @@ export default function Main(props) {
   const data = useSelector(state => state.campaigns);
   const dispatch = useDispatch();
 
-  const [campaigns, setCampaigns] = useState(data);
+  const [campaigns, setCampaigns] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -53,7 +53,7 @@ export default function Main(props) {
       if (__DEV__) {
         console.tron.log(response.data);
       }
-      await dispatch({type: 'CAMPAIGNS', payload: response.data});
+      // await dispatch({type: 'CAMPAIGNS', payload: response.data});
       setCampaigns(response.data);
     } catch (error) {
       if (__DEV__) {
