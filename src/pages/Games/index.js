@@ -67,19 +67,20 @@ export default function Main(props) {
         setModal(false);
         props.navigation.navigate('QuizGame', {code: value});
       } else {
-        Alert.alert(
-          'Não foi possível realizar a ação',
-           response.data.msg,
-          [
-            {
-              text: 'OK', onPress: () => {
-                props.navigation.navigate('Home');
-                setModal(false);
-              }
-            }
-          ],
-          {cancelable: false},
-        );
+        console.tron.log(response.data);
+        // Alert.alert(
+        //   'Não foi possível realizar a ação',
+        //    response.data.msg,
+        //   [
+        //     {
+        //       text: 'OK', onPress: () => {
+        //         props.navigation.navigate('Home');
+        //         setModal(false);
+        //       }
+        //     }
+        //   ],
+        //   {cancelable: false},
+        // );
         props.navigation.navigate('Home');
 
       }
@@ -104,6 +105,8 @@ export default function Main(props) {
             <Btn onPress={() => {
               props.navigation.navigate('Home');
               setModal(false);
+
+              // _scanner(7);
             }}>
               <TextLight>CANCELAR</TextLight>
             </Btn>
