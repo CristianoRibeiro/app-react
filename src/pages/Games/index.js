@@ -103,10 +103,10 @@ export default function Main(props) {
           reactivate={false}
           bottomContent={
             <Btn onPress={() => {
-              // props.navigation.navigate('Home');
+              props.navigation.navigate('Home');
               setModal(false);
 
-              _scanner(7);
+              // _scanner(7);
             }}>
               <TextLight>CANCELAR</TextLight>
             </Btn>
